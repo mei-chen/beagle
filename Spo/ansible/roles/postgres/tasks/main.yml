@@ -1,0 +1,42 @@
+---
+
+- name: Install postgres database
+  apt: name={{ item }} state=latest update_cache=yes cache_valid_time=86400
+  with_items:
+    - postgresql-9.3
+    - postgresql-client-9.3
+    - postgresql-contrib-9.3
+    - postgresql-server-dev-9.3
+    # for ansible postgres management
+    - python-psycopg2
+  tags: packages
+
+- name: Ensure the PostgreSQL service is running
+  service: name=postgresql state=started enabled=yes
+
+- name: Create Postgres Role
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name="{{ db_user }}"
+    state=present
+    role_attr_flags=CREATEDB
+
+- name: Ensure database is created
+  become_user: postgres
+  postgresql_db:
+    name={{ db_name }}
+    encoding='UTF-8'
+    lc_collate='en_US.UTF-8'
+    lc_ctype='en_US.UTF-8'
+    template='template0'
+    state=present
+
+- name: Ensure user has access to the database
+  become_user: postgres
+  postgresql_user:
+    db={{ db_name }}
+    name={{ db_user }}
+    password={{ db_password }}
+    priv=ALL
+    state=present

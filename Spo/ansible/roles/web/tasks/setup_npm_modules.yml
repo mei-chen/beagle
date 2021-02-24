@@ -1,0 +1,18 @@
+---
+
+- name: Install socket node modules
+  npm:
+    path: "{{ npm_socket_path }}"
+
+
+- name: Install app nodemodules
+  npm:
+    path: "{{ npm_frontend_path }}"
+  when: server_user != "vagrant"
+
+
+- name: Run build command
+  command: "npm run dist"
+  args:
+    chdir: "{{ npm_frontend_path }}"
+  when: server_user != "vagrant"

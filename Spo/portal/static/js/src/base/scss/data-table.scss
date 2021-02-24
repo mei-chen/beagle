@@ -1,0 +1,90 @@
+.delete-icon {
+  color: #d9534f;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    color: #d43f3a;
+  }
+}
+
+// overwrite bootstrap & react-bootstap-table
+.table {
+  tbody>tr>td,
+  thead>tr>th {
+    padding: 15px;
+  }
+
+  th > div {
+    display: inline-block;
+    width: 200px;
+    max-width: calc(100% - 70px);
+    margin: 0 10px 0 20px;
+  }
+
+  .collaborator-icon {
+    margin-left: 10px;
+  }
+}
+
+.filter-wrap,
+.table [data-field="name"] > div {
+  position: relative;
+  cursor: default;
+
+  &:before {
+    pointer-events: none;
+    content: "\f002";
+    font-family: 'Font Awesome 5 Light';
+    color: #ccc;
+    position: absolute;
+    left: 0;
+    top: -1px;
+  }
+}
+
+.filter {
+  font-weight: 400;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
+  background-repeat: no-repeat;
+  background-position: 0 4px;
+  color: #333;
+  height: 20px;
+  padding: 0 0 0 16px;
+
+  &:focus {
+    box-shadow: none;
+    border-bottom-color: #000;
+  }
+}
+
+.title-header {
+  float: left;
+}
+
+.order {
+  float: right;
+  height: 20px;
+  cursor: pointer;
+}
+
+.react-bootstrap-table-page-btns-ul {
+  float: none;
+  margin: 0 auto;
+}
+
+.react-bs-table-pagination {
+  [class*="col"] {
+    &:first-child {
+      display: none;
+    }
+
+    &:last-child {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

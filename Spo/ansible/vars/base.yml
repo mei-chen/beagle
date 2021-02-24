@@ -1,0 +1,14 @@
+---
+
+
+application_name: spot
+update_apt_cache: yes
+app_location: "/srv/{{ application_name }}"
+
+security_group_name: "{{ application_name }}_security_group"
+instance_type: t2.small
+
+GUNICORN_DJANGO_PORT: 8001
+NODE_SOCKET_SERVER_PORT: 4000
+
+create_superuser: yes

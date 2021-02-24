@@ -1,0 +1,151 @@
+html,
+body {
+    height: 100%;
+    background-color: rgb(93, 16, 26);
+}
+
+.fa {
+    font-family: 'Font Awesome 5 Light'
+}
+
+.wrap-table {
+    height: 100%;
+    display: table;
+    width: 100%;
+}
+
+.wrap-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.auth {
+    margin: 0 auto;
+    max-width: 480px;
+}
+
+.auth label {
+    font-weight: normal;
+}
+
+.auth h2 {
+    margin-top: 0;
+    margin-bottom: 22px;
+}
+
+
+.auth-header {
+    text-align: right;
+    color: #fff;
+    padding: 15px 18px;
+}
+
+.auth-logo {
+    width: 34px;
+    height: auto;
+    opacity: 0.5;
+}
+
+.auth-form {
+    background-color: #fff;
+    padding: 30px 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.auth-form-checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 15px;
+}
+
+.auth-form-checkbox label {
+    margin-bottom: 0;
+}
+
+.auth-form-checkbox input {
+    margin-top: 0px;
+    vertical-align: middle;
+}
+
+.auth-form-bottom {
+    text-align: right;
+    padding: 5px 22px 5px 0;
+}
+
+.auth-link {
+    color: #fff;
+    margin: 0 20px;
+}
+
+.auth-link:hover {
+    color: #fff;
+}
+
+.auth-footer {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.auth-error {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.auth-errors {
+    margin-bottom: 25px;
+}
+
+.coupon {
+    float: left;
+    padding: 4px 0;
+}
+
+.coupon-label {
+    color: #5D101A;
+    margin: 0;
+    padding-right: 10px;
+}
+
+.coupon-input-wrap {
+    display: inline-block;
+    position: relative;
+}
+
+.coupon-icon {
+    position: absolute;
+    left: 5px;
+    top: 7px;
+    transform: rotate(-45deg);
+    font-size: 9px;
+}
+
+.coupon-input {
+    border: 0;
+    border-bottom: 1px solid #D6D6D6;
+    outline: none;
+    padding-left: 22px;
+    max-width: 135px;
+}
+
+.coupon-input:focus {
+    border-color: #66afe9;
+}
+
+.beagle-link {
+    font-size: 14px;
+    color: rgb(93, 16, 26);
+    padding: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.beagle-link:hover {
+    color: rgb(93, 16, 26);
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.beagle-link img {
+    margin-right: 6px;
+    margin-top: -2px;
+}

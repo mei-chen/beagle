@@ -1,0 +1,10 @@
+---
+# Set the version of Node.js to install ("0.10", "0.12", "4.x", "5.x", "6.x").
+# Version numbers from Nodesource: https://github.com/nodesource/distributions
+nodejs_version: "7.x"
+
+# The user for whom the npm packages will be installed.
+nodejs_install_npm_user: "{{ server_user }}"
+
+# The directory for global installations.
+npm_config_prefix: "/usr/local/lib/npm"

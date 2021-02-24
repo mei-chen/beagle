@@ -1,0 +1,12 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Dear Sir/Madam,
+
+You have been invited by {{ inviter }} to join Spot and collaborate on the dataset "{{ dataset }}"!
+
+Steps to go through:
+1. Follow this link to get started: {{ registration_url }}
+2. Follow this link to collaborate: {{ collaboration_url }}
+
+{% endblock %}
