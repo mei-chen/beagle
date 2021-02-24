@@ -1,0 +1,27 @@
+---
+
+- name: Create RDS instance
+  rds:
+    command: create
+    region: "{{ region | mandatory }}"
+    instance_name: "{{ application_name }}-{{ env | mandatory }}"
+    size: 200
+    db_engine: postgres
+    instance_type: "db.{{ instance_type | default('t2.small') }}"
+    db_name: "{{ application_name }}_{{ env | mandatory }}"
+    username: postgres
+    # Password is only actually used first time, on DB creation
+    password: "{{ db_password | mandatory }}"
+    wait: true
+    wait_timeout: 600
+    vpc_security_groups: "{{ security_group.group_id | mandatory}}"
+  register: rds
+
+- name: Create RDS host group for later roles
+  add_host:
+    name: "{{ rds.instance.endpoint }}:{{ rds.instance.port }}"
+    changed: "{{ rds.changed }}"
+    username: "{{ rds.instance.username }}"
+    password: "{{ db_password | mandatory }}"
+    db_name: "{{ application_name }}_{{ env | mandatory }}"
+    groups: "rds"

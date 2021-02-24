@@ -1,0 +1,24 @@
+.batch-table-list-wrapper {
+  max-height: 30vh;
+}
+
+.filelist-left {
+    max-height: 400px;
+}
+
+.filelist-right {
+    max-height: 350px;
+}
+
+.batches-wrapper .table-responsive {
+  max-height: calc(100vh - 245px);
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  table {
+    margin-bottom: 0;
+  }
+}
+
+.btn {
+	font-family: "Font Awesome 5 Pro", sans-serif;
+}

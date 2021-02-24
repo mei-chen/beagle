@@ -1,0 +1,19 @@
+SHELL=/bin/bash
+
+PROJECT_NAME=kibble
+BIND_TO=127.0.0.1
+RUNSERVER_PORT=8000
+MAILSERVER_PORT=1025
+SETTINGS=kibble.app_settings.test_settings
+TEST_SETTINGS=kibble.app_settings.test_settings
+ELASTICSEARCH_URL=http://127.0.0.1:9200/
+TEST_APP?=
+
+PYTHONPATH=$(CURDIR)
+
+MANAGE= PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(SETTINGS) django-admin.py
+
+test: buildbot_test
+
+buildbot_test:
+	echo "Buildbot placeholder"

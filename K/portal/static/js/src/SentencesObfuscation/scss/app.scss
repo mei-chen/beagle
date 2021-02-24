@@ -1,0 +1,40 @@
+.file-list {
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.file-buttons-confirm {
+  max-width: 400px;
+  margin: 0 auto 40px;
+}
+
+.panel.tiny {
+  .panel-heading {
+    padding-bottom: 0;
+  }
+
+  .panel-footer {
+    padding-top: 0;
+  }
+}
+
+.row-style {
+  border-bottom: 1px solid #cccccc;
+  padding: 10px 0px;
+  display: flex;
+
+  &.head {
+    border-bottom: 2px solid #cccccc
+  }
+
+  .col-style {
+    border-right: 1px solid #cccccc;
+  }
+
+  .flex-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {"model": "analysis.simmodel", "pk": 1,
+    "fields": {
+      "uuid": "7303d692-26d2-4b56-b260-d86ecb2841bc",
+      "created_at": "2017-10-30T18:43:50.440Z",
+      "name": "Australian Employment Law (Enterprise Agreements)",
+      "api_name": "fwca"}},
+  {"model": "analysis.simmodel", "pk": 2,
+    "fields": {
+      "uuid": "461f0c67-fc10-4564-8696-552a53847175",
+      "created_at": "2017-10-30T18:44:11.096Z",
+      "name": "European Union law",
+      "api_name": "eulaw"}},
+  {"model": "analysis.simmodel", "pk": 3,
+    "fields": {
+      "uuid": "7ea1a9e2-4338-4a06-aeb0-0d00ef3999de",
+      "created_at": "2017-10-30T18:44:36.142Z",
+      "name": "English Wikipedia",
+      "api_name": "wiki"}},
+  {"model": "analysis.simmodel", "pk": 4,
+    "fields": {
+      "uuid": "e4064bc6-59d7-4aa9-86dc-67d559fd8438",
+      "created_at": "2017-10-30T18:44:58.502Z",
+      "name": "English Google News",
+      "api_name": "googlenews"}},
+  {"model": "analysis.simmodel", "pk": 5,
+    "fields": {
+      "uuid": "e4064bc6-59d7-4aa9-86dc-67d559fd8439",
+      "created_at": "2017-10-30T18:45:58.502Z",
+      "name": "North American Corporate Contracts",
+      "api_name": "lawinsider"}}
+]

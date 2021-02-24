@@ -1,0 +1,36 @@
+.row-title {
+    border: 1px solid grey;
+}
+.input-wrapper {
+    display: flex;
+
+    .add-keyword-input {
+        width: 100%;
+        border: 1px solid darkgrey;
+        padding: 10px 5px 10px 5px;;
+
+        &:focus {
+          outline:none;
+        }
+    }
+    .add-button {
+        margin-left: 10px;
+        border: 1px solid darkgray;
+        padding: 7px 10px 7px 10px;
+
+        &:hover {
+            background-color: #c8c8c8;
+        }
+    }
+}
+.keyword-list-selector{
+
+    .slector-header {
+    }
+    .list-group-class {
+        padding: 10px 5px;
+        background-color: white;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+}

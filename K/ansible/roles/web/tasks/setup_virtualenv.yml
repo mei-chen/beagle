@@ -1,0 +1,33 @@
+---
+
+- name: Install virtualenv
+  pip: name=virtualenv
+  tags: packages
+
+- name: Create the virtualenv
+  command: virtualenv -p {{ virtualenv_python_version }} {{ virtualenv_path }}
+           creates={{ virtualenv_path }}/bin/activate
+
+- name: Upgrade virtualenv pip
+  pip: virtualenv={{ virtualenv_path }} name=pip state=latest
+  tags: packages
+
+- name: Upgrade setuptools
+  pip: virtualenv={{ virtualenv_path }} name=setuptools state=latest
+
+- name: Ensure gunicorn is installed
+  pip: virtualenv={{ virtualenv_path }} name=gunicorn
+
+- name: Create the application log folder
+  file: path={{ application_log_dir }}
+        owner={{ gunicorn_user }}
+        group={{ gunicorn_group }}
+        mode=0774
+        state=directory
+
+- name: Create the application log file
+  file: path={{ application_log_file }}
+        owner={{ gunicorn_user }}
+        group={{ gunicorn_group }}
+        mode=0664
+        state=touch

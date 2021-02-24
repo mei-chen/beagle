@@ -1,0 +1,11 @@
+---
+
+- name: Install Redis
+  apt: name=redis-server state=latest update_cache=true cache_valid_time=86400
+  become: true
+  become_user: root
+
+- name: Ensure Redis is Running
+  service: name=redis-server state=running
+  become: true
+  become_user: root

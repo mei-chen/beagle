@@ -1,0 +1,21 @@
+---
+
+- name: Create Elasticache instance
+  elasticache:
+    state: present
+    region: "{{ region | mandatory }}"
+    name: "{{ application_name }}-{{ env | mandatory }}"
+    engine: redis
+    cache_engine_version: 2.8
+    cache_port: 6379
+    cache_security_groups: []
+    security_group_ids: ["{{ security_group.group_id }}"]  # Dynamically registered in ./ec2/main.yml
+    node_type: "cache.t2.micro"
+    num_nodes: 1
+    wait: true
+  register: elasticache
+
+- name: Create Elasticache host group for later roles
+  add_host:
+    name: "{{ elasticache.elasticache.data.CacheNodes[0].Endpoint.Address }}:{{ elasticache.elasticache.data.CacheNodes[0].Endpoint.Port }}"
+    groups: "elasticache"

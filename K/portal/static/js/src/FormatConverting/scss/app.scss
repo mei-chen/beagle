@@ -1,0 +1,17 @@
+.list-files-left {
+    max-height: 350px;
+}
+
+.list-files-right {
+    max-height: 530px;
+}
+
+.converted-list {
+    max-width: calc(100% - 80px);
+    word-wrap: break-word;
+}
+
+.nonconverted-list {
+    max-width: calc(100% - 20px);
+    word-wrap: break-word;
+}

@@ -1,0 +1,77 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html class="{% block html_class %}{% endblock %}">
+    <head>
+        <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        />
+
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+        <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" />
+
+        <link rel="stylesheet" href="/static/fonts/fontawesome-pro-5.0.6/css/fontawesome-all.css">
+        <link rel="stylesheet" href="/static/fonts/fontawesome-pro-5.0.6/css/fontawesome-all.min.css" />
+
+        <meta http-equiv="Content-Type"
+            content="text/html; charset=UTF-8"
+        />
+
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1.0"
+        />
+
+        <title>Kibble</title>
+
+        {% block styles %}{% endblock %}
+        <script>
+            window.CONFIG = {
+                MAX_UPLOAD_SIZE: '{{ MAX_UPLOAD_SIZE }}',
+                DROPBOX_APP_KEY: '{{ DROPBOX_APP_KEY }}',
+                API_URLS: {
+                    root: '/api/v1',
+                    document: '/api/v1/document/notify_action',
+                    batchList: '{% url 'batch-list' %}',
+                    projectList: '{% url 'project-list' %}',
+                    fileList: '{% url 'file-list' %}',
+                    keywordListApi: '{% url 'keywordlist-list' %}',
+                    keywordListSearchApi: '{% url 'keywordlist-search-list' %}',
+                    keywordApi: '{% url 'keyword-list' %}',
+                    docList: '{% url 'document-list' %}',
+                    convertApi: '{% url 'convertfile-list' %}',
+                    batchDownload: '{% url "document:batch_download" %}',
+                    cleanupDocToolsApi: '{% url 'cleanup-doc-tool-list' %}',
+                    cleanupDocApi: '{% url 'cleanup-doc-list' %}',
+                    regexList: '{% url 'regex-list' %}',
+                    regexApply: '{% url 'regex-apply-list' %}',
+                    sentenceSplittingApi: '{% url 'sentence-splitting-list' %}',
+                    downloadSentences: '{% url 'document:download_sentences' %}',
+                    batchDownloadClean: '{% url 'document:batch_download_clean' %}',
+                    reportList: '{% url 'report-list' %}',
+                    downloadReport: '{% url 'reports:report_download' %}',
+                    simmodel: '{% url 'simmodel-list' %}',
+                    recommendation: '{% url 'recommend-list' %}',
+                    synonyms: '{% url 'recommend_synonyms' %}',
+                    sentences: '{% url 'pull_similar_sentences' %}',
+                    personalData: 'api/v1/personal-data/'
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            {% block body %}{% endblock %}
+        </div>
+        <script src="https://www.google.com/jsapi?key=AIzaSyAb_m3H2ckI6r69wqbUtGjJhkBpjEzBY3o"></script>
+        {% include "watcher/gdrive.html" %}
+        <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onApiLoad"></script>
+
+        {% if HOT_LOAD %}
+            <script type="text/javascript" src='http://localhost:8000/assets/app.js'></script>
+        {% else %}
+            <script src='{% static "js/dist/assets/app.js" %}' type="text/javascript"></script>
+        {% endif %}
+        {% include "integration/intercom.html" %}
+    </body>
+</html>

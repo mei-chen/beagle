@@ -1,0 +1,83 @@
+---
+
+- name: Remove old ansible key
+  ec2_key:
+    name: ansible
+    region: "{{ region | mandatory }}"
+    state: absent
+    wait: true
+
+- name: Use your public key for the ec2 instance
+  ec2_key:
+    name: ansible
+    region: "{{ region | mandatory }}"
+    key_material: "{{ lookup('file', item) }}"
+    wait: true
+  with_fileglob: "{{ public_key | mandatory }}"
+
+- name: Create security group
+  ec2_group:
+    name: "{{ security_group_name | mandatory }}"
+    description: "{{ security_group_name | mandatory }} security group"
+    region: "{{ region | mandatory }}"
+    rules:  # Allows all
+      # SSH
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+
+      # HTTP
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+
+      # HTTPS
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+
+      # POSTGRES
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        cidr_ip: 0.0.0.0/0
+
+      # REDIS
+      - proto: tcp
+        from_port: 6379
+        to_port: 6379
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+  register: security_group
+
+- name: Create Instances
+  ec2:
+    key_name: ansible
+    group: "{{ security_group_name | mandatory }}"
+    region: "{{ region | mandatory }}"
+    instance_type: "{{ instance_type | default('t2.small') }}"
+    image: "{{ ami_id | mandatory }}"
+    exact_count: "{{ instances | default(1) }}"
+    count_tag:
+      environment: "{{ application_name }}-{{ env | mandatory }}"
+    instance_tags:
+      Name: "{{ application_name }}-{{ env | mandatory }}"
+      environment: "{{ application_name }}-{{ env | mandatory }}"
+    monitoring: yes
+    wait: true
+  register: ec2
+
+- name: Add all instance public IPs to host group
+  add_host: hostname="{{ item.public_ip }}" groups="tag_environment_{{ env | mandatory }}"
+  with_items: "{{ ec2.tagged_instances }}"
+
+
+- name: Copy files to local
+  local_action: copy
+    content="Security Group = {{ security_group }} \nEC2 data = {{ ec2 }}"
+    dest="./logs/{{env}}_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}_{{ ansible_date_time.tz }}.log"
