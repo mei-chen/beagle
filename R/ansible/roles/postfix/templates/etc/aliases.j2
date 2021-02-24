@@ -1,0 +1,4 @@
+# See man 5 aliases for format
+postmaster:    root
+{{ rufus_user }}: |"{{ virtualenv_path }}/bin/python {{ app_location }}/manage.py process_mail"
+

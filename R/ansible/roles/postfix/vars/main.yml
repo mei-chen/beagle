@@ -1,0 +1,1 @@
+rufus_process_email_script: "{{ app_location }}/core/process_mail.py"

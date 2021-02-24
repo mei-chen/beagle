@@ -1,0 +1,60 @@
+---
+
+
+- name: Install Postfix
+  apt: name={{ item }} state=latest update_cache=true cache_valid_time=86400
+  with_items:
+    - postfix
+    - mailutils
+  tags: packages
+  become: true
+  become_user: root
+
+- debug:
+    msg="Tag Environment = {{ groups.get('tag_environment_' + env) }} \n Host vars = {{ hostvars[groups.get('tag_environment_' + env).0]['ansible_eth0']['ipv4']['address'] }}"
+
+- name: Set destination for postfix
+  set_fact:
+    destination_hosts: "{{ fqdn }} {{( ', %s , %s' % (groups.get('tag_environment_' + env).0, groups.get('tag_environment_' + env)|map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address'])|join(','))) if groups.get('tag_environment_' + env) else ''}}"
+
+- name: Set destination for postfix
+  set_fact:
+    aws_internal_ip: "{{ (groups.get('tag_environment_' + env)|map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address'])|list).0 }}"
+
+- name: Create the postfix aliases file
+  template: src=etc/aliases.j2
+            dest='/etc/aliases'
+            backup=yes
+  become: true
+  become_user: root
+
+- name: Add the post fix main.cf file
+  template: src=etc/maildomain.j2
+            dest='/etc/maildomain'
+            backup=yes
+  become: true
+  become_user: root
+
+- name: Update etc hosts
+  template: src=etc/hosts.j2
+            dest='/etc/hosts'
+            backup=yes
+  become: true
+  become_user: root
+
+- name: Add the post fix main.cf file
+  template: src=postfix/main.j2
+            dest='/etc/postfix/main.cf'
+            backup=yes
+  become: true
+  become_user: root
+
+- name: Add ailiases to aliases.db
+  command: postalias /etc/aliases
+  become: true
+  become_user: root
+
+- name: Reload postfix
+  command: postfix reload
+  become: true
+  become_user: root

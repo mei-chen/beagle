@@ -1,0 +1,18 @@
+---
+
+- name: Construct DATABASE_URL
+  set_fact:
+    db_name: "{{ hostvars[groups['rds'][0]]['db_name'] }}"
+    db_user: "{{ hostvars[groups['rds'][0]]['username'] }}"
+    db_password: "{{ hostvars[groups['rds'][0]]['password'] | default(gather_secrets.db_password) }}"
+    db_host: "{{ groups['rds'][0] }}"
+    db_port: "{{ hostvars[groups['rds'][0]]['ansible_ssh_port'] }}"
+    DATABASE_URL: "postgres://{{ hostvars[groups['rds'][0]]['username'] }}:{{ gather_secrets.db_password | default(hostvars[groups['rds'][0]]['password']) }}@{{ groups['rds'][0] }}:{{ hostvars[groups['rds'][0]]['ansible_ssh_port'] }}/{{ hostvars[groups['rds'][0]]['db_name'] }}"
+    SESSION_SECRET: "{{ gather_secrets.get('SESSION_SECRET') or lookup('password', '/tmp/session_secret length=50 chars=ascii_letters,digits,hexdigits') }}"
+
+- name: Copy files to local
+  local_action: copy
+    content="Host vars = {{ hostvars }} \nTag Environment = {{ groups.get('tag_environment_' + env) }}"
+    dest="./logs/{{env}}_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}_{{ ansible_date_time.tz }}.log"
+
+- debug: msg="{{ db_name }} {{ db_password }}  {{ db_host }} {{ db_port }}"

@@ -1,0 +1,25 @@
+---
+
+- name: Install packages required by the Django app inside virtualenv
+  pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
+
+- name: Create the production django settings file
+  template: src=production_settings.j2
+            dest={{ project_path }}/{{ application_name }}/production_settings.py
+            backup=yes
+
+- name: Run Django database migrations
+  django_manage:
+    command: migrate
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  when: run_django_db_migrations is defined and run_django_db_migrations
+  tags: django.migrate
+
+- name: Run Django collectstatic
+  django_manage:
+    command: collectstatic --noinput -i node_modules
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  when: run_django_collectstatic is defined and run_django_collectstatic
+  tags: django.collectstatic

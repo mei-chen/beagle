@@ -1,0 +1,21 @@
+---
+
+
+application_name: Rufus
+fqdn: westpac-rufus.beagle.ai
+server_hostname: rufus
+
+update_apt_cache: yes
+base_location: /srv/
+app_location: "{{ base_location }}{{ application_name }}"
+virtualenv_path: "{{ base_location }}venv/"
+
+security_group_name: "beagle_security_group_{{ application_name }}"
+region: ap-southeast-2
+ami_id: ami-593c313a
+instance_type: t2.small
+
+env: master
+client_name: westpac
+app_identifier: "{{ application_name }}-{{ client_name }}-{{ env | mandatory }}"
+rufus_user: rufus

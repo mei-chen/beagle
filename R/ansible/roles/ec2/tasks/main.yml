@@ -1,0 +1,64 @@
+---
+
+- name: Remove old ansible key
+  ec2_key:
+    name: ansible
+    region: "{{ region | mandatory }}"
+    state: absent
+    wait: true
+
+- name: Use your public key for the ec2 instance
+  ec2_key:
+    name: ansible
+    region: "{{ region | mandatory }}"
+    key_material: "{{ lookup('file', item) }}"
+    wait: true
+  with_fileglob: "{{ ec2_public_key | default('~/.ssh/id_beagle_*.pub') }}"
+
+- name: Create security group
+  ec2_group:
+    name: "{{ SECURITY_GROUP_NAME | mandatory }}"
+    description: "{{ SECURITY_GROUP_NAME | mandatory }} security group"
+    region: "{{ region | mandatory }}"
+    rules:  # Allows all
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 25
+        to_port: 25
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+  register: security_group
+
+- name: Create Instances
+  ec2:
+    key_name: ansible
+    group: "{{ SECURITY_GROUP_NAME | mandatory }}"
+    region: "{{ region | mandatory }}"
+    instance_type: "{{ instance_type | default('t2.small') }}"
+    image: "{{ ami_id | mandatory }}"
+    exact_count: "{{ instances | default(1) }}"
+    count_tag:
+      environment: "{{ app_identifier }}"
+    instance_tags:
+      Name: "{{ app_identifier }}"
+      environment: "{{ app_identifier }}"
+    monitoring: no
+    wait: true
+  register: ec2
+
+- name: Add all instance public IPs to host group
+  add_host: hostname="{{ item.public_ip }}" groups="tag_environment_{{ env | mandatory }}"
+  with_items: "{{ ec2.tagged_instances }}"
