@@ -1,0 +1,143 @@
+.access-button {
+  width: 500px;
+  > a, > span {
+    display: block;
+    text-decoration: none;
+
+    .authenticated {
+      padding: 0px 15px 0px 70px;
+      color: black;
+      background: white;
+      border: 1px solid black;
+      border-radius: 5px;
+      &:hover {
+        cursor:default;
+      };
+
+      .text-wraper {
+        font-size: 15px;
+        vertical-align: middle;
+        display: inline-block;
+
+        .github-name {
+          color:#861f2c;
+          font-weight: 600
+        }
+      }
+    }
+
+    .not-authenticated {
+      padding: 0px 90px;
+      color: white;
+      background: #861f2c;
+      border-radius: 5px;
+      &:hover {
+        cursor:pointer;
+      };
+
+      .text-wraper {
+        font-size: 20px;
+        vertical-align: middle;
+        display: inline-block;
+      }
+    }
+
+    .icon-wrapper {
+      vertical-align: middle;
+      font-size: 28px;
+      padding-right: 19px;
+      text-align: left;
+      display: inline-block;
+    }
+
+    .deny-icon {
+      padding: 6px;
+      vertical-align: middle;
+      font-size: 20px;
+      float: right;
+      display: inline-block;
+      transition: 0.2s ease;
+
+      &:hover {
+        cursor:pointer;
+        color: #861f2c;
+      }
+    }
+  }
+}
+
+.auth-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+
+  li {
+    margin-bottom: 15px;
+  }
+}
+
+.settings-subtitle {
+  margin-top: 25px 0 15px;
+}
+
+.not-found {
+  text-align: left;
+  border: 1px solid #EBCCD1;
+  border-radius: 3px;
+  padding: 15px 0;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.not-found-message {
+  text-align: center;
+  color: #A94442;
+  margin-bottom: 35px;
+}
+
+.not-found-parts {
+  display: flex;
+}
+
+.not-found-part {
+  width: 50%;
+  display: flex;
+  padding: 0 20px 30px 40px;
+  line-height: 1.2;
+
+  & + .not-found-part {
+    border-left: 1px solid #E1E1E1;
+  }
+}
+
+.not-found-num {
+  font-size: 55px;
+  color: #E3BC9A;
+  line-height: 1;
+}
+
+.not-found-text {
+  font-size: 20px;
+  color: #C2B9AA;
+  padding-left: 20px;
+}
+
+.not-found-em {
+  color: #959087;
+
+  i {
+    font-size: 16px;
+    vertical-align: middle;
+    margin-right: 4px;
+    margin-top: -6px;
+  }
+}
+
+a.not-found-em {
+  text-decoration: none;
+
+  &:hover {
+    border-bottom: 1px solid #E02C62;
+    color: #959087;
+  }
+}

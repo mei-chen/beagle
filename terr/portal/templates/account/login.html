@@ -1,0 +1,18 @@
+{% extends "account_base.html" %}
+
+{% block title %}Sign In{% endblock title %}
+
+{% block content %}
+<a href="/accounts/github/login/?process=login" class="login-button">
+    <i class="fab fa-github"></i>
+    <span>Authenticate with GitHub</span>
+</a>
+<a href="/accounts/bitbucket_oauth2/login/?process=login" class="login-button">
+    <i class="fab fa-bitbucket"></i>
+    <span>Authenticate with Bitbucket</span>
+</a>
+<a href="/accounts/gitlab/login/?process=login" class="login-button">
+    <i class="fab fa-gitlab"></i>
+    <span>Authenticate with GitLab</span>
+</a>
+{% endblock content %}

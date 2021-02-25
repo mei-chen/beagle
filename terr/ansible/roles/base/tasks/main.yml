@@ -1,0 +1,67 @@
+---
+
+- include: create_swap_file.yml
+  when: create_swap_file
+  tags: swap
+
+- name: Ensure bash, OpenSSL, and libssl are the latest versions
+  apt: name={{ item }} update_cache={{ update_apt_cache }} state=latest
+  with_items:
+    - bash
+    - openssl
+    - libssl-dev
+    - libssl-doc
+  async: 0
+  poll: 0
+  tags: packages
+  become: true
+  become_user: root
+
+- name: Install Base Packages
+  apt: name={{ item }} state=latest update_cache=true cache_valid_time=86400
+  with_items:
+    - build-essential
+    - acl
+    - git
+    - mercurial
+
+    # Python
+    - python
+    - python-dev
+    - python-pip
+    - python-virtualenv
+    - ipython
+
+    # libxml for lxml package (python requirement)
+    - libxml2-dev
+    - libxslt1-dev
+
+    # Scipy required
+    - libatlas-base-dev
+    - gfortran
+    - libopenblas-dev
+    - liblapack-dev
+
+    # Pycurl required
+    - libcurl4-gnutls-dev
+    - librtmp-dev
+
+    # Misc
+    - supervisor
+    - libpq-dev
+    - libffi-dev
+
+    # WeasyPrint required
+    - python-lxml
+    - python-cffi
+    - libcairo2
+    - libpango1.0-0
+    - libgdk-pixbuf2.0-0
+    - shared-mime-info
+  tags: packages
+  become: true
+  become_user: root
+
+- name: Upgrade pip
+  pip: name=pip state=latest
+  tags: packages

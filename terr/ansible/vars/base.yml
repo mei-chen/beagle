@@ -1,0 +1,38 @@
+---
+
+
+application_name: terry
+update_apt_cache: yes
+app_location: "/srv/{{ application_name }}"
+
+security_group_name: "{{ application_name }}_security_group"
+instance_type: t2.small
+
+GUNICORN_DJANGO_PORT: 8001
+NODE_SOCKET_SERVER_PORT: 4000
+
+SLACK_WEBHOOK: null
+SLACK_CHANNEL: null
+
+GITHUB_LOGIN_CLIENT_ID: null
+GITHUB_LOGIN_SECRET: null
+
+GITHUB_OAUTH_CLIENT_ID: null
+GITHUB_OAUTH_SECRET: null
+
+GITHUB_APP_ID: null
+GITHUB_APP_SECRET: null
+
+BITBUCKET_LOGIN_CLIENT_ID: null
+BITBUCKET_LOGIN_SECRET: null
+
+BITBUCKET_OAUTH_CLIENT_ID: null
+BITBUCKET_OAUTH_SECRET: null
+
+GITLAB_LOGIN_CLIENT_ID: null
+GITLAB_LOGIN_SECRET: null
+
+GITLAB_OAUTH_CLIENT_ID: null
+GITLAB_OAUTH_SECRET: null
+
+create_superuser: yes

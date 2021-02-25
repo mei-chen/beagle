@@ -1,0 +1,48 @@
+.aside {
+    padding: 18px 20px;
+}
+
+.aside-company {
+    color: #cecece;
+
+    a {
+        color: #cecece;
+        text-decoration: none;
+
+        &:hover {
+            color: #e02c62;
+        }
+    }
+}
+
+.aside-links {
+    border-top: 1px solid #C1C1C1;
+    border-bottom: 1px solid #C1C1C1;
+    padding: 20px 0;
+    margin-bottom: 6px;
+
+    a {
+        display: block;
+        margin: 15px 0px;
+        color: #757575;
+        text-decoration: none;
+        font-size: 15px;
+
+        &:hover {
+            color:#5d101a;
+            cursor:pointer;
+        }
+
+        &.active {
+            color: darken(#333, 10%);
+        }
+    }
+}
+
+.aside-header {
+    padding: 0 15px 15px;
+}
+
+.logo-image {
+    margin-right: 12px;
+}

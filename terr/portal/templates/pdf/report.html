@@ -1,0 +1,80 @@
+{% load template_utils %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static "css/pdf-report.css" %}">
+    <title>Terry PDF report</title>
+</head>
+<body>
+<div>
+    {% if exception %}
+        <p>{{ exception }}</p>
+    {% elif error %}
+        <p>{{ error }}</p>
+    {% else %}
+        <div class="header">
+            {% if repo_icon %}
+            <img class="repo-icon" src="{% get_static_prefix %}{{ repo_icon }}" />
+            {% endif %}
+            <div class="repo-details">
+                <div class="repo-name">{{ repo_name }}</div>
+                <div class="repo-url">{{ git_url }}</div>
+                <div class="repo-risk">Your dependency stack is <span class="repo-risk-value">{{ open_percent}}% open</span></div>
+            </div>
+        </div>
+        <img src="{{ stats_img_path }}"/>
+        <h3>Licenses</h3>
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>{{ stats_header.0 }}</th>
+                    <th>{{ stats_header.1 }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for stat in stats %}
+                    <tr>
+                        <td class="cell-license">{{ stat.0 }}</td>
+                        <td class="cell-count">
+                            <span class="license-count">{{ stat.1 }}</span>
+                            {% if stat.1 <= 1 %}
+                                <span>lib</span>
+                            {% else %}
+                                <span>libs</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Libraries</h3>
+        <table class="licenses-table">
+            <thead>
+                <tr>
+                    <td>{{ licenses_header.1 }}</td>
+                    <td>{{ licenses_header.0 }}</td>
+                    <td>{{ licenses_header.4 }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for licenses in licenses %}
+                    <tr>
+                        <td>
+                            <span>{{ licenses.1 }}</span>
+                            <span class="lib-version">{{ licenses.3 }}</span>
+                        </td>
+                        <td>{{ licenses.0 }}</td>
+                        <td class="cell-lib-license">{{ licenses.4|get_license_name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+</body>
+</html>

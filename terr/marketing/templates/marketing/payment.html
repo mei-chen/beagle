@@ -1,0 +1,68 @@
+{% extends "account_base.html" %}
+
+{% block title %}Subscription purchase{% endblock title %}
+
+{% block header %}
+{% if user %}
+<a href="/settings" class="auth-user">
+    <i class="auth-user-icon fa fa-user-circle"></i>
+    <span class="auth-user-name">
+        <span class="auth-user-overflow">{{ user }}</span>
+    </span>
+</a>
+{% endif %}
+{% endblock header %}
+
+{% block content %}
+<h2>Subscribe</h2>
+<div class="sub-top">
+    <div class="sub-price">${{ price }}</div>
+    <div class="sub-plan">
+        <span class="sub-title">Dogbone plan</span>
+        <ul class="sub-offers">
+            <li><span class="sub-offer">{{ public|title }}</span> Public Repositories</li>
+            <li><span class="sub-offer">Up to {{ private }}</span> Private Repositories</li>
+        </ul>
+    </div>
+</div>
+
+{% if coupon %}
+<div class="coupon-info">
+    <span class="coupon-title">Coupon applied: {{ coupon.title }}</span>
+    <p class="coupon-desc">{{ coupon.description }}</p>
+</div>
+{% endif %}
+
+<form class="coupon-form" action="{% url 'marketing:purchase_subscription' %}" method="post">
+    {% csrf_token %}
+    <div class="coupon-icon">
+        <i class="fa fa-ticket-alt"></i>
+    </div>
+    <button class="coupon-button btn btn-primary" type="submit">Apply coupon</button>
+    <div class="coupon-input">
+        {{ coupon_form }}
+
+        {% if coupon_form.errors %}
+        <div class="coupon-errors">
+        {% for error in coupon_form.errors.coupon_code %}
+            <strong class="coupon-error text-danger">{{ error|escape }}</strong>
+        {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</form>
+
+<div class="paypal-button">
+    {{ form.render }}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    // set font-size of price depending on price string length
+    window.COUPON_PRICE = "{{ price }}";
+    const price = document.querySelector('.sub-price');
+    const size = -3 * COUPON_PRICE.length + 67;
+    price.style.fontSize = size + 'px';
+</script>
+{% endblock scripts %}

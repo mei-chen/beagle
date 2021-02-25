@@ -1,0 +1,251 @@
+.reports-pagination {
+  text-align: center;
+}
+
+.reposts-heading {
+  h1 {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.filter {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 17px;
+  margin-left: 35px;
+  position: relative;
+}
+
+.filter-input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #CCCCCC;
+  padding: 1px 1px 1px 20px;
+
+  &:focus {
+    border-bottom-color: #000;
+  }
+}
+
+.filter-icon {
+  color: #CCCCCC;
+  position: absolute;
+  top: 4px;
+  left: 0;
+
+  &--focused {
+    color: #000;
+  }
+}
+
+.report {
+  box-shadow: 0 0 4px lighten(#000, 60%);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 16px;
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  &--red {
+    border-bottom: 5px solid darken(#f2dede, 5%);
+
+    .report-date {
+      color: darken(#f2dede, 23%);
+    }
+  }
+
+  &--yellow {
+    border-bottom: 5px solid darken(#fcf8e3, 10%);
+
+    .report-date {
+      color: darken(#fcf8e3, 48%);
+    }
+  }
+}
+
+.report-buttons {
+  float: right;
+
+  button {
+    margin-left: 8px;
+    outline: none !important;
+  }
+}
+
+.report-body {
+  overflow: hidden;
+  font-size: 16px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.report-score {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 40px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 5px;
+  text-align: center;
+  color: #fff;
+  margin-right: 20px;
+}
+
+.report-licenses {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 102px;
+}
+
+.report-date {
+  display: block;
+  font-size: 11px;
+  color: #c5c5c5;
+  line-height: 1;
+}
+
+.report-icon {
+  float: left;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+
+.report-url {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.report-share-button {
+  position: relative;
+}
+
+.report-share-count {
+  position: absolute;
+  font-size: 10px;
+  text-align: center;
+  padding: 0 3px;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  top: -5px;
+  right: -5px;
+  border-radius: 9px;
+  box-shadow: 0 0 3px #333;
+  background-color: #fff;
+  color: lighten(#333, 10%);
+}
+
+.report-private {
+  color: #777777;
+  border: 1px solid #D3D3D3;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 4px 10px;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+.sharable-links {
+  margin-top: 10px;
+}
+
+.sharable-links-header {
+  padding: 15px 8px;
+  font-size: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.sharable-links-title {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 17px;
+}
+
+.sharable-links-button {
+  margin-left: 20px;
+  vertical-align: middle;
+}
+
+.shared {
+  padding: 5px 8px;
+  line-height: 28px;
+
+  &:first-child {
+    border-top: 2px solid #ccc;
+  }
+
+  &:nth-child(odd) {
+    background-color: #eee;
+  }
+
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  i {
+    margin-left: 6px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.shared-name {
+  float: left;
+  font-size: 16px;
+  width: 205px;
+}
+
+.shared-url {
+  overflow: hidden;
+  font-size: 12px;
+  padding: 0 5px;
+}
+
+.shared-buttons {
+  float: right;
+}
+
+.shared-controls {
+  float: right;
+}
+
+.shared-input {
+  width: calc(100% - 45px);
+  display: inline-block;
+  height: 28px;
+}
+
+.shared-name-value,
+.shared-url-value {
+  max-width: calc(100% - 35px);
+  float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.shared-url-value {
+  color: #333;
+  line-height: 1;
+  margin: 8px 0;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px dotted #333;
+  }
+}
+

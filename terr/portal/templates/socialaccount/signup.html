@@ -1,0 +1,44 @@
+{% extends "account_base.html" %}
+
+{% block title %}{% Sign Up %}{% endblock %}
+    <h2>Sign up</h2>
+    <!-- display non-field errors -->
+    {% if form.errors %}
+        <div class="auth-errors">
+        {% for error in form.non_field_errors %}
+            <strong class="auth-error text-danger">{{ error|escape }}</strong>
+        {% endfor %}
+        </div>
+    {% endif %}
+    <!-- display field errors -->
+    <form class="form" method="post" action="{% url 'socialaccount_signup' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            <input name="{{ form.username.html_name }}" type="text" class="form-control" id="{{ form.username.id_for_label }}" value="{{ form.username.value }}" />
+            {% if form.errors %}
+            {% for error in form.errors.username %}
+                <strong class="auth-error text-danger">{{ error|escape }}</strong>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">E-mail</label>
+            <input name="{{ form.email.html_name }}" type="email" class="form-control" id="{{ form.email.id_for_label }}" value="{{ form.email.value }}" />
+            {% if form.errors %}
+            {% for error in form.errors.email %}
+                <strong class="auth-error text-danger">{{ error|escape }}</strong>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="auth-form-bottom">
+            <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+    </form>
+</div>
+{% block footer %}
+    <a href="{% url 'account_login' %}" class="auth-link">Sign in</a>
+{% endblock footer %}

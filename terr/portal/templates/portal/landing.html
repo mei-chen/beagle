@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset='utf-8' />
+	<title>Terry</title>
+
+	<!-- Stylesheet -->
+	{% include "integration/fontawesome.html" %}
+	<link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" />
+	<link href="/static/css/landing.css" rel="stylesheet" type="text/css" />
+
+	<!-- Script -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script>
+		jQuery( document ).ready( function() {
+
+			jQuery( '#menu_toggle' ).on( 'click', function() {
+				jQuery( '#popup' ).addClass('popup_visible');
+			});
+
+			jQuery( '#popup_menu' ).on( 'click', function() {
+				jQuery( '#popup' ).removeClass('popup_visible');
+			});
+
+			/* Submit the form */
+			jQuery( '#submit_button' ).on( 'click', function() {
+				jQuery( '#form_check_liscenses' ).submit();
+			});
+
+			/* Trigger intercome chat */
+			jQuery( '#intercom_button' ).on( 'click', function() {
+				window.Intercom('show');
+			} );
+
+		});
+	</script>
+
+</head>
+
+<body>
+
+<!--
+  =====================
+  SECTION : Header
+  =====================
+  -->
+
+<header id='header'>
+
+	<a id='terry_logo' href='/'>
+		<img id="terry_logo_image" src="/static/img/logo.svg" alt="Terry"/>
+		<img id="terry_logo_text" src="/static/img/logo-text.svg" alt="Terry"/>
+	</a>
+
+	<div id='menu_toggle'>
+	<i class='fa fa-bars'></i>
+	</div>
+
+</header>
+
+<!--
+  =====================
+  SECTION : Popup
+  =====================
+  -->
+
+<div id='popup'>
+
+	<div id='popup_header'>
+
+		<div id='popup_logo'>
+			<img src='/static/img/landing/beagle_logo.png' id='beagle_logo' alt='' />
+		</div>
+
+		<div id='popup_beagle_solution'>
+			a Beagle.ai solution
+		</div>
+
+		<div id='popup_menu'>
+			<i class='fa fa-times'></i>
+		</div>
+
+	</div> <!-- #popup_header -->
+
+	<div id='popup_content'>
+
+		<h3>Get in</h3>
+		<a class='signup_button' href='/accounts/github/login/?process=login'><i class='fab fa-github'></i><span>Authenticate with GitHub</span></a>
+		<a class='signup_button' href='/accounts/bitbucket_oauth2/login/?process=login'><i class='fab fa-bitbucket'></i><span>Authenticate with Bitbucket</span></a>
+		<a class='signup_button' href='/accounts/gitlab/login/?process=login'><i class='fab fa-gitlab'></i><span>Authenticate with GitLab</span></a>
+
+		<div id='popup_info'>
+			Any concerns?
+			<div id="popover">
+				<i id="popover_btn" class="fa fa-info-circle"></i>
+				<div id="popover_content">
+					<div id="popover_title">Authentication only</div>
+					<ul id="popover_list">
+						<li><i class="fa fa-shield-check"></i> Not granting access to private repos</li>
+						<li><i class="fa fa-shield-check"></i> No code is being stored by Terry</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div> <!-- #popup_content -->
+
+</div>
+
+<!--
+  =====================
+  SECTION : Check liscenses
+  =====================
+  -->
+
+<section id='section_check_liscenses'>
+
+	<h1>Check your project dependencies</h1>
+
+	<form id='form_check_liscenses' action='/accounts/login' method='GET'>
+
+		<div id='form_prefix'>
+			<i class="fab fa-github"></i>
+			<i class="fab fa-bitbucket"></i>
+			<i class="fab fa-gitlab"></i>
+		</div>
+		<input type='text' name='git_url' id='sniff' placeholder='https://github.com/paste-that/repo' />
+
+		<!-- To have submit button using an image, and be fully supported, we use a div and js to submit the form -->
+		<div id='submit_button'>
+			<img id='submit_image' src="/static/img/sniffing-dog-icon.svg" />
+		</div>
+
+	</form>
+
+</section>
+
+<!--
+  =====================
+  SECTION : Dependencies
+  =====================
+  -->
+
+<section id='section_dependencies'>
+
+	<div class='column'>
+
+		<img src='/static/img/landing/dependencies.png' alt='' />
+
+	</div>
+
+	<div class='column section_dependencies_content'>
+
+		<h3>Automatically parse dependencies and extract the licenses</h3>
+
+		<ul id='logo_dependencies'>
+		<li><img src='/static/img/landing/logo_pip.jpg' alt='Python' title='Python' /></li>
+		<li><img src='/static/img/landing/logo_bower.jpg' alt='Bower' title='Bower' /></li>
+		<li><img src='/static/img/landing/logo_npm.jpg' alt='npm' title='npm' /></li>
+		<li><img src='/static/img/landing/logo_maven.jpg' alt='Maven' title='Maven' /></li>
+		<li><img src='/static/img/landing/logo_composer.jpg' alt='Composer (Packagist)' title='Composer (Packagist)' /></li>
+		<li><img src='/static/img/landing/logo_ruby.jpg' alt='Ruby gems' title='Ruby gems' /></li>
+		</ul>
+
+		<div id='section_dependencies_content_text'>
+		Get instant insights on the licenses you deal with.
+		</div>
+
+	</div>
+
+</section>
+
+<!--
+  =====================
+  SECTION : Plan
+  =====================
+  -->
+
+<section id='section_plan'>
+
+	<div class='wrap'>
+
+		<h2>Pick your plan.</h2>
+
+		<div id='plans'>
+
+		<!-- Plan Column START -->
+		<div class='plan_column'>
+		<div class='plan_column_wrapper'>
+
+			<div class='plan_header'>
+				<div class='plan_header_name'>Open</div>
+				<div class='plan_header_price'>Free</div>
+			</div>
+
+			<div class='plan_content'>
+
+				<div class='plan_details'>
+				<ul>
+					<li><i class="fa fa-fw fa-users"></i> Unlimited collaborators</li>
+					<li><i class="fa fa-fw fa-globe"></i> Unlimited public repositories</li>
+					<li><i class="fa fa-fw fa-lock-alt"></i> 3 private repositories</li>
+					<li><i class="fab fa-fw fa-github"></i> GitHub Marketplace integration<sup>*</sup></li>
+				</ul>
+				</div>
+
+				<a class='plan_button' href='/accounts/login'>
+					Select
+				</a>
+
+			</div>
+
+		</div>
+		</div>
+		<!-- Plan Column END -->
+
+		<!-- Plan Column START -->
+		<div class='plan_column'>
+		<div class='plan_column_wrapper'>
+
+			<div class='plan_header'>
+				<div class='plan_header_name'>Dogbone</div>
+				<div class='plan_header_price'>$20<span>/mo</span></div>
+			</div>
+
+			<div class='plan_content'>
+
+				<div class='plan_details'>
+				<ul>
+					<li><i class="fa fa-fw fa-users"></i> Unlimited collaborators</li>
+					<li><i class="fa fa-fw fa-globe"></i> Unlimited public repositories</li>
+					<li><i class="fa fa-fw fa-lock-alt"></i> 20 private repositories</li>
+					<li><i class="fab fa-fw fa-github"></i> GitHub Marketplace integration<sup>*</sup></li>
+				</ul>
+				</div>
+
+				<a class='plan_button' href='/marketing/subscribe'>
+					Select
+				</a>
+
+			</div>
+
+		</div>
+		</div>
+		<!-- Plan Column END -->
+
+		<!-- Plan Column START -->
+		<div class='plan_column'>
+		<div class='plan_column_wrapper'>
+
+			<div class='plan_header'>
+				<div class='plan_header_name'>Enterprise</div>
+				<div class='plan_header_price'>Contact Us</div>
+			</div>
+
+			<div class='plan_content'>
+
+				<div class='plan_details'>
+				<ul>
+					<li><i class="fa fa-fw fa-users"></i> Unlimited collaborators</li>
+					<li><i class="fa fa-fw fa-globe"></i> Unlimited public repositories</li>
+					<li><i class="fa fa-fw fa-lock-alt"></i> 21+ private repositories</li>
+					<li><i class="fab fa-fw fa-github"></i> GitHub Marketplace integration<sup>*</sup></li>
+				</ul>
+				</div>
+
+				<a class='plan_button' href='mailto:support@beagle.ai'>
+					Select
+				</a>
+
+			</div>
+
+		</div>
+		</div>
+		<!-- Plan Column END -->
+
+		</div>
+
+		<div id='plan_soon'>
+		* Feature coming soon
+		</div>
+
+	</div> <!-- .wrap -->
+
+</section> <!-- #section_plan -->
+
+<!--
+  =====================
+  SECTION : Footer
+  =====================
+  -->
+
+<footer id='footer'>
+
+	<div id='social_menu'>
+		<ul>
+			<li><a target="_blank" href='https://www.facebook.com/beagleinc'><i class="fab fa-facebook-f"></i><span>Facebook</span></a></li>
+			<li><a target="_blank" href='https://twitter.com/beagleinc'><i class="fab fa-twitter"></i><span>Twitter</span></a></li>
+			<!-- <li><a href='http://youtube.com'><span>YouTube</span></a></li> -->
+		</ul>
+	</div>
+
+	<!-- <div id='footer_menu'>
+		<ul>
+			<li><a href='#'>Home</a></li>
+			<li><a href='#'>How it Works</a></li>
+			<li><a href='#'>Supported Packages</a></li>
+			<li><a href='#'>Contact</a></li>
+		</ul>
+	</div> -->
+
+	<div id="intercom_button" title="Contact Us">
+		<span class="fa fa-comments"></span>
+	</div>
+
+</footer>
+{% include "integration/intercom.html" %}
+</body>
+
+</html>
