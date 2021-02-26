@@ -1,0 +1,22 @@
+@font-face {
+  font-family: Concourse T7;
+  src: url('/static/fonts/concourse-t7-regular.otf')
+}
+
+
+:local(.notFoundPage) {
+  margin: 30px 0px 80px;
+}
+
+:local(.notFoundPage h1) {
+  color: red;
+  font-size: 34px;
+  text-align: left;
+  padding: 0px 0px 10px;
+  font-family: Concourse T7, Arial, sans-serif !important;
+}
+
+:local(.badPath) {
+  color: red;
+  margin: 0px 5px;
+}

@@ -1,0 +1,9 @@
+---
+
+
+- name: restart filebeat
+  become: true
+  become_user: root
+  service:
+    name: filebeat
+    state: restarted

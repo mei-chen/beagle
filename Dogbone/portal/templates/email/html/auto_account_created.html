@@ -1,0 +1,69 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Hi {{ first_name }},</p>
+<br/>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">
+    Thank you for sending your contract to Beagle. Let me introduce Rufus, your automatic contract manager. Just forward a contract to
+    <a style="color: blue; text-decoration: underline;" href="mailto:rufus@beagle.ai">rufus@beagle.ai</a>, it'll analyze it for you and send the results to your inbox.
+    While it's sniffing out the fine print (it may take a couple of minutes) let's set up your account.
+</p>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">Click
+    <a style="color: blue; text-decoration: underline;" href="{{ follow_url }}">here</a>
+    to claim your username and change your password. Security is important to us, and you need to do this before we can send your analyzed contract.
+</p>
+<br/>
+<br/>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">
+Remember,
+</p>
+<p style="color:black; font-size: 14px; line-height:16px">
+    <ol>
+        <li style="color:black; font-size: 14px; line-height:24px">Beagle is not a lawyer. It is a really smart dog.</li>
+
+
+        <li style="color:black; font-size: 14px; line-height:24px">You are using the system under <a href="http://docs.beagle.ai/legal/beagle-terms.html">Beagle's Terms & Conditions</a>, also found at the end of this email.</li>
+
+        <li style="color:black; font-size: 14px; line-height:24px">We're here to help. To ask us a question or for support just hit "reply" or try the built in chat support feature.</li>
+    </ol>
+</p>
+
+{% endblock %}
+
+
+{% block signature %}
+<br/>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">Thank you,<br/> The Dog Pack</p>
+<br/>
+<br/>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px; font-weight: bold;">Before you use Beagle, make sure you know what you're signing up for.</p>
+<p style="color:black; font-size: 14px; line-height:16px"><a style="color: blue; text-decoration: underline;" href="http://docs.beagle.ai/legal/beagle-terms.html">Beagle Terms of Use</a></p>
+
+<p style="color:black; font-size: 10px; line-height:12px">
+    Thank you for using Beagle. This contract governs the Terms of Use between Beagle Inc ("Beagle") and the user ("you"). As with any relationship there are a few basic rules to help set expectations. Here are the rules for using Beagle. If you do not agree with these rules, you are not allowed to use Beagle.
+<br/><br/>
+Using Beagle:<br/>
+Beagle is a productivity tool. Artificial intelligence is used to help you see what to look at, based on Beagle’s own criteria, as well as anything Beagle has learned from your usage over time. Beagle is not a replacement for your lawyer. Beagle is not a replacement for your own due diligence. Beagle uses its own pre-programmed logic to automatically tag and highlight items. Beagle also has collaboration tools. Beagle Inc. (the owner and creator of Beagle) gives you a right to use the Beagle system, provided that your account is in good standing. An account is in good standing if all invoices (as applicable) are current, and you have not used the system for something it was not intended or something illegal.
+<br/><br/>
+Information Ownership and Confidentiality:<br/>
+All documents are assumed to be owned by the user who uploaded it. All content, (comments/mentions), etc. are assumed to be owned by the author. Beagle makes no ownership claims at all to any of the data uploaded, or entered. The owner of the data gives Beagle the right to use their data, so that Beagle can deliver its services. To remove this permission, just email support@beagle.ai. Anything Beagle determines through its machine learning process, all statistics, usage metrics, and anything else is solely owned by Beagle.
+
+Beagle will not share your data with anyone. Only the uploader of a document is permitted to invite others to collaborate. Beagle will only access your information for answering support related questions, or as required for the machine learning to deliver personalized results.
+<br/><br/>
+Data Deletion:<br/>
+If you want your data deleted from the platform, please email support@beagle.ai. We do our best to ensure that we delete it from our platform and remove it from all backups as the scheduling process permits. Because Beagle is cloud based we cannot guarantee complete deletion from all possible backups, however we can warrant the data is unusable.
+<br/><br/>
+Termination Rights:<br/>
+You can terminate your agreement with Beagle at at any time by emailing support@beagle.ai All your data will be frozen, unless you specifically ask it to be deleted. There is no refund for prepaid amounts. Beagle may terminate your account if it is misused. Misuse means you have allowed, or enabled others to use your login credentials, using the system for something not intended, trying to access other peoples information without their consent etc. We will suspend any account prior to termination, which gives Beagle an opportunity to chat with you about it. Beagle's decision on termination is final. Beagle can also terminate any account, for any reason with 30 days notice. If Beagle terminates your account without cause, any unused pre-paid amounts will be refunded. All data will be removed, or made technically unavailable within 60 days of the termination date.
+<br/><br/>
+Legal Stuff:<br/>
+Beagle Inc.is an Ontario Canada corporation, that provides the Beagle platform. Neither you or Beagle want to have a dispute, but sometimes disputes happen. If there is a dispute, you and Beagle agree to a binding arbitration in Waterloo Region Ontario, Canada. Neither you or Beagle will be liable for any special or consequential damages. Any user damages will be limited to the amounts paid, or owed to the user. Beagle damages are related to any actual losses we incur based on the user behavior or conduct. Beagle will try really hard to make sure the system is available and secure. Beagle however cannot guarantee availability or security. Beagle can warrant that the end to end communications will exceed PCI compliance standards. Beagle is not liable for the accuracy, or reliability of anything related to what Beagle provides. No artificial intelligence company can guarantee those results. If there are bugs, let us know by emailing support@beagle.ai, or use the online support portal when it is available. You will indemnify Beagle Inc. for any losses incurred as a result of your usage.
+
+Beagle Inc. may change these terms at its convenience. Beagle will notify you when there terms are updated, either through email or our support portal. If you decide to terminate your account because of a change in these terms, a pro-rated refund will be provided.
+</p>
+{% endblock %}

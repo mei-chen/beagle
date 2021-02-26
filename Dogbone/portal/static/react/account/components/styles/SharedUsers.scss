@@ -1,0 +1,141 @@
+div.shared-users-container {
+  margin-left: -30px;
+  ul.shared-users-list {
+
+    li.shared-users-list-element {
+      display: block;
+      margin: 3px;
+      float: left;
+      box-shadow: 0px 2px 3px 0px rgba(93, 92, 92, 0.61);
+
+      &.add-button {
+        margin-right: 7px;
+      }
+
+      img.shared-users-avatar {
+        height: 35px;
+        width: 35px;
+      }
+
+      span.shared-users-add-user {
+        cursor: pointer;
+        display: block;
+        height: 35px;
+        width: 35px;
+        background-color: #c0c0c0;
+        text-align: center;
+        line-height: 35px;
+        color: #fff;
+        font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+        transition: all 0.2s ease;
+
+        &.shared-users-users-modal {
+           &:hover {
+            opacity: 0.8;
+            color: #1c4aa2;
+          }
+        }
+
+        &:hover {
+          opacity: 0.8;
+          color: rgb(0, 152, 0);
+        }
+      }
+
+      .beagle-shared-user {
+        position: relative;
+
+        .owner-btn {
+          position: absolute;
+          top: -5px;
+          left: -5px;
+          background-color: green;
+          color: white;
+          border-radius: 50%;
+          width: 13px;
+          line-height: 13px;
+          text-align: center;
+          font-size: 8px;
+          cursor: pointer;
+        }
+        .delete-btn {
+          position: absolute;
+          top: -5px;
+          left: 28px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          width: 13px;
+          line-height: 13px;
+          text-align: center;
+          font-size: 8px;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+  .shared-users-user-search {
+    width: 215px;
+    display: inline-block;
+
+    .typeahead-selector {
+      background: #fff;
+      position: absolute;
+      width: 215px;
+      z-index: 2;
+      border: 1px solid #ccc;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        padding: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        a {
+          text-decoration: none;
+          color: #4a4a4a;
+        }
+      }
+      li.hover {
+        background: #ccc;
+      }
+      li:hover {
+        background: #ccc;
+      }
+    }
+
+    input {
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 8px;
+      width: 100%;
+      margin-top: 2px;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+
+  .add-btn {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 7px 10px 7px 10px;
+    margin-left: 10px;
+    height: 30px;
+    background-color: white;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover{
+      color: #009800;
+    }
+    &:focus{
+      outline: none;
+    }
+  }
+}

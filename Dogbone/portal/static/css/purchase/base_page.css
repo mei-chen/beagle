@@ -1,0 +1,172 @@
+@charset "UTF-8";
+@font-face {
+  font-family: Concourse T2;
+  src: url("/static/fonts/concourse-t2-regular.otf"); }
+@font-face {
+  font-family: Concourse T7;
+  src: url("/static/fonts/concourse-t7-regular.otf"); }
+@font-face {
+  font-family: Concourse C2;
+  src: url("/static/fonts/concourse-c2-regular.otf"); }
+.purchase {
+  max-width: 1000px;
+  margin: 20px auto; }
+  .purchase .messages {
+    margin: 20px 0; }
+    .purchase .messages li {
+      padding: 12px;
+      border: 1px solid;
+      border-radius: 5px; }
+    .purchase .messages li.error {
+      color: red;
+      background-color: #ffcccc;
+      border-color: #e87d7d; }
+    .purchase .messages li.success {
+      color: #5cb85c;
+      background-color: #eaf6ea;
+      border-color: #b7c3b7; }
+  .purchase h1 {
+    font-family: 'Concourse T7', Helvetica, Arial, sans-serif;
+    margin: 40px 0 0;
+    padding: 0;
+    color: black; }
+  .purchase h2 {
+    font-family: 'Concourse C2', Helvetica, Arial, sans-serif;
+    padding-bottom: 20px;
+    color: black; }
+  .purchase .subscription-options {
+    display: flex;
+    justify-content: center;
+    flex-align: column;
+    margin: 30px 0px; }
+    .purchase .subscription-options .subscription {
+      flex: 1;
+      max-width: 500px;
+      margin: 0px 10px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0px 2px 17px 0px rgba(0, 0, 0, 0.35); }
+      .purchase .subscription-options .subscription .title {
+        font-family: 'Concourse C2', Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 10px;
+        text-align: center; }
+      .purchase .subscription-options .subscription .price-info {
+        padding: 10px;
+        text-align: center; }
+        .purchase .subscription-options .subscription .price-info .price, .purchase .subscription-options .subscription .price-info .price span {
+          font-size: 32px;
+          font-family: 'Concourse T7', Helvetica, Arial, sans-serif; }
+        .purchase .subscription-options .subscription .price-info .price .old {
+          color: red;
+          text-decoration: line-through; }
+        .purchase .subscription-options .subscription .price-info .coupon {
+          padding: 10px; }
+          .purchase .subscription-options .subscription .price-info .coupon input {
+            color: white;
+            width: 240px;
+            font-size: 14px;
+            background: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            outline: none;
+            padding: 10px; }
+          .purchase .subscription-options .subscription .price-info .coupon button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 9px; }
+      .purchase .subscription-options .subscription .benefits {
+        background-color: #eee;
+        color: #676767;
+        font-size: 14px;
+        line-height: 20px; }
+        .purchase .subscription-options .subscription .benefits li {
+          padding: 12px 0;
+          padding-left: 40px;
+          padding-right: 20px; }
+          .purchase .subscription-options .subscription .benefits li:before {
+            content: "✓";
+            display: inline-block;
+            width: 20px;
+            margin-left: -20px; }
+        .purchase .subscription-options .subscription .benefits li:nth-child(even) {
+          background-color: rgba(0, 0, 0, 0.04); }
+      .purchase .subscription-options .subscription .buy-now {
+        padding: 10px;
+        background-color: white;
+        text-align: center; }
+        .purchase .subscription-options .subscription .buy-now .buy-title {
+          padding-top: 15px;
+          font-family: 'Concourse T7', Helvetica, Arial, sans-serif;
+          font-size: 24px; }
+      .purchase .subscription-options .subscription.annual .price-info {
+        color: white;
+        background-color: #5D101A; }
+      .purchase .subscription-options .subscription.annual .title {
+        color: white;
+        background-color: #5D101A; }
+  .purchase .benefit-hero {
+    text-align: center;
+    font-family: 'Concourse C2', Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    margin: 20px 0 30px; }
+  .purchase .for-enterprise {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    max-width: 430px;
+    margin: 10px auto;
+    border-radius: 8px;
+    border: 1px solid #943f4a;
+    color: #5D101A;
+    background-color: white; }
+    .purchase .for-enterprise .icon {
+      display: flex;
+      background-image: url("/static/img/GlassesBeagle.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 50px;
+      background-position-y: 50%; }
+    .purchase .for-enterprise .text {
+      padding: 10px;
+      flex: 1; }
+  .purchase .shopping-cart table {
+    width: 440px;
+    margin: 10px auto; }
+    .purchase .shopping-cart table td, .purchase .shopping-cart table th {
+      padding: 10px; }
+    .purchase .shopping-cart table thead {
+      border-bottom: 1px solid #bbb;
+      font-weight: bold; }
+      .purchase .shopping-cart table thead th {
+        color: #555; }
+    .purchase .shopping-cart table tbody tr td.qty {
+      text-align: center; }
+    .purchase .shopping-cart table tbody tr.total {
+      font-weight: bold;
+      border-top: 1px solid #bbb; }
+  .purchase .payment {
+    max-width: 440px;
+    margin: 20px auto;
+    text-align: center; }
+    .purchase .payment #braintree-container {
+      min-height: 70px;
+      margin: 10px 0;
+      padding: 12px;
+      background-color: white;
+      border: 1px solid #eee;
+      border-radius: 8px; }
+    .purchase .payment button.checkout {
+      margin-top: 20px;
+      padding: 12px;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+      border: 1px solid green;
+      border-radius: 5px;
+      background-color: #b3ffb3; }
+
+/*# sourceMappingURL=base_page.css.map */

@@ -1,0 +1,158 @@
+user www-data;
+worker_processes {{ DEPLOY.NGINX.WORKERS.COUNT }};
+pid /run/nginx.pid;
+
+events {
+
+        ###########################################################################
+        ##
+        ##  Worker Settings
+        ##
+        ###########################################################################
+
+        worker_connections {{ DEPLOY.NGINX.WORKERS.CONNECTION_COUNT }};
+	    accept_mutex off;
+}
+
+http {
+
+        ###########################################################################
+        ##
+        ##  Basic Settings
+        ##
+        ###########################################################################
+
+        sendfile on;
+        sendfile_max_chunk 512k;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        server_tokens off;
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        ###########################################################################
+        ##
+        ##  Logging Settings
+        ##
+        ###########################################################################
+
+        access_log {{ DEPLOY.NGINX.LOGGING.ACCESS }};
+        error_log {{ DEPLOY.NGINX.LOGGING.ERROR }}{% if DEPLOY.NGINX.LOGGING.LEVEL %} {{ DEPLOY.NGINX.LOGGING.LEVEL }}{% endif %};
+
+        ###########################################################################
+        ##
+        ##  GZip Settings
+        ##
+        ###########################################################################
+
+        gzip on;
+        gzip_disable "msie6";
+
+
+        ###########################################################################
+        ##
+        ##  Server Settings
+        ##
+        ###########################################################################
+
+        upstream app_servers {
+                server 127.0.0.1:8000;
+        }
+
+        upstream socket_nodes {
+                ip_hash;
+                server 127.0.0.1:4000 weight=5;
+        }
+
+        server {
+                listen 80;
+		        listen [::]:80;
+
+		        {% if DEPLOY.NGINX.SSL.USE_HTTPS %}
+		        listen 443 ssl spdy;
+		        {% endif %}
+
+  		        server_name {{ DOMAIN }};
+  		        charset     utf-8;
+
+                ###########################################################################
+                ##
+                ##  SSL Settings
+                ##
+                ###########################################################################
+
+                {% if DEPLOY.NGINX.SSL.USE_HTTPS %}
+		        ssl_certificate {{ DEPLOY.NGINX.SSL.CERTIFICATE }};
+		        ssl_certificate_key {{ DEPLOY.NGINX.SSL.CERTIFICATE_KEY }};
+		        ssl_trusted_certificate {{ DEPLOY.NGINX.SSL.CERTIFICATE }};
+
+		        ssl_stapling on;
+    		    ssl_stapling_verify on;
+    		    ssl_ciphers 'AES256+EECDH:AES256+EDH:!aNULL';
+                ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+                ssl_session_cache shared:SSL:10m;
+                ssl_prefer_server_ciphers on;
+                ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+                ssl_session_timeout 5m;
+
+        		if ($ssl_protocol = "") {
+		            rewrite ^ https://$server_name$request_uri? permanent;
+		        }
+
+    		    add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+    		    add_header X-Frame-Options DENY;
+    		    add_header X-Content-Type-Options nosniff;
+
+		        resolver 8.8.4.4 8.8.8.8 valid=300s;
+    		    resolver_timeout 5s;
+
+                {% endif %}
+
+                client_max_body_size 75M;   # adjust to taste
+
+                ###########################################################################
+                ##
+                ##  Location Settings
+                ##
+                ###########################################################################
+
+                location / {
+                        proxy_pass         http://app_servers;
+                        proxy_redirect     off;
+                        proxy_set_header   Host $host;
+                        proxy_set_header   X-Real-IP $remote_addr;
+                        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header   X-Forwarded-Host $server_name;
+                        proxy_read_timeout 180s;
+                }
+                
+                location /static/ {
+                        autoindex off;
+                        alias /home/ubuntu/static/;
+                }
+
+                location /media/profile_photo/ {
+                        autoindex off;
+                        alias /home/ubuntu/dogbone/media/profile_photo/;
+                }
+
+                location /socket.io/ {
+                        proxy_set_header Upgrade $http_upgrade;
+                        proxy_set_header Connection "upgrade";
+                        proxy_http_version 1.1;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header Host $host;
+                        proxy_pass http://socket_nodes;
+                }
+        }
+}
+
+
+###########################################################################
+##
+##  GENERATED: {% now "SHORT_DATETIME_FORMAT" %}
+##
+###########################################################################

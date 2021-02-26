@@ -1,0 +1,143 @@
+div.keywords-column {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-left: 15px;
+
+  .keywords-header {
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid #d7d7d7;
+
+    .keyword-add-wrap {
+      line-height: 50px;
+      font-size: 25px;
+      padding-left: 10px;
+      margin-top: 4px;
+      width: 100%;
+      float: left;
+      position: relative;
+
+      $button-size: 60px;
+
+      .keyword-add-box {
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        width: calc(100% - #{$button-size + 15px});
+        float: left;
+        background: white;
+        padding: 1px 10px 1px 40px;
+        font-size: 20px;
+        line-height: 1.8;
+        margin-top: 8px;
+        outline: none;
+
+        &:focus{
+          box-shadow: 0px 0px 1px 1px #78aafc;
+        }
+      }
+
+      .keyword-add-button {
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        width: $button-size;
+        float: right;
+        background: white;
+        padding: 1px 10px;
+        font-size: 20px;
+        line-height: 1.8;
+        margin-top: 8px;
+        outline: none;
+
+        &:focus{
+          box-shadow: 0px 0px 1px 1px #78aafc;
+        }
+      }
+
+      .keyword-add-icon {
+        color: #333333;
+        position: absolute;
+        font-size: 18px;
+        top: 20px;
+        left: 21px;
+      }
+    }
+  }
+
+  .keywords-container {
+
+    .deleted {
+      height: 0px !important;
+      padding: 0px !important;
+      border: 0px !important;
+      overflow: hidden;
+    }
+
+    .no-keywords{
+      margin-top:130px;
+      text-align: center;
+      font-size: 18px;
+      color:#b3b3b3;
+      padding: 25px;
+
+      .keywords-tutorial {
+        font-size: 10pt;
+        color: #555;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid #f5f5f5;
+        margin: 20px;
+        padding: 20px;
+      }
+    }
+
+    .keywords-row {
+      display: flex;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      transition: all 0.3s ease;
+
+      .toggleActiveButton {
+        cursor: pointer;
+
+        .on {
+          color: #3E5700;
+        }
+      }
+
+      .keyword-active-btn {
+        flex: 1;
+      }
+      .keyword-name {
+        flex: 3;
+
+        &.inactive {
+          color: #999;
+        }
+      }
+      .keyword-delete {
+        flex: 1;
+        text-align: right;
+      }
+    }
+
+   .learners-listing-no-data {
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      text-align: center;
+      top: 40%;
+      color: #939393;
+      i {
+        font-size: 35px;
+      }
+      .learner-message {
+        font-size: 20px;
+      }
+    }
+
+
+  }
+}

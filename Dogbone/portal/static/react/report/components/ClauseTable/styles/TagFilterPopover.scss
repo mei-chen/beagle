@@ -1,0 +1,89 @@
+.drop-popover {
+  position: absolute;
+  z-index: 2;
+  width: 250px;
+  height: 400px;
+  
+  .popover-header {
+    background-color: #EEE;
+    color: #111;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px 3px 0 0;
+
+    .close-icon {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      color: #777;
+
+      &:hover {
+        color: #000;
+        cursor: pointer;
+      }
+    }
+  }
+  .popover-body {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0 0 3px 3px;
+    display: flex;
+    flex-direction: column;
+    .search-bar {
+      position: relative;
+      .search-icon {
+        position: absolute;
+        top: 13px;
+        left: 13px;
+        color: #ccc;
+        &.active {
+          color: #000;
+        }
+      }
+      .input-bar {
+        width: 207px;
+        padding: 5px;
+        input {
+          padding: 0 0 0 30px;
+        }
+      }
+    }
+    .rows {
+      max-height: 200px;
+      overflow: scroll;
+      .row {
+        display: flex;
+        padding: 5px 10px;
+        cursor: pointer;
+        background-color : #fff;
+        min-width: 100px;
+        color : #000;
+        &:hover {
+          background-color : #5d101a;
+          color : #fff;
+        }
+        .check {
+          width: 25px;
+        }
+        .option-name {
+          flex: 1;
+          .selected {
+            font-weight: bold;
+          }
+          .no-icon{
+            margin-right: 17px; 
+          }
+          i {
+            font-size: 12px;
+            padding: 0 5px;
+          }
+          span {
+            display: inline-block;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}

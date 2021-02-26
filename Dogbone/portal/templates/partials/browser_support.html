@@ -1,0 +1,18 @@
+<script>
+  window.browser = {
+    // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+    opera: (!!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0),
+
+    // Firefox 1.0+
+    firefox: typeof InstallTrigger !== 'undefined',
+
+    // At least Safari 3+: "[object HTMLElementConstructor]"
+    safari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
+
+    // Chrome 1+
+    chrome: !!window.chrome && !this.opera,
+
+    // At least IE6
+    ie: /*@cc_on!@*/false || !!document.documentMode,
+  }
+</script>

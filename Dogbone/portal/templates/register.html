@@ -1,0 +1,75 @@
+{% extends "_layout.html" %}
+
+{% block extra_css %}
+<link href="/static/css/login.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block conversion_scripts %}
+<!-- Google Code for 7 Day Trial Conversion Page
+In your html page, add the snippet and call
+goog_report_conversion when someone clicks on the
+chosen link or button. -->
+<script type="text/javascript">
+  /* <![CDATA[ */
+  goog_snippet_vars = function() {
+    var w = window;
+    w.google_conversion_id = 948001566;
+    w.google_conversion_label = "dc9YCLH8_l8QnraFxAM";
+    w.google_remarketing_only = false;
+  }
+
+  // DO NOT CHANGE THE CODE BELOW.
+  goog_report_conversion = function() {
+    goog_snippet_vars();
+    window.google_conversion_format = "3";
+    window.google_is_call = true;
+    var opt = new Object();
+    opt.onload_callback = function() {
+    var form = document.getElementById('register-form');
+    form.submit();
+  }
+    var conv_handler = window['google_trackConversion'];
+      if (typeof(conv_handler) == 'function') {
+      conv_handler(opt);
+    }
+  }
+
+  fb_report_conversion = function() {
+    fbq('track', 'CompleteRegistration');
+  }
+
+  report_conversion = function() {
+    goog_report_conversion();
+    fb_report_conversion();
+  }
+
+  /* Keydown submit listener */
+  onEnter = function (e) {
+    if (13 == e.keycode) {
+      report_conversion();
+    }
+  }
+
+/* ]]> */
+</script>
+<script type="text/javascript"
+ src="//www.googleadservices.com/pagead/conversion_async.js">
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="login-panel">
+    <h2>Sign Up</h2>
+    {% include "form_register.html" %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    {% if HOT_LOAD %}
+        <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+{% endblock %}

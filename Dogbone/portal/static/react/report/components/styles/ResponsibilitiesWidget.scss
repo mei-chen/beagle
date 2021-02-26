@@ -1,0 +1,53 @@
+@import 'variables';
+
+#responsibilities > div { // each party
+  padding: 5px 0 0;
+}
+.resp-bg, .resp-line {
+  display: inline-block;
+  height: 6px;
+  width: 100%;
+  border-radius: 10px;
+}
+.resp-bg {
+  position: relative;
+  margin: 4px 0;
+  background-color: rgba(100,100,100,.2);
+}
+
+.resp-line {
+  position: absolute;
+  width: 0%; /* default width. it is dynamically adjusted */
+  &.both { background-color: #74c57f; }
+}
+
+.partya.resp-line { background-color: $you; }
+.partyb.resp-line { background-color: $them; }
+
+
+
+.responsibilities {
+  background-repeat: no-repeat;
+  width: 44%;
+  padding-right: 2%;
+  float: left;
+  display: block;
+  overflow: hidden;
+}
+
+#responsibilities {
+  cursor: pointer;
+  padding: 5px 0 0 0;
+  div.text {
+    padding-top: 10px;
+    width: 100%;
+    font-size: 14px;
+    span {
+      display: inline-block;
+    }
+  }
+  .score {
+    float: right;
+    font-weight: bold;
+  }
+}

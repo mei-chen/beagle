@@ -1,0 +1,104 @@
+<form method="POST" role="form" id="register-form" name="register">
+    {% csrf_token %}
+
+    {% if form.first.errors %}<div class="field-error">{{ form.first.errors }}</div>{% endif %}
+    {% if form.last.errors %}<div style="text-align: right;" class="field-error">{{ form.last.errors }}</div>{% endif %}
+    <div class="form-group">
+        <div class="row">
+            <div class="half {% if form.first.errors %}has-error{% endif %}" id="first_name">
+                {{ form.first }}
+            </div>
+            <div class="half right {% if form.last.errors %}has-error{% endif %}">
+                {{ form.last }}
+            </div>
+        </div>
+    </div>
+
+    {% if form.username.errors %}<div class="field-error">{{ form.username.errors }}</div>{% endif %}
+    <div class="form-group {% if form.username.errors %}has-error{% endif %} {% for err in form.non_field_errors %}{% if err == 'This username is already registered'%}has-error{% endif %}{% endfor %}">
+        {{ form.username }}
+    </div>
+
+    {% if form.email.errors %}<div class="field-error">{{ form.email.errors }}</div>{% endif %}
+    <div class="form-group {% if form.email.errors %}has-error{% endif %} {% for err in form.non_field_errors %}{% if err == 'This email is already registered'%}has-error{% endif %}{% endfor %}">
+        {{ form.email }}
+    </div>
+
+    {% if form.phone.errors %}<div class="field-error">{{ form.phone.errors }}</div>{% endif %}
+    <div class="form-group {% if form.phone.errors %}has-error{% endif %}">
+        {{ form.phone }}
+    </div>
+
+    {% if form.password.errors %}{{ form.password.errors }}{% endif %}
+    {% if form.password.errors %}{{ form.repeat_password.errors }}{% endif %}
+    <div id="passwords" class="form-group {% if form.password.errors %}has-error{% endif %} {% for err in form.non_field_errors %}{% if err == 'Passwords do not match'%}has-error{% endif %}{% endfor %}">
+        <div class="row">
+            <div class="half">
+                {{ form.password }}
+            </div>
+            <div class="half right">
+                {{ form.repeat_password }}
+            </div>
+        </div>
+    </div>
+
+    <div class="errors-list">
+        {% if form.non_field_errors %}
+        <ul class="errorlist">
+            {% for err in form.non_field_errors %}
+                <li class="form-error">{{ err }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <div class="center-block">
+            <input type="submit" id="submit-button" class="btn btn-default btn-lg center-block" disabled='disabled' value="Get Browser Extension"/>
+        </div>
+    </div>
+
+</form>
+
+<style>
+  #show-promo-field {
+    cursor: pointer;
+  }
+  #promo-code {
+    display: none;
+  }
+  .half {
+    width: 45%;
+    float: left;
+  }
+  .right {
+    margin-left: 10%;
+  }
+
+  .errors-list {
+    padding: 10px 0;
+    text-align: center;
+  }
+</style>
+
+<script>
+  window.onload = function watchRequiredFields() {
+
+    $( ".required" ).keyup(function( i ) {
+        var required_filled = true;
+        $( ".required" ).each(function( i ) {
+            if($(this).val() === "")
+                required_filled = false;
+        });
+
+        if (required_filled) {
+            $('#submit-button').removeAttr("disabled");
+            $('#submit-button').css({"color": "#fff", "background-color": "#5cb85c", "border-color": "#4cae4c"});
+        }
+        else {
+            $('#submit-button').attr('disabled', 'disabled');
+            $('#submit-button').css({"color": "#333", "background-color": "#fff", "border-color": "#ccc"});
+        }
+    });
+  }
+</script>

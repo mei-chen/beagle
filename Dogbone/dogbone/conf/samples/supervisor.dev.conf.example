@@ -1,0 +1,54 @@
+; supervisor config file
+
+[inet_http_server]         ; inet (TCP) server disabled by default
+port=127.0.0.1:9001        ; (ip_address:port specifier, *:port for all iface)
+
+[supervisord]
+logfile=/var/log/supervisor/supervisord.log ; (main log file;default $CWD/supervisord.log)
+pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+childlogdir=/var/log/supervisor            ; ('AUTO' child log dir, default $TEMP)
+
+; the below section must remain in the config file for RPC
+; (supervisorctl/web interface) to work, additional interfaces may be
+; added by defining them in separate rpcinterface: sections
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=http://127.0.0.1:9001 ;
+
+; The [include] section can just contain the "files" setting.  This
+; setting can list multiple files (separated by whitespace or
+; newlines).  It can also contain wildcards.  The filenames are
+; interpreted as relative to this file.  Included files *cannot*
+; include files themselves.
+
+[include]
+files = /etc/supervisor/conf.d/*.conf
+
+;;=======================================================
+;; PROGRAMS
+;;=======================================================
+
+[program:gunicorn]
+user=ubuntu ;
+environment=DJANGO_SETTINGS_MODULE="dogbone.dev_settings",NLTK_DATA="/home/ubuntu/nltk_data" ;
+command=/home/ubuntu/.virtualenvs/beagle_web/bin/gunicorn dogbone.wsgi:application --bind 127.0.0.1:8000 --pid /home/ubuntu/gunicorn.pid --access-logfile /home/ubuntu/gunicorn_access.log --error-logfile /home/ubuntu/gunicorn_error.log --log-level info --worker-class eventlet --timeout 60 --workers 2 ;
+directory=/home/ubuntu/dogbone ;
+
+[program:celery]
+user=ubuntu ;
+environment=DJANGO_SETTINGS_MODULE="dogbone.dev_settings",NLTK_DATA="/home/ubuntu/nltk_data" ;
+command=/home/ubuntu/.virtualenvs/beagle_web/bin/celery -A dogbone worker --loglevel=INFO --time-limit=7200 --logfile="/home/ubuntu/celery.log" ;
+directory=/home/ubuntu/dogbone ;
+
+[program:celery_beat]
+user=ubuntu ;
+environment=DJANGO_SETTINGS_MODULE="dogbone.dev_settings",NLTK_DATA="/home/ubuntu/nltk_data" ;
+command=/home/ubuntu/.virtualenvs/beagle_web/bin/celery -A dogbone beat --loglevel=INFO  --logfile="/home/ubuntu/celery_beat.log" ;
+directory=/home/ubuntu/dogbone ;
+
+[program:node_notifications]
+user=ubuntu ;
+command=node server.js --logfile=/home/ubuntu/node.log --environment=dev ;
+directory=/home/ubuntu/dogbone/node_server ;

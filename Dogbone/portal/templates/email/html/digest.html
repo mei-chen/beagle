@@ -1,0 +1,75 @@
+{% extends "email/html/_layout.html" %}
+
+{% block body %}
+
+<p style="color:#5d101a; font-size: 18px; line-height:16px;">Hi {{ first_name }},</p>
+<br/>
+<p style="font-size: 14px; line-height:16px">{% if is_owner %}Your{% else %}The{% endif %} document <b>{{ document_title }}</b> has just been {{ done_action }}!</p>
+<br/>
+<p style="font-size: 14px; line-height:16px">Check it out in the link below:
+    <br/>
+    <br/>
+    <a style="color: #5d101a; text-decoration: underline; font-size: 15px;" href="{{ follow_link }}">
+        <b>{{ follow_link }}</b>
+    </a>
+</p>
+<br/>
+<br/>
+<br/>
+<p style="color:#585858; font-size: 13px; line-height:20px;">
+    Here are a few quick insights:
+</p>
+<br/>
+
+{% if digest.parties.you and digest.parties.them %}
+<div>
+    <span style="font-size: 13px;">Between</span>
+    <div style="width: 80%; border: 1px solid #5d101a; text-align: center; display: inline-block; margin-left: 10px; margin-right: 20px; margin-bottom: 20px; border-radius: 4px; font-size: 13px;">
+        <div style="display:inline-block; width: 49%; border-right: 1px solid #5d101a">{{ digest.parties.you }}</div>
+        <div style="display:inline-block; width: 49%;">{{ digest.parties.them }}</div>
+    </div>
+</div>
+{% endif %}
+
+<br/>
+
+{% for clause_stats in digest.annotations %}
+    <div style="width: 150px; border: 1px solid #5d101a; text-align: center; display: inline-block; margin-left: 10px; margin-right: 20px; margin-bottom: 20px; border-radius: 4px;">
+        <div style="background-color: #5d101a; padding: 5px; border-radius: 4px 4px 0 0;">
+            <span style="color: white; font-size: 12px; font-weight: normal;">
+                {{ clause_stats.display_plural }}
+            </span>
+        </div>
+
+        <div style="padding: 10px;">
+            <p style="color:#5d101a; font-size: 12px; line-height: 18px;">
+                <b>{{ clause_stats.total }}</b> clauses
+            </p>
+        </div>
+    </div>
+{% endfor %}
+
+<br/>
+<br/>
+
+{% for kw_stats in digest.keywords %}
+    <p style="color:#585858; font-size: 14px; line-height:20px;">
+        Keyword <b>&quot;{{ kw_stats.label }}&quot;</b>:
+    </p>
+    <ul style="list-style: none;">
+        {% for kw_clause in kw_stats.clauses %}
+            <li style="margin-top: 20px; font-size: 13px;">
+                <span style="color:#585858; font-size: 34px;">&ldquo;</span>
+                {{ kw_clause | safe }}
+            </li>
+        {% endfor %}
+        {% if kw_stats.xmore > 0 %}
+            <li style="margin-top: 20px; font-size: 13px;">
+                <a style="color: #A4A4A4; text-decoration: underline;" href="{{ follow_link }}#/clause-table?{{ kw_stats.label }}=t">{{ kw_stats.xmore }} more clauses</a>
+            </li>
+        {% endif %}
+    </ul>
+    <br/>
+{% endfor %}
+
+{% endblock %}

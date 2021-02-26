@@ -1,0 +1,56 @@
+---
+
+
+- name: SyncDB
+  environment:
+    DATABASE_URL: "{{ app_env.DATABASE_URL }}"
+  django_manage:
+    app_path: "{{ app_location }}"
+    virtualenv: "{{ virtualenv_path }}"
+    command: syncdb --all --noinput
+  when:
+    - env != "vagrant"
+
+- name: Fake migrations
+  environment:
+    DATABASE_URL: "{{ app_env.DATABASE_URL }}"
+  django_manage:
+    app_path: "{{ app_location }}"
+    virtualenv: "{{ virtualenv_path }}"
+    command: migrate --fake --noinput
+  when:
+    - env != "vagrant"
+    - "{{ hostvars[groups['rds'][0]]['changed'] }}"
+
+
+- name: Collect Static
+  environment:
+    STATIC_ASSET_PATH: "{{ app_env.STATIC_ASSET_PATH }}"
+  django_manage:
+    app_path: "{{ app_location }}"
+    virtualenv: "{{ virtualenv_path }}"
+    command: collectstatic
+  when:
+    - env != "vagrant"
+
+
+- name: Init pretrained
+  environment:
+    DATABASE_URL: "{{ app_env.DATABASE_URL }}"
+  django_manage:
+    app_path: "{{ app_location }}"
+    virtualenv: "{{ virtualenv_path }}"
+    command: init_pretrained
+  when:
+    - env != "vagrant"
+
+
+- name: Install pretrained
+  environment:
+    DATABASE_URL: "{{ app_env.DATABASE_URL }}"
+  django_manage:
+    app_path: "{{ app_location }}"
+    virtualenv: "{{ virtualenv_path }}"
+    command: install_pretrained
+  when:
+    - env != "vagrant"

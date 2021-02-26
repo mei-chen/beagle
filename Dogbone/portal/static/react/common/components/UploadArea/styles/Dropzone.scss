@@ -1,0 +1,46 @@
+.drag-and-drop {
+    border-left: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+  .dropzone {
+    display: none;
+    &.active {
+      display: block;
+      position: absolute;
+      z-index: 999;
+      bottom:0;
+      top:0;
+      left:0;
+      right:0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(200,200,200,0.9);
+
+      .drop-area {
+        display: block;
+        margin: 3em;
+        position: absolute;
+        height:auto;
+        bottom:0;
+        top:0;
+        left:0;
+        right:0;
+        border: 6px dashed #fff;
+        border-radius: 1em;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .drop-area-text {
+          max-width: 50%;
+          font-size: 4em;
+          color: #fff;
+          text-align: center;
+        }
+
+
+      }
+
+    }
+  }
+}

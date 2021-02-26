@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Email title or subject</title>
+
+<style type="text/css">
+
+  /* reset */
+  #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+  .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+  .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Forces Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+  p {margin: 0; padding: 0; font-size: 0px; line-height: 0px;} /* squash Exact Target injected paragraphs */
+  table td {border-collapse: collapse;} /* Outlook 07, 10 padding issue fix */
+  table {border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; } /* remove spacing around Outlook 07, 10 tables */
+
+  /* bring inline */
+  img {display: block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;}
+  a img {border: none;}
+  a {text-decoration: none; color: #000001;} /* text link */
+  a.phone {text-decoration: none; color: #000001 !important; pointer-events: auto; cursor: default;} /* phone link, use as wrapper on phone numbers */
+  span {font-size: 13px; line-height: 17px; color: #000001;}
+
+</style>
+<!--[if gte mso 9]>
+  <style>
+  /* Target Outlook 2007 and 2010 */
+  </style>
+<![endif]-->
+</head>
+<body style="width:100%; margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+
+<!-- body wrapper -->
+<table cellpadding="0" cellspacing="0" border="0" style="margin:10px 0 0 0; padding:0; width:100%; line-height: 100% !important;">
+  <tr>
+    <td valign="top">
+      <!-- content wrapper -->
+      <table cellpadding="0" cellspacing="0" border="0" align="center" style="background: #fff; max-width: 600px">
+        <tr>
+          <td valign="top" style="vertical-align: top;">
+<!-- ///////////////////////////////////////////////////// -->
+<table cellpadding="0" cellspacing="0" border="0" align="center" style="background: #5d101a; width: 100%;">
+  <tr>
+    <td valign="top" style="vertical-align: top;">
+      <img src="https://beta.beagle.ai/static/img/logo.png" alt="Beagle" title="Beagle" width="145" height="38" style="width: 145px; height: 38px; padding: 10px; margin-left: 30px;">
+    </td>
+  </tr>
+</table>
+<table cellpadding="15px" cellspacing="0" border="0" align="center">
+  <tr>
+    <td valign="top" style="vertical-align:top; font-family:Helvetica,Arial,sans-serif; font-size:14px;">
+      <span style="font-size:16px; margin:0; padding:30px 10px; font-family:Helvetica,Arial,sans-serif;">
+
+        {% block body %}
+        {% endblock %}
+
+        {% block signature %}
+        <br/>
+        <br/>
+        <p style="color:#5d101a; font-size: 14px; line-height:8px"><b>Thank you,</b></p>
+        <p style="color:#5d101a; font-size: 14px; line-height:24px">The Dog Pack</p>
+        {% endblock %}
+
+      </span>
+    </td>
+  </tr>
+</table>
+<div style="background:#5d101a; width:100%; padding: 5px 0; text-align: center; color:white; font-size: 12px; font-family:Helvetica,Arial,sans-serif;">
+    Support:
+        <a style="color: #A4A4A4; text-decoration: underline;" href="mailto:support@beagle.ai">support@beagle.ai</a>
+</div>
+
+<!-- //////////// -->
+          </td>
+        </tr>
+      </table>
+      <!-- / content wrapper -->
+    </td>
+  </tr>
+</table>
+<!-- / page wrapper -->
+</body>
+</html>

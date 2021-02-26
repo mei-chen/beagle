@@ -1,0 +1,24 @@
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 10px auto;
+
+  .explanation {
+    font-size: 1.2em;
+    font-weight: normal;
+    padding: 5px 0;
+    text-shadow: none;
+    color: #4a4a4a;
+  }
+
+  .row {
+    display: flex;
+    flex: 1;
+    .option {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+}

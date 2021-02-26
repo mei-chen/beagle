@@ -1,0 +1,25 @@
+@import 'variables';
+
+html,
+body,
+#react-app,
+.app,
+.app main {
+  height: 100%;
+  width: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+
+  main {
+    flex: 1;
+
+    .content-wrap {
+      height: calc(100% - #{$header-height} - #{$footer-height});
+      padding: $header-height 0 $footer-height 0;
+      overflow-y: scroll;
+    }
+  }
+}

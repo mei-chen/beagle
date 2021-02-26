@@ -1,0 +1,16 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Hi {{ first_name }},
+
+We received "{{ document_title }}" and are processing it.
+
+
+Sometimes it could take up to 5 minutes. We will send you an email once we're done.
+
+
+Thank you,
+The Dog Pack
+
+support@beagle.ai
+{% endblock %}

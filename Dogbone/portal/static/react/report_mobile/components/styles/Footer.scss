@@ -1,0 +1,30 @@
+@import 'variables';
+
+.beagle-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  z-index: 10;
+
+  nav {
+    display: flex;
+    text-align: center;
+    margin: $mid-spacing;
+
+    .nav-button {
+      flex: 1 50%;
+      line-height: $icon-size;
+      background: $beagle-red;
+
+      &:not(:first-child) {
+        margin-left: $mid-spacing;
+      }
+
+      a {
+        font-weight: bold;
+        color: #FFFFFF;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.local {
+    background-color: #fff;
+    border-bottom: 1px solid #eaeaea;
+  &:hover {
+    color: #5D101A;
+    background: rgb(249, 249, 249);
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,150 @@
+.annotation-editor-popup {
+
+  .annotation-popup {
+    position: absolute;
+    float: left;
+    padding: 15px;
+    //
+    z-index: 1000;
+    transition: all 0.2s ease;
+    background: white;
+    box-shadow: 0px 2px 15px -2px rgba(0, 0, 0, 0.35);
+    border: 1px solid #ccc;
+
+    textarea {
+      resize: vertical;
+    }
+
+    div.title {
+      font-weight: bold;
+      padding: 6px 0 6px 0;
+    }
+
+    span.close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      color: #aaa;
+      padding: 1px 5px;
+      &:hover {
+        color: #333;
+      }
+    }
+
+    span.delete-btn {
+      left: 98%;
+      cursor: pointer;
+      color: #aaa;
+      float: right;
+      &:hover {
+        color: red;
+      }
+    }
+
+    div.clausetext {
+      textarea {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px;
+        color: #777;
+        border: 1px solid #ccc;
+        min-height: 80px;
+        font-size: 14px;
+      }
+    }
+
+    div.comment {
+      textarea {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px;
+        color: #777;
+        border: 1px solid #ccc;
+        min-height: 40px;
+        font-size: 14px;
+      }
+    }
+
+    div.annotations-list {
+      div.annotation {
+        font-size: small;
+        margin-top: 5px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+
+        span.annotation-label {
+          font-size: 16px;
+          display: block;
+          padding: 7px 0 5px 0;
+        }
+
+        select {
+          border: 1px solid #111;
+          background: transparent;
+          width: 100%;
+          padding: 5px 35px 5px 5px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          height: 34px;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          display: block;
+        }
+
+      }
+
+      div.add-annotation {
+        margin: 5px auto;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        text-align: center;
+        color: #ccc;
+        &:hover {
+          color: white;
+          background-color: #ccc;
+          cursor: pointer;
+        }
+      }
+    }
+
+    div.buttons {
+      padding-top: 30px;
+      button {
+        height:30px;
+        width:100px;
+        margin: -20px -50px;
+        position:relative;
+        top:50%;
+        left:50%;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .button-container {
+    text-align: center;
+    padding: 0;
+
+    // button {
+    //   margin: 10px;
+    // }
+
+    // button.delete {
+    //   background-image: linear-gradient(-179deg, #FA8576 0%, #F65C32 100%);
+    //   text-shadow: none;
+    // }
+  }
+}

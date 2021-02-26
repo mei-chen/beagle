@@ -1,0 +1,55 @@
+{% extends "_layout.html" %}
+
+{% block extra_css %}
+<link href="/static/css/landing.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+
+{% if messages %}
+<div class="login-crouton login-success">
+  <div class="login-crouton-contents">
+    <strong>{% for message in messages %}{{ message }}{% endfor %}</strong>
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <form class="form-login" method="post">
+        {% csrf_token %}
+
+        <h1 class="form-login-heading">Log In</h1>
+
+        <!-- email -->
+        {% if form.email.errors %}<div class="field-error">{{ form.email.errors }}</div>{% endif %}
+        {{ form.email }}
+        <!-- /email -->
+
+        <!-- password -->
+        {% if form.password.errors %}<div class="field-error">{{ form.password.errors }}</div>{% endif %}
+        {{ form.password }}
+        <!-- /password -->
+
+        {% if form.non_field_errors %}<div class="nonfield-error">{{ form.non_field_errors }}</div>{% endif %}
+
+        <button id="submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Get Inside</button>
+    </form>
+    <div class="form-bottom-note">
+        <a  href="{% url 'reset_password' %}"><i class="fa fa-unlock"></i> Forgot your password?</a>
+        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+        <a  href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Don't have an account?</a>
+    </div>
+
+</div> <!-- /container -->
+
+{% endblock %}
+
+
+{% block extra_js %}
+  {% if HOT_LOAD %}
+    <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js??"></script>
+  {% else %}
+    <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+  {% endif %}
+{% endblock %}

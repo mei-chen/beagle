@@ -1,0 +1,85 @@
+.ch-onwer-class {
+  color:green;
+}
+.my-modal-body {
+  &.modal-body {
+    padding: 0px;
+  }
+}
+
+.my-modal-header {
+
+  .modal-doc-title {
+    display: inline-block;
+    float: right;
+    margin-top: -20px;
+    margin-right: 10px;
+    max-width: 247px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: #f1f1f1;
+    color: #949494;
+    border-radius: 5px;
+    padding: 0px 7px;
+  }
+}
+.modal-user {
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #b3b3b3;
+
+  &.owner {
+    background-color: #fff1de;
+  }
+
+  .modal-avatar-wraper {
+    display: inline-block;
+    margin-right: 3px;
+
+    img.modal-avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 4px;
+    }
+  }
+  .info-wraper {
+    display: inline-block;
+    vertical-align: middle;
+
+    .name {
+      color: #5D101A;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      max-width: 270px;
+
+      &.smaller {
+        color:black;
+        font-size: 14px;
+      }
+    }
+    .login {
+      font-size: 10px;
+      color: grey;
+    }
+  }
+  .action {
+    display: inline-block;
+    float: right;
+    position: relative;
+    padding: 10px;
+    color: #d84545;
+    cursor: pointer;
+    min-width: 85px;
+
+    &.owner {
+      color:#4b904b;
+    }
+  }
+}
+
+.modal-collaborators-list {
+  height: 400px;
+  overflow: auto;
+}

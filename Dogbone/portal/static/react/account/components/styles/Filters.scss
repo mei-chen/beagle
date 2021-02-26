@@ -1,0 +1,66 @@
+.filters {
+  position: relative;
+  font-size: 14px;
+  background-color: #F5F5F5;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 25px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .18);
+
+  &--disabled {
+    pointer-events: none;
+    opacity: 0.7;
+    position: relative;
+    z-index: 10;
+  }
+}
+
+.filters-categories {
+  display: flex;
+  align-items: center;
+}
+
+.filters-category {
+  margin-left: 25px;
+}
+
+.filters-reset {
+  font-size: 12px;
+  color: #999;
+  position: absolute;
+  right: 10px;
+  bottom: -20px;
+  cursor: pointer;
+
+  &:hover {
+    color: darken(#999, 15%)
+  }
+}
+
+.checkbox-blue {
+  display: none; // hide default checkbox
+
+  & + label {
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 0;
+    cursor: pointer;
+
+    &:before {
+      font-family: 'Font Awesome 5 Pro';
+      content: '\f0c8';
+      font-size: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      width: 16px;
+      margin-right: 6px;
+    }
+  }
+
+  &:checked + label {
+    &:before {
+      content: '\f14a';
+      color: #3A99FC;
+    }
+  }
+}

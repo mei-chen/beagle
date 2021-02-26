@@ -1,0 +1,160 @@
+@import 'variables';
+
+$box-shadow-arguments: 0px 0px 0px 4px;
+@mixin background($colour) {
+  box-shadow:2px 0px 0px 1px #fff;
+  background-color: $colour;
+  //box-shadow: $colour $box-shadow-arguments;
+}
+
+$fade-time: 100ms;
+$transition: background-color $fade-time linear, box-shadow $fade-time linear;
+
+$lock-border: #969494;
+
+:local(.sentence) {
+  color: #333;
+
+  transition: $transition;
+
+  // Make it relative for the lock icon
+  &.locked {
+
+    position: relative;
+    display: inline-block;
+    background-color: $lock-border;
+    padding:3px;
+    padding-bottom:5px;
+    border-radius:3px;
+    margin-top:5px;
+    margin-bottom:3px;
+    box-shadow:0px 0px 3px 1.5px #555555;
+    width:100%;
+    word-break: break-all;
+
+    .sentence-text {
+      margin-right:3px;
+      //background-color: $lock-border !important;
+      box-shadow: 0 0 0 0 transparent !important;
+    }
+  }
+
+  // Hover for highlighting sentences
+  &:hover {
+    // Override any highlighting that exists on child annotations
+    .sentence-text {
+      background-color: $hover-colour !important;
+      box-shadow:2px 0px 0px 1px #fff;
+      //box-shadow: $hover-colour $box-shadow-arguments !important;
+    }
+  }
+
+  &.focused {
+    font-weight: bold;
+  }
+
+  .sentence-text {
+    font-size: 11pt;
+    padding-left:3px;
+    margin-right:5px;
+    padding-bottom:6px;
+    padding-top:4px;
+    transition: $transition;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    &.annotation.active {
+      &.liab { @include background($liab); }
+      &.resp { @include background($resp); }
+      &.term { @include background($term); }
+      &.refs { @include background($refs); }
+    }
+
+    &.style-bold {
+      font-weight: bold;
+    }
+
+    &.style-underline {
+      text-decoration: underline;
+    }
+
+    &.tagged { @include background($tagged); }
+    &.auto-tagged { @include background($auto-tagged); }
+  }
+
+  .icon-right {
+    position: absolute;
+    right: -45px;
+    width: 30px;
+    height: 30px;
+    bottom: 50%;
+
+    &:before {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      display: block;
+      width: 0;
+      z-index: 0;
+      top: 13px;
+      left: -13px;
+      border-width: 10px 12px 10px 0;
+      border-color: transparent $lock-border;
+    }
+
+
+    .lock-media {
+      max-width: 50%;
+      position: relative;
+      .lock-avatar {
+        padding: 5px;
+        height: 100%;
+        width: 100%;
+        background-size: cover;
+        display: inline-block;
+        border: 2px solid $lock-border;
+        border-radius: 4px 4px 4px 4px;
+        box-shadow:0px 0px 1.2px 1.2px #555555;
+      }
+      .lock-icon {
+        position: absolute;
+        height: 18px;
+        width: 18px;
+        bottom: -3px;
+        left: 28px;
+        display: block;
+        border-radius: 50%;
+        background-color: #26a028;
+        border: 2px solid #fff;
+        text-align: center;
+        line-height: 16px;
+        i {
+          display: inline-block;
+          color: #fff;
+          font-size: 12px;
+          opacity: 1;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  i {
+    margin: 0 2px;
+    opacity: 0.5;
+    padding: 0 5px 5px 5px;
+    color: #000;
+
+    &:hover {
+      opacity: 1;
+      color: #5d101a;
+    }
+  }
+
+}
+
+.tooltip-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

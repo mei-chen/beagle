@@ -1,0 +1,39 @@
+.shopping-cart table {
+  width: 440px;
+  margin: 10px auto; }
+  .shopping-cart table td, .shopping-cart table th {
+    padding: 10px; }
+  .shopping-cart table thead {
+    border-bottom: 1px solid #bbb;
+    font-weight: bold; }
+    .shopping-cart table thead th {
+      color: #555; }
+  .shopping-cart table tbody tr td.qty {
+    text-align: center; }
+  .shopping-cart table tbody tr.total {
+    font-weight: bold;
+    border-top: 1px solid #bbb; }
+
+.payment {
+  max-width: 440px;
+  margin: 20px auto;
+  text-align: center; }
+  .payment #braintree-container {
+    min-height: 70px;
+    margin: 10px 0;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 8px; }
+  .payment button.checkout {
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    background-color: #b3ffb3; }
+
+/*# sourceMappingURL=_checkout.css.map */

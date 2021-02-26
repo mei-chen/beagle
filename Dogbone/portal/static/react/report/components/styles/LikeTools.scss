@@ -1,0 +1,42 @@
+.like-tools {
+  font-size: 16px;
+  flex: 1;
+
+  i {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .like {
+    opacity: 0.4;
+    color: #000;
+    &.liked {
+      opacity : 1.0;
+      color: green;
+    }
+    &.other-likes {
+      opacity : 0.4;
+      color: green;
+    }
+    &:hover {
+      color: green;
+      opacity: 1.0;
+    }
+  }
+  .dislike {
+    opacity: 0.4;
+    color: #000;
+    &.disliked {
+      opacity : 1.0;
+      color: red;
+    }
+    &.other-dislikes {
+      opacity : 0.4;
+      color: red;
+    }
+    &:hover {
+      color: red;
+      opacity: 1.0;
+    }
+  }
+}

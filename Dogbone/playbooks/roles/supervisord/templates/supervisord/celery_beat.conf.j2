@@ -1,0 +1,9 @@
+[program:celery_beat]
+user={{ run_user }} ;
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+command={{ virtualenv_path }}/bin/celery -A dogbone beat --loglevel=INFO
+directory={{ app_location }} ;
+stdout_logfile={{ base_location }}logs/celery_beat_stdout.log ;
+stderr_logfile={{ base_location }}logs/celery_beat_stderr.log ;
+stdout_logfile_maxbytes={{ logfile_maxbytes }} ;
+stderr_logfile_maxbytes={{ logfile_maxbytes }} ;

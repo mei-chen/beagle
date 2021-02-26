@@ -1,0 +1,40 @@
+---
+
+- name: Install Required Packages
+  apt: name={{ item }} state=latest update_cache=true cache_valid_time=86400
+  with_items:
+  - python-virtualenv
+  - build-essential
+  - python
+  - python-dev
+  - python-pip
+  - libpq-dev
+  - git-core
+  - libffi-dev
+  - python-setuptools
+  - libevent-dev
+  - libssl-dev
+
+  # libxml for lxml package (python requirement)
+  - libxml2-dev
+  - libxslt1-dev
+
+  # for server-side React. NPM installs nodejs as a dependency
+  - npm
+  - nodejs-legacy
+
+  # for scipy
+  - gfortran
+  - libopenblas-dev
+  - liblapack-dev
+  become: true
+  become_user: root
+
+- name: Upgrade setuptools
+  pip: name=setuptools state=latest
+  tags: packages
+
+
+- name: Upgrade pip
+  pip: name=pip state=latest
+  tags: packages

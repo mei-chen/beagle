@@ -1,0 +1,10 @@
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+}
+
+.errorlist {
+    padding-left: 0;
+    list-style: none;
+    color: #a94442;
+}

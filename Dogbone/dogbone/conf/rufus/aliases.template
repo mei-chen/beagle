@@ -1,0 +1,4 @@
+# See man 5 aliases for format
+postmaster:    root
+{{ RUFUS_USER }}: |"/home/ubuntu/{{ RUFUS_FOLDER }}/process_mail.py {{ ENVIRONMENT }}"
+

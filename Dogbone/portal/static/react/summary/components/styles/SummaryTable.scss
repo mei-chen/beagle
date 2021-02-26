@@ -1,0 +1,90 @@
+.table-container {
+  margin: 13px 0px;
+  max-height: 55vh;
+  overflow-y: auto;
+
+  &.top{
+    margin: 0px 0px;
+    margin-bottom: -7px;
+  }
+
+  .top-row{
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+    &.document-row{
+      &:hover{
+        background-color: #5d101a;
+        color: white;
+        .row-cell{
+          &.doc-title{
+            a{
+              color: white;
+            }
+          }
+        }
+      }
+    }
+
+    &.top {
+     padding-bottom: 0px;
+    }
+
+    .row-cell{
+      padding-left: 5px;
+      padding-right: 5px;
+      display: inline-block;
+      text-align: center;
+      font-size: 12pt;
+      width: 147px;
+
+      &.doc-title{
+        width: 230px;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        white-space: nowrap;
+        a{
+          color: #5d101a;
+        }
+      }
+      &.error{
+        width: 30px;
+      }
+    }
+    .separator{
+      display: inline-block;
+      height: 16px;
+      border-left:1px solid #adadad;
+    }
+    .handshake{
+      display: inline-block;
+      width: 21px;
+    }
+  }
+}
+.top-row-separator {
+  border-top: 1px solid #adadad;
+  display: inline-block;
+
+  &.name{
+    width: 22%;
+    margin-left: 3%;
+  }
+  &.type{
+    width: 15.3%;
+    margin-left: 1.4%;
+  }
+  &.time{
+    width: 15.5%;
+    margin-left: 1.4%;
+  }
+  &.partys{
+    width: 33%;
+    margin-left: 1.4%;
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+}

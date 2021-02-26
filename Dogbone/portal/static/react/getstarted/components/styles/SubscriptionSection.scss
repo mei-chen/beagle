@@ -1,0 +1,25 @@
+.subscription-section {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+  
+  .explanation {
+    font-size: 1.2em;
+    font-weight: normal;
+    padding: 5px 0;
+    text-align: center;
+    text-shadow: none;
+    color: #4a4a4a;
+  }
+
+  .call-to-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    .button-panel {
+      button {
+        margin: 0 10px;
+        font-size: 1.2em;
+      }
+    }
+  }
+}

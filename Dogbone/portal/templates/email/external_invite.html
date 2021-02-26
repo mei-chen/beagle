@@ -1,0 +1,14 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Dear Sir/Madam,
+
+You have been invited by {{ firstname }} to join Beagle.ai and collaborate on {{ document_title }}!
+
+You are invited to share your opinion on this: {{ sentence_text }}
+
+Follow this link to get started: {{ follow_url }}
+
+
+Beagle.ai Team
+{% endblock %}

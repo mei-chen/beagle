@@ -1,0 +1,77 @@
+.multiselect {
+  position: relative;
+  font-size: 13px;
+  color: #676767;
+
+  &--open {
+
+    .multiselect-btn {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+      border-bottom-color: #0055A6;
+      background-color: #fff;
+    }
+
+    .multiselect-options {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    }
+  }
+}
+
+.multiselect-btn {
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  padding: 4px 20px 4px 10px;
+  border-bottom: 1px solid #C4C4C4;
+  position: relative;
+
+  &:after {
+    font-family: 'Font Awesome 5 Pro';
+    content: '\f078';
+    font-size: 14px;
+    color: #939393;
+    position: absolute;
+    top: 4px;
+    right: 8px;
+  }
+}
+
+.multiselect-options {
+  list-style: none;
+  padding: 5px 10px;
+  margin: 0;
+  position: absolute;
+  min-width: 100%;
+  background-color: #fff;
+  z-index: 10;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.multiselect-option {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  padding: 3px 0;
+  border-bottom: 1px solid #CCCCCC;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &--checked {
+    .multiselect-icon {
+      color: #3A99FC;
+    }
+  }
+}
+
+.multiselect-icon {
+  font-size: 16px;
+  display: inline-block;
+  min-width: 23px;
+  text-align: center;
+  padding: 0 2px;
+  margin-right: 5px;
+  color: #464646;
+}

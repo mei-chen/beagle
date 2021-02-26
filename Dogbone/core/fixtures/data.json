@@ -1,0 +1,56 @@
+[
+{
+  "pk": 1, 
+  "model": "core.documenttype", 
+  "fields": {
+    "name": "End User License Agreement", 
+    "samples_folder": "eula", 
+    "label": "EULA"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.documenttype", 
+  "fields": {
+    "name": "Master Services", 
+    "samples_folder": "master-services", 
+    "label": "MASTER_SERVICES"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.documenttype", 
+  "fields": {
+    "name": "Services Agreement", 
+    "samples_folder": "services-agreement", 
+    "label": "SERVICES_AGREEMENT"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.documenttype", 
+  "fields": {
+    "name": "Terms and Conditions", 
+    "samples_folder": "terms-and-conditions", 
+    "label": "TERMS_AND_CONDITIONS"
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.documenttype", 
+  "fields": {
+    "name": "Terms of Service", 
+    "samples_folder": "terms-of-service", 
+    "label": "TERMS_OF_SERVICE"
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.documenttype", 
+  "fields": {
+    "name": "User Agreement", 
+    "samples_folder": "user-agreement", 
+    "label": "USER_AGREEMENT"
+  }
+}
+]

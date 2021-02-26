@@ -1,0 +1,51 @@
+@import '../../styles/variables';
+
+.pagination {
+  display: flex;
+
+  $border-size: 2px;
+
+  .pagination-pages {
+    display: flex;
+    height: $icon-size;
+    flex: 1 auto;
+    justify-content: flex-end;
+    margin-right: $mid-spacing;
+
+    p {
+      margin: 0;
+      padding: 0 $mid-spacing;
+      line-height: $icon-size - $border-size / 2;
+      font-weight: bold;
+      border: $border-size solid;
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: $small-spacing;
+      border-bottom-right-radius: $small-spacing;
+    }
+  }
+
+  .pagination-buttons {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - #{2 * $mid-spacing});
+    margin: 0 $mid-spacing;
+
+    .pagination-option {
+      flex: 1 50%;
+      padding: 0;
+      height: $icon-size - 2 * $border-size;
+      line-height: $icon-size - 2 * $border-size;
+      border: $border-size solid;
+      border-radius: $small-spacing;
+
+      &:not(:first-child) {
+        margin-left: $mid-spacing;
+      }
+    }
+
+  }
+}

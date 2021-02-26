@@ -1,0 +1,55 @@
+.sample-document-section {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+  padding: 10px 0;
+
+  .explanation {
+    font-size: 1.2em;
+    font-weight: normal;
+    padding: 5px 0;
+    text-align: center;
+    text-shadow: none;
+    color: #4a4a4a;
+  }
+  
+  .documents {
+    display: flex;
+    padding: 20px 0;
+    margin: 10px 70px;
+
+    .loading {
+      margin: 0 auto;
+      text-align: center;
+
+      .loading-text {
+        padding-top: 5px;
+        color: #4a4a4a;
+      }
+    }
+
+    .sample-document {
+      font-size: 1em;
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 10px;
+
+      &:hover {
+        color: #5D101A;
+        background: rgb(249, 249, 249);
+
+        .icon {
+          color: #5D101A;
+        }
+      }
+
+      .icon {
+        padding-top: 10px;
+        color: #000;
+      }
+
+      .subtitle {
+        margin: 10px 0 20px 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@import 'variables';
+
+.spinner-container {
+  background-color: white;
+  padding-bottom: 20px;
+}
+
+.beagle-spinner {
+  background-color: white;
+  &.inline {
+    display: inline-block;
+    margin: 20px;
+    vertical-align: middle;
+  }
+  &.widget-size {
+    margin: 14% 46%;
+  }
+  &.center {
+    .spinner {
+      display: flex;
+      .rotating-plane {
+        margin: 20px auto;
+      }
+    }
+  }
+  .rotating-plane {
+    background-color: $beagle-red;
+  }
+}
+

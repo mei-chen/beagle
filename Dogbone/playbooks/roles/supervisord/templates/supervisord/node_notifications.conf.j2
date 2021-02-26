@@ -1,0 +1,9 @@
+[program:node_notifications]
+user={{ run_user }} ;
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+command=node server.js --syslog
+directory={{ app_location }}/node_server ;
+stdout_logfile={{ base_location }}logs/node_stdout.log ;
+stderr_logfile={{ base_location }}logs/node_stderr.log ;
+stdout_logfile_maxbytes={{ logfile_maxbytes }} ;
+stderr_logfile_maxbytes={{ logfile_maxbytes }} ;

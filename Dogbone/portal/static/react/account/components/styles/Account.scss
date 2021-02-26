@@ -1,0 +1,24 @@
+/* This is the stylesheet for /account */
+
+* {
+  box-sizing: border-box; /* forces the browser to render the box with the specified width and height, and place the border and padding inside the box. */
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.summary-wrap {
+  width: 980px;
+  margin: 0 auto;
+  flex: 1;
+  max-width: 980px;
+  padding: 20px 20px 0 20px;
+  min-height: calc(100vh - 88px);
+}
+
+.columns {
+  display: flex;
+}

@@ -1,0 +1,94 @@
+div.projects-column {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-left: 15px;
+
+  .projects-section {
+  }
+
+  div.projects-project-header {
+    width: 100%;
+    margin-bottom: 25px;
+
+    .fa-search {
+      color: #c0c0c0;
+    }
+
+    .projects-filter {
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .projects-filter-icon {
+      &--active {
+        color: #3A99FC;
+      }
+    }
+
+    .projects-header-title {
+      font-size: 25px;
+    }
+
+    .projects-searchbar {
+      line-height: 50px;
+      font-size: 25px;
+      margin-top: 4px;
+      width: 100%;
+      position: relative;
+
+      .projects-searchbox {
+        background: white;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .18);
+        padding: 0 10px;
+        font-size: 20px;
+        line-height: 1.8;
+        margin-top: 8px;
+        position: relative;
+        z-index: 1;
+
+        .projects-search {
+          width: 10%;
+          padding: 0 15px;
+        }
+
+        input {
+          appearance: none;
+          box-shadow: none;
+          width: 89%;
+          border: 0px;
+          padding-left: 10px;
+          line-height: 1.8;
+
+          &:focus{
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+
+  .projects-listing-no-data {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    top: 40%;
+    margin-top:10px;
+    color: #939393;
+    i {
+      font-size: 35px;
+    }
+    .projects-message {
+      font-size: 20px;
+    }
+  }
+
+  .project-listing-no-data {
+    line-height: 25px;
+    text-align: center;
+    padding: 15px;
+  }
+
+}

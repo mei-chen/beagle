@@ -1,0 +1,9 @@
+<script>
+  window.BEAGLE = window.BEAGLE || {};
+  {% if user_json_dict %}
+  window.BEAGLE.userData = JSON.parse('{{ user_json_dict|escapejs }}');
+  {% endif %}
+  {% if subscription_json_dict %}
+  window.BEAGLE.subscriptionData = JSON.parse('{{ subscription_json_dict|escapejs }}');
+  {% endif  %}
+</script>

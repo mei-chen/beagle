@@ -1,0 +1,61 @@
+## Specify python version
+machine:
+  post:
+    - pyenv global 2.7.10
+
+## Customize dependencies
+dependencies:
+  pre:
+    - pip install -U pip setuptools virtualenv
+
+  post:
+    - python -m nltk.downloader book
+
+test:
+  override:
+    - coverage run manage.py test
+  post:
+    - coverage html -d $CIRCLE_ARTIFACTS
+
+deployment:
+  dev:
+    branch: dev
+    commands:
+      - fab remote:dev deploy:
+          timeout: 1800
+      - fab remote:dev post_deploy_test
+
+  staging:
+    branch: staging
+    commands:
+      - fab remote:staging deploy:
+          timeout: 1800
+      - fab remote:staging post_deploy_test
+
+  master:
+    branch: master
+    commands:
+      - fab remote:master deploy:
+          timeout: 1800
+      - fab remote:master post_deploy_test
+
+  tr_dev:
+    branch: tr-dev
+    commands:
+      - fab remote:tr-dev deploy:
+          timeout: 1800
+      - fab remote:tr-dev post_deploy_test
+
+  tr_staging:
+    branch: tr-staging
+    commands:
+      - fab remote:tr-staging deploy:
+          timeout: 1800
+      - fab remote:tr-staging post_deploy_test
+
+  tr_prod:
+    branch: tr-prod
+    commands:
+      - fab remote:tr-prod deploy:
+          timeout: 1800
+      - fab remote:tr-prod post_deploy_test

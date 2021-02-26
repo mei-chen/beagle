@@ -1,0 +1,15 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Hi {{ first_name }},
+
+Uh oh! We're having trouble processing your email.
+
+Often it's because we don't support the file types you attached or maybe you forgot to attach something.
+Today we are looking at .docx, .doc, .pdf and .txt. Rest assured, we've got someone looking into it and will get back to you as soon as we can.
+
+If you'd like an update, just hit "reply" to this email. Thanks for your patience.
+
+Thank you,
+The Dog Pack
+{% endblock %}

@@ -1,0 +1,3 @@
+requests==2.7.0
+decorator==4.0.9
+validators==0.10.1

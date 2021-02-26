@@ -1,0 +1,139 @@
+/* edit profile column stylings */
+div.edit-profile-avatar-column {
+  .edit-profile-section {
+    .edit-profile-avatar-container {
+
+      .edit-profile-avatar {
+        display: inline-block;
+        overflow: hidden;
+        line-height: 1;
+        vertical-align: middle;
+        height: 200px;
+        width: 200px;
+      }
+    }
+    form {
+      width: 90%;
+      padding-top: 10px;
+      font-size: 12px;
+      overflow: hidden;
+      input {
+        margin: 3px 0px;
+      }
+    }
+  }
+
+  .edit-profile-update-buttons {
+    padding: 10px;
+  }
+}
+
+.edit-profile-update-buttons {
+  .edit-profile-cancel-button {
+    background-color: transparent;
+    border: 0;
+    color: #0275d8;
+    margin-left: 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+div.edit-profile-column {
+  flex: 1;
+
+  .edit-profile-header {
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid #d7d7d7;   /* sexy divider */
+
+    span i {
+      color: #c0c0c0;
+    }
+
+    .edit-profile-title-container {
+      line-height: 60px;
+      padding-left: 10px;
+      width: 100%;
+      float: left;
+
+      .edit-profile-chevron {
+        font-size: 23px;
+        margin-right: 10px;
+      }
+    }
+
+    .edit-profile-title {
+      font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+      font-size: 25px;
+    }
+  }
+
+  div.edit-profile-body {
+    padding-top: 10px;
+    div.edit-profile-section {
+      width: 100%;
+      display: inline-block;
+      font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+      padding: 10px 20px;
+
+      .edit-profile-update-buttons {
+        margin-top: 20px;
+        text-align: right;
+      }
+
+      .field-error {
+        color: red;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+        label {
+          font-size: 14px;
+        }
+
+        input {
+          box-sizing: border-box;
+          height: 48px;
+          font-size: 18px;
+        }
+      }
+
+      .label-margin{
+        margin-top: 10px;
+      }
+      /* Half Inputs */
+      .adjacent {
+        display: flex;
+        align-items: flex-end;
+        margin: 0 -5px;
+      }
+
+      .adjacent-column {
+        width: 50%;
+        padding: 0 5px;
+
+        &--prep {
+          text-align: center;
+          height: 48px;
+          line-height: 48px;
+          width: 35px;
+        }
+
+        &--company {
+          flex: 0 0 auto;
+        }
+      }
+
+      span.edit-profile-section-title {
+        font-size: 20px;
+        display: inline-block;
+        width: 100%;
+        padding-bottom: 10px;
+      }
+
+    }
+  }
+}

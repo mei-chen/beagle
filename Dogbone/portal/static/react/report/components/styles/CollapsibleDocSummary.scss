@@ -1,0 +1,293 @@
+.collapsible-summary {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+  transition: all 0.3s ease;
+  top:45px;
+  z-index: 2;
+  margin:auto;
+  left: 50px;
+  right: 0;
+  width: calc(100% - 50px);
+  height: 40px;
+  padding: 0px 0px 10px 0px;
+
+  &.extended {
+    width: 980px;
+    height: 120px;
+    padding:0px 10px 10px 10px 10px;
+    transition: all 0.3s ease 0.2s;
+  }
+
+  &.hiden {
+    top: -210px;
+
+    // hide export dropdown for hidden summary
+    .document-export-popover {
+      display: none !important;
+    }
+  }
+
+  .summary-contetn-wraper{
+    position: absolute;
+    margin:auto;
+    display: block;
+    width: 961px;
+    left:0px;
+    right: 0px;
+    margin-top: 0px;
+
+    padding-top: 5px;
+    height: 45px;
+
+    &.extended{
+      padding-top: 0px;
+      height: 111px;
+    }
+
+    .avatar{
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      padding: 0px 10px;
+      border-radius: 50%;
+      background-size: cover;
+      vertical-align: super;
+
+      &.shrinked{
+        vertical-align: baseline;
+      }
+    }
+
+    .summary-title {
+      font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+      font-size: 20px;
+      font-weight: normal;
+      padding: 0;
+      margin: 5px 0px -5px 0px;
+      text-align: left;
+      text-shadow: none;
+      color: #4a4a4a;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 630px;
+    }
+    .shrinked-summary-title{
+      font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      font-weight: normal;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      text-shadow: none;
+      color: #5d101a;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 215px;
+    }
+    #doctype {
+      font-weight: bold;
+      border-bottom: 1px dashed #bbb;
+      margin-left: 5px;
+    }
+    #doctype-shrinked {
+      font-size: 12px;
+    }
+
+    .small-button {
+      font-size: 11pt;
+      padding: 2px 10px;
+      margin-right: 4px;
+    }
+
+    .subtle-button {
+      font-size: 10pt;
+      padding: 0 4px;
+      border: 1px solid transparent;
+      color: #aaa;
+      background: transparent;
+
+      &:hover {
+        color: #555;
+        border: 1px dashed #555;
+        background: transparent;
+      }
+    }
+
+    .export-button-extended {
+      position: absolute;
+      top: 79px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      display: block;
+
+      .export-button-text {
+        font-size: 14px;
+        margin: -4px 0px 0px 4px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    .calendar-icon {
+    position: absolute;
+    color: #b3b3b3;
+    top: 15px;
+    right: 12px;
+    font-size: 17px;
+    }
+
+    .stats{
+      display: inline-block;
+
+      &.shrinked-party-wrapper {
+        padding: 0px 0px 0px 10px;
+        margin-bottom: 30px;
+        vertical-align: middle;
+	font-size: 12px;
+      }
+
+      &.shrinked-export-wrapper {
+        padding: 0px 10px;
+        margin-top: 9px;
+        vertical-align: middle;
+        float: right;
+      }
+      &.separator {
+        margin: 3px 0px 0px 0px;
+        vertical-align: middle;
+        height: 37px;
+        border-left: 1px solid #b3b3b3;
+        float: right;
+      }
+      &.top-button-wrapper {
+        margin: 7px 10px 0px 10px;
+        vertical-align: text-bottom;
+        cursor: pointer;
+        float: right;
+      }
+      &.shrinked-shared-users-wrapper {
+        float: right;
+        padding: 5px;
+      }
+      .to-top-arrow {
+        padding: 0px 12px;
+        margin-bottom: -5px;
+        font-size: 12px;
+      }
+      .to-top-text {
+        font-size: 12px;
+      }
+
+      .export-button {
+        cursor: pointer;
+        font-size: 20px;
+        display: block;
+
+        .export-button-text {
+          font-size: 14px;
+          margin: -4px 0px 0px 4px;
+          display: inline-block;
+          vertical-align: middle;
+
+        }
+      }
+
+      .parties {
+        font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 35px;
+        max-width: 980px;
+        text-align: left;
+        margin: 5px 0;
+
+        &.party-editor {
+          margin-left: 5px;
+        }
+
+        .inplace-edit-parties-button {
+          position: relative;
+
+          .close-weak-analysis-popover {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+
+            &:hover {
+              color: #000;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .wrap-party {
+          display: inline-block;
+          vertical-align: middle;
+          max-width: 300px;
+        }
+
+        .header-party {
+          display: block;
+          line-height: 0px;
+          margin: 0 5px 0 5px;
+          line-height: 28px;
+
+          .overflow-party {
+            display: block;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            &.shrinked-summary{
+              max-width: 95px;
+            }
+          }
+
+          .party_name {
+            box-sizing: border-box;
+            padding: 5px 10px 3px 10px;
+            outline: 0px solid transparent;
+            margin: 0 0px -11px 0px;
+            line-height: 16px;
+
+            &.party_edit {
+              box-shadow: 0px -2px 6px #eee;
+              border-radius: 6px 6px 0 0;
+              border: 1px dashed #bababa;
+            }
+            &.party_nonedit {
+              border-left: 1px solid transparent;
+              border-right: 1px solid transparent;
+              border-bottom: 0px;
+              box-shadow: none;
+            }
+          }
+
+          .confid-bg, .confid-line {
+            display: inline-block;
+            height: 1px;
+            width: 100%;
+          }
+          .confid-bg {
+            display: block;
+            position: relative;
+            margin: 0;
+            top: 0;
+            background-color: #E8BDA0;
+          }
+          .confid-line {
+            position: absolute;
+            width: 0%; /* default width. it is dynamically adjusted */
+            background-color: #A0DBE8;
+          }
+        }
+      }
+    }
+  }
+}

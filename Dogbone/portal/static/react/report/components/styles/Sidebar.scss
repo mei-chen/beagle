@@ -1,0 +1,42 @@
+@import 'variables';
+
+body.crouton-shown .beagle-sidebar {
+  padding-top: 135px;
+}
+
+// nav icon dimensions
+$width: 50px;
+// height = width (square)
+
+.beagle-sidebar {
+  display: flex;
+  width: $width;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 60px;
+  background-color: $beagle-red;
+  $transition: 0.2s ease-in-out;
+
+  nav {
+    position: fixed;
+    a {
+      width: $width;
+      height: $width;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: white;
+      transition: all $transition;
+
+      &:hover {
+        background-color: rgba(white, 0.1);
+      }
+
+      &.active {
+        background-color: rgba(white, 0.2);
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+0.25.7
+
+
+# Versioning guidelines:
+#  - the major should stay at 0 as long as we're in beta (0.x.y)
+#  - every deploy bumps the version number (x.y.z+1)
+#  - every deploy that brings major changes increments the minor (x.y+1.0)

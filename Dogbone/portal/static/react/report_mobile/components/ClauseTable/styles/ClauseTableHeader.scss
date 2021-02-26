@@ -1,0 +1,100 @@
+  .clause-table-header {
+    padding: 10px;
+    background-color: #fff;
+    border: #ccc solid 1px;
+    border-radius: 3px 3px 0 0px;
+    .header-search {
+      display: flex;
+      .search-container {
+        flex: 1;
+        position: relative;
+        .search-icon {
+          position: absolute;
+          top: 8px;
+          left: 8px;
+          color: #ccc;
+          &.active {
+            color: #000;
+          }
+        }
+
+        input {
+          font-size: 15px;
+          flex: 1;
+          padding-left: 30px;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+      }
+      .header-tools {
+        padding: 0 0px 0 10px;
+        .csv-export {
+          text-align: center;
+          cursor: pointer;
+          i {
+            font-size: 20px;
+            color: #ccc;
+            &:hover {
+              color: #000;
+            }
+          }
+        }
+        .count-container {
+          text-align: center;
+          span {
+            cursor: default;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+    .header-toolbar {
+      display: flex;
+    .selection-tools {
+        display: flex;
+        input {
+          cursor: pointer;
+        }
+        .selected-count {
+          font-size: 11px;
+          color: #000;
+          cursor: default;
+          min-width: 12px;
+          padding: 4.5px 5px;
+        }
+      }
+      .selection-present {
+        padding-right: 5px;
+        background-color: #EBF5FE;
+        border-radius: 4px;
+      }
+      .filter-bar {
+        display: flex;
+        padding: 0 10px;
+        .filter-option {
+          cursor: pointer;
+          position: relative;
+          text-align: center;
+          color: #ccc;
+          font-size: 20px;
+          padding: 0 10px;
+          &.enabled {
+            color: #000;
+            &:hover {
+              color: #000;
+            }
+          }
+          &:hover {
+            color: #888;
+          }
+        }
+      }
+      .tool-gap {
+        flex: 1
+      }
+    }
+    .filter-popover {
+      position: relative;
+    }
+  }

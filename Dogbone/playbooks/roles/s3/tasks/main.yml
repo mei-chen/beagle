@@ -1,0 +1,43 @@
+---
+
+
+- name: Set documents bucket detail
+  set_fact:
+      S3_BUCKET_NAME_DETAIL: "{{ PROFILE_PICTURE_BUCKET | mandatory }}"
+
+- s3_bucket:
+    name: "{{ S3_BUCKET_NAME_DETAIL | mandatory }}"
+    policy: "{{ lookup('template', './files/policy.json') }}"
+    region: "{{ region | mandatory }}"
+    versioning: yes
+    tags:
+      client: "{{ client_name }}"
+      env: "{{ env }}"
+
+
+- name: Set models bucket detail
+  set_fact:
+      S3_BUCKET_NAME_DETAIL: "{{ PREDICTION_MODELS_BUCKET | mandatory }}"
+
+- s3_bucket:
+    name: "{{ S3_BUCKET_NAME_DETAIL | mandatory }}"
+    policy: "{{ lookup('template', './files/policy.json') }}"
+    region: "{{ region | mandatory }}"
+    versioning: yes
+    tags:
+      client: "{{ client_name }}"
+      env: "{{ env }}"
+
+
+- name: Set pictures bucket detail
+  set_fact:
+      S3_BUCKET_NAME_DETAIL: "{{ UPLOADED_DOCUMENTS_BUCKET | mandatory }}"
+
+- s3_bucket:
+    name: "{{ S3_BUCKET_NAME_DETAIL | mandatory }}"
+    policy: "{{ lookup('template', './files/policy.json') }}"
+    region: "{{ region | mandatory }}"
+    versioning: yes
+    tags:
+      client: "{{ client_name }}"
+      env: "{{ env }}"

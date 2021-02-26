@@ -1,0 +1,9 @@
+[program:flower]
+user={{ run_user }} ;
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+command={{ virtualenv_path }}/bin/celery flower -A dogbone --address=127.0.0.1 --port=5555 --url-prefix=flower
+directory={{ app_location }} ;
+stdout_logfile={{ base_location }}logs/flower_stdout.log ;
+stderr_logfile={{ base_location }}logs/flower_stderr.log ;
+stdout_logfile_maxbytes={{ logfile_maxbytes }} ;
+stderr_logfile_maxbytes={{ logfile_maxbytes }} ;

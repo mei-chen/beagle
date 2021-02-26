@@ -1,0 +1,22 @@
+.agreement-editor {
+  position: relative;
+  line-height: 15px;
+
+  .back-to-top {
+    color: #fff;
+    position: fixed;
+    background-color: #5d101a;
+    padding: 5px;
+    bottom: -2px;
+    right: 3%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    opacity: 0.5;
+    cursor: pointer;
+    z-index: 3;     /*pesky venn tooltip uses the bottom left and sits on top*/
+
+    &:hover {
+      opacity: 1.0;
+    }
+  }
+}

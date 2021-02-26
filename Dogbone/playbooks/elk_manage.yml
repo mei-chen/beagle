@@ -1,0 +1,75 @@
+- name: Create instances
+  hosts: localhost
+  gather_facts: False
+  vars:
+    hdd_volumes_logger:
+    - device_name: /dev/sdf
+      volume_size: 10
+      delete_on_termination: true
+
+  vars_files:
+    - vars/globals.yml
+    - vars/secrets.yml
+
+  tasks:
+    - name: Launch logger instance
+      ec2:
+        key_name: "{{ key_name | mandatory }}"
+        group: "{{ SECURITY_GROUP_NAME }}" # logging
+        instance_type: t2.medium
+        image: "{{ AMI_ID | mandatory }}"
+        instance_tags:
+          Name: "{{ logger_identifier | mandatory }}"
+          OS: Linux
+        wait: true
+        region: "{{ region | mandatory }}"
+        # vpc_subnet_id: subnet-709a1b07
+        # assign_public_ip: yes
+        volumes: "{{ hdd_volumes_logger }}"
+        count_tag:
+          Name: "{{ logger_identifier | mandatory }}"
+        exact_count: 1
+        monitoring: yes
+        wait: true
+      register: ec2_logger
+
+    - debug: var=ec2_logger.tagged_instances
+
+    - name: Add all instance public IPs to host group
+      add_host: hostname="{{ item.public_ip }}" groups="tag_environment_{{ logger_identifier | mandatory }}"
+      with_items: "{{ ec2_logger.tagged_instances }}"
+
+    - name: Create Elasticache instance
+      elasticache:
+        state: present
+        region: "{{ region | mandatory }}"
+        name: "{{ client_identifier | mandatory }}-elk"
+        engine: redis
+        cache_engine_version: 2.8
+        cache_port: 6379
+        cache_security_groups: []
+        security_group_ids: ["{{ beagle_security_group.group_id }}"]  # Dynamically registered in ./ec2/main.yml
+        node_type: "cache.t2.micro"
+        num_nodes: 1
+        wait: true
+      register: elasticache_logger
+
+    - name: Construct filebeat output REDIS_URL
+      set_fact:
+        filebeat_output: "{{ elasticache_logger.elasticache.data.CacheNodes[0].Endpoint.Address }}"
+
+    # - name: associate an elastic IP with logger instance
+    #   ec2_eip:
+    #     device_id: "{{ item.id }}"
+    #     ip: 52.26.104.154
+    #     region: "{{ region | mandatory }}"
+    #   with_items: "{{ ec2_logger.tagged_instances }}"
+
+    # - name: Wait for SSH to come up for logger instance
+    #   wait_for:
+    #     host: "{{ item.private_ip }}"
+    #     port: 22
+    #     delay: 10
+    #     timeout: 60
+    #     state: started
+    #   with_items: "{{ ec2_logger.tagged_instances }}"

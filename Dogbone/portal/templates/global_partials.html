@@ -1,0 +1,14 @@
+{% include "partials/hotjar_tracking.html" %}
+{% include "partials/browser_support.html" %}
+{% include "partials/socketio.html" %}
+{% include "partials/intercom.html" %}
+{% include "partials/fontawesome.html" %}
+{% include "partials/beagle_fonts.html" %}
+{% if INTERCOM_ENV == 'prod' %}
+  {% include "partials/inspectlet.html" %}
+  {% include "partials/ga.html" %}
+  {% include "partials/fb_tracking.html" %}
+{% else %}
+  <!-- INTERCOM_ENV == {{ INTERCOM_ENV }}. Skipped GA, FBQ and Inspectlet -->
+{% endif %}
+

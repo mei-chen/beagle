@@ -1,0 +1,87 @@
+$beagle-red: #5D101A;
+$beagle-green: #147039;
+
+.beagle-toast-container {
+
+  $offset: 40px;
+  $padding: 20px;
+  $width: 300px;
+  $height: auto;
+
+  $opacity: 0.94;
+
+  position: fixed;
+  top: $offset;
+  right: $offset;
+  z-index: 10000;
+  font-family: Helvetica, Arial, sans-serif;
+  pointer-events: none;
+
+  .toast {
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+    //margin-bottom: $offset;
+    padding: $padding;
+    width: $width;
+    height: $height;
+    border: 0px;
+    font-size: 14px;
+    background-color: rgba(white, $opacity);
+    box-shadow: 0px 5px 20px 1px rgba(60, 60, 60, 0.42);
+    cursor: pointer;
+    color: rgb(84, 79, 79);
+    font-size: 85%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 18px;
+      line-height: 0px;
+    }
+  }
+
+  .toast-spacer {
+    height: $offset;
+    width: $width;
+    pointer-events: none;
+    background:transparent;
+  }
+
+  .toast-error {
+    $bg-color: lighten($beagle-red, 28%);
+    color: #A30000;
+    border-bottom: 2px solid rgba($bg-color, $opacity);
+  }
+
+  .toast-success {
+    $bg-color: lighten($beagle-green, 15%);
+    color: $beagle-green;
+    border-bottom: 2px solid rgba($bg-color, $opacity);
+  }
+
+  /// TOAST ANIMATIONS
+  .toast-enter {
+    opacity: 0;
+  }
+  .toast-enter.toast-enter-active {
+    opacity: 1;
+    transition: all 300ms ease-out;
+  }
+  .toast-leave {
+    opacity: 1;
+  }
+  .toast-leave.toast-leave-active {
+    opacity: 0;
+    transition: all 300ms ease-in;
+  }
+}
