@@ -1,0 +1,174 @@
+@import 'variables';
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.beagle-notifications {
+  .bell-icon {
+    position: relative;
+
+    $size: 32px;
+    width: $size;
+    height: $size;
+    line-height: 0;
+    text-align: center;
+    cursor: pointer;
+    color: $icon-colour;
+    padding: 7px 8px;
+
+    &:hover {
+      color: $icon-hover-colour;
+    }
+
+    i.fa.fa-bell {
+      font-size: 18px;
+    }
+
+    .badge {
+      $badge-size: 12px;
+      position: absolute;
+      display: inline-block;
+      top: 7px;
+      right: 4px;
+      width: $badge-size;
+      height: $badge-size;
+      border: 2px solid #5d101a;
+      border-radius: 50%;
+      background-color: $unread-colour;
+      transition: opacity 0.3s ease-in-out;
+      opacity: 0;
+      padding: 0px;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .header-dropdown.notification-dropdown {
+    width: 300px;
+    font-size: 12px;
+
+    .scrollable-container {
+      max-height: 400px;
+      overflow-y: scroll;
+    }
+
+    .contents {
+      flex-direction: column;
+      display: flex;
+      * {
+        display: flex;
+      }
+    }
+
+    .menu-toggles {
+      display: flex;
+      padding-bottom: 6px;
+      button {
+        flex: 1;
+        padding: 0;
+        margin: 0;
+        outline: none;
+        border: none;
+        background: none;
+        color: #888;
+        font-size: 12px;
+        &.active {
+          text-decoration: underline;
+        }
+        &:disabled {
+          color: #ccc;
+        }
+      }
+    }
+
+    .notif {
+      align-items: center;
+
+      &:not(:last-child) {
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .read-indicator {
+        margin-right: 10px;
+        .indicator {
+          width: 10px;
+          height: 10px;
+          cursor: pointer;
+          border-radius: 50%;
+          &.read {
+            background-color: #eee;
+          }
+          &.unread {
+            background-color: $unread-colour;
+          }
+        }
+      }
+
+      .content {
+        flex: 1;
+
+        .avatar {
+          $size: 38px;
+          display: inline-block;
+          margin-right: 10px;
+          width: $size;
+          height: $size;
+          background-size: cover;
+        }
+
+        .info {
+          flex: 1;
+          flex-direction: column;
+          line-height: 1.7;
+
+          .text {
+            line-height: 1.3;
+          }
+
+          .time {
+            font-weight: normal;
+            color: grey;
+          }
+        }
+      }
+    }
+
+    .no-data {
+      padding: 15px;
+      font-size: 14px;
+      font-weight: normal;
+      color: #888;
+      justify-content: center;
+    }
+
+    .load-more {
+      cursor: pointer;
+      outline: none;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: none;
+      color: #555;
+
+      &:hover {
+        border-color: #aaa;
+      }
+
+      .spinner {
+        margin: 0 5px;
+        opacity: 0;
+
+        transition: opacity 0.1s ease-in-out;
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+
+  }
+
+}

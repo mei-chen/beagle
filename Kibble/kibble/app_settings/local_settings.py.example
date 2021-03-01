@@ -1,0 +1,16 @@
+import os
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+DB_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(DB_DIR, 'db.sqlite3'),
+    }
+}
+
+AWS_ACCESS_KEY_ID = 'AKIAJ32G4N2ZUDZJVKQA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'nitr0-kibble'
+AWS_S3_REGION_NAME = 'eu-central-1'

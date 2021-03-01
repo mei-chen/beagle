@@ -1,0 +1,31 @@
+@import 'variables';
+
+.beagle-context-view {
+  position: relative;
+  height: 100%;
+  margin: 0 $large-spacing;
+
+  .center-content {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    .beagle-list-of-terms {
+      margin: 2 * $large-spacing 0 $large-spacing 0;
+
+      .beagle-panel {
+
+        .header {
+          display: flex;
+          align-items: center;
+          padding: $mid-spacing $large-spacing;
+          margin: $mid-spacing 0;
+        }
+
+        .collapsed .header {
+          padding: $mid-spacing $large-spacing;
+        }
+      }
+    }
+  }
+}

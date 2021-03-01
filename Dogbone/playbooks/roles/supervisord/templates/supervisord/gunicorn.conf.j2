@@ -1,0 +1,9 @@
+[program:gunicorn]
+user={{ run_user }} ;
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+command={{ virtualenv_path }}bin/gunicorn dogbone.wsgi:application --bind 127.0.0.1:8000 --log-syslog --log-syslog-facility daemon --log-syslog-to unix:///dev/log#dgram --log-level info --worker-class eventlet --timeout 60  --workers 6
+directory={{ app_location }} ;
+stdout_logfile={{ base_location }}logs/gunicorn_stdout.log ;
+stderr_logfile={{ base_location }}logs/gunicorn_stderr.log ;
+stdout_logfile_maxbytes={{ logfile_maxbytes }} ;
+stderr_logfile_maxbytes={{ logfile_maxbytes }} ;

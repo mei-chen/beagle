@@ -1,0 +1,207 @@
+body {
+    padding-bottom: 40px;
+    background-color: white;
+}
+
+.form-signup, .form-login {
+    max-width: 500px;
+    padding: 0px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    margin-top: 30px;
+    background-color: #F2F2F2;
+}
+.form-signup .form-signup-heading,
+.form-signup .checkbox,
+.form-login .form-login-heading,
+.form-login .checkbox{
+    margin-bottom: 10px;
+}
+.form-signup .form-control, .form-login .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signup .form-control:focus, .form-login .form-control:focus {
+    z-index: 2;
+}
+.form-signup input[type="email"],
+.form-login input[type="email"],{
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    color: black;
+}
+
+.form-signup input:focus,
+.form-login input:focus{
+    outline: none;
+    border-color: #BBBBBB;
+    box-shadow: 0 0 0px yellow;
+}
+
+.form-signup input[type="password"],
+.form-login input[type="password"]{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    color: black;
+}
+.form-signup input, .form-signup button,
+.form-login input, .form-login button {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+.form-signup button,
+.form-login button {
+    padding: 14px 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    -webkit-box-shadow: 1px 2px 4px rgba(0,0,0,0.04);
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.04);
+    color: #5d101a !important;
+    font-family: inherit;
+    font-size: 20px;
+    line-height: normal;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: normal;
+    cursor: pointer;
+    -webkit-transition: 200ms ease;
+    -o-transition: 200ms ease;
+    transition: 200ms ease;
+    -webkit-appearance: none;
+}
+.form-signup button:hover,
+.form-login button:hover{
+    background-color: #5D101A;
+    color: white !important;
+}
+
+.form-signup button:focus,
+.form-login button:focus {
+    background-color: #5D101A;
+    color: white !important;
+    outline: none;
+    border-color: #BBBBBB;
+    box-shadow: 0 0 0px yellow;
+}
+.form-signup h1,
+.form-login h1 {
+    background-color: #DB533B;
+    text-transform: uppercase;
+    font-size: 30px !important;
+    padding-top: 20px;
+}
+.form-signup .field-note {
+    color: #5D101A;
+    text-align: left;
+    text-decoration: none;
+    padding: 2px 26px;
+    margin-bottom: -10px;
+}
+
+.form-signup .fineprint {
+    color: gray;
+    padding: 2px 26px;
+    margin-bottom: -10px;
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.form-bottom-note {
+    color: #5D101A;
+    max-width: 500px;
+    padding: 0px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: white;
+    text-align: center;
+}
+
+.form-bottom-note a {
+    text-decoration: none;
+    color: #DB533B;
+}
+.form-bottom-note a i {
+    font-size: 12px;
+}
+
+.field-error {
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
+.field-error ul li, .nonfield-error ul li{
+    color: #5D101A;
+    font-weight: 700;
+    text-align: left;
+    font-size: 1.5rem;
+    padding: 2px 26px;
+}
+
+.field-error ul li::before, .nonfield-error ul li::before {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    content: "\f071 ";
+}
+
+.blend {
+    color: grey !important;
+}
+
+.blend a {
+    color: darkgrey !important;
+}
+
+.shopping-cart-form {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 9px;
+    border-radius: 3px;
+    min-height: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e3e3e3;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+
+.form-inline {
+    display: flex;
+    margin: 0px 3%;
+}
+
+.polite-message {
+    color: #b8b54e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.optional-background {
+    background-color: #fffdbd;
+    padding: 10px 0px;
+    margin: 15px 0px;
+}

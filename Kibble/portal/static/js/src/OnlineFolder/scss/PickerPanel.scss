@@ -1,0 +1,96 @@
+.folder-watchers {
+  display: flex;
+  justify-content: space-around;
+
+  .watcher-wrapper{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+  }
+}
+.folder-container {
+  margin: auto;
+  width: 100%;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .drive-action {
+    text-align: center;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 5px;
+
+    &.critical {
+      &:hover {
+        background-color: #ffbebe;
+      }      
+    }
+
+    &:hover {
+      background-color: #c5c4c4;
+    }
+
+    i {
+      padding: 0px 4px;
+    }
+  }
+
+  .drive-icon {
+    font-size: 19px;
+    justify-content: center;
+    display: flex;
+    i {
+      color: #5d101a;
+      padding: 3px;
+    }
+  }
+  .drive-body {
+    width: 100%;
+
+    .drive-folder-list {
+      margin-bottom: 10px;
+
+      .list-item{
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        font-size: 15px;
+        border-bottom: 1px solid #bbbbbb;
+
+        .folder-name {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 162px;
+        }
+
+        .delete-folder {
+          width: 20px;
+          cursor: pointer;
+          float: right;
+          padding: 0px 4px;
+          border-radius: 5px;
+          display: flex;
+          justify-content: flex-end;
+          flex-direction: row;
+          align-items: center;
+          overflow: hidden;
+          white-space: nowrap;
+          transition: all 0.2s ease;
+
+          i {
+            padding: 0px 2px;
+          }
+
+          &:hover {
+            width: 123px;
+            background-color: #bbbbbb;
+          }
+        }
+      }
+    }
+  }
+}

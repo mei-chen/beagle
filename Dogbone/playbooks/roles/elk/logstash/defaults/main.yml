@@ -1,0 +1,3 @@
+# elasticsearch_host: "https://search-logs-vdxkryrlos3brrundqbakhfolq.us-west-2.es.amazonaws.com"
+elasticsearch_host: "localhost:9200"
+redis_filebeat_host: "logcache-beagle.rlhfuv.ng.0001.usw2.cache.amazonaws.com"

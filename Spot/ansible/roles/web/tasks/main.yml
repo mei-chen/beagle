@@ -1,0 +1,19 @@
+- include: create_users_and_groups.yml
+
+- include: setup_git_repo.yml
+  when: server_user != "vagrant"
+  tags: deploy
+
+- include: setup_virtualenv.yml
+  tags: virtualenv
+
+- include: setup_npm_modules.yml
+  when: server_user != "vagrant"  # Not working well on vagrant
+  tags: deploy
+
+- include: setup_django_app.yml
+  tags: deploy
+
+- include: set_file_permissions.yml
+  when: server_user != "vagrant"
+  tags: deploy

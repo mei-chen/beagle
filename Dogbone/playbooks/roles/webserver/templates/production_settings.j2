@@ -1,0 +1,14 @@
+import os
+
+DEBUG = False
+HOT_LOAD = False
+
+{% if set_s3_bucket %}
+AWS_DEFAULT_BUCKET_NAME = ''
+
+PROFILE_PICTURE_BUCKET = os.environ.get('PROFILE_PICTURE_BUCKET')
+PREDICTION_MODELS_BUCKET = os.environ.get('PREDICTION_MODELS_BUCKET')
+UPLOADED_DOCUMENTS_BUCKET = os.environ.get('UPLOADED_DOCUMENTS_BUCKET')
+{% endif %}
+
+CLIENT_NAME = os.environ.get('CLIENT_NAME')

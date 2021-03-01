@@ -1,0 +1,23 @@
+env: 'vagrant'
+server_user: 'vagrant'
+
+setup_git_repo: yes
+git_branch: develop
+
+# Database settings.
+db_user: "{{ application_name }}"
+db_name: "{{ application_name }}"
+db_password: password
+db_host: localhost
+db_port: 5432
+
+# Nginx settings.
+nginx_server_name: 127.0.0.1
+nginx_strong_dh_group: no
+
+# Django specific
+django_settings_file: "{{ application_name }}.settings"
+django_secret_key: "1^A9B5-E27CE5E$BB2p56B4p$dyD34F50E664_A18B"
+
+run_django_db_migrations: yes
+run_django_collectstatic: yes

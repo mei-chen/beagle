@@ -1,0 +1,33 @@
+// VARIABLES
+$beagle-red: #5D101A;
+
+// colours for liability, resp, term highlighting
+$resp: #ffd4dc;
+$liab: #b6daf2;
+$term: #ffffb3;
+$refs: #bcf0d2;
+$cust: #DACAF4;
+$kywd: #EBE3F8;
+
+$tagged: #dacaf4;
+$auto-tagged: #f7f3ff;
+
+// colours for parties
+$you: #E3E346;
+$them: #28A3D4;
+$both: #74c57f;
+
+//colours for the languages
+$en: red;
+$fr: green;
+$sp: blue;
+
+$grey: #4a4a4a;
+$bordergrey: #ccc;
+$liab-text: darken($liab, 30%);
+$resp-text: darken($resp, 12%);
+$term-text: darken($term, 10%);
+$refs-text: darken($refs, 10%);
+
+$hover-colour: yellow;
+

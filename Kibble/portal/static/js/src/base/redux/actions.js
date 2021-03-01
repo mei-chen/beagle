@@ -1,0 +1,20 @@
+export const GET_REQUEST = (action) => `${action}/GET_REQUEST`;
+export const GET_SUCCESS = (action) => `${action}/GET_SUCCESS`;
+export const GET_ERROR = (action) => `${action}/GET_ERROR`;
+export const POST_REQUEST = (action) => `${action}/POST_REQUEST`;
+export const POST_SUCCESS = (action) => `${action}/POST_SUCCESS`;
+export const POST_ERROR = (action) => `${action}/POST_ERROR`;
+export const PATCH_REQUEST = (action) => `${action}/PATCH_REQUEST`;
+export const PATCH_SUCCESS = (action) => `${action}/PATCH_SUCCESS`;
+export const PATCH_ERROR = (action) => `${action}/PATCH_ERROR`;
+export const DELETE_REQUEST = (action) => `${action}/DELETE_REQUEST`;
+export const DELETE_SUCCESS = (action) => `${action}/DELETE_SUCCESS`;
+export const DELETE_ERROR = (action) => `${action}/DELETE_ERROR`;
+export const LIST_CLEANUP = (action) => `${action}/LIST_CLEANUP`;
+export const LIST_APPEND = (action) => `${action}/LIST_APPEND`;
+export const MODAL_SHOW = (action) => `${action}/MODAL_SHOW`;
+export const MODAL_HIDE = (action) => `${action}/MODAL_HIDE`;
+export const TASK_RUN = (action) => `${action}/TASK_RUN`;
+export const TASK_ERROR = (action) => `${action}/TASK_ERROR`;
+export const REMOVE = (action) => `${action}/REMOVE`;
+

@@ -1,0 +1,7 @@
+---
+- name: restart kibana
+  become: true
+  become_user: root
+  service:
+    name=kibana
+    state=restarted

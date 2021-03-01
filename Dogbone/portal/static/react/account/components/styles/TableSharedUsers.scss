@@ -1,0 +1,20 @@
+div.table-shared-users-container {
+
+  button{
+    margin-top: 3px;
+  }
+  input {
+    // display: block;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 60%;
+    margin-left: 2px;
+    margin-top: 3px;
+    &:focus{
+      outline: none;
+    }
+  }
+}

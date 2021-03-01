@@ -1,0 +1,12 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Dear {{ new_owner_name }},
+
+{{ old_owner_name }} assigned you the new owner of "{{ document_title }}"!
+
+Follow this link to collaborate: {{ follow_url }}
+
+
+Beagle.ai Team
+{% endblock %}

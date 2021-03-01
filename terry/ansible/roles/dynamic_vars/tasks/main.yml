@@ -1,0 +1,30 @@
+---
+
+- debug: msg="{{ hostvars[groups['rds'][0]] }}"
+- name: construct DATABASE_URL
+  set_fact:
+      DATABASE_URL: postgres://{{ hostvars[groups['rds'][0]]['username'] }}:{{ hostvars[groups['rds'][0]]['password'] | default(db_password | mandatory) }}@{{ groups['rds'][0] }}:{{ hostvars[groups['rds'][0]]['ansible_ssh_port'] }}/{{ hostvars[groups['rds'][0]]['db_name'] }}
+
+- name: Construct REDIS_URL
+  set_fact:
+    REDIS_URL: redis://{{ groups['elasticache'][0] }}:{{ hostvars[groups['elasticache'][0]]['ansible_ssh_port'] }}/0
+
+- name: Construct BROKER_URL
+  set_fact:
+    BROKER_URL: redis://{{ groups['elasticache'][0] }}:{{ hostvars[groups['elasticache'][0]]['ansible_ssh_port'] }}/1
+
+- name: Add SESSION_SECRET to app_env
+  set_fact:
+    SESSION_SECRET: "{{ db_password | hash('sha1')}}"
+
+- name: Set all envs
+  set_fact:
+    app_env: "{{ app_env | combine({ \"DATABASE_URL\": DATABASE_URL, \"REDIS_URL\": REDIS_URL, \"BROKER_URL\": BROKER_URL, \"SESSION_SECRET\": SESSION_SECRET }) }}"
+    db_name: "{{ hostvars[groups['rds'][0]]['db_name'] }}"
+    db_user: "{{ hostvars[groups['rds'][0]]['username'] }}"
+    db_password: "{{ hostvars[groups['rds'][0]]['password'] | default(db_password | mandatory) }}"
+    db_host: "{{ groups['rds'][0] }}"
+    db_port: "{{ hostvars[groups['rds'][0]]['ansible_ssh_port'] }}"
+
+- debug: msg="{{ app_env }}"
+- debug: msg="{{ groups }}"

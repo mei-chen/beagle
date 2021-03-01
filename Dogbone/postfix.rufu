@@ -1,0 +1,49 @@
+Rufus Mail Server Notes.
+
+Machine Needed:   
+postfix installed (apt-get install postfix)
+mailutils installed (apt-get install mailutils)
+
+When Postfix is being configured chose stand alone internet connection.
+
+AWS Needed:
+elastic IP address (so it is a fixed IP)
+security group with proper ports for email, ssh etc
+
+DNS Needed:
+set an A record for the subdomain from the IP elastic IP address  example rufus.beagle.ai. A 54.68.104.91
+set an MX record for the subdomain from the elastic IP address  example rufus.beagle.ai. MX 10 rufus
+
+Machine Configuration:
+set /etc/hostname to be the A record name   example rufus
+set /etc/maildomain to be the A record name   example rufus
+set /etc/hosts to add the hostname to the 127.0.0.1 localhost   example.  127.0.0.1 localhost rufus
+add a new line to hosts file to add the PRIVATE ip of the AWS machine example   172.31.17.59 rufus.beagle.ai
+
+Postfix Config  (PRE TLS) main.cf
+#=========================================================================
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+
+# TLS parameters
+smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+
+myhostname = rufus.beagle.ai
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+mydestination = rufus.beagle.ai, ip-172-31-17-59.us-west-2.compute.internal, localhost.us-west-2.compute.internal, localhosti, ec2-54-201-113-172.us-west-2.compute.amazonaws.com
+relayhost = 
+mynetworks = 172.0.0.0/8 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+#=================================================================================

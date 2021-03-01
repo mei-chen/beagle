@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.index {
+  width: 40%;
+  margin: 50px auto;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 2px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.index code {
+  padding: 3px 6px;
+  color: #000;
+  background: #fff;
+  font-size: 14px;
+}
+
+.index img {
+  margin: 40px auto;
+  border-radius: 4px;
+  background: #fff;
+  display: block;
+}
+
+.notice {
+  margin: 20px auto;
+  padding: 15px 0;
+  text-align: center;
+  border: 1px solid #000;
+  border-width: 1px 0;
+}
+
+.wrapper {
+  width: 95%;
+  margin: auto;
+}
+
+.cloud-icons-button {
+  display: inline-block;
+  &.white-icon {
+    i {
+      color: white;
+    }
+  }
+  i {
+    margin-right: 7px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #1880cf;
+
+  }
+}
+
+.online-wrapper .table-responsive {
+  max-height: calc(100vh - 265px);
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  table {
+    margin-bottom: 0;
+  }
+}

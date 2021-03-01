@@ -1,0 +1,75 @@
+/*Disable the skip button
+.introjs-skipbutton {
+    display: none;
+}
+*/
+
+.intro-window {
+    width: 300px;
+}
+
+.intro-window > .introjs-tooltiptext {
+    text-align: center;
+}
+
+.intro-window > .introjs-tooltiptext > i{
+    font-size: 70px;
+}
+
+.intro-window > .introjs-tooltiptext > .introjs-title{
+    font-size: 20px;
+    padding: 10px 0;
+}
+
+.intro-window > .introjs-tooltiptext > .introjs-subtext{
+    font-size: 15px;
+    color: #5a5a5a;
+}
+
+.intro-window > .introjs-tooltiptext > .introjs-subtext-2{
+    font-size: 12px;
+    color: #5a5a5a;
+}
+
+.intro-sidebar {
+    background-color: rgba(255,255,255,.5);
+    width: 55px !important ;
+}
+
+.intro-navbar {
+    background-color: rgba(255,255,255,.5);
+    width: 200px !important;
+    right: 6% !important;
+    left: inherit !important;
+}
+
+.intro-dropdown-tooltip {
+    right: 165px !important;
+    left: initial !important;
+}
+
+.intro-dropdown-helper-layer {
+    display: none;
+}
+
+.intro-widgets-tooltip {
+    width: 200px !important;
+    right: 979px !important;
+}
+
+/* Editor Box Style */
+.intro-editor-box-highlight {
+    display: none;
+}
+
+.intro-party-highlight {
+    height: 57px !important;
+    top: 57px !important;
+    left: 375px !important;
+    width: 330px !important;
+    opacity: 0.4;
+}
+
+.intro-party-tooltip{
+    left: 100px !important;
+}

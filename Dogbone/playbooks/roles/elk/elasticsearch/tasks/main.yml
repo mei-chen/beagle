@@ -1,0 +1,59 @@
+---
+
+
+- name: Add Elasticsearch apt key.
+  become: true
+  become_user: root
+  apt_key:
+    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elasticsearch repository.
+  become: true
+  become_user: root
+  apt_repository:
+    repo: 'deb http://packages.elastic.co/elasticsearch/2.x/debian stable main'
+    state: present
+    update_cache: yes
+
+- name: Install Elasticsearch.
+  become: true
+  become_user: root
+  apt:
+    pkg=elasticsearch
+    state=present
+
+- name: Configure Elasticsearch.
+  become: true
+  become_user: root
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    owner: root
+    group: elasticsearch
+    mode: 0750
+  notify: restart elasticsearch
+
+- name: Start Elasticsearch.
+  become: true
+  become_user: root
+  service:
+    name=elasticsearch
+    state=started
+    enabled=yes
+
+- name: Make sure Elasticsearch is running before proceeding.
+  wait_for:
+    host={{ elasticsearch_network_host }}
+    port={{ elasticsearch_http_port }}
+    delay=3
+    timeout=300
+
+- name: Filebeat Templates in ES
+  become: true
+  become_user: root
+  uri:
+    url: "{{ kibana_elasticsearch_url }}/_template/filebeat?pretty"
+    method: PUT
+    body_format: json
+    body: "{{ lookup('template','filebeat-index-template.json') }}"

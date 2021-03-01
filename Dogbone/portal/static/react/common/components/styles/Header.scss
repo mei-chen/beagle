@@ -1,0 +1,249 @@
+@import 'variables';
+
+.crouton {
+  background-color: #f34914;
+  .error {
+    max-width: 980px;
+    margin: 0 auto;
+    color: #fff;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+
+    span {
+      flex: 1;
+      text-align: center;
+    }
+
+    .buttons {
+      padding: 0 5px;
+      button {
+        font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+        color: #f5f5f5;
+        font-size: 25px;
+        background: #f34914;
+        border: #f34914;
+        text-decoration: none;
+        &:hover {
+          text-decoration: none;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.beagle-header {
+  min-height: 45px;
+
+  &.shrinkable {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    box-shadow: 0px 0px 12px 0px rgba(black, 0.5);
+  }
+
+  background-color: $beagle-red;
+  $transition: 0.2s ease-in-out;
+
+  .header-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    div.header-logo {
+      display: flex;
+      a {
+        width: 145px;
+        height: 26px;
+        background-image: url("/static/img/logo.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: height $transition;
+      }
+    }
+
+    ul.header-right-nav {
+      display: flex;
+      flex: 1;
+      margin: 0;
+      transition: margin $transition;
+
+      padding: 0;
+      list-style-type: none;
+      align-items: center;
+      justify-content: flex-end;
+
+      li.header-nav-item {
+        $spacing: 15px;
+        margin: 0 0 0 $spacing;
+        position: relative;
+
+        &.nav-upload {
+          font-size: 15pt;
+          margin-top: -5px;
+        }
+
+        .header-nav-sign-in {
+          font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          text-decoration: none;
+          color: #fff;
+          &:hover {
+            color: $icon-hover-colour;
+          }
+        }
+
+        .header-nav-item-link {
+          font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+          font-size: 0.6em;
+          cursor: pointer;
+          text-decoration: none;
+          color: #fff;
+          padding: 15px 5px;
+
+          .user-name{
+            font-size: 14px;
+          }
+
+          &:hover {
+            color: $icon-hover-colour;
+          }
+
+          &.account-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 5px;
+
+            span {
+              font-size: 14px;
+              font-weight: bold;
+            }
+          }
+
+          &.trial-link {
+            font-size: 15px;
+          }
+
+          &.link-user-actions-dropdown {
+            line-height: 2.8;
+            font-size: 16px;
+            border: none;
+            padding: 0px 6px;
+            background: none;
+            color: white;
+            outline: none;
+
+            &:hover {
+              color: $icon-hover-colour;
+            }
+          }
+
+          .avatar {
+            $size: 25px;
+            width: $size;
+            height: $size;
+            margin-right: 8px;
+            border-radius: 50%;
+            background-size: cover;
+          }
+
+          span {
+            line-height: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  .header-dropdown {
+    background: #fff;
+    position: absolute;
+    top: 37px;
+    right: 3px;
+    width: 140px;
+    padding: 8px;
+    border: 1px solid $beagle-red;
+    z-index: 3;
+    box-shadow: 0px 2px 15px -2px rgba(black, 0.35);
+
+    div.separator {
+      border-bottom: 1px solid #eee;
+      margin: 5px 0;
+    }
+
+    i.fa {
+      text-align: center;
+    }
+
+    .dropdown-arrow {
+      position: absolute;
+      right: 5px;
+      top: -6px;
+
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: 0 6px 6px 6px;
+      border-color: transparent transparent #fff transparent;
+    }
+
+    a {
+      display: block;
+      line-height: 2em;
+      font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+
+      &:hover {
+        color: #555;
+      }
+    }
+    span {
+      display: block;
+      line-height: 2em;
+      font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+      color: #888888;
+    }
+  }
+
+  .user-actions-dropdown {
+    right: -2px;
+    top: 34px;
+    font-size: 12px;
+  }
+}
+
+.intercom-button {
+  font-size: 26px;
+  background-color: #fff;
+  color: #5d101a;
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:0 0 5px 0px #5d101a;
+  z-index: 100;
+  transition: 0.2s ease;
+
+  &:hover {
+    font-size: 29px;
+    width: 61px;
+    height: 61px;
+    line-height: 61px;
+    right: 37px;
+    bottom: 37px;
+    box-shadow:0 0 7px -1px #5d101a;
+  }
+}

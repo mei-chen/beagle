@@ -1,0 +1,23 @@
+.sidemenu-button {
+  color: black;
+  margin: 16px 0 0 10px;
+
+  &:hover {
+    color: #555;
+    cursor: pointer;
+  }
+
+  &.active {
+    color: #5D101A;
+
+    &:hover {
+      color: #5D101A;
+      cursor: default;
+    }
+  }
+
+  .active-chevron {
+    color: #cecece;
+    float: right;
+  }
+}

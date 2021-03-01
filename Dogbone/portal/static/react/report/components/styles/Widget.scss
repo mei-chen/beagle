@@ -1,0 +1,99 @@
+.widget {
+  position: relative;
+  transition: all 0.2s ease;
+  height: 192px;
+  padding: 2%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+
+  $margin: 15px;
+  margin: $margin 0px;
+  &:nth-child(odd) {
+    margin-right: $margin;
+  }
+  &:nth-child(even) {
+    margin-left: $margin;
+  }
+
+  h2 {
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+    font-size: 1.25em;
+    font-weight: normal;
+    color: #4a4a4a;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    line-height: 140%;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 2px 15px -2px rgba(0, 0, 0, 0.35);
+
+    h2 {
+      color: #A5424B;
+    }
+  }
+
+  .cornerTag {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 0 30px 30px;
+    border-color: transparent transparent #DACAF4 transparent;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    span {
+      font-size: 8pt;
+      position: absolute;
+      bottom: -27px;
+      right: 3px;
+      color: #fff;
+    }
+  }
+
+  .RespoColor {
+    border-color: transparent transparent #E6A8B3 transparent;
+  }
+  .LiabiColor {
+    border-color: transparent transparent #8DBAD9 transparent;
+  }
+  .TermiColor {
+    border-color: transparent transparent #E6E68A transparent;
+  }
+  .ExterColor {
+    border-color: transparent transparent #92D6AF transparent;
+  }
+}
+
+.information-overlay {
+  z-index: 1;
+  background: rgba(0,0,0,0.3);
+  position: absolute;
+  width: 420px;
+  margin-top: 16px;
+
+  .grid {
+    display: flex;
+    overflow-wrap: break-word;
+    .grid-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: px;
+      color: #fff;
+      opacity: 1;
+      border: 2px solid white;
+      flex: 1;
+      height: 78px;
+      text-align: center;
+      .cell-contents {
+
+      }
+    }
+  }
+}
+

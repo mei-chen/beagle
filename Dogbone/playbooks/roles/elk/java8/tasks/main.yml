@@ -1,0 +1,28 @@
+---
+
+
+- name: add webupd8 ppa
+  apt_repository: repo='ppa:webupd8team/java'
+  become: true
+  become_user: root
+
+- name: update
+  shell: apt-get update
+  become: true
+  become_user: root
+
+- name: auto accept oracle jdk license
+  shell: "{{item}}"
+  with_items:
+    - echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+    - echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+  become: true
+  become_user: root
+
+- name: install java8
+  apt:
+    pkg=oracle-java8-installer
+    state=present
+  become: true
+  become_user: root
+

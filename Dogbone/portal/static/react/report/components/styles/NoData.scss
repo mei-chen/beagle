@@ -1,0 +1,18 @@
+.no-data-container {
+  position: relative;
+  height: 48%;
+
+  .no-data-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: #ccc;
+  }
+}
+
+.no-data-contextv {
+  display: block;
+  padding: 16px 20px;
+  color: #ccc;
+}

@@ -1,0 +1,66 @@
+@import '../../styles/variables';
+
+.clause-table {
+  width: 100%;
+  margin-top: 160px;
+  padding-bottom: 10px;
+  .last { border-bottom: none !important; }
+
+  .paginator {
+    font-size: 12px;
+    padding: 5px 0;
+    text-align: center;
+
+    .paging {
+      cursor: pointer;
+      padding: 0 5px;
+      &.active {
+        color: $beagle-red;
+      }
+      &.inactive {
+        color: #CECECE;
+      }
+    }
+
+    .page {
+      cursor: pointer;
+      padding: 0 3px;
+      color: #CECECE;
+      &.active {
+        color: $beagle-red;
+      }
+    }
+  }
+
+  .clause-table-footer {
+    display: flex;
+    height: 20px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #fff;
+    border-right-color: rgb(204, 204, 204);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: rgb(204, 204, 204);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: rgb(204, 204, 204);
+    border-left-style: solid;
+    border-left-width: 1px;
+
+    .back-to-top {
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 15px;
+      color: #ccc;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}

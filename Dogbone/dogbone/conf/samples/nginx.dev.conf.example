@@ -1,0 +1,134 @@
+user www-data;
+worker_processes 4;
+pid /run/nginx.pid;
+
+events {
+        worker_connections 768;
+        # multi_accept on;
+}
+
+http {
+
+        ##
+        # Basic Settings
+        ##
+
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        server_tokens off;
+        proxy_intercept_errors on;
+	error_page 404 /static/errors/404.html;
+
+        # server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        ##
+        # Logging Settings
+        ##
+
+        access_log /home/ubuntu/access.log;
+        error_log /home/ubuntu/error.log;
+
+        ##
+        # Gzip Settings
+        ##
+
+        gzip on;
+        gzip_disable "msie6";
+
+        # gzip_vary on;
+        # gzip_proxied any;
+        # gzip_comp_level 6;
+        # gzip_buffers 16 8k;
+        # gzip_http_version 1.1;
+        # gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+        upstream app_servers {
+                server 127.0.0.1:8000;
+                # server 127.0.0.1:8081;
+                # ..
+                # .
+        }
+
+        upstream socket_nodes {
+                ip_hash;
+                server 127.0.0.1:4000 weight=5;
+        }
+
+        server {
+                listen 80;
+		listen [::]:80;
+		listen 443 ssl spdy;
+
+  		server_name dev.beagle.ai;
+
+		#wildcard beagle.ai certs
+		ssl_certificate /etc/nginx/ssl/beagle.ai.crt;
+		ssl_certificate_key /etc/nginx/ssl/beagle.ai.key;
+
+		#self signed certs
+        	#ssl_certificate /etc/nginx/ssl/nginx.crt;
+        	#ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+		if ($ssl_protocol = "") {
+		rewrite ^ https://$server_name$request_uri? permanent;
+		}
+
+
+
+		#ssl_ciphers 'AES128+EECDH:AES128+EDH:!aNULL';
+		ssl_ciphers 'AES256+EECDH:AES256+EDH:!aNULL';
+		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  		ssl_session_cache shared:SSL:10m;
+
+
+  		ssl_prefer_server_ciphers on;
+  		ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+
+		ssl_session_timeout 5m;
+
+    		add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+    		add_header X-Frame-Options DENY;
+    		add_header X-Content-Type-Options nosniff;
+    		ssl_stapling on;
+    		ssl_stapling_verify on;
+		ssl_trusted_certificate /etc/nginx/ssl/beagle.ai.pem;
+		resolver 8.8.4.4 8.8.8.8 valid=300s;
+    		resolver_timeout 5s;
+
+    # the domain name it will serve for
+    server_name beta.beagle.ai; # substitute your machine's IP address or FQDN
+    charset     utf-8;
+
+    # max upload size
+    client_max_body_size 75M;   # adjust to taste
+                location / {
+                        proxy_pass         http://app_servers;
+                        proxy_redirect     off;
+                        proxy_set_header   Host $host;
+                        proxy_set_header   X-Real-IP $remote_addr;
+                        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header   X-Forwarded-Host $server_name;
+                }
+
+                location /static/ {
+                        autoindex on;
+                        alias /home/ubuntu/static/;
+                }
+
+                location /socket.io/ {
+                        proxy_set_header Upgrade $http_upgrade;
+                        proxy_set_header Connection "upgrade";
+                        proxy_http_version 1.1;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header Host $host;
+                        proxy_pass http://socket_nodes;
+                }
+        }
+}

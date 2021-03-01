@@ -1,0 +1,2 @@
+class ReportNotFound(Exception):
+    pass

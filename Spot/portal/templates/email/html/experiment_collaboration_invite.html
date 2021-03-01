@@ -1,0 +1,20 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Dear <b>{{ invitee }}</b>,</p>
+<br/>
+
+<p style="color:black; font-size: 14px; line-height:16px">
+    You have been invited by <b>{{ inviter }}</b> to collaborate on the experiment "<b>{{ experiment }}</b>"!
+</p>
+<br/>
+
+<p style="color:black; font-size: 14px; line-height:16px">
+    Follow this link to <a style="color: blue; text-decoration: underline;" href="{{ collaboration_url }}">collaborate</a>
+</p>
+<p style="color:#909090; font-size: 12px; line-height:16px; margin-top: 5px;">
+    or copy and paste this URL in your browser:<br/>
+    <span style="color:#909090; font-size: 12px">{{ collaboration_url }}</span>
+</p>
+
+{% endblock %}

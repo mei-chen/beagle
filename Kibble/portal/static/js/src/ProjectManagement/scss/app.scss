@@ -1,0 +1,26 @@
+.wrapper {
+  width: 95%;
+  margin: auto;
+}
+
+.container {
+  width: 100%;
+}
+
+table {
+  tr.row-clickable {
+    cursor: pointer;
+    &.active td {
+      background: #e8e8e8;
+    }
+  }
+}
+
+.projects-wrapper .table-responsive {
+  max-height: calc(100vh - 265px);
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  table {
+    margin-bottom: 0;
+  }
+}

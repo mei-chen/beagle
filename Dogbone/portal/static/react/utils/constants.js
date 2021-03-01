@@ -1,0 +1,3 @@
+global.MANUAL_TAG_TYPE = 'M';
+global.SUGGESTED_TAG_TYPE = 'S';
+global.ANNOTATION_TAG_TYPE = 'A';

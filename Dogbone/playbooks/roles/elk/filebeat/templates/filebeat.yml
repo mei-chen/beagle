@@ -1,0 +1,26 @@
+filebeat:
+  prospectors:
+    - paths:
+      - /var/log/syslog.log
+      - /var/log/auth.log
+      - /var/www/logs/*
+    - input_type: log
+  registry_file: /var/lib/filebeat/registry
+output:
+  redis:
+    host: "{{ filebeat_output }}"
+    port: 6379
+    save_topology: true
+    index: "filebeat"
+    db: 0
+    db_topology: 1
+    timeout: 5
+    reconnect_interval: 1
+logging:
+  level: warning
+  to_files: true
+  to_syslog: false
+  files:
+    path: /var/log/beats
+    name: filebeat.log
+    keepfiles: 7

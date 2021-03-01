@@ -1,0 +1,25 @@
+{% extends "email/html/_layout.html" %}
+{% load humanize %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Hi {{ first_name }}, </p>
+<br/>
+
+<p style="color:black; font-size: 14px; line-height:14px">You have pending notifications waiting for you:</p>
+<br/>
+
+<table style="font-family:Helvetica,Arial,sans-serif; line-height:16px">
+{% for notification in notifications %}
+    <tr style="{% if forloop.counter|divisibleby:2 %}background-color:white;{% else %}background-color:#FAFAFA;{% endif %} border-style: solid;
+    border-width: 0px 0px 1px 0px; border-color: darkgray;">
+        <td><img height="50" width="50" src="{{ notification.avatar_url }}"/></td>
+        <td style="padding-left: 10px;"><a href="{{ notification.notification_url }}">{{ notification.notification_display }}</a>
+            <span style="color: grey; font-size: 12px; font-weight: bold;">
+                {{ notification.notification_timestamp|naturaltime }}
+            </span>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

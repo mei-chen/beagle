@@ -1,0 +1,21 @@
+---
+
+- name: Set hostname
+  hostname: name="{{ APPLICATION_FQDN | mandatory }}"
+  become: true
+  become_user: root
+
+- name: Set hostname in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127\.0\.0\.1'
+    line: '127.0.0.1 {{ APPLICATION_FQDN | mandatory }}'
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  become_user: root
+
+- name: Set ansible_fqdn
+  set_fact:
+    ansible_fqdn: "{{ APPLICATION_FQDN | mandatory }}"

@@ -1,0 +1,58 @@
+{% extends "_layout.html" %}
+
+{% block extra_css %}
+<link href="/static/css/purchase/base_page.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+<div class="purchase yearly">
+
+  {% include "session_messages.html" %}
+
+  <h2>Congrats, you are awesome!</h2>
+
+  <p class="benefits-title">Here are the benefits of a Beagle subscription:</p>
+  <ul class="benefits">
+    <li>Unlimited number of uploaded documents</li>
+    <li>Premium support</li>
+    <li>Special pricing</li>
+    <li>Invite an unlimited number of collaborators</li>
+  </ul>
+
+  <div class="price-block">
+    <div class="price-detail">
+    Price:
+      {% if coupon %}
+      <span class="price old">{{ yearly_subscription.price }}</span>
+      <span class="price new">{{ coupon.purchase_price }}</span>
+      {% else %}
+      <span class="price default">{{ yearly_subscription.price }}</span>
+      {% endif %}
+    </div>
+
+    <div class="coupon">
+      <form method="get">
+        <input name="coupon" placeholder="Enter coupon code here" value="{% if coupon %}{{ coupon.code }}{% endif %}" autocomplete=off>
+        <button type="submit">Apply Coupon</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="checkout">
+    <a href="{% url 'checkout' %}">Checkout</a>
+  </div>
+
+
+</div>
+{% endblock %}
+
+
+
+{% block extra_js %}
+    {% if HOT_LOAD %}
+        <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+{% endblock %}

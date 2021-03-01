@@ -1,0 +1,128 @@
+{% extends "_layout.html" %}
+
+{% block extra_css %}
+<link href="/static/css/landing.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block conversion_scripts %}
+<!-- Google Code for 7 Day Trial Conversion Page
+In your html page, add the snippet and call
+goog_report_conversion when someone clicks on the
+chosen link or button. -->
+<script type="text/javascript">
+  /* <![CDATA[ */
+  goog_snippet_vars = function() {
+    var w = window;
+    w.google_conversion_id = 948001566;
+    w.google_conversion_label = "dc9YCLH8_l8QnraFxAM";
+    w.google_remarketing_only = false;
+  }
+
+  // DO NOT CHANGE THE CODE BELOW.
+  goog_report_conversion = function() {
+    goog_snippet_vars();
+    window.google_conversion_format = "3";
+    window.google_is_call = true;
+    var opt = new Object();
+    opt.onload_callback = function() {
+    var form = document.getElementById('register-form');
+    form.submit();
+  }
+    var conv_handler = window['google_trackConversion'];
+      if (typeof(conv_handler) == 'function') {
+      conv_handler(opt);
+    }
+  }
+
+  fb_report_conversion = function() {
+    fbq('track', 'CompleteRegistration');
+  }
+
+  report_conversion = function() {
+    goog_report_conversion();
+    fb_report_conversion();
+  }
+
+  /* Keydown submit listener */
+  onEnter = function (e) {
+    if (13 == e.keycode) {
+      report_conversion();
+    }
+  }
+
+/* ]]> */
+</script>
+<script type="text/javascript"
+ src="//www.googleadservices.com/pagead/conversion_async.js">
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <form class="form-signup" method="post">
+
+        {% csrf_token %}
+
+        <h1 class="form-signup-heading">Sign Up</h1>
+
+        {% if subscription %}
+        <div class="shopping-cart-form"><i class="fa fa-shopping-cart"></i> {{ subscription.name }}</div>
+        {% endif %}
+
+        <div class="optional-background">
+          <div class="polite-message">
+            <div><i class="fa fa-star-o" aria-hidden="true"></i> Optional, but always nice</div>
+          </div>
+          <div class="form-inline">
+            {{form.first}}
+            {{form.last}}
+          </div>
+        </div>
+
+        <!-- email -->
+        {% if form.email.errors %}<div class="field-error">{{ form.email.errors }}</div>{% endif %}
+        {{ form.email }}
+        <!-- /email -->
+
+        <!-- password -->
+        {% if form.password.errors %}<div class="field-error">{{ form.password.errors }}</div>{% endif %}
+        {{ form.password }}
+        <!-- /password -->
+
+        <div class="field-note"><i class="fa fa-newspaper-o"></i> Have a coupon?</div>
+
+        <!-- coupon -->
+        {% if form.coupon.errors %}<div class="field-error">{{ form.coupon.errors }}</div>{% endif %}
+        {{ form.coupon }}
+        <!-- /coupon -->
+
+        {% if form.non_field_errors %}<div class="nonfield-error">{{ form.non_field_errors }}</div>{% endif %}
+
+        <button id="submit-button" onkeydown="onEnter()" onclick="report_conversion()" class="btn btn-lg btn-primary btn-block" type="submit">Start Trial Account</button>
+        <div class="fineprint">
+            (No <strike>Credit Card</strike> required, no <strike>SPAM</strike>, no <strike>nasty stuff</strike>, ever, we promise)
+        </div>
+      </form>
+      <div class="form-bottom-note">
+          Already have an account? <a  href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Log In <i class="fa fa-sign-in"></i></a>
+      </div>
+
+    </div> <!-- /container -->
+    <script type="text/javascript">
+        $('#submit-button').mouseover(function(target) {$('#create_trial_button').text("Yes, I'm awesome!")})
+        $('#submit-button').mouseout(function(target) {$('#create_trial_button').text("Create Trial Account")})
+    </script>
+
+{% endblock %}
+
+{% block extra_js %}
+    {% if HOT_LOAD %}
+        <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+{% endblock %}
+

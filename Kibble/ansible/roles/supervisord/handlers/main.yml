@@ -1,0 +1,7 @@
+---
+
+- name: restart supervisord
+  service: name=supervisor state=restarted sleep=4
+  # sleep is because supervisor's init script exits before it really stops, which causes start to fail
+  become: true
+  become_user: root

@@ -1,0 +1,52 @@
+- name: Provision
+  user: ubuntu
+  hosts: "tag_environment_{{ env | mandatory }}"
+  gather_facts: false
+
+  vars_files:
+    - vars/globals.yml
+    - vars/secrets.yml
+
+  vars:
+    ansible_ssh_extra_args: "-A"
+    run_user: www-data
+    git_repo: git@github.com:BeagleInc/dogbone.git
+    app_env:
+      NLTK_DATA: /var/lib/nltk-data/
+      STATIC_ASSET_PATH: "{{ base_location }}static/"
+      AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY_ID }}"
+      AWS_SECRET_ACCESS_KEY: "{{ AWS_SECRET_ACCESS_KEY }}"
+      INTERCOM_APP_ID: "{{ INTERCOM_APP_ID if env in prod_envs else INTERCOM_DEV_APP_ID }}"
+      INTERCOM_API_KEY: "{{ INTERCOM_API_KEY if env in prod_envs else INTERCOM_DEV_API_KEY }}"
+      DJANGO_DEBUG: "{{ 0 if env in prod_envs else 1 }}"
+      SOCKET_DOMAIN: 1
+      EMAIL_BACKEND: smtp
+      SYSLOG: 1
+    client_identifier: "{{ client_name | mandatory }}-{{ env | mandatory }}"
+
+  pre_tasks:
+    - raw: test -e /usr/bin/python || (sudo apt-get -y update && sudo apt-get install -y python-minimal)
+    - action: setup
+
+    - apt:
+        name="{{ item }}"
+        state=latest
+        update_cache=yes
+        cache_valid_time=86400
+
+      with_items:
+        - acl
+        - unattended-upgrades
+      become: true
+      become_user: root
+
+  roles:
+    - dynamic_vars
+    - hostname
+    - deploy_user
+    - developer_access
+    - supervisord
+    - webserver
+    - nginx
+    - postfix
+    - elk/filebeat

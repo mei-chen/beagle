@@ -1,0 +1,68 @@
+---
+
+- name: Add Supervisor Group
+  group: name=supervisor state=present
+  become: true
+  become_user: root
+
+- name: Add User to Supervisor Group
+  user:
+    name="{{ item }}"
+    append=true
+    groups=supervisor
+  with_items:
+    - "{{ ansible_user_id }}"
+    - deploy
+  become: true
+  become_user: root
+
+- name: Install Required Packages
+  apt:
+    name="{{ item }}"
+    state=latest
+    update_cache=yes
+    cache_valid_time=86400
+  with_items:
+    - supervisor
+  become: true
+  become_user: root
+
+- name: Allow users to access
+  template:
+    src=supervisord/permissions.conf.j2
+    dest=/etc/supervisor/conf.d/permissions.conf
+    mode=0660
+  notify: restart supervisord
+  become: true
+  become_user: root
+
+# Otherwise node can't bind
+- name: Kill all port 4000 processes if present
+  command: fuser -k 4000/tcp
+  become: true
+  become_user: root
+  ignore_errors: yes
+
+# We need to force a restart here because handlers only run at the end
+# But we use the permission changes above later
+- name: restart supervisord
+  service:
+    name=supervisor
+    state=restarted
+    sleep=4
+  # sleep is because supervisor's init script exits before it really stops, which causes start to fail
+  become: true
+  become_user: root
+
+- name: Setup Gunicorn
+  template:
+    src=supervisord/gunicorn.conf.j2
+    dest=/etc/supervisor/conf.d/{{ application_name }}.conf mode=0660
+  notify: restart supervisord
+  become: true
+  become_user: root
+
+- name: restart nginx again
+  service: name=nginx state=restarted
+  become: true
+  become_user: root

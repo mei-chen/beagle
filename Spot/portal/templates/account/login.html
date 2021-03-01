@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/auth.css">
+    <title>Sign In</title>
+</head>
+<body>
+    <div class="wrap-table">
+        <div class="wrap-cell">
+            <div class="auth">
+                <div class="auth-header">
+                    <img class="auth-logo" src="/static/img/logo.svg" alt="Beagle">
+                </div>
+                <div class="auth-form">
+                    <h2>Sign in</h2>
+                    <!-- display non-field errors -->
+                    {% if form.errors %}
+                        <div class="auth-errors">
+                            {% for error in form.non_field_errors %}
+                                <strong class="auth-error text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <!-- display errors end -->
+                    <form class="form" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="login">E-mail</label>
+                            <input name="{{ form.login.html_name }}" type="text" class="form-control" id="login">
+                            {% if form.errors %}
+                            {% for error in form.errors.login %}
+                                <strong class="auth-error text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input name="{{ form.password.html_name }}" type="password" class="form-control" id="password">
+                            {% if form.errors %}
+                            {% for error in form.errors.password %}
+                                <strong class="auth-error text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="auth-form-bottom">
+                            <div class="auth-form-checkbox">
+                                <label for="remember">Remember me:</label>
+                                <input name="{{ form.remember.html_name }}" type="checkbox" id="remember">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </div>
+                    </form>
+
+                    <a class="beagle-link" href="/api/v1/dogbone/authorize/" title="Grant access to the Spot API for your Beagle account">
+                        <img src="/static/img/beagle-logo.png" width="25px" />
+                        Connect to Beagle
+                    </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

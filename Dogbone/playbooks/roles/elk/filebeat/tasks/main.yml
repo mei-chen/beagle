@@ -1,0 +1,44 @@
+---
+- name: adding filebeat repository GPG key
+  become: true
+  become_user: root
+  apt_key:
+    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+
+- name: adding beats repository
+  become: true
+  become_user: root
+  apt_repository:
+    repo: deb https://packages.elastic.co/beats/apt stable main
+    update_cache: yes
+
+- name: installing filebeat
+  become: true
+  become_user: root
+  apt:
+    pkg: filebeat
+    state: latest
+
+- name: setting filebeat to autostart
+  become: true
+  become_user: root
+  service:
+    name: filebeat
+    enabled: yes
+  notify:
+    - restart filebeat
+
+- name: copying filebeat configuration files
+  become: true
+  become_user: root
+  template:
+    src: "{{ item }}"
+    dest: /etc/filebeat/{{ item }}
+    owner: root
+    group: root
+    mode: 0664
+  with_items:
+    - filebeat.yml
+  notify:
+    - restart filebeat
+

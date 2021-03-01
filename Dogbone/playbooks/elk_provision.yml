@@ -1,0 +1,21 @@
+- name: Configure logger instance
+  user: ubuntu
+  hosts: "tag_environment_{{ logger_identifier | mandatory }}"
+  gather_facts: false
+
+  vars_files:
+    - vars/globals.yml
+    - vars/secrets.yml
+
+  pre_tasks:
+    - name: install python2
+      raw: test -e /usr/bin/python || (sudo apt -y update && sudo apt install -y python-minimal)
+
+  roles:
+    - { role: elk/java8, tags: ['java'] }
+    - { role: elk/nginx, tags: ['nginx'] }
+    - { role: elk/logstash, tags: ['logstash'] }
+    - { role: elk/elasticsearch, tags: ['elasticsearch'] }
+    - { role: elk/curator, tags: ['curator'] }
+    - { role: elk/kibana, tags: ['kibana'] }
+

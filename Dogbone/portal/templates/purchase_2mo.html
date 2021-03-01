@@ -1,0 +1,86 @@
+{% extends "_layout.html" %}
+{% load humanize %}
+
+{% block extra_css %}
+<link href="/static/css/purchase/base_page.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+
+<div class="purchase yearly">
+
+  {% include "session_messages.html" %}
+
+  <h1>Welcome to Beagle,</h1>
+  <h2>the smartest way to extract information from legal documents.</h2>
+
+  <div class="subscription-options">
+    <div class="subscription annual">
+
+      <div class="title">{{ display_subscription.name }}</div>
+
+      <div class="price-info">
+        <div class="price">
+          {% if coupon %}
+          <span class="old">${{ display_subscription.price|floatformat:2|intcomma }}</span>
+          <span class="new">${{ coupon.purchase_price|floatformat:2|intcomma }}</span>
+          {% else %}
+          <span class="default">${{ display_subscription.price|floatformat:2|intcomma }}</span>
+          {% endif %}
+          {{ display_subscription.currency }}
+        </div>
+
+        <div class="coupon">
+          <form method="get">
+            <input name="coupon" placeholder="Have a coupon code? Enter it here"
+            value="{% if coupon %}{{ coupon.code }}{% endif %}" autocomplete=off>
+            <button type="submit">Apply Coupon</button>
+          </form>
+        </div>
+      </div>
+
+      <ul class="benefits">
+        <li>Understand <em>every</em> contract you sign this year with <strong>unlimited document uploads</strong></li>
+        <li>Receive input from a wide range of people and experts with <strong>unlimited collaborator invitations</strong></li>
+        <li><strong>Early release of new features</strong></li>
+        <li>Invitation to <strong>join the Top Dog Customer Council</strong> (customer advisory board to influence product direction)</li>
+        <li><strong>Premium support</strong> (chat and email support)</li>
+      </ul>
+
+      <div class="buy-now">
+        <div class="buy-title">Buy now!</div>
+        <div class="paypal-block">
+          {{ paypal_form.render }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="benefit-hero">
+    Save time, save money, stay informed.
+  </div>
+
+
+  <div class="for-enterprise">
+    <div class="icon"></div>
+    <div class="text">
+      Enterprise? Looking for a custom solution? Contact our sales team at
+      <a href="mailto:enterprise@beagle.ai">enterprise@beagle.ai</a>.
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+    {% if HOT_LOAD %}
+        <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+{% endblock %}

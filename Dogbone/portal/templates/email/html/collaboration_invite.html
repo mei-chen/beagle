@@ -1,0 +1,35 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Dear {{ invitee_name }},</p>
+<br/>
+
+<p style="color:black; font-size: 12px; line-height:16px">
+    You have been invited by {{ inviter_name }}{% if inviter_email != inviter_name %} ({{ inviter_email }}){% endif %} to collaborate on
+    <b>{{ document_title }}</b>!
+</p>
+<br/>
+{% if sentence_text %}
+<p style="color:black; font-size: 12px; line-height:16px">
+    You are invited to share your opinion on this:<br/>
+    <pre style="font-size: 12px; font-style: italic; white-space: pre-wrap">{{ sentence_text }}</pre>
+</p>
+<br/>
+{% endif %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Follow this link for instant access:
+    <a style="color: blue; text-decoration: underline;" href="{{ follow_url }}">{{ document_title }}</a>
+</p>
+
+<p style="color:#909090; font-size: 11px; line-height:16px; margin-top: 5px;">
+    (or copy/paste this URL in your browser: <br/>
+    <span style="color:#909090; font-size: 10px">{{ follow_url }}</span> )
+</p>
+<br/>
+
+<p style="color:#dbdbdb; font-size: 10px; line-height:16px">If you have questions or feedback please email us at
+    <a style="color: #bcbcff; text-decoration: underline;" href="mailto:support@beagle.ai">support@beagle.ai</a>.
+    You may also visit our documentation site listed below.
+</p>
+
+{% endblock %}

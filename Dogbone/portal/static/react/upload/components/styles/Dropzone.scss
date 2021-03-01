@@ -1,0 +1,24 @@
+.beagle-dragndrop {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+
+  .dropzone {
+    border: 4px dashed #fff;
+    text-align: center;
+    font-weight: bold;
+    padding: 20px 30px 20px 30px;
+    margin: 50px 0 50px 0;
+    border-radius: 30px;
+    box-sizing: content-box !important;
+
+    &:active {
+      background-color:rgba(255, 255, 255, 0.5);
+    }
+
+    &:hover{
+      background-color:rgba(255, 255, 255, 0.5);
+      cursor:pointer;
+    }
+
+  }
+}
+

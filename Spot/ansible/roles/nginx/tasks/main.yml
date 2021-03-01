@@ -1,0 +1,39 @@
+---
+
+- name: Install Required Packages
+  apt:
+    name="{{ item }}"
+    state=latest
+    update_cache=yes
+    cache_valid_time=86400
+  with_items:
+    - nginx
+  become: true
+  become_user: root
+
+- name: Install nginx Conf
+  template:
+    src=nginx.j2
+    dest=/etc/nginx/sites-available/{{ application_name }}
+    force=true
+    mode=0660
+  notify: restart nginx
+  become: true
+  become_user: root
+
+- name: Enable nginx Site Config
+  file:
+    src=/etc/nginx/sites-available/{{ application_name }}
+    dest=/etc/nginx/sites-enabled/{{ application_name }}
+    state=link
+  notify: restart nginx
+  become: true
+  become_user: root
+
+- name: Remove default app from nginx
+  file:
+    name=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx
+  become: true
+  become_user: root

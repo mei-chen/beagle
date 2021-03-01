@@ -1,0 +1,32 @@
+.references {
+  background-repeat: no-repeat;
+  width: 44%;
+  padding-left: 2%;
+  float: right;
+  display: block;
+  overflow: hidden;
+
+  #external-refs {
+    overflow-y: scroll;
+    height: 150px;
+  }
+
+    p {
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 140%;
+    color: #4a4a4a;
+    text-align: left;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      li {
+        padding: 3px 0;
+        font-size: 14px;
+      }
+    }
+}

@@ -1,0 +1,42 @@
+---
+
+- name: Upgrade setuptools
+  pip: name=setuptools state=latest virtualenv={{ virtualenv_path }}
+
+- name: Install packages required by the Django app inside virtualenv
+  pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
+
+- name: Create the production django settings file
+  template: src=production_settings.j2
+            dest={{ project_path }}/{{ application_name }}/app_settings/production_settings.py
+
+- name: Run Django database migrations
+  django_manage:
+    command: migrate
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  when: run_django_db_migrations is defined and run_django_db_migrations
+  tags: django.migrate
+
+- name: Run Django collectstatic
+  django_manage:
+    command: collectstatic --noinput -i node_modules
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  when: run_django_collectstatic is defined and run_django_collectstatic
+  tags: django.collectstatic
+
+- name: Create super user
+  django_manage:
+    command: custom_createsuperuser --username {{ superuser_username | mandatory }} --password {{ superuser_password | mandatory }}
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  tags: django.create_superuser
+  when: create_superuser is defined and create_superuser
+
+- name: Update social apps
+  django_manage:
+    command: update_social_apps
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  tags: django.update_social_apps

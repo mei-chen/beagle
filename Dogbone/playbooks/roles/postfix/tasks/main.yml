@@ -1,0 +1,56 @@
+---
+
+- name: Set mailname
+  copy: content="{{ ansible_fqdn }}" dest=/etc/mailname owner=root group=root mode=0644
+  become: true
+  become_user: root
+  notify: Restart Postfix
+
+- name: Install Postfix
+  apt: name=postfix state=latest update_cache=yes cache_valid_time=86400
+  become: true
+  become_user: root
+
+- name: Configure Postfix
+  blockinfile:
+    dest: /etc/postfix/main.cf
+    block: |
+      smtp_tls_security_level = encrypt
+      smtp_sasl_auth_enable = yes
+      smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+      smtp_sasl_security_options = noanonymous
+  become: true
+  become_user: root
+  notify: Restart Postfix
+
+- name: Configure Postfix Auth
+  copy:
+    dest: /etc/postfix/sasl_passwd
+    force: yes
+    group: root
+    owner: root
+    mode: 0640
+    content: "smtp.sendgrid.net:2525 beagleinc:{{ sendgrid_password }}"
+  become: true
+  become_user: root
+  register: postfix_sasl
+
+- name: Regenerate Postfix Auth DB
+  shell: postmap /etc/postfix/sasl_passwd
+  become: true
+  become_user: root
+  when: postfix_sasl | changed
+  notify: Restart Postfix
+
+- name: Set Postfix relayhost
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: '^relayhost\s*='
+    # This relayhost must match with the one specified in the sasl_passwd file above
+    line: "relayhost = smtp.sendgrid.net:2525"
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  become_user: root
+  notify: Restart Postfix

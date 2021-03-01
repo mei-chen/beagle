@@ -1,0 +1,15 @@
+.ml-3 {
+    margin-left: 1rem !important;
+}
+
+.mr-3 {
+    margin-right: 1rem !important;
+}
+
+#content-header {
+    margin-bottom: 40px;
+}
+
+.scrollable {
+    overflow-y: auto;
+}

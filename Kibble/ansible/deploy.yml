@@ -1,0 +1,87 @@
+---
+
+- name: EC2
+  hosts: localhost
+  connection: local
+
+  vars_files:
+    - vars/base.yml
+    - vars/secret.yml
+
+  roles:
+    - ec2
+    - rds
+    - elasticache
+
+  post_tasks:
+    - wait_for: host="{{ item }}" port=22 search_regex=OpenSSH
+      with_items: "{{ groups['tag_environment_' + env] }}"
+
+  pre_tasks:
+    - name: Check environment is valid
+      fail: msg="Environment name must be 7 characters or shorter"
+      when: "{{ env | length }} > 7"
+
+    - name: Check db password is set
+      fail: msg="The database password needs to be set in vars/secret.yml"
+      when: db_password is undefined
+
+
+- name: Provision
+  user: ubuntu
+  hosts: "tag_environment_{{ env | mandatory }}"
+  gather_facts: false
+
+  vars:
+    ansible_ssh_extra_args: "-A"
+    git_repo: git@github.com:BeagleInc/kibble.git
+    git_branch: master
+    server_user: ubuntu
+    app_env:
+      STATIC_ASSET_PATH: "{{ app_location }}/collectstatic"
+      AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY_ID }}"
+      AWS_SECRET_ACCESS_KEY: "{{ AWS_SECRET_ACCESS_KEY }}"
+      AWS_STORAGE_BUCKET_NAME: "{{ AWS_STORAGE_BUCKET_NAME }}"
+      AWS_S3_REGION_NAME: "{{ AWS_S3_REGION_NAME }}"
+      DROPBOX_APP_KEY: "{{ DROPBOX_APP_KEY }}"
+      DROPBOX_APP_SECRET: "{{ DROPBOX_APP_SECRET }}"
+      GOOGLE_DRIVE_CLIENT_ID: "{{ GOOGLE_DRIVE_CLIENT_ID }}"
+      GOOGLE_DRIVE_CLIENT_SECRET: "{{ GOOGLE_DRIVE_CLIENT_SECRET }}"
+      DJANGO_DEBUG: "0"
+      SOCKET_DOMAIN: 1
+      EMAIL_BACKEND: smtp
+      SYSLOG: 1
+      NODE_SOCKET_SERVER_PORT: "{{ NODE_SOCKET_SERVER_PORT }}"
+
+  vars_files:
+    - vars/base.yml
+    - vars/secret.yml
+
+  pre_tasks:
+    - raw: sudo apt-get -y install python-simplejson
+    - action: setup
+
+    - apt:
+        name="{{ item }}"
+        state=latest
+        update_cache=yes
+        cache_valid_time=86400
+      with_items:
+        - acl
+        - unattended-upgrades
+      become: true
+      become_user: root
+
+    - gather_secrets:
+      become: true
+      become_user: root
+
+  roles:
+    - dynamic_vars
+    - developer_access
+    - base
+    - redis
+    - node
+    - web
+    - nginx
+    - supervisord

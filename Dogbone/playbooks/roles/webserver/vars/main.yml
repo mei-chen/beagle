@@ -1,0 +1,2 @@
+npm_socket_path: "{{ app_location }}/node_server"
+npm_frontend_path: "{{ app_location }}/portal/static/react"

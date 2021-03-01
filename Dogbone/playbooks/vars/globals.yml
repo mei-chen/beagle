@@ -1,0 +1,20 @@
+---
+
+prod_envs:
+  - beta
+  - tr_prod
+  - eu_prod
+
+application_name: dogbone
+base_location: /var/www/
+app_location: "{{ base_location }}{{ application_name }}"
+virtualenv_path: "{{ base_location }}venv/"
+APPLICATION_FQDN: "{{ subdomain | mandatory }}.beagle.ai"
+key_name: ansible
+
+kibana_version: "4.6"
+
+kibana_server_port: 5601
+kibana_server_host: localhost
+kibana_uri: "http://{{ kibana_server_host }}:{{ kibana_server_port }}"
+kibana_elasticsearch_url: "http://localhost:9200"

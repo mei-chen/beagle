@@ -1,0 +1,30 @@
+.critical-action-active {
+  color: #A80830;
+  border-bottom: 1px dashed;
+  cursor: pointer;
+}
+
+.critical-action-confirmation {
+  cursor: pointer;
+
+  span {
+    padding: 4px;
+    border: 1px solid #555;
+    font-size: 80%;
+    color: #000;
+  }
+
+  .approve {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .reject {
+    border-left: 0px;
+    border-radius: 0 4px 4px 0;
+  }
+}
+.critical-action-inactive {
+  color: #999;
+  cursor: default;
+  border-bottom: 1px dashed #999;
+}

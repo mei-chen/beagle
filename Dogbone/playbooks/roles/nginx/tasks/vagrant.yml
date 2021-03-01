@@ -1,0 +1,12 @@
+---
+
+
+- name: Install nginx Conf for Vagrant
+  template:
+    src=nginx_vagrant.j2
+    dest=/etc/nginx/sites-available/beagle
+    force=true
+    mode=0660
+  notify: restart nginx
+  become: true
+  become_user: root

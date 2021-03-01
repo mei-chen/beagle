@@ -1,0 +1,2 @@
+class DocumentSizeOverLimitException(Exception):
+    pass

@@ -1,0 +1,42 @@
+{% extends "_layout.html" %}
+
+
+{% block extended_header %}
+	<div class="headline">
+	  <h1>We sniff out the fine print so you don't have to.</h1>
+	  <h2>The simplest way to extract information from legal documents.</h2>
+	  <h2>&nbsp;</h2>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="features">
+      <h3>We show you what is there... fine print and all.</h3>
+      <ul>
+        <li>
+          <i class="one"><img src="/static/img/icon-time@2x.png" width="72" height="72"></i>
+          <h4>Save Time</h4>
+          <p>The days of reading are now gone. Near instant summaries of the most complex documents.</p>
+        </li>
+        <li>
+          <i class="one"><img src="/static/img/icon-money@2x.png" width="72" height="72"></i>
+          <h4>Save Money</h4>
+          <p>Reduce those lawyer and legal department conversations drastically. You are now informed.</p>
+        </li>
+        <li>
+          <i class="one"><img src="/static/img/icon-informed@2x.png" width="72" height="72"></i>
+          <h4>Stay Informed</h4>
+          <p>Instant awareness of every element that impacts your business. You know what is going on.</p>
+        </li>
+      </ul>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+  {% if HOT_LOAD %}
+    <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js??"></script>
+  {% else %}
+    <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+  {% endif %}
+{% endblock %}

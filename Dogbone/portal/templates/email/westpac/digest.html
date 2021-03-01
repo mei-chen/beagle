@@ -1,0 +1,14 @@
+{% extends "email/westpac/_layout.html" %}
+{% block body %}
+
+Hi {{ first_name }} (WESTPAC CLIENT),
+
+{% if is_owner %}Your{% else %}The{% endif %} document {{ document_title }} has just been {{ done_action }}!
+Follow this link to check it out: {{ follow_link }}
+{% for clause_stats in digest.annotations %}
+    * {{ clause_stats.display_plural }}: {{ clause_stats.total }} clauses
+
+{% endfor %}
+
+The Westpac Team, on collaboration with Beagle Asia Pacific Pty Ltd.
+{% endblock %}

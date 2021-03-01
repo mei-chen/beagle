@@ -1,0 +1,165 @@
+@import 'variables';
+
+h1 {
+  font-family: 'Concourse T7', Helvetica, Arial, sans-serif;
+  margin: 40px 0 0;
+  padding: 0;
+  color: black;
+}
+h2 {
+  font-family: 'Concourse C2', Helvetica, Arial, sans-serif;
+  padding-bottom: 20px;
+  color: black;
+}
+
+
+.subscription-options {
+  display: flex;
+  justify-content: center;
+  flex-align: column;
+  margin: 30px 0px;
+
+  .subscription {
+    flex: 1;
+    max-width: 500px;
+    margin: 0px 10px;
+
+    border-radius: 15px;
+    overflow: hidden;
+
+    box-shadow: 0px 2px 17px 0px rgba(black, 0.35);
+
+    .title {
+      font-family: 'Concourse C2', Helvetica, Arial, sans-serif;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .price-info {
+      padding: 10px;
+      text-align: center;
+
+      .price, .price span {
+        font-size: 32px;
+        font-family: 'Concourse T7', Helvetica, Arial, sans-serif;
+      }
+
+      .price {
+        .old {
+          color: red;
+          text-decoration: line-through;
+        }
+      }
+
+      .coupon {
+        padding: 10px;
+        input {
+          color: white;
+          width: 240px;
+          font-size: 14px;
+          background: none;
+          background-color: rgba(white, 0.1);
+          border: none;
+          outline: none;
+          padding: 10px;
+        }
+        button {
+          background: rgba(white, 0.2);
+          border: none;
+          padding: 9px;
+        }
+      }
+    }
+
+    .benefits {
+      background-color: #eee;
+      color: #676767;
+      font-size: 14px;
+      line-height: 20px;
+
+      $bullet-width: 20px;
+      $side-padding: 20px;
+      li {
+        padding: 12px 0;
+        padding-left: $bullet-width + $side-padding;
+        padding-right: $side-padding;
+        &:before {
+          content: "✓";
+          display: inline-block;
+          width: $bullet-width;
+          margin-left: -$bullet-width;
+        }
+      }
+      li:nth-child(even) {
+        background-color: rgba(black, 0.04);
+      }
+    }
+
+    .buy-now {
+      padding: 10px;
+      background-color: white;
+      text-align: center;
+
+      .buy-title {
+        padding-top: 15px;
+        font-family: 'Concourse T7', Helvetica, Arial, sans-serif;
+        font-size: 24px;
+      }
+      .paypal-block {
+      }
+    }
+
+    &.annual {
+      .price-info {
+        color: white;
+        background-color: $beagle-red;
+      }
+
+      .title {
+        color: white;
+        background-color: $beagle-red;
+      }
+    }
+  }
+}
+
+.benefit-hero {
+  text-align: center;
+  font-family: 'Concourse C2', Helvetica, Arial, sans-serif;
+  font-size: 30px;
+  margin: 20px 0 30px;
+}
+
+.for-enterprise {
+  $base-col: $beagle-red;
+  display: flex;
+  flex-direction: row;
+
+  padding: 10px;
+
+  max-width: 430px;
+  margin: 10px auto;
+  border-radius: 8px;
+  border: 1px solid desaturate(lighten($base-col, 20%), 30%);
+  color: $base-col;
+
+  background-color: white;
+
+  .icon {
+    display: flex;
+    background-image: url('/static/img/GlassesBeagle.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    background-position-y: 50%;
+  }
+
+  .text {
+    padding: 10px;
+    flex: 1;
+  }
+}
+

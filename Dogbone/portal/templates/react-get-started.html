@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="Beagle">
+    <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
+    <title>Beagle</title>
+    <link href="../static/css/styles2.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css" />
+    {% include "global_partials.html" %}
+    <!--Dropbox Include-->
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tsx9rcah18qz3c7"></script>
+    <!--Google Include-->
+    <script src="https://www.google.com/jsapi?key=AIzaSyAb_m3H2ckI6r69wqbUtGjJhkBpjEzBY3o"></script>
+    {% include "gdrive.html" %}
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onApiLoad"></script>
+  </head>
+  <body style="margin: 0; -webkit-font-smoothing: antialiased; font-smoothing: antialiased; background-color: #fafafa;">
+    {% include "user_json_data.html" %}
+    <div id="react-get-started"></div>
+    {% if HOT_LOAD %}
+    <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/getstarted.entry.js"></script>
+    {% else %}
+    <script type="text/javascript" src="/static/react/build/getstarted.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+  </body>
+</html>

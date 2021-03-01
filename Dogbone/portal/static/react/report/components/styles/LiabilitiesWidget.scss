@@ -1,0 +1,75 @@
+@import 'variables';
+
+.liabilities {
+        background-repeat: no-repeat;
+        width: 44%;
+        padding-left: 2%;
+        float: right;
+        display: block;
+        overflow: hidden;
+  }
+
+.liab-bg, .liab-line {
+  display: inline-block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+}
+.liab-bg {
+  position: relative;
+  width: 420px;
+  margin: 4px 0 0 0;
+  background-color: rgba(100,100,100,.2);
+}
+
+.liab-line {
+  position: absolute;
+  width: 0%; /* default width. it is dynamically adjusted */
+  border-radius: 10px 0 0 10px;
+  &.both { background-color: $both; }
+  &.partya { background-color: $you; }
+  &.partyb { background-color: $them; }
+}
+
+.heatmap {
+  position: relative;
+  width: 100%;
+
+  img{
+    position: absolute;
+  }
+
+  canvas {
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .them-label, .you-label {
+    position: absolute;
+    font-size: 12px;
+    top: 5px;
+    font-weight: bold;
+    color: #4a4a4a;
+  }
+  .them-label {
+    left: 5px;
+  }
+  .you-label {
+    float: right;
+    left: 80%;
+  }
+}
+
+
+/* 'i' icon that enables liability hover over */
+.info-icon {
+  color: #4a4a4a;
+  opacity: 0.6;
+  width: 18px;
+  text-align: center;
+  padding-top: 3px;
+  height: 19px;
+  &:hover {
+    color: $beagle-red;
+    opacity: 1.0;
+  }
+}

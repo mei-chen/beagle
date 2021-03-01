@@ -1,0 +1,27 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+<h4>EDIT USER</h4>
+
+
+<form method="POST" role="form">
+
+    {% csrf_token %}
+
+    <div>
+        <label for="id_first">First</label>
+        {{ form.first }}
+    </div>
+    <div>
+        <label for="id_last">Last</label>
+        {{ form.last }}
+    </div>
+    <div>
+        <label for="id_title">Title</label>
+        {{ form.title }}
+    </div>
+   
+    <input type="submit" name="edit_user" value="Update"/>
+</form>
+
+{% endblock %}

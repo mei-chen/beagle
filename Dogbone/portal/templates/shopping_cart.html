@@ -1,0 +1,24 @@
+<div class="shopping-cart">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in cart %}
+            <tr>
+                <td class="name"> {{ row.item.name }} </td>
+                <td class="qty"> {{ row.quantity }} </td>
+                <td class="price"> {{ row.total_price }} {{ row.item.currency }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="2">Total:</td>
+                <td>{{ cart.total_price }} {{ cart.currency }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

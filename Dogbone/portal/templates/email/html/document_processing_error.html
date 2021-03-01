@@ -1,0 +1,14 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Hi {{ first_name }}, </p>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">Uh oh! We're having trouble processing your contract <b>{{ document_title }}</b>.</p>
+
+<p style="color:black; font-size: 14px; line-height:16px">Often it's because we don't support that file type.
+    Today we are looking at .docx, .doc, .pdf and .txt. Rest assured, we've got someone looking into it and will get back to you as soon as we can.</p>
+
+<p style="color:black; font-size: 14px; line-height:16px">If you'd like an update, just hit "reply" to this email. Thanks for your patience.</p>
+
+
+{% endblock %}

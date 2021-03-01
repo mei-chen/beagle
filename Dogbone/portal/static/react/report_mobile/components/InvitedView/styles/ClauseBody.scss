@@ -1,0 +1,10 @@
+@import '../../styles/variables';
+
+.clause-body {
+
+  height: calc(100% - #{2 * $icon-size + 2 * $mid-spacing});
+  margin: $mid-spacing;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+}

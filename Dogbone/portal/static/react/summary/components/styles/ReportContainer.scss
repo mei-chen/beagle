@@ -1,0 +1,53 @@
+.report-wrap-container {
+  max-height: 70vh;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 2%;
+  margin: 0;
+  position: relative;
+  color: #4a4a4a;
+  .report-title {
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    text-shadow: none;
+    color: #4a4a4a;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .export-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+
+    .export-button {
+      font-size: 15px;
+      color: #4a4a4a;
+      margin-left: 10px;
+      text-decoration: none;
+      position: relative;
+
+      .fa {
+        font-size: 20px;
+        vertical-align: middle;
+        margin-right: 3px;
+      }
+    }
+
+    .extra-tool-wrapper {
+      display: inline-block;
+    }
+
+    .document-export-popover {
+      display: block;
+      top: 100%;
+      left: -104px;
+      width: 240px!important;
+    }
+  }
+}

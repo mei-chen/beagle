@@ -1,0 +1,11 @@
+supervisor_django: "{{ application_name }}_django"
+supervisor_celery: "{{ application_name }}_celery"
+
+supervisor_npm: "{{ application_name }}_npm"
+npm_socket_path: "{{ project_path}}/realtime/node"
+
+
+# Logs
+application_log_dir: "/srv/logs"
+application_log_file: "{{ application_log_dir }}/gunicorn_supervisor.log"
+application_log_npm_file: "{{ application_log_dir }}/npm_supervisor.log"

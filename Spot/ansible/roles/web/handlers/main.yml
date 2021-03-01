@@ -1,0 +1,5 @@
+---
+
+- name: restart application
+  supervisorctl: name={{ supervisor_django }} state=restarted
+  when: server_user != "vagrant"

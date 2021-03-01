@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  .pagination-option {
+    cursor: pointer;
+    text-align: center;
+    color: #ccc;
+    font-size: 15px;
+    padding: 0 10px;
+
+    &.enabled {
+      color : #333;
+      &:hover {
+        color : #000;
+      }
+    }
+  }
+}

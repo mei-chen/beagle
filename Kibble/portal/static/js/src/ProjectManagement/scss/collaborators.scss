@@ -1,0 +1,47 @@
+.collaborators {
+	margin: -15px;
+
+	.collaborators-wrapper {
+		height: 300px;
+		overflow-y: auto;
+		align-items: center;
+
+		.collaborator{
+			padding: 10px;
+			display: flex;
+			justify-content: space-between;
+			border-bottom: 1px solid grey;
+
+			i {
+				cursor: pointer;
+				padding: 5px;
+			}
+		}
+	}
+
+	.collaborators-tools {
+		background-color: #f1f1f1;
+		padding: 10px;
+		display: flex;
+		justify-content: space-between;
+
+		i {
+			padding: 0px 2px 0px 0px;
+		}
+
+		.input-user {
+			padding: 5px;
+			width: 75%;
+		}
+	}
+}
+.fail-message-wrapper {
+	padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+	i {
+		padding: 5px;
+	}
+}

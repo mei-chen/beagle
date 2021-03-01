@@ -1,0 +1,22 @@
+{% extends "email/html/_layout.html" %}
+
+{% block body %}
+
+<p style="color:#5d101a; font-size: 18px; line-height:16px;">Hi {{ first_name }},</p>
+<br/>
+
+{% if documents %}
+    <p style="font-size: 14px; line-height:16px">Your batch <b>{{ batch_name }}</b> has just been processed!</p>
+    <br/>
+    <p style="font-size: 14px; line-height:16px">Check it out in the link below:
+        <br/>
+        <br/>
+        <a style="color: #5d101a; text-decoration: underline; font-size: 15px;" href="{{ follow_link }}">
+            <b>{{ follow_link }}</b>
+        </a>
+    </p>
+{% else %}
+    <p style="font-size: 14px; line-height:16px">Uh oh! We're having trouble processing your batch <b>{{ batch_name }}</b>.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+---
+
+
+- name: "Permissions on {{ app_env.STATIC_ASSET_PATH }}"
+  file: state=directory path="{{ app_env.STATIC_ASSET_PATH }}" owner="{{ run_user }}" group="{{ run_user }}" mode=2775
+  become: true
+  become_user: root
+
+- name: "Add STATIC_ASSET_PATH to /etc/environment"
+  lineinfile:
+    create: yes
+    dest: "/etc/environment"
+    regexp: '^STATIC_ASSET_PATH='
+    line: "STATIC_ASSET_PATH=\"{{ app_env.STATIC_ASSET_PATH }}\""
+  become: true
+  become_user: root

@@ -1,0 +1,45 @@
+---
+- name: adding logstash repository GPG key
+  apt_key:
+    url: https://packages.elasticsearch.org/GPG-KEY-elasticsearch
+  become: true
+  become_user: root
+
+- name: adding logstash repository
+  apt_repository:
+    repo: deb http://packages.elasticsearch.org/logstash/2.2/debian stable main
+    update_cache: yes
+  become: true
+  become_user: root
+
+- name: installing logstash
+  apt:
+    pkg: logstash
+    state: latest
+  become: true
+  become_user: root
+
+- name: setting logstash to autostart
+  become: true
+  become_user: root
+  service:
+    name: logstash
+    enabled: yes
+  notify:
+    - restart logstash
+
+- name: copying logstash configuration files
+  become: true
+  become_user: root
+  template:
+    src: "{{ item }}"
+    dest: /etc/logstash/conf.d/{{ item }}
+    owner: root
+    group: root
+    mode: 0664
+  with_items:
+    - 02-redis-input.conf
+    - 10-syslog-filter.conf
+    - 30-elasticsearch-output.conf
+  notify:
+    - restart logstash

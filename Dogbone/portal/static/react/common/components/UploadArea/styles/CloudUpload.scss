@@ -1,0 +1,17 @@
+.cloud-upload{
+    display: flex;
+
+    .upload-app {
+        padding: 10px;
+        flex: 1;
+        
+        &:hover {
+          color: #5D101A;
+          background: rgb(249, 249, 249);
+          cursor: pointer;
+        }
+        .upload-app-text {
+
+        }
+    }
+}

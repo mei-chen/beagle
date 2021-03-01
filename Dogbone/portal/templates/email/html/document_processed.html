@@ -1,0 +1,12 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Hi {{ first_name }}, </p>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">Your document <b>{{ document_title }}</b> has just been processed!</p>
+<p style="color:black; font-size: 14px; line-height:16px">You can check it out
+    <a style="color: blue; text-decoration: underline;" href="{{ follow_link }}">here</a>.
+</p>
+
+
+{% endblock %}

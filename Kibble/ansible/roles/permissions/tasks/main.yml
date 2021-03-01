@@ -1,0 +1,4 @@
+- name: "Permissions on {{ app_location }}"
+  file: state=directory path="{{ app_location }}" owner=root group=www-data mode=2775
+  become: true
+  become_user: root

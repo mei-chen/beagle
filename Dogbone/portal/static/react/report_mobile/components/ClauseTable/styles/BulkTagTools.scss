@@ -1,0 +1,107 @@
+@import '../../styles/variables';
+
+:local(.tagTools) {
+  div {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  margin: 8px 0px;
+
+  .typeahead-tokenizer {
+    display: flex;
+  }
+
+  .typeahead-token {
+    display: flex;
+    padding: 5px;
+    margin-right: 8px;
+    border-radius: 3px;
+    background: #fff;
+    font-size: 14px;
+    cursor: default;
+    color: rgba(black, 0.7);
+    box-shadow: 0px 0px 4px 0px rgba(black, 0.2);
+
+    &.M { background-color: $tagged; }
+    &.K { background-color: #fff; }
+    &.S { background-color: $auto-tagged; }
+
+    &.LIABILITY { background-color: $liab; }
+    &.RESPONSIBILITY { background-color: $resp; }
+    &.TERMINATION { background-color: $term; }
+    &.mention { background-color: #EEE8AA}
+    &.hashtag { background-color: #50C878}
+
+
+    // the check or x buttons
+    .typeahead-token-controls {
+      margin-left: 5px;
+      font-weight: bold;
+      color: inherit;
+
+      .typeahead-token-check {
+        margin: 0 2px;
+        color: inherit;
+      }
+      .typeahead-token-close {
+        margin: 0 2px;
+        color: inherit;
+      }
+    }
+
+    .tagtype-icon {
+      line-height: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+  }
+
+  .typeahead {
+    flex: 1;
+    position: relative;
+    min-width: 200px;
+
+    input {
+      height: 23px;
+      width: 100%;
+      border: none;
+      outline: none;
+      background: none;
+      border-bottom: 1px solid transparent;
+      &:focus {
+        border-color: #ccc;
+      }
+    }
+
+    ul.typeahead-selector {
+      position: absolute;
+      list-style: none;
+      left: 0;
+      top: 18px;
+      padding: 5px 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 0 0 4px 4px;
+      z-index: 1;
+
+      li {
+        padding: 5px;
+        border-radius: 2px;
+        span {
+          text-decoration: none;
+          color: #000;
+          padding: 3px;
+          cursor: pointer;
+        }
+        &.hover {
+          background-color: #eee;
+        }
+      }
+    }
+  }
+}

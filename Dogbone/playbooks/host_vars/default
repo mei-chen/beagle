@@ -1,0 +1,14 @@
+---
+# These are the settings for the vagrant app install
+
+run_user: vagrant
+app_location: /vagrant/
+database_name: beagle
+
+# App Settings
+app_env:
+  STATIC_ASSET_PATH: "/home/vagrant/static/"
+  REDIS_URL: "redis://localhost:6379/1"
+  BROKER_URL: "redis://localhost:6379/0"
+  DATABASE_URL: "postgres://%2Fvar%2Frun%2Fpostgresql/{{ database_name }}"
+

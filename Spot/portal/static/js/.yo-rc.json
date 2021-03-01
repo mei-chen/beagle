@@ -1,0 +1,9 @@
+{
+  "generator-react-webpack": {
+    "appName": "spot",
+    "style": "scss",
+    "cssmodules": true,
+    "postcss": false,
+    "generatedWithVersion": 4
+  }
+}

@@ -1,0 +1,107 @@
+html,
+body {
+    height: 100%;
+    background-color: rgb(93, 16, 26);
+}
+
+.wrap-table {
+    height: 100%;
+    display: table;
+    width: 100%;
+}
+
+.wrap-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.auth {
+    margin: 0 auto;
+    max-width: 480px;
+}
+
+.auth label {
+    font-weight: normal;
+}
+
+.auth h2 {
+    margin-top: 0;
+    margin-bottom: 22px;
+}
+
+.auth .error {
+    margin-bottom: 5px;
+    color: #f00;
+}
+
+
+.auth-header {
+    text-align: right;
+    color: #fff;
+    padding: 15px 18px;
+}
+
+.auth-logo {
+    width: 34px;
+    height: auto;
+    opacity: 0.5;
+}
+
+.auth-form {
+    background-color: #fff;
+    padding: 30px 25px 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.auth-form-checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 15px;
+}
+
+.auth-form-checkbox label {
+    margin-bottom: 0;
+}
+
+.auth-form-checkbox input {
+    margin-top: 0px;
+    vertical-align: middle;
+}
+
+.auth-form-bottom {
+    text-align: right;
+    padding: 5px 22px;
+}
+
+.auth-link {
+    color: #fff;
+    margin: 0 20px;
+}
+
+.auth-link:hover {
+    color: #fff;
+}
+
+.auth-footer {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.beagle-link {
+    font-size: 14px;
+    color: rgb(93, 16, 26);
+    padding: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.beagle-link:hover {
+    color: rgb(93, 16, 26);
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.beagle-link img {
+    margin-right: 6px;
+    margin-top: -2px;
+}

@@ -1,0 +1,18 @@
+.subscription-contents{
+  display: flex;
+  flex-direction: column;
+
+  .free-trial-message {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .paid-trial-message {
+    .subscription-item {
+      padding-top: 5px;
+    }
+  }
+  .warning-sign{
+    color: #8c8c8c;
+  }
+}

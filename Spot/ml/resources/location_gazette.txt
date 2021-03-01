@@ -1,0 +1,863 @@
+Afghan
+African
+Afrikaner
+Albanian
+Algerian
+American
+Andorran
+Angolan
+Anguillan
+Antarctican
+Antillean
+Argentine
+Argentinian
+Armenian
+Aromanian
+Aruban
+Australian
+Austrian
+Azerbaijani
+Azeri
+Bahamian
+Bahraini
+Balochi
+Bangladeshi
+Barbadian
+Basotho
+Belarusian
+Belgian
+Belizean
+Beninese
+Bermudian
+Bhutanese
+Boer
+Bolivian
+Bosnian
+Botswanan
+Brazilian
+Breton
+British
+Briton
+Bruneian
+Bulgarian
+Burkinabe
+Burmese
+Burundian
+Cambodian
+Cameroonian
+Canadian
+Verdean
+Catalan
+Caymanian
+Chadian
+Chilean
+Chinese
+Colombian
+Comorian
+Congole
+Congolese
+Islander
+Croat
+Croatian
+Cuban
+Cypriot
+Czech
+Djiboutian
+Dominican
+Dutch
+Timorese
+Ecuadorian
+Egyptian
+Emirati
+Emirian
+English
+Guinean
+Eritrean
+Estonian
+Ethiopian
+Faeroese
+Fijian
+Filipino
+Finn
+French
+Gabonese
+Gambian
+Georgian
+German
+Ghanaian
+Gibraltarian
+Greek
+Greenlander
+Grenadian
+Guadeloupean
+Guamanian
+Guatemalan
+Guianese
+Guyanese
+Haitian
+Honduran
+Hungarian
+Icelander
+Indian
+Indonesian
+Iranian
+Iraqi
+Irish
+Israeli
+Italian
+Ivoirian
+Ivorian
+Jamaican
+Japane
+Japanese
+Jordanian
+Kazakh
+Kenyan
+Kiribatian
+Korean
+Kosovo Albanian
+Kuwaiti
+Kyrgyz
+Lao
+Latvian
+Lebane
+Lebanese
+Liberian
+Libyan
+Liechtensteiner
+Lithuanian
+Luxembourger
+Macanese
+Macedonian
+Malagasy
+Malawian
+Malaysian
+Maldivian
+Malian
+Malte
+Maltese
+Manx
+Marshallese
+Martinican
+Mauritanian
+Mauritian
+Mexican
+Micronesian
+Moldovan
+Monegasque
+Mongolian
+Montenegrian
+Montenegrin
+Montserratian
+Moroccan
+Mozambican
+Namibian
+Nauruan
+Nepale
+Nepalese
+Netherlander
+Zealander
+Nicaraguan
+Nigerian
+Nigerien
+Niuean
+Norwegian
+Omani
+Pakistani
+Palauan
+Palestinian
+Panamanian
+Paraguayan
+Persian
+Peruvian
+Pitcairner
+Polynesian
+Portugue
+Portuguese
+Qatari
+Quebecer
+Reunionese
+Romanian
+Russian
+Rwandan
+Sahrawi
+Salvadoran
+Salvadorian
+Samoan
+Marinese
+Saudi
+Arabian
+Senegalese
+Serb
+Serbian
+Sicilian
+Singaporean
+Slovak
+Slovene
+Somali
+Spaniard
+Spanish
+Lankan
+Sudane
+Sudanese
+Surinamer
+Swazi
+Swede
+Syrian
+Taiwane
+Taiwanese
+Tajik
+Tanzanian
+Tibetan
+Tobagonian
+Togolese
+Tokelauan
+Tongan
+Trinidadian
+Tunisian
+Turk
+Turkmen
+Tuvaluan
+Ugandan
+Ukrainian
+Uruguayan
+Uzbek
+Vanuatuan
+Vatican
+Venezuelan
+Vietnamese
+Vincentian
+Welsh
+Yemeni
+Zambian
+Zimbabwean
+
+
+
+Alameda
+Allegheny
+Baltimore
+Bergen
+Bernalillo
+Bexar
+Bronx
+Broward
+Bucks
+Clark
+Cobb
+Collin
+Contra Costa
+Cook
+Cuyahoga
+Dallas
+Davidson
+DeKalb
+Denton
+Denver
+DuPage
+Duval
+El Paso
+Erie
+Essex
+Fairfax
+Fairfield
+Franklin
+Fresno
+Fulton
+Gwinnett
+Hamilton
+Harris
+Hartford
+Hennepin
+Hidalgo
+Hillsborough
+Honolulu
+Jackson
+Jefferson
+Kent
+Kern
+King
+Kings
+Lake
+Los Angeles
+Macomb
+Maricopa
+Marion
+Mecklenburg
+Miami-Dade
+Middlesex
+Milwaukee
+Monmouth
+Monroe
+Montgomery
+Multnomah
+Nassau
+New Haven
+New York
+Norfolk
+Oakland
+Oklahoma
+Orange
+Palm Beach
+Philadelphia
+Pierce
+Pima
+Pinellas
+Prince George's
+Providence
+Queens
+Riverside
+Sacramento
+Salt Lake
+San Bernardino
+San Diego
+San Francisco
+San Joaquin
+San Mateo
+Santa Clara
+Shelby
+Snohomish
+St. Louis
+Suffolk
+Tarrant
+Travis
+Ventura
+Wake
+Wayne
+Westchester
+Worcester
+
+
+
+Alabama
+ALABAMA
+Alaska
+ALASKA
+Alberta
+Arizona
+ARIZONA
+Arkansas
+ARKANSAS
+British Columbia
+Ca
+CA
+California
+CALIFORNIA
+Colorado
+COLORADO
+Connecticut
+CONNECTICUT
+DC
+D. C
+D.C
+De
+DE
+Delaware
+DELAWARE
+District of Columbia
+DISTRICT OF COLUMBIA
+Federated States of Micronesia
+FEDERATED STATES OF MICRONESIA
+FL
+FLA
+Florida
+FLORIDA
+Ga
+GA
+Georgia
+GEORGIA
+Hawaii
+HAWAII
+Ia
+IA
+Idaho
+IDAHO
+Illinois
+ILLINOIS
+Indiana
+INDIANA
+Iowa
+IOWA
+I. Terr
+I.Terr
+Kan
+Kansas
+KANSAS
+Kentucky
+KENTUCKY
+Ks
+KS
+Ky
+KY
+LA
+Louisiana
+LOUISIANA
+Ma
+MA
+Maine
+MAINE
+Manitoba
+Maryland
+MARYLAND
+Massachusetts
+MASSACHUSETTS
+Mi
+MI
+Michigan
+MICHIGAN
+Minnesota
+MINNESOTA
+Mississippi
+MISSISSIPPI
+Missouri
+MISSOURI
+Mn
+MN
+Mo
+MO
+Montana
+MONTANA
+N. Dak
+N.Dak
+Neb
+Nebraska
+NEBRASKA
+Nevada
+NEVADA
+New Brunswick
+Newfoundland
+New Hampshire
+NEW HAMPSHIRE
+New Jersey
+NEW JERSEY
+New Mexico
+NEW MEXICO
+NEW YORK
+N. H
+N.H
+Nj
+NJ
+N. J
+N.J
+Nm
+NM
+N. Mex
+N.Mex
+North Carolina
+NORTH CAROLINA
+North Dakota
+NORTH DAKOTA
+Northwest Terr
+Nova Scotia
+NS
+NT
+NU
+Nunavut
+Nv
+NV
+Ny
+NY
+N. Y
+N.Y
+Ohio
+OHIO
+OKLAHOMA
+Ontario
+Oregon
+OREGON
+Pa
+PA
+PE
+Penna
+Pennsylvania
+PENNSYLVANIA
+Prince Edward
+Puerto Rico
+QB
+Quebec
+Rhode Island
+RHODE ISLAND
+Ri
+RI
+Sasketchewan
+Sc
+SC
+Sd
+S. Dak
+S.Dak
+South Carolina
+SOUTH CAROLINA
+South Dakota
+SOUTH DAKOTA
+Tennessee
+TENNESSEE
+Tex
+Texas
+TEXAS
+Tn
+TN
+Tx
+TX
+Ut
+UT
+Utah
+UTAH
+U. Terr
+Va
+VA
+Vermont
+VERMONT
+Virginia
+VIRGINIA
+Vt
+VT
+Wa
+WA
+Washington
+WASHINGTON
+Washington DC
+West Virginia
+WEST VIRGINIA
+Wi
+WI
+Wisconsin
+WISCONSIN
+Wv
+WV
+W. V
+W.V
+W. Vir
+W.Vir
+Wy
+WY
+Wyoming
+WYOMING
+YK
+Yukon
+
+
+
+Afghanistan
+Albania
+Algeria
+America
+American Samoa
+Andorra
+Angola
+Anguilla
+Antarctica
+Antarctic Lands
+Antigua
+Antigua and Barbuda
+Argentina
+Armenia
+Aruba
+Ashmore and Cartier Islands
+Ashmore Islands
+Australia
+Austria
+Azerbaijan
+Bahamas
+Bahrain
+Baker Island
+Bangladesh
+Barbados
+Barbuda
+Bassas da India
+Belarus
+Belgium
+Belize
+Benin
+Bermuda
+Bhutan
+Bolivia
+Borneo
+Bosnia
+Bosnia and Herzegovina
+Bosnia Herzegovina
+Botswana
+Bouvet Island
+Brazil
+Britain
+British Indian Ocean Territory
+British Virgin Islands
+Brunei
+Bulgaria
+Burkina Faso
+Burma
+Burundi
+Caicos Islands
+Cambodia
+Cameroon
+Canada
+Cape Verde
+Cartier Islands
+Cayman Islands
+Central African Republic
+Chad
+Chile
+China
+Christmas Island
+Clipperton
+Clipperton Island
+Colombia
+Comoros
+Congo
+Cook Islands
+Coral Sea Islands
+Costa Rica
+Cote d 'Ivoire
+Cote d'Ivoire
+Cote D 'Ivoire
+Cote D'Ivoire
+Croatia
+Cuba
+Cyprus
+Czechoslovakia
+Czech Republic
+Democratic Republic of the Congo
+Denmark
+Djibouti
+Dominica
+Dominican Republic
+East Timor
+Ecuador
+Egypt
+El Salvador
+England
+Equatorial Guinea
+Eritrea
+Estonia
+Ethiopia
+Europa Island
+European Union
+Falkland Islands
+Faroe Islands
+Federated States of Micronesia
+Fiji
+Finland
+Former Yugoslav Republic of Macedonia
+France
+French Guiana
+French Polynesia
+French Southern
+French Southern and Antarctic Lands
+Gabon
+Gambia
+Georgia
+Germany
+Ghana
+Gibraltar
+Glorioso
+Glorioso Islands
+Greece
+Greenland
+Grenadan
+Guadeloupe
+Guam
+Guatemala
+Guernsey
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Heard Island
+Heard Island and McDonald Islands
+Herzegovina
+Holland
+Holy See
+Honduras
+Hong Kong
+Howland Island
+Hungary
+Iceland
+India
+Indonesia
+Iran
+Iraq
+Ireland
+Islas Malvinas
+Isle of Man
+Israel
+Italy
+Ivory Coast
+Jamaica
+Jan Mayen
+Japan
+Jarvis Island
+Jersey
+Johnston Atoll
+Jordan
+Juan de Nova Island
+Kazakhstan
+Keeling Islands
+Kenya
+Kingman Reef
+Kiribati
+Korea
+Kuwait
+Kyrgyzstan
+Laos
+Latvia
+Lebanon
+Lesotho
+Liberia
+Libya
+Liechtenstein
+Lithuania
+Luxembourg
+Macau
+Macedonia
+Madagascar
+Malawi
+Malaysia
+Maldives
+Mali
+Malta
+Marshall Islands
+Martinique
+Mauritania
+Mauritius
+Mayotte
+McDonald Islands
+Mexico
+Micronesia
+Midway Islands
+Moldova
+Monaco
+Mongolia
+Montenegro
+Montserrat
+Morocco
+Mozambique
+Myanmar
+Namibia
+Nauru
+Navassa Island
+Nepal
+Netherlands
+Netherlands Antilles
+Nevis
+New Caledonia
+New Guinea
+New Zealand
+Nicaragua
+Niger
+Nigeria
+Niue
+Norfolk Island
+Northern Mariana Islands
+North Korea
+North Vietnam
+Norway
+Oman
+Pakistan
+Palau
+Palestine
+Palmyra Atoll
+Panama
+Papua
+Papua New Guinea
+Paracel Islands
+Paraguay
+People Republic of China
+Persia
+Peru
+Philippines
+Pitcairn Islands
+Poland
+Portugal
+Puerto Rico
+Qatar
+Republic of Chile
+Republic of the Congo
+Reunion
+Romania
+Russia
+Rwanda
+Saint Helena
+Saint Kitts
+Saint Kitts and Nevis
+Saint Lucia
+Saint Pierre and Miquelon
+Saint Vincent and the Grenadines
+Samoa
+San Marino
+Sao Tome and Principe
+Saudi Arabia
+Scotland
+Senegal
+Serbia
+Serbia and Montenegro
+Seychelles
+Sierra Leone
+Singapore
+Slovakia
+Slovenia
+Solomon Islands
+Somalia
+South Africa
+South Georgia
+South Georgia and the South Sandwich Islands
+South Korea
+South Sandwich Isklands
+South Sandwich Islands
+South Vietnam
+soviet
+Soviet
+Soviet Union
+Spain
+Spratly Islands
+Sri Lanka
+Sudan
+Suriname
+Svalbard
+Swaziland
+Sweden
+Switzerland
+Syria
+Taiwan
+Tajikistan
+Tanzania
+Thailand
+Tibet
+Tobago
+Togo
+Tokelau
+Tonga
+Trinidad
+Trinidad and Tobago
+Tromelin Island
+Tunisia
+Turkey
+Turkmenistan
+Turks and Caicos Islands
+Tuvalu
+Uganda
+UK
+Ukraine
+United Arab Emirates
+United Kingdom
+United States
+United States of America
+Uruguay
+U.S.
+USA
+USSR
+Uzbekistan
+Vanuatu
+Vatican
+Vatican City
+Venezuela
+Vietnam
+Virgin Islands
+Wake Island
+Wales
+Wallis and Futuna
+Western Sahara
+Yemen
+Yugoslavia
+Yugoslav Republic of Macedonia
+Zaire
+Zambia
+Zimbabwe

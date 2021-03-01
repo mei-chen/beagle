@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <script>
+        const hash = window.location.hash;
+        if (hash) {
+            let url = '/#/online-folder/';
+            const groups = hash.match(/access_token=([^&]*)/);
+            if (groups) {
+                const token = groups[1];
+                url += `?token=${token}`;
+            }
+            window.location.href = url;
+        }
+    </script>
+{% endblock body %}

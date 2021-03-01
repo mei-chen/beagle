@@ -1,0 +1,78 @@
+/* profile column stylings */
+div.profile-column {
+
+  width: 210px;
+  margin-bottom: 60px;
+
+  .no-underline{
+    text-decoration: none;
+  }
+
+  .profile-avatar {
+    display: inline-block;
+    margin-bottom: 10px;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+    height: 200px;
+    width: 200px;
+
+    &:hover {
+      opacity: 0.6;
+      cursor: pointer;
+    }
+  }
+
+  span {
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+  }
+
+  div.profile-name {
+    width: 100%;
+    font-size: 30px;
+    line-height: 33px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    span {
+      word-break: break-word;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      hyphens: auto;
+    }
+  }
+
+  span.profile-title {
+    font-size: 20px;
+    display: inline-block;
+  }
+
+  span.profile-company-name {
+    font-size: 17px;
+    display: inline-block;
+    color: #a3a3a3;
+    padding-left: 3px;
+  }
+
+  span.profile-email {
+    i {
+      margin-right: 4px;
+    }
+    line-height: 22px;
+    font-size: 12px;
+    display: block;
+    color: #939393;
+  }
+
+  .edit-account-button {
+    padding-top: 10px;
+  }
+
+  .hrseparator {
+    width: 100%;
+    height: 0px;
+    border-bottom: 1px solid #cecece;
+    margin: 20px 0 40px 0;
+  }
+
+}

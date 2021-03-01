@@ -1,0 +1,13 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Hi {{ first_name }}, </p>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">Uh oh! We're having trouble processing your contract <b>{{ title }}</b>.
+
+    Today we are looking at .docx, .doc, .pdf and .txt.</p>
+
+<p style="color:black; font-size: 14px; line-height:16px">If you'd like an update, just hit "reply" to this email. Thanks for your patience.</p>
+
+
+{% endblock %}

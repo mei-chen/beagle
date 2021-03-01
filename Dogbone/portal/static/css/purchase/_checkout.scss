@@ -1,0 +1,56 @@
+$width: 440px;
+
+.shopping-cart {
+  table {
+    width: $width;
+    margin: 10px auto;
+    td, th {
+      padding: 10px;
+    }
+    $border-col: #bbb;
+    thead {
+      border-bottom: 1px solid $border-col;
+      font-weight: bold;
+      th {
+        color: #555;
+      }
+    }
+    tbody tr {
+      td.qty {
+        text-align: center;
+      }
+    }
+    tbody tr.total {
+      font-weight: bold;
+      border-top: 1px solid $border-col;
+    }
+  }
+}
+
+.payment {
+  max-width: $width;
+  margin: 20px auto;
+  text-align: center;
+
+  #braintree-container {
+    min-height: 70px;
+    margin: 10px 0;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+  }
+
+  button.checkout {
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    $base: green;
+    color: $base;
+    border: 1px solid $base;
+    border-radius: 5px;
+    background-color: lighten($base, 60%);
+  }
+}

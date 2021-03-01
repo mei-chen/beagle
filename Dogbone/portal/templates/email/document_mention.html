@@ -1,0 +1,14 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Dear {{ mentioned_user }},
+
+You have been mentioned by {{ mention_author }}{% if mention_author_email != mention_author %} ({{ mention_author_email }}){% endif %} in "{{ document_title }}"!
+
+Clause under discussion is: {{ sentence_text }}
+
+Follow this link to join discussion: {{ follow_url }}
+
+
+Beagle.ai Team
+{% endblock %}

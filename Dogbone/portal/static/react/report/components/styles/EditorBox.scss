@@ -1,0 +1,175 @@
+@import 'variables';
+
+$border-col: #ccc;
+$border-focus-col: $beagle-red;
+$bg-col: ghostwhite;
+
+$close-btn-size: 20px;
+
+$textarea-padding: 10px;
+$outer-border-padding: 10px;
+$offset: 0px;
+$side-margin: $textarea-padding + $outer-border-padding + $offset;
+
+
+.beagle-editor-box {
+  position: relative;
+  display: flex;
+  z-index: 1; // sits overtop track changes controls
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  padding: $outer-border-padding;
+  border: 1px solid $border-col;
+  background-color: $bg-col;
+
+  &.regular{
+    margin: 0 (-$side-margin);
+  }
+
+  &.condensed{
+    max-width: 100%;
+  }
+
+  &.is-clause-table {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid $border-col;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $close-btn-size;
+    text-align: center;
+    line-height: $close-btn-size;
+    border-radius: 0 0 0 ($close-btn-size/2);
+    background-color: #bbb;
+    color: white;
+    z-index:2;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #ddd;
+      color: #888;
+    }
+  }
+
+  .editor-contents {
+    position: relative;
+    flex: 1;
+    width: 100%;
+
+    .textarea-contents {
+      position: relative;
+      padding: 10px;
+
+      .sentence-lock {
+        position: absolute;
+        background-color: rgba(0,0,0,0.6);
+        //inside rounded corner around the close button--not used
+        //background:-webkit-radial-gradient(100% 0, circle, rgba(0,0,0,0) 13px, rgba(0,0,0,0.6) 13px);
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .lock-media {
+          max-width: 50%;
+          position: relative;
+          height: 40px;
+          width: 40px;
+          .lock-avatar {
+            padding: 5px;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            display: inline-block;
+            border: 2px solid #fff;
+            border-radius: 4px;
+          }
+          .lock-icon {
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            top: 25px;
+            left: 28px;
+            display: block;
+            border-radius: 50%;
+            background-color: #3ca056;
+            border: 2px solid #fff;
+            text-align: center;
+            i {
+              display: inline-block;
+              color: #fff;
+              font-size: 12px;
+              position: absolute;
+              top: 3.32px;
+              left: 5.6px;
+            }
+          }
+        }
+        .lock-info {
+          color: #fff;
+          padding: 0 12px;
+          text-align: center;
+          .lock-name {
+            display: block;
+          }
+          .lock-description {
+            display: inline-block;
+            font-size: 13px;
+          }
+        }
+      }
+
+      .clause-view {
+        margin: 0;
+        cursor: text;
+        
+        .clause-area {
+          padding: $textarea-padding;
+          border: 1px solid transparent;
+          overflow-wrap: break-word;
+        }
+
+        textarea {
+          margin: 0;
+          padding: $textarea-padding;
+          width: 100%;
+          resize: vertical;
+          font-size: 16px;
+          line-height: 22px;
+          border: 1px solid $border-col;
+          outline: none;
+          &:focus {
+            border-color: $border-focus-col;
+          }
+        }
+      }
+
+      .pending-text-edit-area {
+        line-height: 22px;
+      }
+
+    }
+
+    .bottom-controls {
+      display: flex;
+    }
+  }
+
+  .control-panel {
+    display: flex;
+  }
+}

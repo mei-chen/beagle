@@ -1,0 +1,49 @@
+{% extends "_layout.html" %}
+{% load humanize %}
+
+{% block extra_css %}
+<link href="/static/css/purchase/base_page.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+
+<div class="purchase yearly">
+
+  {% include "session_messages.html" %}
+
+  <h1>Have a coupon?</h1>
+  <h2>Enjoy the smartest way to extract information from legal documents.</h2>
+
+  <div class="subscription-options">
+    <div class="subscription annual">
+
+      <div class="title">Redeem a BEAGLE Coupon</div>
+
+      <div class="price-info">
+
+        <div class="coupon">
+          <form method="get">
+            <input name="coupon" placeholder="Have a coupon code? Enter it here" value="{% if coupon %}{{ coupon.code }}{% endif %}" autocomplete=off>
+            <button type="submit">Redeem</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+    {% if HOT_LOAD %}
+        <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+{% endblock %}

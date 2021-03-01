@@ -1,0 +1,79 @@
+
+---
+- name: Ensure dependency is installed (Ubuntu).
+  apt:
+    name=apt-transport-https
+    state=present
+
+- name: Add Kibana repository.
+  become: true
+  become_user: root
+  apt_repository:
+    repo: 'deb https://packages.elastic.co/kibana/{{ kibana_version }}/debian stable main'
+    state: present
+    update_cache: yes
+
+
+- name: Install Kibana.
+  become: true
+  become_user: root
+  apt:
+    pkg=kibana
+    state=present
+
+- name: Ensure Kibana is started and enabled at boot.
+  become: true
+  become_user: root
+  service:
+    name: kibana
+    state: started
+    enabled: yes
+
+- name: Copy Kibana configuration.
+  become: true
+  become_user: root
+  template:
+    src: kibana.yml.j2
+    dest: "/opt/kibana/config/kibana.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart kibana
+
+
+- name: Install unzip.
+  become: true
+  become_user: root
+  apt:
+    pkg=unzip
+    state=present
+
+- name: Check kibana filebeat dashboards
+  stat: path=/tmp/beats-dashboards-1.1.0.zip
+  register: kibana_dashboards_present
+
+- name: Copy kibana filebeat dashboards
+  copy:
+    src=beats-dashboards-1.1.0.zip
+    dest=/tmp/beats-dashboards-1.1.0.zip
+    owner=root
+    group=root
+    mode=0644
+  become: true
+  become_user: root
+  when: kibana_dashboards_present != 0
+
+- name: Install kibana filebeat dashboards
+  unarchive:
+    src=/tmp/beats-dashboards-1.1.0.zip
+    dest=/tmp/
+    copy=no
+  become: true
+  become_user: root
+  when: kibana_dashboards_present != 0
+
+- name: Configure kibana filebeat dashboards
+  become: true
+  become_user: root
+  # shell: bash /tmp/beats-dashboards-1.1.0/load.sh -url "{{ kibana_elasticsearch_url }}"
+  shell: bash /tmp/beats-dashboards-1.1.0/load.sh

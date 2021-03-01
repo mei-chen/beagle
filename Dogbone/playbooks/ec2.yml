@@ -1,0 +1,13 @@
+---
+
+- include: ec2_manage.yml
+  tags: [ec2]
+
+- include: elk_manage.yml
+  tags: [elk]
+
+- include: ec2_provision.yml
+  tags: [ec2]
+
+- include: elk_provision.yml
+  tags: [elk]

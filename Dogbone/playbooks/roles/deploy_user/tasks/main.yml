@@ -1,0 +1,25 @@
+---
+
+- name: Add user for CI deploys
+  user:
+    name: deploy
+    groups: www-data
+  become: true
+  become_user: root
+
+- name: Add ssh key for CI deploys
+  authorized_key:
+    user: deploy
+    key: "{{ lookup('file', item) }}"
+  with_fileglob: files/id_*.pub
+  become: true
+  become_user: deploy
+
+- name: Add DATABASE_URL so deploy can run manage.py
+  lineinfile:
+    create: yes
+    dest: "/home/deploy/.bash_profile"
+    regexp: '^export DATABASE_URL='
+    line: "export DATABASE_URL=\"{{ app_env.DATABASE_URL }}\""
+  become: true
+  become_user: deploy

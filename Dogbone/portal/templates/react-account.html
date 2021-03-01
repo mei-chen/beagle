@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="Beagle">
+    <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
+    <title>Beagle</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    {% include "global_partials.html" %}
+  </head>
+  <body style="margin: 0; -webkit-font-smoothing: antialiased; font-smoothing: antialiased; background-color: #fafafa;">
+    {% include "user_json_data.html" %}
+    <!--Google Include-->
+    <script src="https://www.google.com/jsapi?key=AIzaSyAb_m3H2ckI6r69wqbUtGjJhkBpjEzBY3o"></script>
+    {% include "gdrive.html" %}
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onApiLoad"></script>
+    <div id="react-account"></div>
+    <div id="modal-element" />
+    <script>
+      window.onload = function() {
+        window.DROPBOX_APP_KEY = '{{ DROPBOX_APP_KEY }}';
+      }
+    </script>
+    {% if HOT_LOAD %}
+        <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/account.entry.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/static/react/build/account.entry.js?{{ git_revision }}"></script>
+    {% endif %}
+  </body>
+</html>

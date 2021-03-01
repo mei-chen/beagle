@@ -1,0 +1,59 @@
+[inet_http_server]         ; inet (TCP) server disabled by default
+port=127.0.0.1:9001        ; (ip_address:port specifier, *:port for all iface)
+
+[supervisord]
+logfile=/var/log/supervisor/supervisord.log ; (main log file;default $CWD/supervisord.log)
+logfile_maxbytes=300MB ;
+logfile_backups=10 ;
+pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+childlogdir=/var/log/supervisor            ; ('AUTO' child log dir, default $TEMP)
+
+; the below section must remain in the config file for RPC
+; (supervisorctl/web interface) to work, additional interfaces may be
+; added by defining them in separate rpcinterface: sections
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=http://127.0.0.1:9001 ;
+
+; The [include] section can just contain the "files" setting.  This
+; setting can list multiple files (separated by whitespace or
+; newlines).  It can also contain wildcards.  The filenames are
+; interpreted as relative to this file.  Included files *cannot*
+; include files themselves.
+
+[include]
+files = /etc/supervisor/conf.d/*.conf
+
+;;=======================================================
+;; PROGRAMS
+;;=======================================================
+
+[program:gunicorn]
+user={{ DEPLOY.USER }} ;
+environment=DJANGO_SETTINGS_MODULE="{{ DEPLOY.SETTINGS_MODULE }}",NLTK_DATA="{{ DEPLOY.NLTK_DATA }}" ;
+command={{ DEPLOY.VIRTUAL_ENVIRONMENT }}/gunicorn dogbone.wsgi:application --bind {{ DEPLOY.GUNICORN.BIND }} --pid {{ DEPLOY.GUNICORN.PID }} --access-logfile {{ DEPLOY.GUNICORN.LOGGING.ACCESS }} --error-logfile {{ DEPLOY.GUNICORN.LOGGING.ERROR }} --log-level {{ DEPLOY.GUNICORN.LOGGING.LEVEL }} --worker-class {{ DEPLOY.GUNICORN.WORKERS.CLASS }} --timeout {{ DEPLOY.GUNICORN.WORKERS.TIMEOUT }}  --workers {{ DEPLOY.GUNICORN.WORKERS.COUNT }} ;
+directory={{ PROJECT_ROOT }} ;
+
+[program:celery]
+user={{ DEPLOY.USER }} ;
+environment=DJANGO_SETTINGS_MODULE="{{ DEPLOY.SETTINGS_MODULE }}",NLTK_DATA="{{ DEPLOY.NLTK_DATA }}" ;
+command={{ DEPLOY.VIRTUAL_ENVIRONMENT }}/celery -A dogbone worker --loglevel={{ DEPLOY.CELERY.LOGGING.LEVEL }} --time-limit={{ DEPLOY.CELERY.TIME_LIMIT }} --logfile="{{ DEPLOY.CELERY.LOGGING.FILENAME }}" ;
+directory={{ PROJECT_ROOT }} ;
+
+[program:celery_beat]
+user={{ DEPLOY.USER }} ;
+environment=DJANGO_SETTINGS_MODULE="{{ DEPLOY.SETTINGS_MODULE }}",NLTK_DATA="{{ DEPLOY.NLTK_DATA }}" ;
+command={{ DEPLOY.VIRTUAL_ENVIRONMENT }}/celery -A dogbone beat --loglevel={{ DEPLOY.CELERY.BEAT.LOGGING.LEVEL }}  --logfile="{{ DEPLOY.CELERY.BEAT.LOGGING.FILENAME }}" ;
+directory={{ PROJECT_ROOT }} ;
+
+[program:node_notifications]
+user={{ DEPLOY.USER }} ;
+command=node server.js --logfile={{ DEPLOY.NODE_SERVER.LOGGING.FILENAME }} --environment={{ DEPLOY.NODE_SERVER.ENV }} ;
+directory={{ PROJECT_ROOT }}/node_server ;
+
+;;=======================================================
+;; GENERATED: {% now "SHORT_DATETIME_FORMAT" %}
+;;=======================================================
+

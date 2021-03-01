@@ -1,0 +1,28 @@
+{
+  "name": "ll",
+  "version": "1.0.0",
+  "description": "NodeJS application for relaying realtime notifications from Django Web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BeagleInc/dogbone-notifications.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeagleInc/dogbone-notifications/issues"
+  },
+  "homepage": "https://github.com/BeagleInc/dogbone-notifications",
+  "dependencies": {
+    "cookie": "^0.1.2",
+    "log4js": "^0.6.25",
+    "minimist": "^1.1.1",
+    "redis": "^2.6.2",
+    "socket.io": "^1.3.5",
+    "dotenv": "^2.0.0",
+    "log4js-syslog-appender": "^0.3.0"
+  }
+}

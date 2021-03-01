@@ -1,0 +1,38 @@
+---
+
+- name: Deploy to a vagrant instance for development
+  hosts: all
+  become: true
+  become_user: root
+  vars_files:
+    - vars/globals.yml
+    - vars/secrets.yml
+
+  vars:
+    ansible_ssh_extra_args: "-A"
+    run_user: vagrant
+    env: vagrant
+    git_repo: git@github.com:BeagleInc/dogbone.git
+    app_env:
+      NLTK_DATA: /var/lib/nltk-data/
+      STATIC_ASSET_PATH: "{{ base_location }}static/"
+      AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY_ID }}"
+      AWS_SECRET_ACCESS_KEY: "{{ AWS_SECRET_ACCESS_KEY }}"
+      INTERCOM_APP_ID: "{{ INTERCOM_APP_ID if env in prod_envs else INTERCOM_DEV_APP_ID }}"
+      INTERCOM_API_KEY: "{{ INTERCOM_API_KEY if env in prod_envs else INTERCOM_DEV_API_KEY }}"
+      DJANGO_DEBUG: "{{ 0 if env in prod_envs else 1 }}"
+      SOCKET_DOMAIN: 1
+      EMAIL_BACKEND: smtp
+      SYSLOG: 1
+
+    # Database settings.
+    db_user: "{{ application_name }}"
+    db_name: "{{ application_name }}"
+    db_password: password
+    db_host: localhost
+    db_port: 5432
+
+  roles:
+    - db
+    - redis
+    - webserver

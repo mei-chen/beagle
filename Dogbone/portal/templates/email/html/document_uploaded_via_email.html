@@ -1,0 +1,10 @@
+{% extends "email/html/_layout.html" %}
+{% block body %}
+
+<p style="color:black; font-size: 14px; line-height:16px">Hi {{ first_name }}, </p>
+<br/>
+<p style="color:black; font-size: 14px; line-height:16px">We received <b>{{ document_title }}</b> and are processing it.</p>
+<p style="color:black; font-size: 14px; line-height:16px">Sometimes it could take up to 5 minutes. We will send you an email once we're done.</p>
+
+
+{% endblock %}

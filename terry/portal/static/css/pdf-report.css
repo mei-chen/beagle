@@ -1,0 +1,118 @@
+/* general */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  color: #fff;
+  font-weight: 700;
+}
+
+tr {
+  border-bottom: 1px solid #E9E9E9;
+}
+
+td, th {
+  padding: 6px 10px;
+  height: 47px;
+}
+
+h2, h3 {
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  text-align: center;
+  font-size: 24px;
+}
+
+/* header */
+.header {
+  background-color: #E2D9CA;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.repo-icon,
+.repo-details {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.repo-icon {
+  margin-right: 10px;
+}
+
+.repo-name {
+  font-size: 35px;
+  color: #0F2A35;
+  margin-bottom: 5px;
+}
+
+.repo-url {
+  font-size: 16px;
+  color: #A29C91;
+  margin-bottom: 5px;
+}
+
+.repo-risk {
+  color: #907760;
+}
+
+.repo-risk-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* stats table */
+.stats-table {
+  text-align: center;
+}
+
+.stats-table thead {
+  background-color: #27ae60;
+}
+
+.cell-license {
+  color: #5d101a;
+  font-weight: 700;
+}
+
+.cell-count {
+  font-size: 16px;
+  color: #C7C7C7;
+}
+
+.license-count {
+  color: #CC5216;
+}
+
+/* licenses table */
+.licenses-table thead {
+  background-color: #2980b9;
+}
+
+.cell-lib-license {
+  color: #5d101a;
+}
+
+.lib-version {
+  color: #CECECE;
+  margin-left: 8px;
+  vertical-align: middle;
+}

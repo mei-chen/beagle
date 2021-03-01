@@ -1,0 +1,39 @@
+---
+
+# Could use a different user per person, but this
+# one is already here and it makes writing the ansible
+# config easier (to work on both new servers and existing ones)
+
+- name: Add user for developer access
+  user:
+    user: "{{ ansible_user_id }}"
+    groups: "{{server_user}}"
+    append: true
+  become: true
+  become_user: root
+  register: add_user
+
+- name: Get developer SSH keys
+  set_fact:
+    keys: "{{ keys }}\n{{ lookup('file', item) }}"
+  with_fileglob: files/*.pub
+
+- name: Add ssh keys for developer access
+  authorized_key:
+    user: "{{ ansible_user_id }}"
+    exclusive: no
+    key: "{{ keys }}"
+
+- name: Add DATABASE_URL so devs can run manage.py
+  lineinfile:
+    create: yes
+    dest: "/home/{{ ansible_user_id }}/.bash_profile"
+    regexp: '^export DATABASE_URL='
+    line: "export DATABASE_URL=\"{{ app_env.DATABASE_URL }}\""
+
+- name: Kill SSH Connection
+  shell: "sleep 1 && pkill -u {{ ansible_ssh_user }} sshd"
+  async: 3
+  poll: 2
+  when: add_user|changed
+  ignore_errors: yes

@@ -1,0 +1,110 @@
+.account {
+    float: right;
+    font-size: 16px;
+    padding: 3px 0;
+
+    > span,
+    > i,
+    > a {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.account-email {
+    padding: 0 13px 0 7px;
+    margin-right: 13px;
+    border-right: 1px solid #825258;
+    max-width: 200px;
+}
+
+.account-email-overflow {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.account-sign-out {
+    font-size: 14px;
+    color: #fff;
+    vertical-align: middle;
+
+    &:hover {
+        color: #fff;
+        opacity: 0.7;
+    }
+}
+
+.intercom-button {
+    font-size: 26px;
+    background-color: #fff;
+    color: #5d101a;
+    position: fixed;
+    right: 23px;
+    bottom: 8px;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px 0px #5d101a;
+    z-index: 100;
+    transition: 0.2s ease;
+
+    &:hover {
+        font-size: 29px;
+        width: 61px;
+        height: 61px;
+        line-height: 61px;
+        right: 20px;
+        bottom: 5px;
+        box-shadow:0 0 7px -1px #5d101a;
+    }
+}
+
+.notification-trigger-button {
+    font-size: 16px;
+    background-color: #fff;
+    color: #5d101a;
+    position: fixed;
+    right: -18px;
+    bottom: 120px;
+    width: 95px;
+    height: 23px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-right: 1px solid #5d101a;
+    border-left: 1px solid #5d101a;
+    border-top: 1px solid #5d101a;
+    border-radius: 7px 7px 0px 0px;
+    z-index: 100;
+    transform: rotate(-90deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+        margin: -8px -4px 0px -8px;
+        color: red;
+        font-size: 12px;
+    }
+}
+
+.Select-menu-outer {
+    z-index: 99;
+}
+
+.optional-field-trigger {
+    cursor: pointer;
+}
+
+.optional-field-wrap {
+    display: flex;
+}
+
+.optional-field-button {
+    margin-left: 5px;
+}

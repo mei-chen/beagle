@@ -1,0 +1,208 @@
+/* Suppress bootstrap box sizing on login pages */
+* {
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+
+/* Beagle Fonts */
+@font-face {
+  font-family: 'equity-caps-a-regular';
+  src: url('../fonts/equity-caps-a-regular.ttf');
+  src: local('../fonts/equity-caps-a-regular.ttf')
+}
+
+
+@font-face {
+  font-family: Concourse T7;
+  src: url('../fonts/concourse-t7-regular.otf')
+}
+
+@font-face {
+  font-family: Concourse T2;
+  src: url('../fonts/concourse-t2-regular.otf')
+}
+
+#login-panel {
+    margin-left: auto;
+    margin-right: auto;
+    color: #555;
+    width: 450px;
+    padding: 40px 20px;
+}
+
+#login-panel * {
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+}
+
+#login-panel h2 {
+    text-align: left;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+}
+
+#promo-code ::-webkit-input-placeholder {
+ font-size: 14px;
+ color: #5D101A;
+ text-transform: uppercase;
+ font-weight: bold;
+}
+#promo-code :-moz-placeholder { /* older Firefox*/
+ font-size:14px;
+ color: #5D101A;
+ text-transform: uppercase;
+ font-weight: bold;
+}
+#promo-code ::-moz-placeholder { /* Firefox 19+ */ 
+ font-size: 14px;
+ color: #5D101A; 
+ text-transform: uppercase;
+ font-weight: bold;
+} 
+#promo-code :-ms-input-placeholder { 
+ font-size: 14px; 
+ color: #5D101A;
+ text-transform: uppercase;
+ font-weight: bold;
+}
+
+#login-panel .getstarted {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 10px 60px 10px 60px;
+    border-style: none;
+    border-radius: 6px;
+    border-radius: 6px;
+    background: #F9D965;
+    background-image: -o-linear-gradient(-89deg, #FADF76 0%, #F6C632 100%);
+    background-image: -moz-linear-gradient(-89deg, #FADF76 0%, #F6C632 100%);
+    background-image: -ms-linear-gradient(-89deg, #FADF76 0%, #F6C632 100%);
+    background-image: linear-gradient(-179deg, #FADF76 0%, #F6C632 100%);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.20), inset 0px 1px 0px 0px #FBEBAC;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.20), inset 0px 1px 0px 0px #FBEBAC;
+    font-size: 1.125em;
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 0px 1px #FAEAAF;
+    color: #5A4307;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+.login-crouton {
+  width: 100%;
+  padding: 8px 35px 8px 14px;
+  border-radius: 5px;
+}
+
+.login-crouton-contents {
+  margin: 0 auto;
+  width: 980px;
+  text-align: center;
+}
+
+.login-success {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.login-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.pagenotfound{
+    color: #5D101A;
+    font-family: Concourse T7;
+    font-size: 15em;
+    line-height: 110%;
+    outline-style: none;
+    user-modify: read-write;
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+.forbidden{
+    display: inline-block;
+    color: #5D101A;
+    font-family: Concourse T7;
+    font-size: 11em;
+    line-height: 110%;
+    outline-style: none;
+    user-modify: read-write;
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+.access {
+    display: inline-block;
+    color: #5D101A;
+    font-family: Concourse T7;
+    font-size: 3em;
+    line-height: 110%;
+    outline-style: none;
+    user-modify: read-write;
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+.invite {
+    display: inline-block;
+    font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+    font-size: 1.3em;
+    font-weight: normal;
+    color: rgba(0,0,0,0.5);
+    max-width: 980px;
+    text-align: center;
+}
+
+.badrequest {
+    display: inline-block;
+    color: #5D101A;
+    font-family: Concourse T7;
+    font-size: 5em;
+    line-height: 110%;
+    outline-style: none;
+    user-modify: read-write;
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+.wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+}
+
+.errorlist {
+    color: red;
+}
+
+.pipe {
+    padding: 0 5px;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 569px) {
+
+  #login-panel {
+      margin-left: auto;
+      margin-right: auto;
+      color: #555;
+      width: 300px;
+      padding: 40px 20px;
+  }
+
+  a {
+    font-size: 14px;
+  }
+}

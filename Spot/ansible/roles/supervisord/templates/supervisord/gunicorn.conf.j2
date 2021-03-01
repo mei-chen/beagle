@@ -1,0 +1,35 @@
+[program:{{ supervisor_django }}]
+user={{ server_user }} ;
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+command={{ virtualenv_path }}/bin/gunicorn {{ application_name }}.wsgi:application --bind 127.0.0.1:{{ GUNICORN_DJANGO_PORT }} --log-syslog --log-syslog-facility daemon --log-syslog-to unix:///dev/log#dgram --log-level info --worker-class eventlet --timeout 60  --workers 6
+directory={{ app_location }}
+stdout_logfile={{ application_log_dir }}/supervisor/django-out.log
+stdout_logfile_maxbytes=50MB
+stdout_logfile_backups=10
+stderr_logfile={{ application_log_dir }}/supervisor/django-err.log
+stderr_logfile_maxbytes=50MB
+stderr_logfile_backups=10
+
+[program:{{ supervisor_celery }}]
+user={{ server_user }} ;
+command={{ virtualenv_path }}/bin/celery -A {{ application_name }} worker -l info
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+directory={{ app_location }}
+stdout_logfile={{ application_log_dir }}/supervisor/celery-worker-out.log
+stdout_logfile_maxbytes=50MB
+stdout_logfile_backups=10
+stderr_logfile={{ application_log_dir }}/supervisor/celery-worker-err.log
+stderr_logfile_maxbytes=50MB
+stderr_logfile_backups=10
+
+[program:{{ supervisor_npm }}]
+command = npm start
+directory = {{ npm_socket_path }}
+environment={{ app_env | custom_env_format | join(",") | replace("%", "%%") }}
+user = {{ server_user }}
+stdout_logfile={{ application_log_dir }}/supervisor/npm-socket-out.log
+stdout_logfile_maxbytes=50MB
+stdout_logfile_backups=10
+stderr_logfile={{ application_log_dir }}/supervisor/npm-socket-err.log
+stderr_logfile_maxbytes=50MB
+stderr_logfile_backups=10

@@ -1,0 +1,61 @@
+---
+# tasks file for nginx
+- name: Install Nginx
+  apt:
+    update_cache: true
+    pkg: nginx
+    state: latest
+  become: true
+  become_user: root
+
+- name: Install Apache2 Utils
+  apt:
+    update_cache: true
+    pkg: apache2-utils
+    state: latest
+  become: true
+  become_user: root
+
+- name: setup status directory
+  become: true
+  become_user: root
+  file:
+    path: /usr/share/nginx/html/status
+    state: directory
+
+- name: copy index file
+  become: true
+  become_user: root
+  template:
+    src: index.html
+    dest: /usr/share/nginx/html/status/index.html
+
+- name: Add config template to the Nginx available sites
+  become: true
+  become_user: root
+  template:
+    src: nginx.conf
+    dest: "/etc/nginx/sites-available/default"
+
+- name: Install python passlib
+  apt:
+    update_cache: true
+    pkg: python-passlib
+    state: installed
+  become: true
+  become_user: root
+
+- htpasswd:
+    path: /etc/nginx/htpasswd.users
+    name: "{{ nginx_htpasswd_username }}"
+    password: "{{ nginx_htpasswd_password }}"
+  become: true
+  become_user: root
+
+- name: Starting Nginx
+  service:
+    name: nginx
+    enabled: yes
+  notify:
+    - restart nginx
+

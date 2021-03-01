@@ -1,0 +1,15 @@
+{% extends "email/_layout.html" %}
+{% block body %}
+
+Hi {{ first_name }},
+
+{% if documents %}
+Your batch {{ batch_name }} has just been processed!
+Follow this link to check it out: {{ follow_link }}
+{% else %}
+Uh oh! We're having trouble processing your batch {{ batch_name }}.
+{% endif %}
+
+
+Beagle.ai Team
+{% endblock %}

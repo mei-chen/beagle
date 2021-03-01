@@ -1,0 +1,16 @@
+---
+
+- name: Install socket node modules
+  npm:
+    path: "{{ npm_socket_path }}"
+
+
+- name: Install app nodemodules
+  npm:
+    path: "{{ npm_frontend_path }}"
+
+
+- name: Run build command
+  command: "npm run prod"
+  args:
+    chdir: "{{ npm_frontend_path }}"

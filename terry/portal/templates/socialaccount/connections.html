@@ -1,0 +1,66 @@
+{% extends "account_base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Account Connections" %}{% endblock %}
+
+{% block header %}
+<a href="/" class="nav-link">Go to Terry <i class="fa fa-chevron-right"></i></a>
+{% endblock header %}
+
+{% block content %}
+<h2>{% trans "Account Connections" %}</h2>
+
+{% if form.accounts %}
+<p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
+
+<form class="auth-socialaccount" method="post" action="{% url 'socialaccount_connections' %}">
+  {% csrf_token %}
+
+  <fieldset>
+    {% if form.non_field_errors %}
+      <div class="auth-errors">
+        {% for error in form.non_field_errors %}
+            <strong class="auth-error text-danger">{{ error|escape }}</strong>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% for base_account in form.accounts %}
+      {% with base_account.get_provider_account as account %}
+      <div class="auth-socialaccount-item">
+        <input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
+        <i class="auth-socialaccount-icon fab fa-{{account.get_brand.name|lower}}"></i>
+        <span class="auth-socialaccount-name">{{ account }}</span>
+        <label class="auth-socialaccount-remove" for="id_account_{{ base_account.id }}">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
+      {% endwith %}
+    {% endfor %}
+  </fieldset>
+</form>
+
+{% else %}
+<p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
+{% endif %}
+
+<h3>{% trans 'Add a 3rd Party Account' %}</h3>
+
+<ul class="socialaccount_providers">
+{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+</ul>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+<script>
+  var form = document.querySelectorAll('.auth-socialaccount')[0];
+  var radioButtons = document.querySelectorAll('[type="radio"]');
+
+  // remove icon click triggers radio button change
+  // radio button change triggers the form submit
+  radioButtons.forEach(function(button) {
+    button.addEventListener('change', function() { form.submit() });
+  });
+</script>
+{% endblock %}

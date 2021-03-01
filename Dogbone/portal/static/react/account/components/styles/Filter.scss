@@ -1,0 +1,25 @@
+.filter {
+  margin-right: 28px;
+  display: inline-block;
+
+  &--active {
+    .filter-icon {
+      color: #3A99FC;
+    }
+  }
+}
+
+.filter-icon {
+  cursor: pointer;
+  font-size: 24px;
+  color: #464646;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.filter-drop {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 10px;
+  width: 180px;
+}

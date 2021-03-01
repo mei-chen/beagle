@@ -1,0 +1,58 @@
+.zip-password-header {
+  color: #fff;
+}
+.btn {
+  display: flex;
+  justify-content: space-around;
+  margin: 0px 20em;
+  background-color: #a91c1c;
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: #fff;
+  text-decoration: none;
+  margin-top: 20px;
+  .disabled {
+    background-color: #986c6c;
+    cursor: default;
+  }
+}
+.btn:hover {
+  color: #ccc;
+}
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner-sum {
+  position: relative;
+  padding: 10px 30px;
+  text-align: left;
+}
+
+.spinnerInactive {
+  position: relative;
+  padding: 10px;
+  text-align: left;
+  margin-left: 0px;
+}
+
+.spinner-sum:before {
+  left: 0px;
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  animation: spinner .6s linear infinite;
+}
+.summary-item {
+  color: #fff;
+  i {
+    margin-right: 10px;
+  }
+}

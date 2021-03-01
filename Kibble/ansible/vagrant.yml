@@ -1,0 +1,39 @@
+---
+- name: Deploy to a vagrant instance for development
+  hosts: all
+  become: true
+  become_user: root
+
+  vars_files:
+    - vars/base.yml
+    - vars/vagrant.yml
+    - vars/secret.yml
+
+  pre_tasks:
+    - name: Set locale
+      raw: sudo bash -c "echo -e 'LANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8\nLC_ALL=C' > /etc/default/locale && export LC_ALL=C"
+
+  vars:
+    git_repo: "https://{{ githubuser | urlencode }}:{{ githubpassword }}@github.com/BeagleInc/kibble.git"
+    REDIS_URL: redis://localhost:6379/0
+    app_env:
+      STATIC_ASSET_PATH: "{{ app_location }}/collectstatic"
+      AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY_ID }}"
+      AWS_SECRET_ACCESS_KEY: "{{ AWS_SECRET_ACCESS_KEY }}"
+      AWS_STORAGE_BUCKET_NAME: "{{ AWS_STORAGE_BUCKET_NAME }}"
+      AWS_S3_REGION_NAME: "{{ AWS_S3_REGION_NAME }}"
+      DROPBOX_APP_KEY: "{{ DROPBOX_APP_KEY }}"
+      DROPBOX_APP_SECRET: "{{ DROPBOX_APP_SECRET }}"
+      GOOGLE_DRIVE_CLIENT_ID: "{{ GOOGLE_DRIVE_CLIENT_ID }}"
+      GOOGLE_DRIVE_CLIENT_SECRET: "{{ GOOGLE_DRIVE_CLIENT_SECRET }}"
+      DJANGO_DEBUG: "0"
+      SOCKET_DOMAIN: 1
+      EMAIL_BACKEND: smtp
+      SYSLOG: 1
+
+  roles:
+    - base
+    - postgres
+    - redis
+    - node
+    - web

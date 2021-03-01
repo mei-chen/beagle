@@ -1,0 +1,23 @@
+- name: EC2
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars_files:
+    - vars/globals.yml
+    - vars/secrets.yml
+
+  roles:
+    - ec2
+    - rds
+    - elasticache
+    - { role: s3, when: set_s3_bucket is defined and set_s3_bucket|bool == true}
+
+  post_tasks:
+    - wait_for: host="{{ item }}" port=22 search_regex=OpenSSH
+      with_items: "{{ groups['tag_environment_' + env] }}"
+
+  pre_tasks:
+    - name: Check environment is valid
+      fail: msg="The app identifer which is made up of the client_name, application_name & env should be < 20 char, it's {{ client_identifier | length }}"
+      when: "{{ client_identifier | length }} > 20"

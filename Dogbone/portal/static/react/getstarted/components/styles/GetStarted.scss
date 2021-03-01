@@ -1,0 +1,32 @@
+/* This is the stylesheet for /get-started */
+
+* {
+  box-sizing: border-box; /* forces the browser to render the box with the specified width and height, and place the border and padding inside the box. */
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #fff;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+  text-align: center;
+
+  .heading {
+    font-size: 2.5em;
+    font-weight: bold;
+    padding: 15px 0;
+    text-align: center;
+    text-shadow: none;
+    color: #4a4a4a;
+    font-family: Concourse, Helvetica, Arial, sans-serif;
+  }
+
+}
+
+.summary-wrap {
+  width: 980px;
+  margin: 0 auto;
+  flex: 1;
+  min-height: calc(100vh - 88px);
+}
