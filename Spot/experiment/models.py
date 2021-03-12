@@ -416,9 +416,9 @@ class ExperimentAttribute(TimeStampedModel):
     name = models.CharField('Name', max_length=300)
 
     parent = models.ForeignKey(Experiment, related_name='child_attribute',
-                               help_text='Main classifier')
+                               help_text='Main classifier', on_delete=models.CASCADE)
     child = models.ForeignKey(Experiment, related_name='attribute_parent',
-                              help_text='Attribute classifier')
+                              help_text='Attribute classifier', on_delete=models.CASCADE)
 
 
 # -- Classifiers --

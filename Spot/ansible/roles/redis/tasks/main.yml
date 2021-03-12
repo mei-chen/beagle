@@ -6,6 +6,6 @@
   become_user: root
 
 - name: Ensure Redis is Running
-  service: name=redis-server state=running
+  service: name=redis-server state=started
   become: true
   become_user: root

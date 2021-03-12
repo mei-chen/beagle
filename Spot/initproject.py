@@ -27,7 +27,7 @@ def rename(filename, new):
     changed_part = filename[len(PATH):]
     new_name = "%s%s" % (PATH, changed_part.replace(OLD, new))
     os.rename(filename, new_name)
-    print "Renamed: '%s' into '%s'" % (filename, new_name)
+    print("Renamed: '%s' into '%s'" % (filename, new_name))
 
 
 def replace_keep_case(word, replacement, text):
@@ -55,7 +55,7 @@ def replace_text(filename, new):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print "Usage: `python initproject.py new_name`"
+        print("Usage: `python initproject.py new_name`")
     NEW = sys.argv[1]
 
     # Rename directories first

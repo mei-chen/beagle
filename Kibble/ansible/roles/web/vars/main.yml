@@ -6,7 +6,7 @@ project_path: "/srv/{{ application_name }}"
 
 # Venv
 virtualenv_path: "/srv/venv"
-virtualenv_python_version: python2.7
+virtualenv_python_version: python3.6
 
 #Socket
 npm_socket_path: "{{ project_path}}/realtime/node"
@@ -43,6 +43,7 @@ nginx_media_dir: "{{ project_path }}/media/"
 
 # Django variables.
 requirements_file: "{{ project_path }}/requirements.txt"
+local_requirements_file: "{{ project_path }}/local_req.txt"
 
 django_environment:
   DJANGO_SECRET_KEY: "{{ django_secret_key }}"

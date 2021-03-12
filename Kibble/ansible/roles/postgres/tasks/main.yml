@@ -3,12 +3,12 @@
 - name: Install postgres database
   apt: name={{ item }} state=latest update_cache=yes cache_valid_time=86400
   with_items:
-    - postgresql-9.3
-    - postgresql-client-9.3
-    - postgresql-contrib-9.3
-    - postgresql-server-dev-9.3
+    - postgresql-10 
+    - postgresql-client-10
+    - postgresql-contrib-10
+    - postgresql-server-dev-10
     # for ansible postgres management
-    - python-psycopg2
+    - python3-psycopg2
   tags: packages
 
 - name: Ensure the PostgreSQL service is running

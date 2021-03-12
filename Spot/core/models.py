@@ -42,7 +42,7 @@ class AccessToken(models.Model):
 
     # Actual user (if token is personal) or None (if token is global)
     owner = models.OneToOneField(User, related_name='access_token',
-                                 null=True, blank=True)
+                                 null=True, blank=True, on_delete=models.CASCADE)
 
     # Actual token value (will be generated automatically, if is omitted)
     value = models.CharField('Value', max_length=MAX_TOKEN_VALUE_LENGTH,
@@ -88,9 +88,9 @@ class ExternalInvite(TimeStampedModel):
 
 class DatasetCollaborationInvite(CollaborationInvite):
 
-    invitee = models.ForeignKey(User, related_name='dataset_collaboration_invites_received')
-    inviter = models.ForeignKey(User, related_name='dataset_collaboration_invites_sent')
-    dataset = models.ForeignKey(Dataset, related_name='collaboration_invites')
+    invitee = models.ForeignKey(User, related_name='dataset_collaboration_invites_received', on_delete=models.CASCADE)
+    inviter = models.ForeignKey(User, related_name='dataset_collaboration_invites_sent', on_delete=models.CASCADE)
+    dataset = models.ForeignKey(Dataset, related_name='collaboration_invites', on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
@@ -100,8 +100,8 @@ class DatasetCollaborationInvite(CollaborationInvite):
 
 class DatasetExternalInvite(ExternalInvite):
 
-    inviter = models.ForeignKey(User, related_name='dataset_external_invites_sent')
-    dataset = models.ForeignKey(Dataset, related_name='external_invites')
+    inviter = models.ForeignKey(User, related_name='dataset_external_invites_sent', on_delete=models.CASCADE)
+    dataset = models.ForeignKey(Dataset, related_name='external_invites', on_delete=models.CASCADE)
 
     def transform_to_collaboration_invite(self, user):
         collaboration_invite = DatasetCollaborationInvite.objects.create(
@@ -118,9 +118,9 @@ class DatasetExternalInvite(ExternalInvite):
 
 class ExperimentCollaborationInvite(CollaborationInvite):
 
-    invitee = models.ForeignKey(User, related_name='experiment_collaboration_invites_received')
-    inviter = models.ForeignKey(User, related_name='experiment_collaboration_invites_sent')
-    experiment = models.ForeignKey(Experiment, related_name='collaboration_invites')
+    invitee = models.ForeignKey(User, related_name='experiment_collaboration_invites_received', on_delete=models.CASCADE)
+    inviter = models.ForeignKey(User, related_name='experiment_collaboration_invites_sent', on_delete=models.CASCADE)
+    experiment = models.ForeignKey(Experiment, related_name='collaboration_invites', on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
@@ -130,8 +130,8 @@ class ExperimentCollaborationInvite(CollaborationInvite):
 
 class ExperimentExternalInvite(ExternalInvite):
 
-    inviter = models.ForeignKey(User, related_name='experiment_external_invites_sent')
-    experiment = models.ForeignKey(Experiment, related_name='external_invites')
+    inviter = models.ForeignKey(User, related_name='experiment_external_invites_sent', on_delete=models.CASCADE)
+    experiment = models.ForeignKey(Experiment, related_name='external_invites', on_delete=models.CASCADE)
 
     def transform_to_collaboration_invite(self, user):
         collaboration_invite = ExperimentCollaborationInvite.objects.create(

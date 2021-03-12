@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from cStringIO import StringIO
+from io import StringIO
 import logging
 import itertools
 import uuid
@@ -701,7 +701,7 @@ class LearnerAttribute(AbstractPretrainedLearner):
     name = models.CharField('Name', max_length=300, default='', blank=True)
 
     # Parent PretrainedLearner
-    parent_learner = models.ForeignKey(PretrainedLearner, related_name='learner_attribute', null=True, default=None)
+    parent_learner = models.ForeignKey(PretrainedLearner, related_name='learner_attribute', null=True, default=None, on_delete=models.CASCADE)
 
     # List of all the possible labels/outputs
     output_range = jsonfield.JSONField(null=True, blank=True, default=None)

@@ -1,4 +1,4 @@
-from cStringIO import StringIO
+from io import StringIO
 
 from django.conf import settings
 from django.test import TestCase

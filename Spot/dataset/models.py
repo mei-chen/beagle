@@ -29,8 +29,7 @@ class Dataset(TimeStampedModel):
 
     # Defines a train/test splitting schema for the dataset
     train_percentage = models.IntegerField(
-        default=80, validators=[MinValueValidator(0), MaxValueValidator(100)]
-    )
+        default=80, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               related_name='datasets',
@@ -167,7 +166,7 @@ class Sample(object):
 
 
 class DatasetMapping(TimeStampedModel):
-    dataset = models.ForeignKey(Dataset, related_name='mappings')
+    dataset = models.ForeignKey(Dataset, related_name='mappings', on_delete=models.CASCADE)
     mapping = jsonfield.JSONField(
         'Mapping', null=True, blank=True,
         load_kwargs={'object_pairs_hook': collections.OrderedDict}
@@ -238,8 +237,8 @@ class DatasetMapping(TimeStampedModel):
 
 
 class LabelingTask(TimeStampedModel):
-    dataset = models.ForeignKey(Dataset, related_name='labeling_tasks')
-    owner = models.ForeignKey(User, related_name='labeling_tasks')
+    dataset = models.ForeignKey(Dataset, related_name='labeling_tasks', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='labeling_tasks', on_delete=models.CASCADE)
 
     name = models.CharField('Name', max_length=300)
     description = models.TextField('Description', blank=True)
@@ -274,8 +273,8 @@ class LabelingTask(TimeStampedModel):
 
 
 class Assignment(TimeStampedModel):
-    labeling_task = models.ForeignKey(LabelingTask, related_name='assignments')
-    assignee = models.ForeignKey(User, related_name='assignments')
+    labeling_task = models.ForeignKey(LabelingTask, related_name='assignments', on_delete=models.CASCADE,)
+    assignee = models.ForeignKey(User, related_name='assignments', on_delete=models.CASCADE,)
 
     stages = jsonfield.JSONField('Stages', null=True, blank=True)
 

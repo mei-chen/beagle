@@ -6,7 +6,7 @@ project_path: "/srv/{{ application_name }}"
 
 # Venv
 virtualenv_path: "/srv/venv"
-virtualenv_python_version: python2.7
+virtualenv_python_version: python3.6
 
 #Socket
 npm_socket_path: "{{ project_path}}/realtime/node"

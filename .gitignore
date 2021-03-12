@@ -1,0 +1,23 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+production_settings.py
+db.sqlite3
+b.sqlite3-journal
+media/
+collectstatic/
+
+### Kibble ###
+Kibble/wkhtmltox
+Kibble/uploads
+
+
+### Vagrant ###
+.vagrant/
+secret.yml
+
+### MAC files ###
+.DS_Store

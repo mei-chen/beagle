@@ -192,8 +192,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
 # Integration credentials
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = "sgbackend.SendGridBackend"
+#EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = ""
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -235,14 +236,15 @@ REST_FRAMEWORK = {
 # Override for current env
 
 try:
-    from app_settings.production_settings import *
-except ImportError:
-    print 'Production settings have not been set'
+    from .app_settings.production_settings import *
+except ImportError as e:
+    print(e)
+    print('Production settings have not been set')
 
 try:
-    from app_settings.local_settings import *
+    from .app_settings.local_settings import *
 except ImportError:
-    print 'Local settings have not been set'
+    print('Local settings have not been set')
 
 # Celery settings
 

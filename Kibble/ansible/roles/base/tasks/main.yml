@@ -25,10 +25,11 @@
     - git
 
     # Python
-    - python
-    - python-dev
-    - python-pip
-    - python-virtualenv
+    - python3
+    - python3-dev
+    - python3-pip
+    - python3-virtualenv
+    - virtualenv
     - ipython
 
     # libxml for lxml package (python requirement)
@@ -54,3 +55,4 @@
 - name: Upgrade pip
   pip: name=pip state=latest
   tags: packages
+  

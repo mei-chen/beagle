@@ -29,10 +29,11 @@ SECRET_KEY = os.environ.get("SESSION_SECRET", '==sxke5!cp)49fx(2--zy*9#c95!@2vr%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Setting to false by default and must be explicitly turned on.
-DEBUG = int(os.environ.get("DJANGO_DEBUG", 0)) == 1
+#DEBUG = int(os.environ.get("DJANGO_DEBUG", 0)) == 1
+DEBUG = False
 HOT_LOAD = int(os.environ.get("HOT_LOAD", 0)) == 1
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", "localhost"]
 
 ######################################################################################
 #
@@ -171,8 +172,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 REDIS_URL = os.environ.get("REDIS_URL", 'redis://localhost:6379/0')
 BROKER_URL = os.environ.get('BROKER_URL', 'redis://localhost:6379/1')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = "sgbackend.SendGridBackend"
+# SendGrid API key is missing right now, use console as the backend
+#EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY', '')
 
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
@@ -356,12 +359,12 @@ WATCHMAN_TOKENS = ','.join([
 
 # Override for current env
 try:
-    from app_settings.production_settings import *
+    from .app_settings.production_settings import *
 except ImportError:
     pass
 
 try:
-    from app_settings.local_settings import *
+    from .app_settings.local_settings import *
 except ImportError:
     pass
 
