@@ -2,8 +2,8 @@ import random
 from json import loads
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
-from model_mommy import mommy
+from django.urls import reverse
+from model_bakery import baker
 from mock import call, patch, ANY
 
 from rest_framework.test import APITestCase
@@ -18,7 +18,7 @@ from shared.mixins import PatcherMixin
 class APIRegExTest(APITestCase):
     def setUp(self):
         self.patchers = {}
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('regex-list')
 
         super(APIRegExTest, self).setUp()
@@ -29,7 +29,7 @@ class APIRegExTest(APITestCase):
         self.addCleanup(self.patchers[name].stop)
 
     def create_dataset(self):
-        self.regexes = mommy.make(RegEx, 3)
+        self.regexes = baker.make(RegEx, 3)
 
     def regex_uri(self, regex):
         return reverse('regex-detail', kwargs={
@@ -99,7 +99,7 @@ class APIRegExTest(APITestCase):
         RegEx API should allow regex editing
         """
         self.client.force_login(self.user)
-        regex = mommy.make(RegEx)
+        regex = baker.make(RegEx)
         data = {
             'name': 'some name',
             'content': 'some random content'
@@ -119,7 +119,7 @@ class APIRegExTest(APITestCase):
         RegEx API should allow regex to be deleted
         """
         self.client.force_login(self.user)
-        regex = mommy.make(RegEx)
+        regex = baker.make(RegEx)
         response = self.client.delete(
             self.regex_uri(regex), format='json')
         self.assertEqual(response.status_code, 204)
@@ -129,7 +129,7 @@ class APIRegExTest(APITestCase):
 class APIRegExApplyTest(APITestCase):
     def setUp(self):
         self.patchers = {}
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('regex-apply-list')
         self.patch('analysis.tasks.regex_apply', 'delay')
         super(APIRegExApplyTest, self).setUp()
@@ -140,11 +140,11 @@ class APIRegExApplyTest(APITestCase):
         self.addCleanup(self.patchers[name].stop)
 
     def create_dataset(self):
-        self.regex = mommy.make(RegEx)
-        self.batch = mommy.make(Batch)
-        self.file = mommy.make(File, batch=self.batch)
-        self.document = mommy.make(Document, source_file=self.file)
-        self.sentences = mommy.make(Sentence, 4, document=self.document)
+        self.regex = baker.make(RegEx)
+        self.batch = baker.make(Batch)
+        self.file = baker.make(File, batch=self.batch)
+        self.document = baker.make(Document, source_file=self.file)
+        self.sentences = baker.make(Sentence, 4, document=self.document)
 
     def test_regexapply_api_requires_login(self):
         """
@@ -172,7 +172,7 @@ class APIRegExApplyTest(APITestCase):
 
 class APIReportTest(APITestCase, PatcherMixin):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('report-list')
 
         self.create_dataset()
@@ -181,11 +181,11 @@ class APIReportTest(APITestCase, PatcherMixin):
         super(APIReportTest, self).setUp()
 
     def create_dataset(self):
-        self.batch = mommy.make(Batch, 2)
-        self.reports = mommy.make(Report, 2)
-        self.report_1 = mommy.make(
+        self.batch = baker.make(Batch, 2)
+        self.reports = baker.make(Report, 2)
+        self.report_1 = baker.make(
             Report, 4, batch=self.batch[0], report_type=ReportTypes.RegEx.value)
-        self.report_2 = mommy.make(
+        self.report_2 = baker.make(
             Report, 4, batch=self.batch[1],
             report_type=ReportTypes.KeyWord.value)
 
@@ -232,7 +232,7 @@ class APISimModelList(APITestCase):
     fixtures = ['initial_data.json']
 
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('simmodel-list')
 
     def test_requires_login(self):
@@ -265,7 +265,7 @@ class APIRecommendation(APITestCase, PatcherMixin):
     fixtures = ['initial_data.json']
 
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.url = reverse('recommend-list')
         self.patch('analysis.tasks.most_similar_recommend', 'delay')
 
@@ -293,7 +293,7 @@ class APIRecommendation(APITestCase, PatcherMixin):
 
 class APIKeywordListTest(APITestCase):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.url = reverse('keywordlist-list')
 
         self.create_dataset()
@@ -301,9 +301,9 @@ class APIKeywordListTest(APITestCase):
         super(APIKeywordListTest, self).setUp()
 
     def create_dataset(self):
-        self.kw_lists = mommy.make(KeywordList, 3)
-        mommy.make(Keyword, 2, keyword_list=self.kw_lists[0])
-        mommy.make(Keyword, 3, keyword_list=self.kw_lists[1])
+        self.kw_lists = baker.make(KeywordList, 3)
+        baker.make(Keyword, 2, keyword_list=self.kw_lists[0])
+        baker.make(Keyword, 3, keyword_list=self.kw_lists[1])
 
     def kwlist_uri(self, kwl):
         return reverse('keywordlist-detail', kwargs={
@@ -407,7 +407,7 @@ class APIKeywordListTest(APITestCase):
         API should allow edit kw list
         """
         kw_list = self.kw_lists[2]
-        mommy.make(Keyword, 2, keyword_list=kw_list)
+        baker.make(Keyword, 2, keyword_list=kw_list)
         data = {
             'name': 'some name',
             'keywords': []
@@ -429,11 +429,11 @@ class APIKeywordListTest(APITestCase):
         API should create brave new keywords on edit
         """
         kw_list = self.kw_lists[2]
-        mommy.make(Keyword, 3, keyword_list=kw_list)
+        baker.make(Keyword, 3, keyword_list=kw_list)
         kws = [{
             'uuid': str(kw.uuid),
             'content': kw.content
-        } for kw in mommy.make(Keyword, 2, keyword_list=kw_list)]
+        } for kw in baker.make(Keyword, 2, keyword_list=kw_list)]
         data = {
             'name': 'some name',
             'keywords': kws + [
@@ -460,7 +460,7 @@ class APIKeywordListTest(APITestCase):
 
 class APIKeywordTest(APITestCase):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.url = reverse('keyword-list')
 
         self.create_dataset()
@@ -468,9 +468,9 @@ class APIKeywordTest(APITestCase):
         super(APIKeywordTest, self).setUp()
 
     def create_dataset(self):
-        self.kwlists = mommy.make(KeywordList, 3)
-        mommy.make(Keyword, 3, keyword_list=self.kwlists[0])
-        mommy.make(Keyword, 2, keyword_list=self.kwlists[1])
+        self.kwlists = baker.make(KeywordList, 3)
+        baker.make(Keyword, 3, keyword_list=self.kwlists[0])
+        baker.make(Keyword, 2, keyword_list=self.kwlists[1])
 
     def test_requires_login(self):
         """
@@ -496,17 +496,17 @@ class APIKeywordTest(APITestCase):
 
 class APIKeywordListSearchTest(APITestCase, PatcherMixin):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.url = reverse('keywordlist-search-list')
         self.patch('analysis.tasks.keywordlist_search', 'delay')
         super(APIKeywordListSearchTest, self).setUp()
 
     def create_dataset(self):
-        self.keywordlist = mommy.make(KeywordList)
-        self.batch = mommy.make(Batch)
-        self.file = mommy.make(File, batch=self.batch)
-        self.document = mommy.make(Document, source_file=self.file)
-        self.sentences = mommy.make(Sentence, 4, document=self.document)
+        self.keywordlist = baker.make(KeywordList)
+        self.batch = baker.make(Batch)
+        self.file = baker.make(File, batch=self.batch)
+        self.document = baker.make(Document, source_file=self.file)
+        self.sentences = baker.make(Sentence, 4, document=self.document)
 
     def test_api_requires_login(self):
         """

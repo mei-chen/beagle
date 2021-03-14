@@ -20,9 +20,9 @@ filerecipe = recipe.Recipe(
 
 class APIConvertTest(APITestCase, PatcherMixin):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('convertfile-list')
-        self.files = mommy.make(File, 3)
+        self.files = baker.make(File, 3)
         self.patch('document.tasks.convert_file', 'delay')
         super(APIConvertTest, self).setUp()
 
@@ -53,21 +53,21 @@ class APIConvertTest(APITestCase, PatcherMixin):
 
 class APIDocumentTest(APITestCase):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('document-list')
         super(APIDocumentTest, self).setUp()
 
     def create_dataset(self):
-        self.batches = mommy.make(Batch, 2)
+        self.batches = baker.make(Batch, 2)
         recipe = filerecipe.extend(batch=self.batches[0])
         self.b1_files = [recipe.make(), recipe.make(), recipe.make()]
         recipe = filerecipe.extend(batch=self.batches[1])
         self.b2_files = [recipe.make(), recipe.make(), recipe.make()]
         self.b1_documents = [
-            mommy.make(Document, source_file=f) for f in self.b1_files]
+            baker.make(Document, source_file=f) for f in self.b1_files]
         self.b2_documents = [
-            mommy.make(Document, source_file=f) for f in self.b2_files]
-        self.d1_tags = [mommy.make(
+            baker.make(Document, source_file=f) for f in self.b2_files]
+        self.d1_tags = [baker.make(
             DocumentTag, 3, document=d) for d in self.b1_documents]
 
     def test_document_api_requires_login(self):
@@ -117,9 +117,9 @@ class APIDocumentTest(APITestCase):
 
 class APICleanupDocumentTest(APITestCase, PatcherMixin):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('cleanup-doc-list')
-        self.docs = mommy.make(Document, 3)
+        self.docs = baker.make(Document, 3)
         self.patch('document.tasks.cleanup_document', 'delay')
         super(APICleanupDocumentTest, self).setUp()
 
@@ -157,7 +157,7 @@ class APICleanupDocumentTest(APITestCase, PatcherMixin):
 
 class APICleanupDocumentToolListTest(APITestCase):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('cleanup-doc-tool-list')
         super(APICleanupDocumentToolListTest, self).setUp()
 
@@ -188,9 +188,9 @@ class APICleanupDocumentToolListTest(APITestCase):
 class APISentenceSplittingTest(APITestCase, PatcherMixin):
     def setUp(self):
         self.patch('document.tasks.sentence_splitting', 'delay')
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.url = reverse('sentence-splitting-list')
-        self.documents = mommy.make(Document, 3)
+        self.documents = baker.make(Document, 3)
         super(APISentenceSplittingTest, self).setUp()
 
     def test_api_requires_login(self):

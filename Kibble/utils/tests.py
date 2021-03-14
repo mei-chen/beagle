@@ -8,7 +8,7 @@ from zipfile import ZipFile
 from django.conf import settings
 from django.test import TestCase
 from mock import patch
-from model_mommy import mommy
+from model_bakery import baker
 
 from portal.models import File
 from utils import personal_data
@@ -198,7 +198,7 @@ class CompressTest(TestCase):
         compress_to_zip should skip missing files
         """
         self.mktemp('first')
-        f = mommy.make(File, content='unexistent.file')
+        f = baker.make(File, content='unexistent.file')
         self.files.append(f.content)
         self.mktemp('second', '.docx')
         zip = compress_to_zip(self.files)

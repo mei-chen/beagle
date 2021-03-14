@@ -440,7 +440,7 @@ def file_cleanup(sender, instance, *args, **kwargs):
     '''
     Deletes the file(s) associated with a model instance.
     '''
-    for field_name, _ in instance.__dict__.iteritems():
+    for field_name, _ in instance.__dict__.items():
         field = getattr(instance, field_name)
         if issubclass(field.__class__, FieldFile) and field.name:
             try:

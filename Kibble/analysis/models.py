@@ -5,7 +5,7 @@ import random
 import re
 import uuid
 
-from io import BytesIO
+from io import StringIO
 from sklearn.metrics.pairwise import cosine_similarity
 
 from django.conf import settings
@@ -25,8 +25,8 @@ RANDOM_STATE = 42
 class SimModel(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=4096, unique=True)
-    api_name = models.CharField(max_length=4096, unique=True)
+    name = models.CharField(max_length=255, unique=True)
+    api_name = models.CharField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.name
@@ -35,7 +35,7 @@ class SimModel(models.Model):
 class RegEx(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=4096, unique=True)
+    name = models.CharField(max_length=255, unique=True)
     content = models.CharField(max_length=4096)
 
     def __unicode__(self):
@@ -45,7 +45,7 @@ class RegEx(models.Model):
 class Report(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    batch = models.ForeignKey(Batch, related_name='reports',on_delete=models.DO_NOTHING,)
+    batch = models.ForeignKey(Batch, related_name='reports',on_delete=models.DO_NOTHING)
     json = models.TextField(default=json.dumps([]))
     name = models.CharField(max_length=4096)
     report_type = models.SmallIntegerField(choices=ReportTypes.choices())
@@ -360,7 +360,7 @@ class Report(models.Model):
         fieldnames = self.get_csv_format()
         if not self.json or fieldnames is None:
             return None
-        filelike = BytesIO()
+        filelike = StringIO()
         writer = csv.DictWriter(
             filelike, fieldnames=fieldnames, quoting=csv.QUOTE_NONNUMERIC,
             extrasaction='ignore'
@@ -380,7 +380,7 @@ class Report(models.Model):
 class KeywordList(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=4096, unique=True)
+    name = models.CharField(max_length=255, unique=True)
     origin = models.CharField(max_length=4096)
 
     def __unicode__(self):
@@ -390,7 +390,7 @@ class KeywordList(models.Model):
 class Keyword(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    keyword_list = models.ForeignKey(KeywordList, related_name='keywords', null=True,on_delete=models.DO_NOTHING,)
+    keyword_list = models.ForeignKey(KeywordList, related_name='keywords', null=True,on_delete=models.CASCADE)
     content = models.CharField(max_length=4096)
 
     def __unicode__(self):

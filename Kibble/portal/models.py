@@ -164,7 +164,7 @@ class Batch(models.Model):
             for report in filter(lambda r: bool(r.json), self.reports.filter(report_type=report_type)):
                 content = report.json if ziptype == 'json' else report.generate_csv().getvalue()
                 zf.writestr(
-                    report.name.encode('utf-8') + '.' + ziptype,
+                    report.name + '.' + ziptype,
                     content
                 )
         return dst, '{}reports_{}.zip'.format(settings.MEDIA_URL, self.name)

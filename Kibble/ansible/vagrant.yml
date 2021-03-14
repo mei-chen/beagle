@@ -11,7 +11,7 @@
 
   pre_tasks:
     - name: Set locale
-      raw: sudo bash -c "echo -e 'LANG=C.UTF-8\nLANGUAGE=C.UTF-8\nLC_ALL=C' > /etc/default/locale && export LC_ALL=C.UTF-8"
+      raw: sudo bash -c "echo -e 'LANG=C.UTF-8\nLANGUAGE=C.UTF-8\nLC_ALL=C.UTF-8' > /etc/default/locale && export LC_ALL=C.UTF-8"
 
   vars:
     git_repo: "https://{{ githubuser | urlencode }}:{{ githubpassword }}@github.com/BeagleInc/kibble.git"

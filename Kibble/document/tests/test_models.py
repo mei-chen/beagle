@@ -7,7 +7,7 @@ from django.db.models.fields.files import FieldFile
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from mock import patch, mock
-from model_mommy import mommy
+from model_bakery import baker
 from lxml.etree import fromstring, tostring
 from unittest import skip
 
@@ -40,7 +40,7 @@ class ModelTest(TempCleanupTestCase):
 
     def make_document(self, test_file):
         content = open(self.get_file(test_file), 'r').read()
-        return mommy.make(Document, content_file=SimpleUploadedFile(
+        return baker.make(Document, content_file=SimpleUploadedFile(
             'test.docx', content))
 
     @patch('document.models.docx_to_txt')
@@ -48,7 +48,7 @@ class ModelTest(TempCleanupTestCase):
         """
         Document model should have docx and text fields
         """
-        document = mommy.make(Document)
+        document = baker.make(Document)
         self.assertTrue(isinstance(document.content_file, FieldFile))
         self.assertTrue(isinstance(document.text_file, FieldFile))
 
@@ -59,7 +59,7 @@ class ModelTest(TempCleanupTestCase):
         Document should convert docx file to text one
         """
         convert_mock.side_effect = side_effect_tmpfile
-        document = mommy.make(Document, content_file=self.make_file())
+        document = baker.make(Document, content_file=self.make_file())
         convert_mock.assert_called_once_with(file_mock.return_value.name)
         self.assertEqual(
             document.text_file.name,
@@ -72,7 +72,7 @@ class ModelTest(TempCleanupTestCase):
         Document should ignore conversion errors
         """
         convert_mock.return_value = None
-        document = mommy.make(Document, content_file=self.make_file())
+        document = baker.make(Document, content_file=self.make_file())
         convert_mock.assert_called_once()
         self.assertEqual(document.text_file, None)
 
@@ -83,7 +83,7 @@ class ModelTest(TempCleanupTestCase):
         Document should run conversion on content file change
         """
         convert_mock.side_effect = side_effect_tmpfile
-        document = mommy.make(Document, content_file=self.make_file())
+        document = baker.make(Document, content_file=self.make_file())
         convert_mock.reset_mock()
         old_name = document.text_file.name
         document.content_file = self.make_file()
@@ -102,7 +102,7 @@ class ModelTest(TempCleanupTestCase):
         Document should run conversion on content file assignment
         """
         convert_mock.side_effect = side_effect_tmpfile
-        document = mommy.make(Document)
+        document = baker.make(Document)
         convert_mock.assert_not_called()
         document.content_file = self.make_file()
         document.save()
@@ -174,9 +174,9 @@ class ModelTest(TempCleanupTestCase):
         """
         cleanup should create DocumentTag for document on cleanup call
         """
-        bpalc_mock.return_value = mommy.make(Document)
-        t_mock.return_value = mommy.make(Document)
-        document = mommy.make(Document)
+        bpalc_mock.return_value = baker.make(Document)
+        t_mock.return_value = baker.make(Document)
+        document = baker.make(Document)
         self.assertFalse(DocumentTag.objects.exists())
 
         document.cleanup(['title/header/footer'])
@@ -202,10 +202,10 @@ class ModelTest(TempCleanupTestCase):
         """
         cleanup on call creates tags with sequence order placed in order field
         """
-        t1_mock.return_value = mommy.make(Document)
-        t2_mock.return_value = mommy.make(Document)
-        t3_mock.return_value = mommy.make(Document)
-        document = mommy.make(Document)
+        t1_mock.return_value = baker.make(Document)
+        t2_mock.return_value = baker.make(Document)
+        t3_mock.return_value = baker.make(Document)
+        document = baker.make(Document)
 
         document.cleanup(['linebreakers', 'table of contents', 'tables'])
         self.assertEqual(
@@ -226,7 +226,7 @@ class ModelTest(TempCleanupTestCase):
         """
         cleanup should call purge_tags
         """
-        doc = mommy.make(Document)
+        doc = baker.make(Document)
         doc.purge_tags()
         purge_mockup.assert_called_once()
 
@@ -236,8 +236,8 @@ class ModelTest(TempCleanupTestCase):
         cleanup should recreate tag on cleanup
         """
         toc_mock.return_value = True
-        document = mommy.make(Document)
-        doctag = mommy.make(
+        document = baker.make(Document)
+        doctag = baker.make(
             DocumentTag, document=document, name='table of contents')
 
         self.assertEqual(DocumentTag.objects.count(), 1)
@@ -255,8 +255,8 @@ class ModelTest(TempCleanupTestCase):
         cleanup should NOT create tag on error
         """
         toc_mock.return_value = None
-        document = mommy.make(Document)
-        mommy.make(DocumentTag, document=document, name='foo')
+        document = baker.make(Document)
+        baker.make(DocumentTag, document=document, name='foo')
 
         self.assertEqual(DocumentTag.objects.count(), 1)
 
@@ -269,7 +269,7 @@ class ModelTest(TempCleanupTestCase):
         """
         cleanup should call conveyor
         """
-        document = mommy.make(Document)
+        document = baker.make(Document)
         document.cleanup(['title/header/footer'])
         conveyor_mockup.assert_called_once()
 
@@ -277,7 +277,7 @@ class ModelTest(TempCleanupTestCase):
         """
         make_copy should copy document
         """
-        doc = mommy.make(Document)
+        doc = baker.make(Document)
         copied = doc.make_copy()
 
         self.assertNotEqual(doc.id, copied.id)
@@ -287,7 +287,7 @@ class ModelTest(TempCleanupTestCase):
         """
         make_copy should remove old copy after call
         """
-        doc = mommy.make(Document)
+        doc = baker.make(Document)
         doc.make_copy()
         new_copied = doc.make_copy()
 
@@ -303,7 +303,7 @@ class ModelTest(TempCleanupTestCase):
         file = ''.join(
             [random.choice(string.ascii_lowercase) for _ in range(10)]
         )
-        doc = mommy.make(
+        doc = baker.make(
             Document,
             content_file=SimpleUploadedFile(file + '.docx', '1\n2\n3\n'),
             text_file=SimpleUploadedFile(file + '.txt', '1\n2\n3\n'),
@@ -325,10 +325,10 @@ class ModelTest(TempCleanupTestCase):
         """
         purge_tags drops all existing tags for document
         """
-        doc = mommy.make(Document)
-        mommy.make(DocumentTag, document=doc, name='title/header/footer')
-        mommy.make(DocumentTag, document=doc, name='tables')
-        mommy.make(
+        doc = baker.make(Document)
+        baker.make(DocumentTag, document=doc, name='title/header/footer')
+        baker.make(DocumentTag, document=doc, name='tables')
+        baker.make(
             DocumentTag, document=doc, name='bullet points and listing')
 
         doc.purge_tags()
@@ -340,7 +340,7 @@ class ModelTest(TempCleanupTestCase):
         Document files should be deleted when instance is deleted
         """
         convert_mock.side_effect = side_effect_tmpfile
-        doc = mommy.make(
+        doc = baker.make(
             Document,
             content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
             text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'),
@@ -359,7 +359,7 @@ class ModelTest(TempCleanupTestCase):
         Document files should be deleted when doc dueryset is deleted
         """
         convert_mock.side_effect = side_effect_tmpfile
-        doc = mommy.make(
+        doc = baker.make(
             Document,
             content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
             text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'),
@@ -380,12 +380,12 @@ class ModelTest(TempCleanupTestCase):
         Document files should be deleted when batch instance is deleted
         """
         convert_mock.side_effect = side_effect_tmpfile
-        batch = mommy.make(Batch, name='Bar')
-        file_ = mommy.make(
+        batch = baker.make(Batch, name='Bar')
+        file_ = baker.make(
             File,
             content=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
             batch=batch)
-        doc = mommy.make(
+        doc = baker.make(
             Document,
             source_file=file_,
             content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
@@ -407,12 +407,12 @@ class ModelTest(TempCleanupTestCase):
         Document files should be deleted when batch dueryset is deleted
         """
         convert_mock.side_effect = side_effect_tmpfile
-        batch = mommy.make(Batch, name='Bar')
-        file_ = mommy.make(
+        batch = baker.make(Batch, name='Bar')
+        file_ = baker.make(
             File,
             content=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
             batch=batch)
-        doc = mommy.make(
+        doc = baker.make(
             Document,
             source_file=file_,
             content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
@@ -437,7 +437,7 @@ class ModelTest(TempCleanupTestCase):
         """
         Document.get_text_lines should return an empty array if doesn't have a txt file
         """
-        doc = mommy.make(Document)
+        doc = baker.make(Document)
         self.assertEqual(doc.get_text_lines(), [])
 
     def test_get_text_lines_has_text_file(self):
@@ -452,7 +452,7 @@ class ModelTest(TempCleanupTestCase):
         """
         Should save docx.Document in io
         """
-        doc = mommy.make(Document)
+        doc = baker.make(Document)
         docx = mock.MagicMock()
         doc.store_doc(docx)
         store_content_mock.assert_called_once()
@@ -475,7 +475,7 @@ class CleanupToolsTest(TempCleanupTestCase):
 
     def make_document(self, test_file):
         content = open(self.get_file(test_file), 'r').read()
-        return mommy.make(Document, content_file=SimpleUploadedFile(
+        return baker.make(Document, content_file=SimpleUploadedFile(
             'test.docx', content))
 
     @patch('document.models.NotificationManager.notify_client')
@@ -484,7 +484,7 @@ class CleanupToolsTest(TempCleanupTestCase):
         """
         conveyor should call self.make_copy
         """
-        document = mommy.make(Document)
+        document = baker.make(Document)
         make_copy_mock.return_value = self.make_document('title-plain.docx')
 
         document.conveyor(['tables'], 'foo')
@@ -497,7 +497,7 @@ class CleanupToolsTest(TempCleanupTestCase):
         """
         conveyor should show warning on bad tool
         """
-        document = mommy.make(Document)
+        document = baker.make(Document)
         make_copy_mock.return_value = self.make_document('title-plain.docx')
         document.conveyor(['foobar'], 'FooSession')
         make_copy_mock.assert_called_once()
@@ -517,7 +517,7 @@ class CleanupToolsTest(TempCleanupTestCase):
         conveyor should show warning on tool error
         """
         cleanup_mock.return_value = None
-        document = mommy.make(Document)
+        document = baker.make(Document)
         make_copy_mock.return_value = self.make_document('title-plain.docx')
         document.conveyor(['tables'], 'FooSession')
         make_copy_mock.assert_called_once()
@@ -767,7 +767,7 @@ class TableOfContentsCleanupTest(TestCase):
 
     def make_doc(self, fpath):
         suf = SimpleUploadedFile('foo.docx', open(fpath).read())
-        return mommy.make(Document, content_file=suf, name='Foo')
+        return baker.make(Document, content_file=suf, name='Foo')
 
     def do_docx_comparing(self, test_file):
         expected_file = '%s-clean.docx' % test_file
@@ -861,9 +861,9 @@ class TableOfContentsCleanupTest(TestCase):
 
 class DocumentSentencesTest(TestCase):
     def setUp(self):
-        self.documents = mommy.make(Document, 3)
-        self.sentences = mommy.make(Sentence, 10, document=self.documents[0])
-        self.sentences2 = mommy.make(Sentence, 10, document=self.documents[1])
+        self.documents = baker.make(Document, 3)
+        self.sentences = baker.make(Sentence, 10, document=self.documents[0])
+        self.sentences2 = baker.make(Sentence, 10, document=self.documents[1])
 
     def test_generate_csv(self):
         """
@@ -917,7 +917,7 @@ class HFTCleanupTest(TestCase):
 
     def make_doc(self, fpath):
         suf = SimpleUploadedFile('foo.docx', open(fpath).read())
-        return mommy.make(Document, content_file=suf, name='Foo')
+        return baker.make(Document, content_file=suf, name='Foo')
 
     def do_compare(self, fname):
         clean_file = '%s-clean.docx' % os.path.splitext(fname)[0]

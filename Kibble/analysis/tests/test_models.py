@@ -1,6 +1,6 @@
 import json
 import re
-from model_mommy import mommy
+from model_bakery import baker
 
 from django.test import TestCase
 
@@ -12,13 +12,13 @@ from document.models import Document, Sentence
 
 class ReportTest(TestCase):
     def setUp(self):
-        self.regex = mommy.make(RegEx, content=re.compile(r'[a-c,1-9]+'))
-        self.keywordlist = mommy.make(KeywordList)
-        mommy.make(Keyword, content='here', keyword_list=self.keywordlist)
-        mommy.make(Keyword, content='9981', keyword_list=self.keywordlist)
-        self.batch = mommy.make(Batch)
-        self.document = mommy.make(
-            Document, source_file=mommy.make(File, batch=self.batch))
+        self.regex = baker.make(RegEx, content=re.compile(r'[a-c,1-9]+'))
+        self.keywordlist = baker.make(KeywordList)
+        baker.make(Keyword, content='here', keyword_list=self.keywordlist)
+        baker.make(Keyword, content='9981', keyword_list=self.keywordlist)
+        self.batch = baker.make(Batch)
+        self.document = baker.make(
+            Document, source_file=baker.make(File, batch=self.batch))
         self.report = Report(batch=self.batch)
         self.samples = [
             'shudzzudzzu',
@@ -121,7 +121,7 @@ class ReportTest(TestCase):
         """
         If nothing found - return None
         """
-        self.regex = mommy.make(RegEx, content=re.compile(r'^ELEXANDINE'))
+        self.regex = baker.make(RegEx, content=re.compile(r'^ELEXANDINE'))
         result = self.report.apply_regex(self.regex)
         self.assertIsNone(result)
 
@@ -129,8 +129,8 @@ class ReportTest(TestCase):
         """
         If nothing found - return None
         """
-        kwl = mommy.make(KeywordList)
-        mommy.make(Keyword, content='never will find', keyword_list=kwl)
+        kwl = baker.make(KeywordList)
+        baker.make(Keyword, content='never will find', keyword_list=kwl)
         result = self.report.apply_keyword(kwl, [])
         self.assertIsNone(result)
 
@@ -221,7 +221,7 @@ class ReportCsvTest(TestCase):
             }
         ])
         Report.objects.create(
-            batch=mommy.make(Batch),
+            batch=baker.make(Batch),
             json=self.data,
             report_type=ReportTypes.RegEx.value)
 
@@ -229,7 +229,7 @@ class ReportCsvTest(TestCase):
         """
         Returns format for csv according to report_type=RegEx
         """
-        report = mommy.make(Report, report_type=ReportTypes.RegEx.value)
+        report = baker.make(Report, report_type=ReportTypes.RegEx.value)
         self.assertEqual(
             report.get_csv_format(),
             ['batch', 'regex', 'found', 'sentence']
@@ -239,7 +239,7 @@ class ReportCsvTest(TestCase):
         """
         Returns format for csv according to report_type=KeywordList
         """
-        report = mommy.make(Report, report_type=ReportTypes.KeyWord.value)
+        report = baker.make(Report, report_type=ReportTypes.KeyWord.value)
         self.assertEqual(
             report.get_csv_format(),
             ['batch', 'keywordlist', 'keyword', 'sentence']
@@ -277,7 +277,7 @@ class KeywordModel(TestCase):
         """
         Keyword should removed when keywordlist field is None
         """
-        mommy.make(Keyword, keyword_list=mommy.make(KeywordList))
+        baker.make(Keyword, keyword_list=baker.make(KeywordList))
         keyword = Keyword.objects.first()
         keyword.keyword_list = None
         keyword.save()
@@ -299,7 +299,7 @@ class KeywordListModel(TestCase):
         """
         KeywordList model can store initial keyword
         """
-        kw = mommy.make(KeywordList)
+        kw = baker.make(KeywordList)
         self.assertTrue(hasattr(kw, 'origin'))
         kw.origin = 'new origin'
         kw.save()

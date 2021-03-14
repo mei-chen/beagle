@@ -7,7 +7,6 @@ from .celery import app as current_app
 from document.models import Document, Sentence
 from portal.models import Project, Batch, File
 
-
 @check
 def _check_models():
     users_count = User.objects.all().count()

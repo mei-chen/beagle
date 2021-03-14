@@ -24,7 +24,7 @@ filerecipe = recipe.Recipe(
 
 class APIProjectTest(APITestCase):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('project-list')
         self.batch_list_url = reverse('batch-list')
         super(APIProjectTest, self).setUp()
@@ -48,9 +48,9 @@ class APIProjectTest(APITestCase):
         return self.project_uri(project) + 'compress/'
 
     def create_dataset(self):
-        self.projects = mommy.make(Project, 3, owner=self.user)
-        self.p1_batches = mommy.make(Batch, 3, project=[self.projects[0]])
-        self.free_batch = mommy.make(Batch)
+        self.projects = baker.make(Project, 3, owner=self.user)
+        self.p1_batches = baker.make(Batch, 3, project=[self.projects[0]])
+        self.free_batch = baker.make(Batch)
 
         recipe = filerecipe.extend(batch=self.p1_batches[0])
         self.b1_files = (recipe.make(), recipe.make(), recipe.make())
@@ -132,8 +132,8 @@ class APIProjectTest(APITestCase):
         """
         Project should be edited on PUT
         """
-        p = mommy.make(Project)
-        b = mommy.make(Batch, project=[p])
+        p = baker.make(Project)
+        b = baker.make(Batch, project=[p])
         self.client.force_login(self.user)
         data = {
             'name': 'FooName',
@@ -188,8 +188,8 @@ class APIProjectTest(APITestCase):
                        kwargs={'pk': project.pk})
 
     def test_list_collaborators(self):
-        users = mommy.make(User, 2)
-        project = mommy.make(Project, owner=self.user)
+        users = baker.make(User, 2)
+        project = baker.make(Project, owner=self.user)
 
         list_collaborators_url = \
             self.get_enpoint_url('list_collaborators', project)
@@ -221,8 +221,8 @@ class APIProjectTest(APITestCase):
         self.assertEqual(expected_data, actual_data)
 
     def test_invite_collaborator(self):
-        user = mommy.make(User, email='user@test.com')
-        project = mommy.make(Project, owner=self.user)
+        user = baker.make(User, email='user@test.com')
+        project = baker.make(Project, owner=self.user)
 
         invite_collaborator_url = \
             self.get_enpoint_url('invite_collaborator', project)
@@ -250,8 +250,8 @@ class APIProjectTest(APITestCase):
         self.assertEqual(400, response.status_code)  # FAILED (duplicate invite)
 
     def test_uninvite_collaborator(self):
-        user = mommy.make(User)
-        project = mommy.make(Project, owner=self.user)
+        user = baker.make(User)
+        project = baker.make(Project, owner=self.user)
 
         uninvite_collaborator_url = \
             self.get_enpoint_url('uninvite_collaborator', project)
@@ -290,8 +290,8 @@ class APIProjectTest(APITestCase):
         )
 
     def test_user_collaboration_management_access(self):
-        user = mommy.make(User)
-        project = mommy.make(Project, owner=self.user)
+        user = baker.make(User)
+        project = baker.make(Project, owner=self.user)
 
         # The project isn't accessible for unauthenticated users
         # and isn't visible for non-collaborators
@@ -344,8 +344,8 @@ class APIProjectTest(APITestCase):
         )
 
     def test_accessible_projects(self):
-        user = mommy.make(User)
-        projects = mommy.make(Project, 4, owner=None)
+        user = baker.make(User)
+        projects = baker.make(Project, 4, owner=None)
 
         projects[1].owner = self.user
         projects[1].save()
@@ -374,7 +374,7 @@ class APIProjectTest(APITestCase):
 
 class APIBatchTest(APITestCase, PatcherMixin):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('batch-list')
         super(APIBatchTest, self).setUp()
 
@@ -389,10 +389,10 @@ class APIBatchTest(APITestCase, PatcherMixin):
         })
 
     def create_dataset(self):
-        self.projects = mommy.make(Project, 4)
-        self.p1_batches = mommy.make(Batch, 3, project=[self.projects[0]])
-        self.p2_batches = mommy.make(Batch, 3, project=[self.projects[1]])
-        self.free_batches = mommy.make(Batch, 2)
+        self.projects = baker.make(Project, 4)
+        self.p1_batches = baker.make(Batch, 3, project=[self.projects[0]])
+        self.p2_batches = baker.make(Batch, 3, project=[self.projects[1]])
+        self.free_batches = baker.make(Batch, 2)
 
         recipe = filerecipe.extend(batch=self.p1_batches[0])
         self.b1_files = (recipe.make(), recipe.make(), recipe.make())
@@ -554,7 +554,7 @@ class APIBatchTest(APITestCase, PatcherMixin):
         """
         Batch can has an owner
         """
-        batch_w_owner = mommy.make(Batch, owner=self.user)
+        batch_w_owner = baker.make(Batch, owner=self.user)
         self.client.force_login(self.user)
         response = self.client.get(self.batch_uri(batch_w_owner))
         self.assertEqual(response.status_code, 200)
@@ -604,8 +604,8 @@ class APIBatchTest(APITestCase, PatcherMixin):
                        kwargs={'pk': batch.pk})
 
     def test_list_collaborators(self):
-        users = mommy.make(User, 2)
-        batch = mommy.make(Batch, owner=self.user)
+        users = baker.make(User, 2)
+        batch = baker.make(Batch, owner=self.user)
 
         list_collaborators_url = \
             self.get_enpoint_url('list_collaborators', batch)
@@ -637,8 +637,8 @@ class APIBatchTest(APITestCase, PatcherMixin):
         self.assertEqual(expected_data, actual_data)
 
     def test_invite_collaborator(self):
-        user = mommy.make(User, email='user@test.com')
-        batch = mommy.make(Batch, owner=self.user)
+        user = baker.make(User, email='user@test.com')
+        batch = baker.make(Batch, owner=self.user)
 
         invite_collaborator_url = \
             self.get_enpoint_url('invite_collaborator', batch)
@@ -666,8 +666,8 @@ class APIBatchTest(APITestCase, PatcherMixin):
         self.assertEqual(400, response.status_code)  # FAILED (duplicate invite)
 
     def test_uninvite_collaborator(self):
-        user = mommy.make(User)
-        batch = mommy.make(Batch, owner=self.user)
+        user = baker.make(User)
+        batch = baker.make(Batch, owner=self.user)
 
         uninvite_collaborator_url = \
             self.get_enpoint_url('uninvite_collaborator', batch)
@@ -706,8 +706,8 @@ class APIBatchTest(APITestCase, PatcherMixin):
         )
 
     def test_user_collaboration_management_access(self):
-        user = mommy.make(User)
-        batch = mommy.make(Batch, owner=self.user)
+        user = baker.make(User)
+        batch = baker.make(Batch, owner=self.user)
 
         # The batch isn't accessible for unauthenticated users
         # and isn't visible for non-collaborators
@@ -760,32 +760,32 @@ class APIBatchTest(APITestCase, PatcherMixin):
         )
 
     def test_accessible_batches(self):
-        users = mommy.make(User, 2)
-        projects = mommy.make(Project, 6, owner=None)
+        users = baker.make(User, 2)
+        projects = baker.make(Project, 6, owner=None)
         batches = []
 
         batches.append(
-            mommy.make(Batch, owner=None, project=[])
+            baker.make(Batch, owner=None, project=[])
         )
         batches.append(
-            mommy.make(Batch, owner=self.user, project=[])
+            baker.make(Batch, owner=self.user, project=[])
         )
 
-        mommy.make(Batch, owner=users[0], project=[])
-        mommy.make(Batch, owner=users[1], project=[])
+        baker.make(Batch, owner=users[0], project=[])
+        baker.make(Batch, owner=users[1], project=[])
 
         batches.append(
-            mommy.make(Batch, owner=users[0], project=[projects[0]])
+            baker.make(Batch, owner=users[0], project=[projects[0]])
         )
         batches.append(
-            mommy.make(Batch, owner=users[1], project=[projects[0]])
+            baker.make(Batch, owner=users[1], project=[projects[0]])
         )
 
         projects[1].owner = self.user
         projects[1].save()
 
         batches.append(
-            mommy.make(Batch, owner=self.user, project=[projects[1]])
+            baker.make(Batch, owner=self.user, project=[projects[1]])
         )
 
         projects[2].owner = users[0]
@@ -796,7 +796,7 @@ class APIBatchTest(APITestCase, PatcherMixin):
         )
 
         batches.append(
-            mommy.make(Batch, owner=users[0], project=[projects[2]])
+            baker.make(Batch, owner=users[0], project=[projects[2]])
         )
 
         projects[3].owner = users[1]
@@ -807,20 +807,20 @@ class APIBatchTest(APITestCase, PatcherMixin):
         )
 
         batches.append(
-            mommy.make(Batch, owner=users[1], project=[projects[3]])
+            baker.make(Batch, owner=users[1], project=[projects[3]])
         )
 
         projects[4].owner = users[0]
         projects[4].save()
 
         batches.append(
-            mommy.make(Batch, owner=users[0], project=[projects[1], projects[4]])
+            baker.make(Batch, owner=users[0], project=[projects[1], projects[4]])
         )
 
-        mommy.make(Batch, owner=users[0], project=[projects[4]])
+        baker.make(Batch, owner=users[0], project=[projects[4]])
 
         batches.append(
-            mommy.make(Batch, owner=users[0], project=[projects[4]])
+            baker.make(Batch, owner=users[0], project=[projects[4]])
         )
 
         BatchCollaborationInvite.objects.create(
@@ -830,14 +830,14 @@ class APIBatchTest(APITestCase, PatcherMixin):
         projects[5].owner = users[1]
         projects[5].save()
 
-        mommy.make(Batch, owner=users[1], project=[projects[5]])
+        baker.make(Batch, owner=users[1], project=[projects[5]])
 
         batches.append(
-            mommy.make(Batch, owner=users[1], project=[projects[1], projects[5]])
+            baker.make(Batch, owner=users[1], project=[projects[1], projects[5]])
         )
 
         batches.append(
-            mommy.make(Batch, owner=users[1], project=[projects[5]])
+            baker.make(Batch, owner=users[1], project=[projects[5]])
         )
 
         BatchCollaborationInvite.objects.create(
@@ -859,8 +859,8 @@ class APIBatchTest(APITestCase, PatcherMixin):
 class LocalUploadTest(APITestCase):
     def setUp(self):
         super(LocalUploadTest, self).setUp()
-        self.user = mommy.make(User)
-        self.batch = mommy.make(Batch, name='Foo')
+        self.user = baker.make(User)
+        self.batch = baker.make(Batch, name='Foo')
         recipe = filerecipe.extend(batch=self.batch)
         self.files = (recipe.make(), recipe.make())
         self.batch_api_url = reverse('batch-list')
@@ -999,7 +999,7 @@ class LocalUploadTest(APITestCase):
 
 class APIFileTest(APITestCase):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('file-list')
         super(APIFileTest, self).setUp()
 
@@ -1014,13 +1014,13 @@ class APIFileTest(APITestCase):
         })
 
     def create_dataset(self):
-        self.batches = mommy.make(Batch, 2)
+        self.batches = baker.make(Batch, 2)
         recipe = filerecipe.extend(batch=self.batches[0])
         self.b1_files = [recipe.make(), recipe.make(), recipe.make()]
         recipe = filerecipe.extend(batch=self.batches[1])
         self.b2_files = [recipe.make(), recipe.make(), recipe.make()]
-        self.converted_file = mommy.make(File, batch=self.batches[0])
-        self.document = mommy.make(Document, source_file=self.converted_file)
+        self.converted_file = baker.make(File, batch=self.batches[0])
+        self.document = baker.make(Document, source_file=self.converted_file)
 
     def test_batch_api_requires_login(self):
         """
@@ -1107,8 +1107,8 @@ class APIFileTest(APITestCase):
         API should allow adding file to batch
         """
         self.client.force_login(self.user)
-        batch = mommy.make(Batch, project=[mommy.make(Project)])
-        free_file = mommy.make(File, batch=None)
+        batch = baker.make(Batch, project=[baker.make(Project)])
+        free_file = baker.make(File, batch=None)
         data = {
             'batch': batch.pk
         }
@@ -1125,8 +1125,8 @@ class APIFileTest(APITestCase):
         API should allow removing files from batch
         """
         self.client.force_login(self.user)
-        batch = mommy.make(Batch, project=[mommy.make(Project)])
-        binded_files = mommy.make(File, batch=batch)
+        batch = baker.make(Batch, project=[baker.make(Project)])
+        binded_files = baker.make(File, batch=batch)
         data = {
             'batch': None
         }
@@ -1139,28 +1139,28 @@ class APIFileTest(APITestCase):
         self.assertNotEqual(binded_files.batch, batch)
 
     def test_accessible_batches(self):
-        user = mommy.make(User)
-        projects = [mommy.make(Project, owner=owner)
+        user = baker.make(User)
+        projects = [baker.make(Project, owner=owner)
                     for owner in [self.user, user]]
-        batches = [mommy.make(Batch, owner=None, project=[projects[index]])
+        batches = [baker.make(Batch, owner=None, project=[projects[index]])
                    for index in [0, 0, 1, 1, 1, 1]]
         files = []
 
-        files.append(mommy.make(File, batch=None))
+        files.append(baker.make(File, batch=None))
 
-        files.append(mommy.make(File, batch=batches[0]))
+        files.append(baker.make(File, batch=batches[0]))
 
         batches[1].owner = self.user
         batches[1].save()
 
-        files.append(mommy.make(File, batch=batches[1]))
+        files.append(baker.make(File, batch=batches[1]))
 
-        files.append(mommy.make(File, batch=batches[2]))
+        files.append(baker.make(File, batch=batches[2]))
 
         batches[3].owner = user
         batches[3].save()
 
-        mommy.make(File, batch=batches[3])
+        baker.make(File, batch=batches[3])
 
         batches[4].owner = user
         batches[4].save()
@@ -1169,12 +1169,12 @@ class APIFileTest(APITestCase):
             invitee=self.user, inviter=user, batch=batches[4]
         )
 
-        files.append(mommy.make(File, batch=batches[4]))
+        files.append(baker.make(File, batch=batches[4]))
 
         batches[5].owner = self.user
         batches[5].save()
 
-        files.append(mommy.make(File, batch=batches[5]))
+        files.append(baker.make(File, batch=batches[5]))
 
         self.client.force_login(self.user)
 

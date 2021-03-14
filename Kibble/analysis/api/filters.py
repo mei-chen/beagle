@@ -8,7 +8,7 @@ from portal.models import Batch
 
 class ReportFilter(FilterSet):
     batch = ModelChoiceFilter(queryset=Batch.objects.all(), to_field_name="id")
-    report_type = NumberFilter(name="report_type", required=True)
+    report_type = NumberFilter(field_name="report_type", required=True)
 
     class Meta:
         model = Report

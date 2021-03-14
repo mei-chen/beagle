@@ -20,12 +20,12 @@ filerecipe = recipe.Recipe(
 
 class DownloadViewTest(TestCase, PatcherMixin):
     def setUp(self):
-        self.user = mommy.make(User)
+        self.user = baker.make(User)
         self.list_url = reverse('document:batch_download')
         self.patch('portal.models.Batch', 'get_converted_documents')
         self.get_converted_documents.return_value\
             .getvalue.return_value = 'ZipFileContent'
-        self.batch = mommy.make(Batch)
+        self.batch = baker.make(Batch)
 
     def test_batch_download_requires_login(self):
         """
@@ -85,15 +85,15 @@ class DownloadViewTest(TestCase, PatcherMixin):
 class SentenceDownloadTest(TestCase, PatcherMixin):
     def setUp(self):
         self.download_url = reverse('document:download_sentences')
-        self.user = mommy.make(User)
-        self.batch = mommy.make(Batch, name='Batch')
+        self.user = baker.make(User)
+        self.batch = baker.make(Batch, name='Batch')
         recipe = filerecipe.extend(batch=self.batch)
-        self.document0 = mommy.make(Document, source_file=recipe.make())
-        self.document1 = mommy.make(Document, source_file=recipe.make())
-        self.document2 = mommy.make(Document)
+        self.document0 = baker.make(Document, source_file=recipe.make())
+        self.document1 = baker.make(Document, source_file=recipe.make())
+        self.document2 = baker.make(Document)
         for i in range(0, 10):
-            mommy.make(Sentence, document=self.document0, text='Bar')
-            mommy.make(Sentence, document=self.document1, text='Bar')
+            baker.make(Sentence, document=self.document0, text='Bar')
+            baker.make(Sentence, document=self.document1, text='Bar')
 
     def test_sentences_download_requires_login(self):
         """

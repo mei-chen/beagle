@@ -40,11 +40,11 @@ class ModelTest(TempCleanupTestCase):
         """
         Project model should have name, status and optional user FK
         """
-        project = mommy.make(Project, name='Foo')
+        project = baker.make(Project, name='Foo')
         project = Project.objects.get(pk=project.pk)
         self.assertEqual(project.name, 'Foo')
         self.assertEqual(project.owner, None)
-        user = mommy.make(User)
+        user = baker.make(User)
         project.owner = user
         project.save()
         project = Project.objects.get(pk=project.pk)
@@ -56,14 +56,14 @@ class ModelTest(TempCleanupTestCase):
         """
         Batch model should have optional project m2m
         """
-        project = mommy.make(Project)
-        batch = mommy.make(Batch)
+        project = baker.make(Project)
+        batch = baker.make(Batch)
         self.assertEqual(batch.project.count(), 0)
         batch.project.add(project)
         batch.save()
         batch = Batch.objects.get(pk=batch.pk)
         self.assertEqual(batch.project.all()[0], project)
-        batch.project.add(mommy.make(Project))
+        batch.project.add(baker.make(Project))
         self.assertEqual(batch.project.count(), 2)
 
     @patch('portal.models.File.get_type')
@@ -72,17 +72,17 @@ class ModelTest(TempCleanupTestCase):
         File model should have type field (None by default)
         """
         gettype_mock.return_value = None
-        obj = mommy.make(File)
+        obj = baker.make(File)
         self.assertIsNone(obj.type)
 
     def test_save_file_in_correct_dir(self):
         """
         Should save under uploads/<batch_id>_<project_name>
         """
-        batch = mommy.make(Batch, name='Bar')
+        batch = baker.make(Batch, name='Bar')
         batch = Batch.objects.get(pk=batch.pk)
 
-        file_ = mommy.make(File, content=self.make_file(), batch=batch)
+        file_ = baker.make(File, content=self.make_file(), batch=batch)
         file_ = File.objects.get(pk=file_.pk)
 
         expected_par_dir = '{}_{}'.format(
@@ -99,8 +99,8 @@ class ModelTest(TempCleanupTestCase):
         Convert and replace an image to pdf
         """
         suf = self.get_test_file('scansmpl.png')
-        batch = mommy.make(Batch)
-        file_ = mommy.make(File, content=suf, batch=batch)
+        batch = baker.make(Batch)
+        file_ = baker.make(File, content=suf, batch=batch)
         old_content = file_.content
         file_.img2pdf()
         self.assertRaises(Exception, lambda: old_content.size)
@@ -117,13 +117,13 @@ class ModelTest(TempCleanupTestCase):
         """
         convert_mock.side_effect = side_effect_tmpfile
         compress_mock.return_value = 'Fooo'
-        batch = mommy.make(Batch)
-        file1 = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch)
+        file1 = baker.make(File, content=self.make_file(), batch=batch)
         file1.convert()
-        file2 = mommy.make(File, content=self.make_file(), batch=batch)
+        file2 = baker.make(File, content=self.make_file(), batch=batch)
         file2.convert()
-        batch2 = mommy.make(Batch)
-        file3 = mommy.make(File, content=self.make_file(), batch=batch2)
+        batch2 = baker.make(Batch)
+        file3 = baker.make(File, content=self.make_file(), batch=batch2)
         file3.convert()
 
         docs = Document.objects.filter(source_file__batch=batch)
@@ -142,13 +142,13 @@ class ModelTest(TempCleanupTestCase):
         """
         convert_mock.side_effect = side_effect_tmpfile
         compress_mock.return_value = 'Fooo'
-        batch = mommy.make(Batch)
-        file1 = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch)
+        file1 = baker.make(File, content=self.make_file(), batch=batch)
         file1.convert()
-        file2 = mommy.make(File, content=self.make_file(), batch=batch)
+        file2 = baker.make(File, content=self.make_file(), batch=batch)
         file2.convert()
-        batch2 = mommy.make(Batch)
-        file3 = mommy.make(File, content=self.make_file(), batch=batch2)
+        batch2 = baker.make(Batch)
+        file3 = baker.make(File, content=self.make_file(), batch=batch2)
         file3.convert()
 
         docs = Document.objects.filter(source_file__batch=batch)
@@ -167,10 +167,10 @@ class ModelTest(TempCleanupTestCase):
         """
         convert_mock.side_effect = side_effect_tmpfile
         compress_mock.return_value = 'Fooo'
-        batch = mommy.make(Batch)
-        file1 = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch)
+        file1 = baker.make(File, content=self.make_file(), batch=batch)
         file1.convert()
-        file2 = mommy.make(File, content=self.make_file(), batch=batch)
+        file2 = baker.make(File, content=self.make_file(), batch=batch)
         file2.convert()
         obj = Document.objects.last()
         obj.content_file = None
@@ -192,8 +192,8 @@ class ModelTest(TempCleanupTestCase):
         """
         Files in media should be deleted on instance deletion
         """
-        batch = mommy.make(Batch, name='Bar')
-        file_ = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch, name='Bar')
+        file_ = baker.make(File, content=self.make_file(), batch=batch)
         content = file_.content
         self.assertTrue(content.size)
         file_.delete()
@@ -203,8 +203,8 @@ class ModelTest(TempCleanupTestCase):
         """
         Files in media should be deleted on file queryset deletion
         """
-        batch = mommy.make(Batch, name='Bar')
-        file_ = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch, name='Bar')
+        file_ = baker.make(File, content=self.make_file(), batch=batch)
         content = file_.content
         self.assertTrue(content.size)
         File.objects.filter(pk=file_.pk).delete()
@@ -214,8 +214,8 @@ class ModelTest(TempCleanupTestCase):
         """
         Files in media should be deleted on instance deletion
         """
-        batch = mommy.make(Batch, name='Bar')
-        file_ = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch, name='Bar')
+        file_ = baker.make(File, content=self.make_file(), batch=batch)
         self.assertTrue(file_.content.size)
         batch.delete()
         self.assertRaises(Exception, lambda: file_.content.size)
@@ -224,8 +224,8 @@ class ModelTest(TempCleanupTestCase):
         """
         Files in media should be deleted on file queryset deletion
         """
-        batch = mommy.make(Batch, name='Bar')
-        file_ = mommy.make(File, content=self.make_file(), batch=batch)
+        batch = baker.make(Batch, name='Bar')
+        file_ = baker.make(File, content=self.make_file(), batch=batch)
         self.assertTrue(file_.content.size)
         Batch.objects.filter(pk=batch.pk).delete()
         self.assertRaises(Exception, lambda: file_.content.size)
@@ -234,7 +234,7 @@ class ModelTest(TempCleanupTestCase):
         """
         File object can have None value in batch field
         """
-        fileobj = mommy.make(File, batch=None)
+        fileobj = baker.make(File, batch=None)
         self.assertTrue(fileobj.batch is None)
 
     @patch('portal.models.File.check_zipped_type')
@@ -244,7 +244,7 @@ class ModelTest(TempCleanupTestCase):
         Check that file type is set correct
         """
         zip_type_mock.return_value = File.FILE_ZIP
-        fileobj = mommy.make(
+        fileobj = baker.make(
             File, content=SimpleUploadedFile('foo', b'foobar'))
         for mime, type in File.FILE_TYPES:
             magic_mock.reset_mock()
@@ -260,7 +260,7 @@ class ModelTest(TempCleanupTestCase):
         """
         Check that file type is set correct for regex cases
         """
-        fileobj = mommy.make(
+        fileobj = baker.make(
             File, content=SimpleUploadedFile('foo', b'foobar'))
         magic_mock.reset_mock()
         magic_mock.return_value = 'text/x-foobar'
@@ -272,7 +272,7 @@ class ModelTest(TempCleanupTestCase):
         """
         File type for unknown mime is FILE_UNKNOWN
         """
-        fileobj = mommy.make(File, content=SimpleUploadedFile('foo', b'moo'))
+        fileobj = baker.make(File, content=SimpleUploadedFile('foo', b'moo'))
         magic_mack.reset_mock()
         magic_mack.return_value = 'Foo'
         self.assertEqual(fileobj.get_type(), File.FILE_UNKNOWN)
@@ -284,7 +284,7 @@ class ModelTest(TempCleanupTestCase):
         Check that file type is set correct
         """
         gettype_mock.return_value = File.FILE_DOC
-        fileobj = mommy.make(File)
+        fileobj = baker.make(File)
         gettype_mock.assert_called_once()
         self.assertEqual(fileobj.type, File.FILE_DOC)
 
@@ -294,7 +294,7 @@ class ModelTest(TempCleanupTestCase):
         Do not check type if it is set
         """
         gettype_mock.return_value = File.FILE_DOC
-        fileobj = mommy.make(File, type=File.FILE_UNKNOWN)
+        fileobj = baker.make(File, type=File.FILE_UNKNOWN)
         gettype_mock.assert_not_called()
         self.assertEqual(fileobj.type, File.FILE_UNKNOWN)
 
@@ -356,7 +356,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         """
         Should convert text file to docx
         """
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_TXT, content=self.make_file())
         self.txt_to_docx.side_effect = side_effect_tmpfile
         content.convert()
@@ -374,7 +374,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         """
         Should convert doc file to docx
         """
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_DOC, content=self.make_file())
         self.doc_to_docx.side_effect = side_effect_tmpfile
         content.convert()
@@ -393,7 +393,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         Should convert pdf file to docx
         """
         self.requires_ocr.return_value = False
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_PDF, content=self.make_file())
         self.pdf_to_docx.side_effect = side_effect_tmpfile
         content.convert()
@@ -411,7 +411,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         """
         Should convert docx file to docx - just create Document and do nothing
         """
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_DOCX, content=self.make_file())
         content.convert()
         self.pdf_to_docx.assert_not_called()
@@ -429,7 +429,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         """
         Should return document on convert finish
         """
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_DOCX, content=self.make_file())
         doc = content.convert()
         d = Document.objects.first()
@@ -442,7 +442,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         Should return None on convert error
         """
         gettype_mock.return_value = File.FILE_UNKNOWN
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_UNKNOWN, content=self.make_file())
         doc = content.convert()
         d = Document.objects.first()
@@ -455,7 +455,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         is it requires ocring and set right prop
         """
         self.requires_ocr.return_value = True
-        file = mommy.make(
+        file = baker.make(
             File, type=File.FILE_PDF, content=self.make_file())
         self.requires_ocr.assert_called()
         self.assertTrue(file.need_ocr)
@@ -466,7 +466,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         is it requires ocring and set right prop
         """
         self.requires_ocr.return_value = False
-        file = mommy.make(
+        file = baker.make(
             File, type=File.FILE_TXT, content=self.make_file())
         self.requires_ocr.assert_not_called()
         self.assertFalse(file.need_ocr)
@@ -479,7 +479,7 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
         If file type is None or unknown - re-call get_type()
         """
         gettype_mock.return_value = File.FILE_DOCX
-        content = mommy.make(
+        content = baker.make(
             File, type=File.FILE_UNKNOWN, content=self.make_file())
         doc = content.convert()
         gettype_mock.assert_called_once()
@@ -499,17 +499,17 @@ class FileConvertTest(TempCleanupTestCase, PatcherMixin):
 class ProjectTest(TestCase):
 
     def make_dataset(self):
-        self.empty_project = mommy.make(Project, name='empty')
-        self.project = mommy.make(Project, name='project')
-        self.batch1 = mommy.make(Batch, name='batch1', project=[self.project])
-        self.batch2 = mommy.make(Batch, name='batch2', project=[self.project])
+        self.empty_project = baker.make(Project, name='empty')
+        self.project = baker.make(Project, name='project')
+        self.batch1 = baker.make(Batch, name='batch1', project=[self.project])
+        self.batch2 = baker.make(Batch, name='batch2', project=[self.project])
         self.id = 0
         self.files1 = [
-            mommy.make(File, batch=self.batch1, content=self.make_file)
+            baker.make(File, batch=self.batch1, content=self.make_file)
             for i in range(3)
         ]
         self.files2 = [
-            mommy.make(File, batch=self.batch2, content=self.make_file)
+            baker.make(File, batch=self.batch2, content=self.make_file)
             for i in range(3)
         ]
 
@@ -579,30 +579,30 @@ class ProjectTest(TestCase):
         """
         Unique project name is required
         """
-        mommy.make(Project, name='project')
+        baker.make(Project, name='project')
         with self.assertRaises(Exception):
-            mommy.make(Project, name='project')
+            baker.make(Project, name='project')
 
 
 class BatchTest(TestCase):
     def make_dataset(self):
-        self.batches = mommy.make(Batch, 3)
+        self.batches = baker.make(Batch, 3)
         self.id = 0
         self.files_b0 = [
-            mommy.make(File, batch=self.batches[0], content=self.make_file)
+            baker.make(File, batch=self.batches[0], content=self.make_file)
             for i in range(3)
         ]
         self.files_b1 = [
-            mommy.make(File, batch=self.batches[1], content=self.make_file)
+            baker.make(File, batch=self.batches[1], content=self.make_file)
             for i in range(3)
         ]
-        self.doc_f0 = mommy.make(Document, 3, source_file=self.files_b0[0])
-        self.doc_f1 = mommy.make(Document, 3, source_file=self.files_b0[1])
-        self.doc_f2 = mommy.make(Document, 3, source_file=self.files_b0[2])
-        mommy.make(Sentence, 4, document=self.doc_f1[1])
-        mommy.make(Sentence, 2, document=self.doc_f2[2])
-        self.doc_b1_f1 = mommy.make(Document, 3, source_file=self.files_b1[1])
-        mommy.make(Sentence, 11, document=self.doc_b1_f1[1])
+        self.doc_f0 = baker.make(Document, 3, source_file=self.files_b0[0])
+        self.doc_f1 = baker.make(Document, 3, source_file=self.files_b0[1])
+        self.doc_f2 = baker.make(Document, 3, source_file=self.files_b0[2])
+        baker.make(Sentence, 4, document=self.doc_f1[1])
+        baker.make(Sentence, 2, document=self.doc_f2[2])
+        self.doc_b1_f1 = baker.make(Document, 3, source_file=self.files_b1[1])
+        baker.make(Sentence, 11, document=self.doc_b1_f1[1])
 
     def make_file(self):
         self.id += 1

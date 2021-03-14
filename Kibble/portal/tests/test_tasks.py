@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from mock import patch, ANY
-from model_mommy import mommy
+from model_bakery import baker
 
 from portal.models import Project, Batch, File
 from portal.tasks import compress_project
@@ -13,18 +13,18 @@ class CompressProjectTaskTest(TestCase):
         return SimpleUploadedFile('test%d.docx' % self.id, b'Test Content')
 
     def make_dataset(self):
-        self.project = mommy.make(Project, name='project')
-        self.batch1 = mommy.make(
+        self.project = baker.make(Project, name='project')
+        self.batch1 = baker.make(
             Batch, name='cmtt_batch1', project=[self.project])
-        self.batch2 = mommy.make(
+        self.batch2 = baker.make(
             Batch, name='cmtt_batch2', project=[self.project])
         self.id = 0
         self.files1 = [
-            mommy.make(File, batch=self.batch1, content=self.make_file)
+            baker.make(File, batch=self.batch1, content=self.make_file)
             for i in range(3)
         ]
         self.files2 = [
-            mommy.make(File, batch=self.batch2, content=self.make_file)
+            baker.make(File, batch=self.batch2, content=self.make_file)
             for i in range(3)
         ]
 
@@ -51,7 +51,7 @@ class CompressProjectTaskTest(TestCase):
         """
         In case if project has no batches inside
         """
-        empty_project = mommy.make(Project, name='empty')
+        empty_project = baker.make(Project, name='empty')
         compress_project.run(empty_project.id, 'session')
         notify_client.assert_called_once_with('session', {
             'action': 'compress_project',

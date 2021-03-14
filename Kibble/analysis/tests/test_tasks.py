@@ -4,7 +4,7 @@ import json
 from django.test import TestCase
 from django.conf import settings
 from mock import call
-from model_mommy import mommy
+from model_bakery import baker
 
 from analysis.tasks import (
     zip_reports, regex_apply, most_similar_recommend, synonyms_recommend,
@@ -20,7 +20,7 @@ from shared.mixins import PatcherMixin
 class RegexApplyTest(TestCase, PatcherMixin):
     def setUp(self):
         self.regex = RegEx.objects.create(content='[0-9]{2}', name='lapcharai')
-        self.batch = mommy.make(Batch)
+        self.batch = baker.make(Batch)
 
     def test_success_apply(self):
         """
@@ -94,7 +94,7 @@ class RegexApplyTest(TestCase, PatcherMixin):
 class BulkZipReportTest(TestCase, PatcherMixin):
     def setUp(self):
         self.patchers = {}
-        self.batch = mommy.make(Batch)
+        self.batch = baker.make(Batch)
         data = json.dumps([
             {
                 'batch': 'hiy',
@@ -315,7 +315,7 @@ class RecommendSynonymsTasksTest(TestCase, PatcherMixin):
 class KeywordSearchTaskTest(TestCase, PatcherMixin):
     def setUp(self):
         self.keywordlist = KeywordList.objects.create(name='lapcharai')
-        self.batch = mommy.make(Batch)
+        self.batch = baker.make(Batch)
 
     def test_success_search(self):
         """

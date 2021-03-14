@@ -26,7 +26,7 @@ filerecipe = recipe.Recipe(
 
 class ConvertTaskTest(TempCleanupTestCase, PatcherMixin):
     def setUp(self):
-        self.files = mommy.make(File, 3)
+        self.files = baker.make(File, 3)
         self.patch('document.tasks.File.objects', 'get')
         self.patch('document.tasks.NotificationManager', 'notify_client')
         self.patch('document.models', 'docx_to_txt')
@@ -45,7 +45,7 @@ class ConvertTaskTest(TempCleanupTestCase, PatcherMixin):
         """
         Convert task should notify about success conversion
         """
-        doc = mommy.make(Document, content_file=self.files[0].content.path)
+        doc = baker.make(Document, content_file=self.files[0].content.path)
         self.get.return_value.convert.return_value = doc
         self.get.return_value.id = '12345'
         self.get.return_value.file_name = 'foobar.txt'
@@ -84,7 +84,7 @@ class ConvertTaskTest(TempCleanupTestCase, PatcherMixin):
 
 class CleanupDocumentToolsTest(TestCase, PatcherMixin):
     def setUp(self):
-        self.docs = mommy.make(Document, 3)
+        self.docs = baker.make(Document, 3)
         self.patch('document.models.Document.objects', 'get')
         self.patch('document.models.Document', 'cleanup')
         self.patch('document.tasks.NotificationManager', 'notify_client')
@@ -103,14 +103,14 @@ class CleanupDocumentToolsTest(TestCase, PatcherMixin):
         """
         Cleanup task should notify about success conversion
         """
-        doc = mommy.make(Document, name='abrakadabra')
+        doc = baker.make(Document, name='abrakadabra')
         seq = [
             {'order': 4, 'tool': 'title'},
             {'order': 2, 'tool': 'tables'},
             {'order': 3, 'tool': 'table of contents'},
             {'order': 1, 'tool': 'linebreakers'}]
         for pos in seq:
-            mommy.make(
+            baker.make(
                 DocumentTag, document=doc, order=pos['order'], name=pos['tool']
             )
         self.get.return_value = doc
@@ -160,12 +160,12 @@ class SentenceMock(object):
 class SentenceSplittingTaskTest(TestCase, PatcherMixin):
     def setUp(self):
         suf = SimpleUploadedFile('foo.txt', 'CONTENT')
-        self.document = mommy.make(Document, text_file=suf)
-        self.document.source_file = mommy.make(File)
-        self.document.source_file.batch = mommy.make(Batch)
-        self.document.source_file.batch.owner = mommy.make(User)
+        self.document = baker.make(Document, text_file=suf)
+        self.document.source_file = baker.make(File)
+        self.document.source_file.batch = baker.make(Batch)
+        self.document.source_file.batch.owner = baker.make(User)
         self.document.source_file.batch.owner.profile.sentence_word_threshold = 0
-        self.bad_document = mommy.make(Document)
+        self.bad_document = baker.make(Document)
         self.patch('document.tasks.NotificationManager', 'notify_client')
         self.patch('document.tasks.SentenceSplittingRemoteAPI', 'process')
         self.patch('document.tasks.SentenceVectorAPI', 'vectorize')
@@ -319,14 +319,14 @@ class SentenceSplittingTaskTest(TestCase, PatcherMixin):
 
 class DownloadSentencesForDocumentsTaskTest(TestCase, PatcherMixin):
     def setUp(self):
-        self.batch = mommy.make(Batch)
+        self.batch = baker.make(Batch)
         recipe = filerecipe.extend(batch=self.batch)
-        self.document0 = mommy.make(Document, source_file=recipe.make())
-        self.document1 = mommy.make(Document, source_file=recipe.make())
-        self.document2 = mommy.make(Document)
+        self.document0 = baker.make(Document, source_file=recipe.make())
+        self.document1 = baker.make(Document, source_file=recipe.make())
+        self.document2 = baker.make(Document)
         for i in range(0, 10):
-            mommy.make(Sentence, document=self.document0, text='Bar')
-            mommy.make(Sentence, document=self.document1, text='Bar')
+            baker.make(Sentence, document=self.document0, text='Bar')
+            baker.make(Sentence, document=self.document1, text='Bar')
 
     def test_csv_saving(self):
         """
@@ -369,8 +369,8 @@ class DownloadSentencesForDocumentsTaskTest(TestCase, PatcherMixin):
 
 class AutoProcessFileTest(TestCase, PatcherMixin):
     def setUp(self):
-        self.file = mommy.make(File, batch=mommy.make(Batch))
-        self.user = mommy.make(User)
+        self.file = baker.make(File, batch=baker.make(Batch))
+        self.user = baker.make(User)
         super(AutoProcessFileTest, self).setUp()
 
     @patch('document.tasks.SentenceSplittingRemoteAPI.process')
