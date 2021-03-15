@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import zipfile
-from StringIO import StringIO
+from io import StringIO, BytesIO
 from tempfile import NamedTemporaryFile
 from zipfile import ZipFile
 
@@ -150,7 +150,7 @@ class CompressTest(TestCase):
                 pass
 
     def mktemp(self, content='foo', suffix='.txt'):
-        f = NamedTemporaryFile(delete=True, suffix=suffix)
+        f = NamedTemporaryFile(delete=True, suffix=suffix.encode('utf-8'))
         f.write(content.encode('utf-8'))
         f.seek(0)
         self.files.append(f)
@@ -162,16 +162,16 @@ class CompressTest(TestCase):
         self.mktemp('first')
         self.mktemp('second', '.docx')
         zip = compress_to_zip(self.files)
-        self.assertTrue(isinstance(zip, StringIO))
+        self.assertTrue(isinstance(zip, BytesIO))
         with ZipFile(zip, 'r') as content:
             info = content.infolist()
             self.assertEqual(len(info), 2)
             self.assertEqual(
-                info[0].filename, self.files[0].name.rsplit('/')[-1])
+                info[0].filename, self.files[0].name.decode('utf-8').rsplit('/')[-1])
             self.assertEqual(
-                info[1].filename, self.files[1].name.rsplit('/')[-1])
-            self.assertEqual(content.read(info[0].filename), 'first')
-            self.assertEqual(content.read(info[1].filename), 'second')
+                info[1].filename, self.files[1].name.decode('utf-8').rsplit('/')[-1])
+            self.assertEqual(content.read(info[0].filename).decode('utf-8'), 'first')
+            self.assertEqual(content.read(info[1].filename).decode('utf-8'), 'second')
 
     def test_compression_handles_unicode(self):
         """
@@ -180,18 +180,18 @@ class CompressTest(TestCase):
         self.mktemp('first')
         self.mktemp(u'тест', u'юникод.docx')
         zip = compress_to_zip(self.files)
-        self.assertTrue(isinstance(zip, StringIO))
+        self.assertTrue(isinstance(zip, BytesIO))
         with ZipFile(zip, 'r') as content:
             info = content.infolist()
             self.assertEqual(len(info), 2)
             self.assertEqual(
-                info[0].filename, self.files[0].name.rsplit('/')[-1])
+                info[0].filename, self.files[0].name.decode('utf-8').rsplit('/')[-1])
             self.assertEqual(
                 info[1].filename,
-                self.files[1].name.rsplit('/')[-1].encode('utf-8'))
-            self.assertIn(u'юникод.docx'.encode('utf-8'), info[1].filename)
-            self.assertEqual(content.read(info[0].filename), 'first')
-            self.assertEqual(content.read(info[1].filename), 'тест')
+                self.files[1].name.decode('utf-8').rsplit('/')[-1])
+            self.assertIn(u'юникод.docx', info[1].filename)
+            self.assertEqual(content.read(info[0].filename).decode('utf-8'), 'first')
+            self.assertEqual(content.read(info[1].filename).decode('utf-8'), 'тест')
 
     def test_compression_handles_missing_file(self):
         """
@@ -202,14 +202,14 @@ class CompressTest(TestCase):
         self.files.append(f.content)
         self.mktemp('second', '.docx')
         zip = compress_to_zip(self.files)
-        self.assertTrue(isinstance(zip, StringIO))
+        self.assertTrue(isinstance(zip, BytesIO))
         with ZipFile(zip, 'r') as content:
             info = content.infolist()
             self.assertEqual(len(info), 2)
             self.assertEqual(
-                info[0].filename, self.files[0].name.rsplit('/')[-1])
+                info[0].filename, self.files[0].name.decode('utf-8').rsplit('/')[-1])
             self.assertEqual(
-                info[1].filename, self.files[2].name.rsplit('/')[-1])
+                info[1].filename, self.files[2].name.decode('utf-8').rsplit('/')[-1])
 
     def test_compression_handles_none_in_list(self):
         """
@@ -219,14 +219,14 @@ class CompressTest(TestCase):
         self.files.append(None)
         self.mktemp('second', '.docx')
         zip = compress_to_zip(self.files)
-        self.assertTrue(isinstance(zip, StringIO))
+        self.assertTrue(isinstance(zip, BytesIO))
         with ZipFile(zip, 'r') as content:
             info = content.infolist()
             self.assertEqual(len(info), 2)
             self.assertEqual(
-                info[0].filename, self.files[0].name.rsplit('/')[-1])
+                info[0].filename, self.files[0].name.decode('utf-8').rsplit('/')[-1])
             self.assertEqual(
-                info[1].filename, self.files[2].name.rsplit('/')[-1])
+                info[1].filename, self.files[2].name.decode('utf-8').rsplit('/')[-1])
 
 
 class SentenceSplittingPostProcessTests(TestCase):
@@ -323,7 +323,7 @@ class PersonalDataTest(TestCase):
         text = open(os.path.join(
             os.path.dirname(__file__),
             'data', 'test', 'rgx.txt')
-        ).read().decode('utf-8')
+        , encoding='utf-8').read()
 
         result = sorted(personal_data.gather_by_regex(text))
 
@@ -397,7 +397,7 @@ class PersonalDataTest(TestCase):
             os.path.dirname(__file__),
             'data', 'test',
             'Contract.txt')
-        ).read().decode('utf-8')
+        , encoding='utf-8').read()
 
         result = sorted(personal_data.gather_by_spacy(text))
 

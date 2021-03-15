@@ -35,7 +35,7 @@ class SentenceSplittingRemoteAPI(object):
         return self._WHITESPACE_SEQUENCE_RE.sub(' ', sentence).strip()
 
     def _post_process(self, payload):
-        return map(self._compress_whitespaces, payload)
+        return list(map(self._compress_whitespaces, payload))
 
     def process(self):
         response = self._make_request()

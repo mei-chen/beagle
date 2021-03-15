@@ -148,7 +148,7 @@ class PersonalDataAPI(ModelViewSet):
         Optional filters by query params.
         """
 
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return self.queryset.none()
 
         document = int(self.request.query_params.get('document', 0))
@@ -219,7 +219,7 @@ class CustomPersonalDataAPI(ModelViewSet):
         Restricts the returned data to a current user
         """
 
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return self.queryset.none()
 
         self.queryset = self.queryset.filter(user=self.request.user)

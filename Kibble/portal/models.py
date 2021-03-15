@@ -395,7 +395,7 @@ class File(models.Model):
             elif self.type == self.FILE_XML:
                 docxpath = xml_to_docx(content.name)
             if docxpath and os.path.exists(docxpath):
-                data = open(docxpath, 'r').read()
+                data = open(docxpath, 'rb').read()
         finally:
             content.close()
         return data
@@ -409,6 +409,7 @@ class File(models.Model):
 
     class Meta:
         unique_together = (('file_name', 'batch'), )
+        ordering = ['id']
 
 
 class KeywordList(models.Model):

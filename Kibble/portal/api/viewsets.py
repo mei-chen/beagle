@@ -4,7 +4,7 @@ import shutil
 import tempfile
 import urllib
 import zipfile
-from io import StringIO
+from io import BytesIO
 
 from constance import config as constance_settings
 from django.conf import settings as django_settings
@@ -215,7 +215,7 @@ class BatchAPI(ModelViewSet):
         docs = Document.objects.filter(source_file__in=files)
         obfuscated_docs = [(d.name, obfuscate_document(d, sents)) for d in docs]
 
-        s = StringIO()
+        s = BytesIO()
         if batch.owner.profile.obfuscated_export_ext == 'PDF':
             tmp_dir = tempfile.mkdtemp()
             pdf_paths = []

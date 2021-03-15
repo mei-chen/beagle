@@ -25,7 +25,7 @@
 			"program": "${workspaceFolder}/manage.py",
 			"args": [
 				"test",
-				"document.tests.test_tasks"
+				"utils.tests"
 			],
 			"django": true
 		}

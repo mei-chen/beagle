@@ -42,6 +42,10 @@ def make_upload_path(instance, fname):
 
 
 class Document(models.Model):
+
+    class Meta:
+        ordering = ['id']
+
     name = models.CharField(max_length=300)
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -26,10 +26,15 @@ def compress_project(project_id, session):
         notify.update({'message': message, 'level': 'error'})
     else:
         notify.update({'message': 'Archive is ready.', 'level': 'info'})
+
         archive = {
-            'content_file': arc.content_file.url if hasattr(arc.content_file, 'url') else False,
             'created_at': arc.created_at.strftime('%Y-%m-%d %H:%M:%S')
         }
+        try:
+            archive['content_file'] = arc.content_file.url
+        except ValueError:
+            archive['content_file'] = False
+
     ret = {
         'action': 'compress_project',
         'notify': notify,

@@ -18,7 +18,7 @@ class LoginViewTest(TestCase):
         self.assertIn('password', errors.keys())
         self.assertNotIn('__all__', errors.keys())
         for k, v in errors.items():
-            self.assertIn(v[0], response.content)
+            self.assertIn(v[0], response.content.decode('utf-8'))
 
     def test_login_wrong_password(self):
         """
@@ -32,4 +32,4 @@ class LoginViewTest(TestCase):
         self.assertNotIn('password', errors.keys())
         self.assertIn('__all__', errors.keys())
         for k, v in errors.items():
-            self.assertIn(v[0], response.content)
+            self.assertIn(v[0], response.content.decode('utf-8'))

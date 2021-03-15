@@ -28,7 +28,7 @@ Django==2.2
 django-allauth==0.36.0
 django-constance==2.0.0
 django-filter==2.4.0
-django-jsonfield==1.0.1
+django-jsonfield==1.4.0
 django-jsonview==2.0.0
 django-model-utils==2.2
 django-queryinspect==1.0.0

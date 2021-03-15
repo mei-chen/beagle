@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.forms.models import model_to_dict
 from mock import patch, ANY
-from model_mommy import mommy, recipe
+from model_bakery import baker, recipe
 from rest_framework.test import APITestCase
 
 from core.models import ProjectCollaborationInvite, BatchCollaborationInvite
@@ -18,7 +18,8 @@ from shared.mixins import PatcherMixin
 
 filerecipe = recipe.Recipe(
     File,
-    content=recipe.seq('mock.file')
+    content=recipe.seq('mock', suffix='.file'),
+    _create_files=True
 )
 
 
@@ -118,7 +119,6 @@ class APIProjectTest(APITestCase):
         """
         self.client.force_login(self.user)
         data = {
-            'name': None,
             'owner': self.user_uri(self.user)
         }
         response = self.client.post(self.list_url, data=data)
@@ -426,11 +426,11 @@ class APIBatchTest(APITestCase, PatcherMixin):
                 batch['filecount'], self.p1_batches[i].files.count())
         self.assertIn('files', data[0])
         self.assertEqual(len(data[0]['files']), 3)
-        for i in range(3):
-            fileobj = data[0]['files'][i]
-            self.assertEqual(
-                fileobj['filename'],
-                self.b1_files[i].file_name)
+        # must sort filenames
+        self.assertEqual(
+            sorted([f['filename'] for f in data[0]['files']]),
+            sorted([f.file_name for f in self.b1_files])
+        )
 
     def test_get_batches_list_no_project(self):
         """
@@ -978,7 +978,7 @@ class LocalUploadTest(APITestCase):
         file = os.path.join(
             os.path.dirname(os.path.abspath(__file__)), 'data', name
         )
-        with open(file, 'r') as f:
+        with open(file, 'rb') as f:
             response = self.client.post(
                 self.file_api_url,
                 data={

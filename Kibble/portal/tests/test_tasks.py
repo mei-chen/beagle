@@ -20,11 +20,11 @@ class CompressProjectTaskTest(TestCase):
             Batch, name='cmtt_batch2', project=[self.project])
         self.id = 0
         self.files1 = [
-            baker.make(File, batch=self.batch1, content=self.make_file)
+            baker.make(File, batch=self.batch1, content=self.make_file())
             for i in range(3)
         ]
         self.files2 = [
-            baker.make(File, batch=self.batch2, content=self.make_file)
+            baker.make(File, batch=self.batch2, content=self.make_file())
             for i in range(3)
         ]
 

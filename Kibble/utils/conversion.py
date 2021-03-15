@@ -10,7 +10,7 @@ import os
 import re
 import string
 import subprocess
-from io import StringIO
+from io import BytesIO
 from subprocess import call
 from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -192,15 +192,17 @@ def compress_to_zip(files):
     :param files: list of files to compress
     :returns: filelike object with ZIP data
     """
-    content = StringIO()
+    content = BytesIO()
     with ZipFile(content, mode='w', compression=ZIP_DEFLATED) as zf:
         for f in files:
             if not f:
                 continue
             name = os.path.basename(f.name)
+            if isinstance(name, bytes):
+                name = name.decode('utf-8')
             try:
                 f.seek(0)
-                zf.writestr(name.encode('utf-8'), f.read())
+                zf.writestr(name, f.read().decode('utf-8'))
                 f.seek(0)
             except:
                 logger.warn(
