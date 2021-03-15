@@ -2,7 +2,7 @@ import os
 import tempfile
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms.models import model_to_dict
 from mock import patch, ANY
 from model_mommy import mommy, recipe

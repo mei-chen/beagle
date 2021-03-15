@@ -1065,7 +1065,7 @@ def obfuscate_sents(obf_str, highlight_color, text, sents):
                     highlight_tag['w:val'] = highlight_color
                     r.find('w:rPr').append(highlight_tag)
 
-    return unicode(parsed).encode('utf-8')
+    return str(parsed).encode('utf-8')
 
 
 def highlight_text(highlight_color, text, replacements):
@@ -1143,7 +1143,7 @@ def highlight_text(highlight_color, text, replacements):
     for par in parsed.find_all('w:p'):
         _process_par(par)
 
-    return unicode(parsed).encode('utf-8')
+    return str(parsed).encode('utf-8')
 
 
 def obfuscate_document(instance, sents):

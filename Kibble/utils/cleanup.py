@@ -1353,8 +1353,8 @@ class ParagraphDescription(object):
 
 class TitleCleanup:
     def __init__(self, docxpath):
-        self.doc = docx.Document(docxpath) if isinstance(docxpath, basestring) else docxpath
-        self.paragraphs = filter(lambda par: bool(par.text.strip()), self.doc.paragraphs)
+        self.doc = docx.Document(docxpath) if isinstance(docxpath, str) else docxpath
+        self.paragraphs = list(filter(lambda par: bool(par.text.strip()), self.doc.paragraphs))
         self.docxpath = docxpath
 
     def calculate(self, par_desc):
@@ -1392,7 +1392,7 @@ class HFCleanup:
 
     def get_file(self, xmlpath):
         file_path = os.path.join(self.extract_path, xmlpath)
-        return open(file_path).read()
+        return open(file_path, 'rb').read()
 
     def get_xml_tree(self, xmlpath):
         return fromstring(self.get_file(xmlpath))
@@ -1420,7 +1420,7 @@ class HFCleanup:
 
     def _write(self, tree, xmlpath):
         with open(os.path.join(self.extract_path, xmlpath), 'w') as f:
-            f.write(tostring(tree))
+            f.write(tostring(tree).decode('utf-8'))
 
     def _make_docx(self):
         out_path = os.path.join(self.extract_path, os.path.basename(self.docx_path))

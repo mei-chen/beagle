@@ -39,7 +39,7 @@ class ModelTest(TempCleanupTestCase):
         return os.path.join(dir, 'data', test_file)
 
     def make_document(self, test_file):
-        content = open(self.get_file(test_file), 'r').read()
+        content = open(self.get_file(test_file), 'rb').read()
         return baker.make(Document, content_file=SimpleUploadedFile(
             'test.docx', content))
 
@@ -281,7 +281,12 @@ class ModelTest(TempCleanupTestCase):
         copied = doc.make_copy()
 
         self.assertNotEqual(doc.id, copied.id)
-        self.assertEqual("Cleaned copy {}".format(doc.name), copied.name)
+
+        # apply right truncation if too long
+        expected_name = "Cleaned copy {}".format(doc.name)
+        if len(expected_name) > 300:
+            expected_name = expected_name[:300]
+        self.assertEqual(expected_name, copied.name)
 
     def test_make_copy_remove_old_copy(self):
         """
@@ -305,13 +310,13 @@ class ModelTest(TempCleanupTestCase):
         )
         doc = baker.make(
             Document,
-            content_file=SimpleUploadedFile(file + '.docx', '1\n2\n3\n'),
-            text_file=SimpleUploadedFile(file + '.txt', '1\n2\n3\n'),
+            content_file=SimpleUploadedFile(file + '.docx', '1\n2\n3\n'.encode('utf-8')),
+            text_file=SimpleUploadedFile(file + '.txt', '1\n2\n3\n'.encode('utf-8')),
         )
         copied = doc.make_copy()
 
-        self.assertEqual('1\n2\n3\n', copied.text_file.read())
-        self.assertEqual('1\n2\n3\n', copied.content_file.read())
+        self.assertEqual('1\n2\n3\n'.encode('utf-8'), copied.text_file.read())
+        self.assertEqual('1\n2\n3\n'.encode('utf-8'), copied.content_file.read())
 
         self.assertNotEqual(doc.content_file, copied.content_file)
         self.assertNotEqual(doc.text_file, copied.text_file)
@@ -342,8 +347,8 @@ class ModelTest(TempCleanupTestCase):
         convert_mock.side_effect = side_effect_tmpfile
         doc = baker.make(
             Document,
-            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
-            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'),
+            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'.encode('utf-8')),
+            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'.encode('utf-8')),
         )
         doc_file = doc.content_file
         txt_file = doc.text_file
@@ -361,8 +366,8 @@ class ModelTest(TempCleanupTestCase):
         convert_mock.side_effect = side_effect_tmpfile
         doc = baker.make(
             Document,
-            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
-            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'),
+            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'.encode('utf-8')),
+            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'.encode('utf-8')),
         )
         doc_file = doc.content_file
         txt_file = doc.text_file
@@ -383,13 +388,13 @@ class ModelTest(TempCleanupTestCase):
         batch = baker.make(Batch, name='Bar')
         file_ = baker.make(
             File,
-            content=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
+            content=SimpleUploadedFile('copy.docx', '1\n2\n3\n'.encode('utf-8')),
             batch=batch)
         doc = baker.make(
             Document,
             source_file=file_,
-            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
-            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'),
+            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'.encode('utf-8')),
+            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'.encode('utf-8')),
         )
         doc_file = doc.content_file
         txt_file = doc.text_file
@@ -410,13 +415,13 @@ class ModelTest(TempCleanupTestCase):
         batch = baker.make(Batch, name='Bar')
         file_ = baker.make(
             File,
-            content=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
+            content=SimpleUploadedFile('copy.docx', '1\n2\n3\n'.encode('utf-8')),
             batch=batch)
         doc = baker.make(
             Document,
             source_file=file_,
-            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'),
-            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'),
+            content_file=SimpleUploadedFile('copy.docx', '1\n2\n3\n'.encode('utf-8')),
+            text_file=SimpleUploadedFile('copy.txt', '1\n2\n3\n'.encode('utf-8')),
         )
         doc_file = doc.content_file
         txt_file = doc.text_file
@@ -474,7 +479,7 @@ class CleanupToolsTest(TempCleanupTestCase):
         return os.path.join(dir, 'data', test_file)
 
     def make_document(self, test_file):
-        content = open(self.get_file(test_file), 'r').read()
+        content = open(self.get_file(test_file), 'rb').read()
         return baker.make(Document, content_file=SimpleUploadedFile(
             'test.docx', content))
 
@@ -538,12 +543,12 @@ class CleanupToolsTest(TempCleanupTestCase):
         expected_file = docx_to_txt(expected_name)
         expected_content = open(expected_file, 'r').read()
         os.remove(expected_file)
-        actual_content = doc.text_file.read()
+        actual_content = doc.text_file.read().decode("utf-8") 
         self.assertMultiLineEqual(expected_content, actual_content)
         if check_xml:
             self.assertMultiLineEqual(
-                self.xml_content(expected_name, 'word/document.xml'),
-                self.xml_content(doc.content_file, 'word/document.xml')
+                self.xml_content(expected_name, 'word/document.xml').decode("utf-8"),
+                self.xml_content(doc.content_file, 'word/document.xml').decode("utf-8")
             )
 
     def test_cleanup_line_breaks_formatted(self):
@@ -757,7 +762,7 @@ class TableOfContentsCleanupTest(TestCase):
         expected_file = docx_to_txt(self.get_path(clean_docx))
         expected_content = open(expected_file, 'r').read()
         os.remove(expected_file)
-        actual_content = doc.text_file.read()
+        actual_content = doc.text_file.read().decode('utf-8')
         self.assertMultiLineEqual(expected_content, actual_content)
 
     def get_path(self, fname):
@@ -766,7 +771,7 @@ class TableOfContentsCleanupTest(TestCase):
         )
 
     def make_doc(self, fpath):
-        suf = SimpleUploadedFile('foo.docx', open(fpath).read())
+        suf = SimpleUploadedFile('foo.docx', open(fpath, 'rb').read())
         return baker.make(Document, content_file=suf, name='Foo')
 
     def do_docx_comparing(self, test_file):
@@ -907,7 +912,7 @@ class HFTCleanupTest(TestCase):
         expected_file = docx_to_txt(self.get_path(clean_docx))
         expected_content = open(expected_file, 'r').read()
         os.remove(expected_file)
-        actual_content = doc.text_file.read()
+        actual_content = doc.text_file.read().decode('utf-8')
         self.assertMultiLineEqual(expected_content, actual_content)
 
     def get_path(self, fname):
@@ -916,7 +921,7 @@ class HFTCleanupTest(TestCase):
         )
 
     def make_doc(self, fpath):
-        suf = SimpleUploadedFile('foo.docx', open(fpath).read())
+        suf = SimpleUploadedFile('foo.docx', open(fpath, 'rb').read())
         return baker.make(Document, content_file=suf, name='Foo')
 
     def do_compare(self, fname):

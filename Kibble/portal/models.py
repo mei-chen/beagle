@@ -91,7 +91,7 @@ class Project(models.Model):
             self.save()
         return archive
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @property
@@ -110,7 +110,7 @@ class Batch(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
     process_time = models.TimeField(null=True, blank=True)
     owner = models.ForeignKey(User, null=True, blank=True,
-                              related_name='batches',on_delete=models.DO_NOTHING,)
+                              related_name='batches',on_delete=models.CASCADE)
     personal_data_gathered = models.BooleanField(default=False)
 
     class Meta:
@@ -122,7 +122,7 @@ class Batch(models.Model):
     def get_upload_time(self):
         return self.upload_date.strftime('%H:%M')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_converted_documents(self, plaintext=False):
@@ -151,7 +151,7 @@ class Batch(models.Model):
             for doc in filter(lambda d: d.has_sentences, docs):
                 text = doc.get_json() if ziptype == 'json' else doc.get_csv()
                 zf.writestr(
-                    doc.name.encode('utf-8') + '.' + ziptype,
+                    doc.name + '.' + ziptype,
                     text
                 )
         return dst, '%s%s' % (settings.MEDIA_URL, file)
@@ -244,7 +244,7 @@ class File(models.Model):
     file_name = models.CharField(max_length=200, null=True)
     content = models.FileField(upload_to=make_upload_path, max_length=400)
     batch = models.ForeignKey(Batch, related_name='files',
-                              null=True, blank=True,on_delete=models.DO_NOTHING,)
+                              null=True, blank=True,on_delete=models.CASCADE)
     need_ocr = models.NullBooleanField(default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     type = models.IntegerField(choices=TYPE_CHOICES, null=True)
@@ -258,7 +258,7 @@ class File(models.Model):
     def filename(self):
         return self.file_name or os.path.basename(self.content.name)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.content.name
 
     def get_content_file(self):
@@ -417,7 +417,7 @@ class KeywordList(models.Model):
         Batch, related_name='keywordlists', null=True, blank=True,on_delete=models.DO_NOTHING,)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -426,7 +426,7 @@ class ProjectArchive(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     content_file = models.FileField(upload_to='project_archives/', null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0.project.name} archive ({0.created_at})'.format(self)
 
 

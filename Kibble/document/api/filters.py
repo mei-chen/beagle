@@ -6,7 +6,7 @@ from portal.models import Batch
 
 
 class DocumentFilter(FilterSet):
-    isorigin = BooleanFilter(name="origin", lookup_expr='isnull')
+    isorigin = BooleanFilter(field_name="origin", lookup_expr='isnull')
     source_file__batch = ModelChoiceFilter(
         queryset=Batch.objects.all(), to_field_name="id")
 

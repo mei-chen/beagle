@@ -28,7 +28,7 @@ class SimModel(models.Model):
     name = models.CharField(max_length=255, unique=True)
     api_name = models.CharField(max_length=255, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -38,7 +38,7 @@ class RegEx(models.Model):
     name = models.CharField(max_length=255, unique=True)
     content = models.CharField(max_length=4096)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -373,7 +373,7 @@ class Report(models.Model):
             writer.writerow(payload)
         return filelike
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -383,7 +383,7 @@ class KeywordList(models.Model):
     name = models.CharField(max_length=255, unique=True)
     origin = models.CharField(max_length=4096)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -393,7 +393,7 @@ class Keyword(models.Model):
     keyword_list = models.ForeignKey(KeywordList, related_name='keywords', null=True,on_delete=models.CASCADE)
     content = models.CharField(max_length=4096)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.content
 
 

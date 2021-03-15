@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from json import loads
-from model_mommy import mommy, recipe
+from model_bakery import baker, recipe
 from mock import call, ANY
 
 from rest_framework.test import APITestCase
@@ -14,7 +14,8 @@ from shared.mixins import PatcherMixin
 
 filerecipe = recipe.Recipe(
     File,
-    content=recipe.seq('mock.file')
+    content=recipe.seq('mock', suffix='.file'),
+    _create_files=True
 )
 
 
@@ -89,9 +90,11 @@ class APIDocumentTest(APITestCase):
         self.assertEqual(response.status_code, 200)
         data = loads(response.content)
         self.assertEqual(len(data), 3)
-        for i in range(3):
-            doc = data[i]
-            self.assertEqual(doc['name'], self.b1_documents[i].name)
+        # sort data
+        self.assertEqual(
+            sorted([t['name'] for t in data]),
+            sorted([t.name for t in self.b1_documents])
+        )
 
     def test_document_api_return_tags(self):
         """

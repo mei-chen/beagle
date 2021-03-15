@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from mock import call, patch
-from model_mommy import mommy, recipe
+from model_bakery import baker, recipe
 
 from document.models import Document, DocumentTag, Sentence
 from document.tasks import (
@@ -20,13 +20,14 @@ from shared.mixins import PatcherMixin
 
 filerecipe = recipe.Recipe(
     File,
-    content=recipe.seq('mock.file')
+    content=recipe.seq('mock', suffix='.file'),
+    _create_files=True
 )
 
 
 class ConvertTaskTest(TempCleanupTestCase, PatcherMixin):
     def setUp(self):
-        self.files = baker.make(File, 3)
+        self.files = baker.make(File, 3, _create_files=True)
         self.patch('document.tasks.File.objects', 'get')
         self.patch('document.tasks.NotificationManager', 'notify_client')
         self.patch('document.models', 'docx_to_txt')
@@ -116,8 +117,8 @@ class CleanupDocumentToolsTest(TestCase, PatcherMixin):
         self.get.return_value = doc
         self.cleanup.return_value = doc
 
-        ordered_tools = map(
-            lambda x: x['tool'], sorted(seq, key=lambda x: x['order']))
+        ordered_tools = list(map(
+            lambda x: x['tool'], sorted(seq, key=lambda x: x['order'])))
         cleanup_document.run(ordered_tools, self.docs[0].id, 'fizz')
         messages = [
             {
@@ -142,6 +143,7 @@ class CleanupDocumentToolsTest(TestCase, PatcherMixin):
             }
         ]
         calls = [call('fizz', msg) for msg in messages]
+
         self.notify_client.assert_has_calls(calls, any_order=True)
 
 
@@ -159,7 +161,7 @@ class SentenceMock(object):
 
 class SentenceSplittingTaskTest(TestCase, PatcherMixin):
     def setUp(self):
-        suf = SimpleUploadedFile('foo.txt', 'CONTENT')
+        suf = SimpleUploadedFile('foo.txt', 'CONTENT'.encode('utf-8'))
         self.document = baker.make(Document, text_file=suf)
         self.document.source_file = baker.make(File)
         self.document.source_file.batch = baker.make(Batch)

@@ -54,7 +54,7 @@ class AccessToken(models.Model):
         # If no ValidationError was raised, then try to save token to db
         super(AccessToken, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value
 
 
@@ -76,7 +76,7 @@ class CollaborationInvite(TimeStampedModel):
     def target(self):
         raise NotImplementedError
 
-    def __unicode__(self):
+    def __str__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
             self.inviter, self.invitee, self.target
         )

@@ -5,7 +5,7 @@ from portal.models import Batch, File, Project
 
 class BatchFilter(FilterSet):
     unassigned = NumberFilter(
-        name="project", exclude=True, required=False
+        field_name="project", exclude=True, required=False
     )
 
     class Meta:
@@ -14,8 +14,8 @@ class BatchFilter(FilterSet):
 
 
 class FileFilter(FilterSet):
-    unassigned = BooleanFilter(name="batch", lookup_expr='isnull')
-    nodocuments = BooleanFilter(name="documents", lookup_expr='isnull')
+    unassigned = BooleanFilter(field_name="batch", lookup_expr='isnull')
+    nodocuments = BooleanFilter(field_name="documents", lookup_expr='isnull')
 
     class Meta:
         model = File
@@ -23,7 +23,7 @@ class FileFilter(FilterSet):
 
 
 class ProjectFilter(FilterSet):
-    exclude_status = NumberFilter(name='status', exclude=True, required=False)
+    exclude_status = NumberFilter(field_name='status', exclude=True, required=False)
 
     class Meta:
         model = Project

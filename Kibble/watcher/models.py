@@ -15,8 +15,8 @@ from portal.models import Batch, File
 class CloudAccess(models.Model):
     user = models.OneToOneField(User,on_delete=models.DO_NOTHING,)
 
-    def __unicode__(self):
-        return unicode(self.user)
+    def __str__(self):
+        return str(self.user)
 
     class Meta:
         abstract = True
@@ -61,7 +61,7 @@ class CloudFolder(TimeStampedModel):
     def human_readable_cloud(self):
         return CloudTypes.HUMAN_READABLE[self.cloud]
 
-    def __unicode__(self):
+    def __str__(self):
         return u'[%s] (%s) %s' % (
             self.user, self.human_readable_cloud, self.folder_path
         )
@@ -81,8 +81,8 @@ class CloudFile(TimeStampedModel):
     def file_path(self):
         return os.path.join(self.folder.folder_path, self.file_name)
 
-    def __unicode__(self):
-        return os.path.join(unicode(self.folder), self.file_name)
+    def __str__(self):
+        return os.path.join(str(self.folder), self.file_name)
 
     class Meta:
         verbose_name_plural = 'Files'

@@ -6,7 +6,7 @@ import logging
 import os
 import tempfile
 import uuid
-from io import BytesIO
+from io import BytesIO, StringIO
 
 import docx
 import numpy as np
@@ -50,11 +50,11 @@ class Document(models.Model):
     text_file = models.FileField(
         null=True, max_length=400, upload_to=make_upload_path)
     source_file = models.ForeignKey(
-        'portal.File', null=True, related_name='documents',on_delete=models.DO_NOTHING,)
+        'portal.File', null=True, related_name='documents',on_delete=models.CASCADE)
     origin = models.OneToOneField(
         'self', on_delete=models.CASCADE, null=True, related_name='cleaned')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_doc(self):
@@ -66,7 +66,7 @@ class Document(models.Model):
         self.text_file.seek(0)
         lines = self.text_file.readlines()
         self.text_file.seek(0)
-        return lines
+        return [l.decode('utf-8') for l in lines]
 
     def store_doc(self, doc):
         io = BytesIO()
@@ -124,7 +124,7 @@ class Document(models.Model):
         finally:
             f.close()
         if abspath:
-            with open(abspath) as f:
+            with open(abspath, 'rb') as f:
                 content = f.read()
             os.unlink(abspath)
             cf = ContentFile(content)
@@ -158,9 +158,12 @@ class Document(models.Model):
             content_file = ContentFile(self.content_file.read())
             content_file.name = 'cleaned_' + os.path.basename(
                 self.content_file.name)
-
+        copied_name = "Cleaned copy {}".format(self.name)
+        # Temporary solution for unittests - righ truncate name if greater than 300 characters
+        if len(copied_name) > 300:
+            copied_name = copied_name[:300]
         copy = Document.objects.create(
-            name="Cleaned copy {}".format(self.name),
+            name=copied_name,
             text_file=text_file,
             content_file=content_file,
             origin=self
@@ -302,10 +305,10 @@ class Document(models.Model):
     def get_csv(self):
         if not self.has_sentences:
             return None
-        filelike = BytesIO()
+        filelike = StringIO()
         writer = csv.writer(filelike, quoting=csv.QUOTE_NONNUMERIC)
         for sentence in self.sentences.all():
-            writer.writerow([sentence.text.encode('utf-8')])
+            writer.writerow([sentence.text])
         return filelike.getvalue()
 
     def get_json(self):
@@ -335,19 +338,19 @@ class Document(models.Model):
 
 
 class DocumentTag(models.Model):
-    document = models.ForeignKey(Document, related_name='tags',on_delete=models.DO_NOTHING,)
+    document = models.ForeignKey(Document, related_name='tags',on_delete=models.CASCADE)
     name = models.CharField(max_length=300)
     order = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
 class Sentence(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    document = models.ForeignKey(Document, related_name='sentences',on_delete=models.DO_NOTHING,)
+    document = models.ForeignKey(Document, related_name='sentences',on_delete=models.CASCADE)
     text = models.TextField()
 
     # The sentence in a vectorized form. The form can be absent or even change
@@ -377,7 +380,7 @@ class Sentence(models.Model):
 
     vector = property(_get_vector, _set_vector)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
 
@@ -391,7 +394,7 @@ class PersonalData(models.Model):
     user = models.ForeignKey(User, null=True,on_delete=models.DO_NOTHING,)
     selected = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
     def save(self, *args, **kwargs):
@@ -424,7 +427,7 @@ class CustomPersonalData(models.Model):
     user = models.ForeignKey(User, null=True,on_delete=models.DO_NOTHING,)
     selected = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
     def save(self, *args, **kwargs):

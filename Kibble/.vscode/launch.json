@@ -15,6 +15,21 @@
 				"0.0.0.0:8001"
 			],
 			"django": true
+		},
+
+		{
+			"name": "Python: Django Test",
+			"type": "python",
+			"request": "launch",
+			"python": "/srv/venv/bin/python",
+			"program": "${workspaceFolder}/manage.py",
+			"args": [
+				"test",
+				"document.tests.test_tasks"
+			],
+			"django": true
 		}
 	]
+
+	
 }

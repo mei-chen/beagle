@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.http import urlquote
-from model_mommy import mommy, recipe
+from model_bakery import baker, recipe
 
 from django.test import TestCase
 
@@ -14,7 +14,8 @@ from shared.mixins import PatcherMixin
 
 filerecipe = recipe.Recipe(
     File,
-    content=recipe.seq('mock.file')
+    content=recipe.seq('mock', suffix='.file'),
+    _create_files=True
 )
 
 
@@ -54,7 +55,7 @@ class DownloadViewTest(TestCase, PatcherMixin):
         self.client.force_login(self.user)
         resp = self.client.get(self.list_url, data={'batch': self.batch.id})
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.content, 'ZipFileContent')
+        self.assertEqual(resp.content.decode('utf-8'), 'ZipFileContent')
         self.get_converted_documents.assert_called_with(False)
 
     def test_batch_download_text(self):
@@ -65,7 +66,7 @@ class DownloadViewTest(TestCase, PatcherMixin):
         resp = self.client.get(
             self.list_url, data={'batch': self.batch.id, 'plaintext': 1})
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.content, 'ZipFileContent')
+        self.assertEqual(resp.content.decode('utf-8'), 'ZipFileContent')
         self.get_converted_documents.assert_called_with(True)
 
     def test_batch_download_handle_utf8_name(self):

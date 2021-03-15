@@ -1,7 +1,5 @@
 from __future__ import absolute_import, unicode_literals
 
-import itertools
-
 # Django
 from django.contrib.auth.models import User
 
@@ -120,7 +118,7 @@ def sentence_splitting(document_id, session):
                 Sentence.objects.bulk_create([
                     Sentence(document=document, text=sentence,
                              vectorization=list(vector))
-                    for sentence, vector in itertools.izip(sentences, vectors)
+                    for sentence, vector in zip(sentences, vectors)
                 ])
 
     ret = {
