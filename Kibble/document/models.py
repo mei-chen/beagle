@@ -278,7 +278,7 @@ class Document(models.Model):
             logger.warning(
                 "%s is NOT cleaned by libreoffice!" % self.content_file.name)
             return None
-        with open(new) as f:
+        with open(new, 'rb') as f:
             self.store_content(f.read())
         return self
 
