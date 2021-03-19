@@ -1,0 +1,9 @@
+
+- stat:
+    path: "{{ virtualenv_path }}/lib/python3.6/site-packages/en_core_web_md/en_core_web_md-3.0.0"
+  register: spacy_model
+
+- name: Install spacy
+  shell: "{{ virtualenv_path }}/bin/python -m spacy download en_core_web_md"
+  when: spacy_model.stat.exists == False
+  tags: spacy

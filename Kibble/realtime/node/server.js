@@ -6,7 +6,7 @@ const cookie_reader = require('cookie');
 
 const logger = log4js.getLogger();
 const config = {
-  listen_port: 4000,
+  listen_port: 4001,
   redis_url: 'redis://localhost:6379'
 };
 

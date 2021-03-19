@@ -75,7 +75,7 @@ let serverAddress;
 
 if (window.location.hostname === 'localhost') {
   // If local bind the port
-  serverAddress = `${window.location.protocol}//${window.location.hostname}:4000`;
+  serverAddress = `${window.location.protocol}//${window.location.hostname}:4001`;
 } else {
   serverAddress = `${window.location.protocol}//${window.location.hostname}`;
 }

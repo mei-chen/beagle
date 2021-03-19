@@ -1,0 +1,6 @@
+- name: Run Django related
+  django_manage:
+    command: loaddata analysis/fixtures/initial_data.json
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+  tags: django.relatedness

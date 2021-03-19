@@ -11,7 +11,7 @@ ami_id: ami-ff902d9b
 instance_type: t2.small
 
 GUNICORN_DJANGO_PORT: 8001
-NODE_SOCKET_SERVER_PORT: 4000
+NODE_SOCKET_SERVER_PORT: 4001
 
 create_superuser: yes
 

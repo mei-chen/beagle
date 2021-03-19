@@ -1,0 +1,10 @@
+- stat:
+    path: "/home/{{server_user}}/wkhtmltox/"
+  register: wkhtmltopdf
+
+- name: Install wkhtmltopdf
+  shell: "cd /home/{{server_user}}; wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz; tar xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz; rm wkhtmltox-0.12.4_linux-generic-amd64.tar.xz; ln -s /home/{{server_user}}/wkhtmltox/bin/wkhtmltopdf /usr/bin/wkhtmltopdf"
+  when: wkhtmltopdf.stat.exists == False
+  become: yes
+  become_user: root
+  tags: wkhtmltopdf

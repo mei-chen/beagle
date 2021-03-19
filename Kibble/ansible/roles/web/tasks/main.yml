@@ -16,3 +16,12 @@
 
 - include: set_file_permissions.yml
   tags: deploy
+
+- include: install_wkhtmltopdf.yml
+  tags: deploy
+
+- include: install_relatedness_models.yml
+  tags: deploy
+
+- include: install_spacy_model.yml
+  tags: deploy
