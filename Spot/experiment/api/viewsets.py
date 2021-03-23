@@ -36,7 +36,7 @@ from experiment.tasks import (
 
 # REST framework
 from rest_framework import authentication
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import action
 from rest_framework import exceptions as drf_exceptions
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -114,7 +114,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
             }
         )
 
-    @list_route(methods=['GET'])
+    @action(detail=False,methods=['GET'])
     def suggest_default_name(self, request, *args, **kwargs):
         next_default_name = generate_default_experiment_name(request.user,
                                                              self.manager)
@@ -154,7 +154,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         experiment.save()
         return self._respond(experiment)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def simulate(self, request, *args, **kwargs):
         experiment = self.get_object()
         simulate_classification.delay(session_key=request.session.session_key,
@@ -163,7 +163,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
                                       task_uuid=request.data['task_uuid'])
         return Response()
 
-    @detail_route(methods=['GET'])
+    @action(detail=True, methods=['GET'])
     def get_evaluate_data(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = experiment.get_cached_data('evaluate')
@@ -175,7 +175,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         }
         return Response(response_data)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def set_evaluate_data(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = {
@@ -185,7 +185,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         experiment.set_cached_data('evaluate', data)
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def evaluate(self, request, *args, **kwargs):
         experiment = self.get_object()
         evaluate_metrics.delay(session_key=request.session.session_key,
@@ -196,7 +196,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
                                task_uuid=request.data['task_uuid'])
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def generate(self, request, *args, **kwargs):
         experiment = self.get_object()
         generate_predictions.delay(session_key=request.session.session_key,
@@ -217,7 +217,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         experiment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @detail_route(methods=['GET'])
+    @action(detail=True, methods=['GET'])
     def list_collaborators(self, request, *args, **kwargs):
         experiment = self.get_object()
         self._check_owner(request, experiment)
@@ -227,7 +227,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         }
         return Response(payload)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def invite_collaborator(self, request, *args, **kwargs):
         experiment = self.get_object()
         self._check_owner(request, experiment)
@@ -247,7 +247,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
             raise drf_exceptions.ValidationError(message)
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def uninvite_collaborator(self, request, *args, **kwargs):
         experiment = self.get_object()
         user = request.user
@@ -274,7 +274,7 @@ class DogboneViewSet(viewsets.ViewSet):
 
     SERIALIZER_SECRET_KEY = '/*[dogbone]->(spot)*/'
 
-    @list_route(methods=['GET'])
+    @action(detail=False,methods=['GET'])
     def authorize(self, request, *args, **kwargs):
         connect_uri = request.build_absolute_uri(
             reverse('experiment-api:dogbone-connect')
@@ -290,7 +290,7 @@ class DogboneViewSet(viewsets.ViewSet):
         )
         return HttpResponseRedirect(dogbone_authorize_url)
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def connect(self, request, *args, **kwargs):
         data = request.data
 
@@ -313,7 +313,7 @@ class DogboneViewSet(viewsets.ViewSet):
         payload = {'access_token': access_token}
         return Response(payload)
 
-    @list_route(methods=['GET'])
+    @action(detail=False,methods=['GET'])
     def login(self, request, *args, **kwargs):
         try:
             serializer = URLSafeSerializer(self.SERIALIZER_SECRET_KEY)
@@ -385,7 +385,7 @@ class PublishViewSet(viewsets.GenericViewSet):
             return self._filter_queryset_for_user(queryset, user)
         return queryset.none()
 
-    @list_route(methods=['GET'])
+    @action(detail=False,methods=['GET'])
     def ping(self, request, *args, **kwargs):
         """ Simply checks that the user has access to the Publish API. """
         payload = {'pong': True}
@@ -418,7 +418,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         if not field in data:
             raise drf_exceptions.ValidationError("No '%s' specified." % field)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def add_sample(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -434,7 +434,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         )
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def remove_sample(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -449,7 +449,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         )
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def get_samples(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -470,7 +470,7 @@ class PublishViewSet(viewsets.GenericViewSet):
                     payload['tagged'].append(entry)
         return Response(payload)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def update_samples(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -485,7 +485,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         )
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def reset(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -496,7 +496,7 @@ class PublishViewSet(viewsets.GenericViewSet):
             reset_online_learner.delay(online_learner.pk)
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def predict(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -515,13 +515,13 @@ class PublishViewSet(viewsets.GenericViewSet):
         }
         return Response(payload)
 
-    @list_route(methods=['GET'])
+    @action(detail=False,methods=['GET'])
     def suggestions(self, request, *args, **kwargs):
         experiments = self.filter_queryset(self.get_queryset())
         payload = map(Experiment.to_dict, experiments)
         return Response(payload)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def collect_to_dataset(self, request, *args, **kwargs):
         experiment = self.get_object()
         data = request.data
@@ -578,7 +578,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
             return user
         raise drf_exceptions.PermissionDenied('Access forbidden.')
 
-    @list_route(methods=['GET'])
+    @action(detail=False,methods=['GET'])
     def ping(self, request, *args, **kwargs):
         """ Simply checks that the user has access to the OnlineLearner API. """
         payload = {'pong': True}
@@ -589,7 +589,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         if not field in data:
             raise drf_exceptions.ValidationError("No '%s' specified." % field)
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def get_or_create(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')
@@ -602,7 +602,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         ).get()
         return Response(payload)
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def get_all(self, request, *args, **kwargs):
         data = request.data
         personal = data.get('personal', True)
@@ -614,7 +614,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         ).get()
         return Response(payload)
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def train(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')
@@ -630,7 +630,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         )
         return Response()
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def predict(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')
@@ -644,7 +644,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         ).get()
         return Response(payload)
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def remove_sample(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')
@@ -656,7 +656,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         )
         return Response()
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def update_flags(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')
@@ -667,7 +667,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         )
         return Response()
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def reset(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')
@@ -677,7 +677,7 @@ class OnlineLearnerViewSet(viewsets.ViewSet):
         )
         return Response()
 
-    @list_route(methods=['POST'])
+    @action(detail=False,methods=['POST'])
     def get_samples(self, request, *args, **kwargs):
         data = request.data
         self._check_field(data, 'tag')

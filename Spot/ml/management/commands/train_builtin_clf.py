@@ -84,9 +84,10 @@ class Command(BaseCommand):
             self.log_debug('F1: %.5f\n' % model_score)
             model_types_and_scores.append((model_type, model_score))
 
+        # unpack tuple and get max
         best_model_type, best_model_score = max(
             model_types_and_scores,
-            key=lambda (model_type, model_score): model_score
+            key=lambda m: m[1]
         )
 
         self.log_debug('Saving...\n')

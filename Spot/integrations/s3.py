@@ -2,9 +2,8 @@ from io import StringIO
 import logging
 import os
 
-from boto.exception import S3ResponseError
-from boto.s3.connection import S3Connection, OrdinaryCallingFormat, SubdomainCallingFormat
-from boto.s3.key import Key
+import boto3
+import botocore
 from django.conf import settings
 
 
@@ -55,6 +54,36 @@ class S3FileManager(object):
 
         self.BUCKET_NAME = bucket_name
 
+        if '.' in self.BUCKET_NAME:
+            # ordinary calling format
+            config = botocore.client.Config(s3={'addressing_style': 'path'})
+        else:
+            # subdomain calling format
+            config = botocore.client.Config(s3={'addressing_style': 'virtual'})
+
+
+        # create the client
+        print(self.ACCESS_KEY_ID)
+        print(self.SECRET_ACCESS_KEY)
+        self.s3_client = boto3.client('s3', config=config,aws_access_key_id=self.ACCESS_KEY_ID, aws_secret_access_key=self.SECRET_ACCESS_KEY)
+
+        # create the bucket if it does not exist
+        try:
+            self.s3_client.head_bucket(Bucket=self.BUCKET_NAME)  
+        except botocore.exceptions.ClientError as e:
+            # If a client error is thrown, then check that it was a 404 error.
+            # If it was a 404 error, then the bucket does not exist.
+            error_code = int(e.response['Error']['Code'])
+            if error_code == 404:
+                # bucket does not exist, create it
+                self.s3_client.create_bucket(Bucket=self.BUCKET_NAME)
+                if cors_conf is not None:
+                    self.s3_client.put_bucket_cors(Bucket=self.BUCKET_NAME, CORSConfiguration=cors_conf)
+            raise e
+
+
+
+        '''
         # Unable to use the subdomain calling format,
         # if there is a full stop in the bucket's name
         calling_format_class = (OrdinaryCallingFormat
@@ -76,7 +105,10 @@ class S3FileManager(object):
             # If the bucket is not there then try to create it
             self.bucket = self.connection.create_bucket(self.BUCKET_NAME)
             self.bucket.set_cors = cors_conf
+        '''
 
+    '''
+    no longer needed, can delete
     def build_key(self, key_name):
         """
         Build a S3 key object
@@ -86,14 +118,16 @@ class S3FileManager(object):
         s3_key = Key(self.bucket)
         s3_key.key = key_name
         return s3_key
+    '''
 
     def delete_key(self, key):
         """
         Delete the specified key from S3
         :param key: the key name string
         """
-        s3_key = self.build_key(key)
-        s3_key.delete()
+
+        # delete the object
+        self.s3_client.delete_object(Bucket=self.BUCKET_NAME, Key=key)
 
     def save_string(self, key, string, acl=None):
         """
@@ -102,10 +136,11 @@ class S3FileManager(object):
         :param key: the key string (it can be a file path)
         :param string: the contents of the file
         """
-        s3_key = self.build_key(key)
-        s3_key.set_contents_from_string(string)
+
+        # write string to file
+        self.s3_client.put_object(Body=string, Bucket=self.BUCKET_NAME, Key=key)
         if acl is not None:
-            s3_key.set_acl(acl)
+            self.s3_client.put_object_acl(ACL=acl, Bucket=self.BUCKET_NAME, Key=key)
 
     def read_to_string(self, key):
         """
@@ -113,11 +148,14 @@ class S3FileManager(object):
         :param key: the key string
         :return:
         """
-        s3_key = self.build_key(key)
-        try:
-            return s3_key.get_contents_as_string()
-        except S3ResponseError as e:
-            if e.status == 404:
+
+        # read string content of file
+        try: 
+            response = self.s3_client.get_object(Bucket=self.BUCKET_NAME, Key=key)
+            return response['Body'].read().decode('utf-8')
+        except botocore.exceptions.ClientError as e:
+            error_code = int(e.response['Error']['Code'])
+            if error_code == 404:
                 return None
             raise e
 
@@ -129,10 +167,9 @@ class S3FileManager(object):
         :param file_path: the path of the file
         :return:
         """
-        s3_key = self.build_key(key)
-        s3_key.set_contents_from_filename(file_path)
+        self.s3_client.upload_file(Filename=file_path, Bucket=self.BUCKET_NAME, Key=key)
         if acl is not None:
-            s3_key.set_acl(acl)
+            self.s3_client.put_object_acl(ACL=acl, Bucket=self.BUCKET_NAME, Key=key)
 
     def read_to_filename(self, key, file_path):
         """
@@ -141,8 +178,7 @@ class S3FileManager(object):
         :param file_path: the path of the file to write to
         :return:
         """
-        s3_key = self.build_key(key)
-        s3_key.get_contents_to_filename(file_path)
+        self.s3_client.download_file(Filename=file_path, Bucket=self.BUCKET_NAME, Key=key)
 
     def save_file(self, key, file_handle, acl=None):
         """
@@ -154,10 +190,9 @@ class S3FileManager(object):
         """
         logging.info('Saving file handle to S3. key=%s', key)
 
-        s3_key = self.build_key(key)
-        s3_key.set_contents_from_file(file_handle)
+        self.s3_client.upload_fileobj(Bucket=self.BUCKET_NAME, Key=key, Fileobj=file_handle)
         if acl is not None:
-            s3_key.set_acl(acl)
+            self.s3_client.put_object_acl(ACL=acl, Bucket=self.BUCKET_NAME, Key=key)
 
     def read_to_file(self, key):
         """
@@ -167,14 +202,14 @@ class S3FileManager(object):
         """
         logging.info('Reading file handle from S3. key=%s', key)
 
-        s3_key = self.build_key(key)
         try:
             s = StringIO()
-            s3_key.get_contents_to_file(s)
+            self.s3_client.upload_fileobj(Bucket=self.BUCKET_NAME, Key=key, Fileobj=s)
             s.seek(0)
             return s
-        except S3ResponseError as e:
-            if e.status == 404:
+        except botocore.exceptions.ClientError as e:
+            error_code = int(e.response['Error']['Code'])
+            if error_code == 404:
                 return None
             raise e
 
@@ -216,6 +251,8 @@ class S3FileManager(object):
 
         return True
 
+    '''
+    # Do not need metadata functions for now
     def get_metadata(self, key, metadata_key):
         """
         Get some metadata for a given S3 key
@@ -223,8 +260,8 @@ class S3FileManager(object):
         :param metadata_key: the metadata key on the S3 key
         :return:
         """
-        s3_key = self.build_key(key)
-        return s3_key.get_metadata(metadata_key)
+        metadata = self.s3_client.head_object(Bucket=self.BUCKET_NAME, Key=metadata_key)
+        return metadata
 
     def set_metadata(self, key, metadata_key, metadata_value):
         """
@@ -236,6 +273,8 @@ class S3FileManager(object):
         """
         s3_key = self.build_key(key)
         s3_key.set_metadata(metadata_key, metadata_value)
+    '''
+
 
 
 def get_s3_bucket_manager(bucket_name, bucket_naming_template="%s"):

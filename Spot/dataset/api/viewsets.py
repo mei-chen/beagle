@@ -14,7 +14,7 @@ from django.db.models.expressions import Value
 from django.http import JsonResponse, HttpResponse
 
 # REST framework
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework import exceptions as drf_exceptions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -155,7 +155,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
         kwargs['partial'] = True
         return super(DatasetViewSet, self).update(request, *args, **kwargs)
 
-    @detail_route(methods=['GET'])
+    @action(detail=True, methods=['GET'])
     @include_samples
     def export(self, request, *args, **kwargs):
         dataset = self.get_object()
@@ -187,7 +187,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
 
         return response
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     @include_samples
     def preview(self, request, *args, **kwargs):
         try:
@@ -217,7 +217,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
         dataset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @detail_route(methods=['GET'])
+    @action(detail=True, methods=['GET'])
     def list_collaborators(self, request, *args, **kwargs):
         dataset = self.get_object()
         self._check_owner(request, dataset)
@@ -227,7 +227,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
         }
         return JsonResponse(payload)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def invite_collaborator(self, request, *args, **kwargs):
         dataset = self.get_object()
         self._check_owner(request, dataset)
@@ -247,7 +247,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
             raise drf_exceptions.ValidationError(message)
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def uninvite_collaborator(self, request, *args, **kwargs):
         dataset = self.get_object()
         user = request.user
@@ -262,13 +262,13 @@ class DatasetViewSet(viewsets.ModelViewSet):
         revoke_dataset_invite(username, dataset)
         return Response()
 
-    @detail_route(methods=['GET'])
+    @action(detail=True, methods=['GET'])
     def allowed_users(self, request, *args, **kwargs):
         dataset = self.get_object()
         payload = map(user_to_dict, [dataset.owner] + dataset.collaborators)
         return JsonResponse(payload, safe=False)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     @include_samples
     def random_sample(self, request, *args, **kwargs):
         dataset = self.get_object()
@@ -492,7 +492,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
         if not field in data:
             raise drf_exceptions.ValidationError("No '%s' specified." % field)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def assign(self, request, *args, **kwargs):
         labeling_task = self.get_object()
         data = request.data
@@ -512,7 +512,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
         payload = {'invalid_assignees': invalid_assignees_ids}
         return Response(payload)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def unassign(self, request, *args, **kwargs):
         labeling_task = self.get_object()
         data = request.data
@@ -524,7 +524,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
         assignment.delete()
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def export_supervised_dataset(self, request, *args, **kwargs):
         labeling_task = self.get_object()
         data = request.data
@@ -538,7 +538,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
                                         task_uuid=data['task_uuid'])
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def expand_evaluation_score(self, request, *args, **kwargs):
         labeling_task = self.get_object()
         data = request.data
@@ -553,7 +553,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
                                       task_uuid=data['task_uuid'])
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def compute_accord_matrix(self, request, *args, **kwargs):
         labeling_task = self.get_object()
         data = request.data
@@ -589,7 +589,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         if not field in data:
             raise drf_exceptions.ValidationError("No '%s' specified." % field)
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def start_stage(self, request, *args, **kwargs):
         assignment = self.get_object()
         data = request.data
@@ -599,7 +599,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
                              task_uuid=data['task_uuid'])
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def finish_stage(self, request, *args, **kwargs):
         assignment = self.get_object()
         data = request.data
@@ -611,7 +611,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
                             task_uuid=data['task_uuid'])
         return Response()
 
-    @detail_route(methods=['POST'])
+    @action(detail=True, methods=['POST'])
     def build_experiment(self, request, *args, **kwargs):
         assignment = self.get_object()
         data = request.data

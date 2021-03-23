@@ -36,6 +36,7 @@ django-queryinspect==1.0.0
 django-storages==1.6.5
 django-watchman==0.15.0
 djangorestframework==3.12.2
+drf-nested-routers==0.93.3
 docutils==0.16
 dropbox==11.3.0
 enum-compat==0.0.2

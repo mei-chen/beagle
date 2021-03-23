@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from io import StringIO
+from io import StringIO, BytesIO
 import logging
 import itertools
 import uuid
@@ -201,7 +201,7 @@ class OnlineLearner(ModelS3Mixin, SetSizeMixin, TimeStampedModel):
     uuid = models.CharField('UUID', max_length=100, unique=True)
 
     # The user whom the learner belongs to (not necessarily the trainer!)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # Triggering tag
     tag = models.CharField('Tag', max_length=300, db_index=True)
@@ -601,7 +601,7 @@ class AbstractPretrainedLearner(ModelS3Mixin, VectorizerS3Mixin, TimeStampedMode
 
         model_s3_path = cls.generate_model_s3(tag).split(':')[1]
 
-        temp_file = StringIO()
+        temp_file = BytesIO()
 
         logging.info('Saving offline model to S3 path: %s' % model_s3_path)
         cls.serialize_ml_model(ml_model, temp_file)
@@ -639,7 +639,7 @@ class AbstractPretrainedLearner(ModelS3Mixin, VectorizerS3Mixin, TimeStampedMode
 
         vectorizer_s3_path = cls.generate_vectorizer_s3(tag).split(':')[1]
 
-        temp_file = StringIO()
+        temp_file = BytesIO()
 
         logging.info('Saving offline vectorizer to S3 path: %s' % vectorizer_s3_path)
         joblib.dump(vectorizer, temp_file, compress=True)

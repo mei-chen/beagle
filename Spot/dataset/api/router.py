@@ -2,17 +2,17 @@
 from dataset.api import viewsets
 
 # REST framework
-from rest_framework_nested import routers
+from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
-router = routers.DefaultRouter()
+router = DefaultRouter()
 
 router.register(
     r'dataset',
     viewsets.DatasetViewSet,
-    base_name='dataset'
+    basename='dataset'
 )
 
-dataset_router = routers.NestedSimpleRouter(
+dataset_router = NestedSimpleRouter(
     router,
     r'dataset',
     lookup='dataset'
@@ -21,17 +21,17 @@ dataset_router = routers.NestedSimpleRouter(
 dataset_router.register(
     r'sample',
     viewsets.SampleViewSet,
-    base_name='sample'
+    basename='sample'
 )
 
 router.register(
     r'labeling_task',
     viewsets.LabelingTaskViewSet,
-    base_name='labeling_task'
+    basename='labeling_task'
 )
 
 router.register(
     r'assignment',
     viewsets.AssignmentViewSet,
-    base_name='assignment'
+    basename='assignment'
 )

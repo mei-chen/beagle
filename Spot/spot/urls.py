@@ -23,14 +23,14 @@ from portal.views import EmailAutofillSignupView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^', include('portal.urls', namespace='portal')),
+    url(r'^', include(('portal.urls', 'portal'), namespace='portal')),
 
     # API
-    url(r'^api/v1/', include('dataset.api.urls', namespace='dataset-api')),
-    url(r'^api/v1/', include('experiment.api.urls', namespace='experiment-api')),
+    url(r'^api/v1/', include(('dataset.api.urls', 'dataset.api'), namespace='dataset-api')),
+    url(r'^api/v1/', include(('experiment.api.urls', 'experiment.api'), namespace='experiment-api')),
 
     # Third Party
     url(r'^accounts/signup/', EmailAutofillSignupView.as_view(), name='account_signup'),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^watchman/', include('watchman.urls', namespace='watchman')),
+    url(r'^watchman/', include(('watchman.urls', 'watchman'), namespace='watchman')),
 ]
