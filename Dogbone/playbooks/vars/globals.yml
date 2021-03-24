@@ -6,7 +6,8 @@ prod_envs:
   - eu_prod
 
 application_name: dogbone
-base_location: /var/www/
+#base_location: /var/www/
+base_location: /srv/
 app_location: "{{ base_location }}{{ application_name }}"
 virtualenv_path: "{{ base_location }}venv/"
 APPLICATION_FQDN: "{{ subdomain | mandatory }}.beagle.ai"

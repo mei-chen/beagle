@@ -10,9 +10,6 @@
 
 ## Configure Kibble
 ### Configure Dev envirnoment
-- Create the file `local_settings.py` in the `Kibble/kibble/app_settings/` directory, where the file contents include:
-    - `DEBUG = True`
-    - `HOT_LOAD = False` (TODO: Fix for True)
 - Create the file `secret.yml` in the ` ansible/vars/` directory, where the file contents include (should be created already):
 
 ```
@@ -54,6 +51,7 @@ In new terminal run:
 _Convenience one-liner:_ `cd /srv/kibble/realtime/node && node server.js`
 
 ### Celery beat
+(OPTIONAL)
 In new terminal run:
 - `$ vagrant ssh`
 - `$ cd /srv/kibble`
@@ -74,6 +72,7 @@ In new terminal run:
 _Convenience one-liner:_ `cd /srv/kibble && source ../venv/bin/activate && celery -A kibble worker -l info --discard`
 
 ### Compile front end.
+(Only need to run if using hot reload or making changes to the front end)
 Outside vagrant environment
 - `$ cd portal/static/js`
 - `$ npm install`

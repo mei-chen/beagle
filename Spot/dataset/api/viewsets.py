@@ -79,7 +79,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
         limited access to datasets he/she is collaborating on.
         """
         user = self.request.user
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return queryset.none()
         queryset_owning = queryset.filter(owner=user)
         queryset_collaborating = queryset.filter(
@@ -305,7 +305,7 @@ class SampleViewSet(viewsets.ViewSet):
 
     def _get_dataset(self, dataset_pk):
         user = self.request.user
-        if user.is_authenticated():
+        if user.is_authenticated:
             # Check that the dataset exists and the current user can access it
             dataset = Dataset.objects.filter(pk=dataset_pk).last()
             if dataset and dataset.has_access(user):
@@ -470,7 +470,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
 
     def filter_queryset(self, queryset):
         user = self.request.user
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return queryset.none()
         return queryset.filter(owner=user).select_related(
             'dataset__owner', 'owner'
@@ -571,7 +571,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
 
     def filter_queryset(self, queryset):
         user = self.request.user
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return queryset.none()
         return queryset.filter(assignee=user).select_related(
             'labeling_task__dataset__owner', 'labeling_task__owner', 'assignee'

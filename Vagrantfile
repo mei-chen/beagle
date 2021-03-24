@@ -58,6 +58,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "Spot/", "/srv/spot"
   config.vm.synced_folder "Dogbone/", "/srv/dogbone"
 
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -92,7 +93,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "dogbone", type: "ansible", run: "never" do |ansible|
-    ansible.playbook = "dogbone/ansible/vagrant.yml"
+    ansible.playbook = "dogbone/playbooks/vagrant.yml"
     ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
   end
 

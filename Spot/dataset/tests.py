@@ -1,5 +1,5 @@
 import mock
-from urllib import urlencode
+from urllib.parse import urlencode
 
 # App
 from core.models import (

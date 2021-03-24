@@ -75,7 +75,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         limited access to experiments he/she is collaborating on.
         """
         user = self.request.user
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return queryset.none()
         queryset_owning = queryset.filter(owner=user)
         queryset_collaborating = queryset.filter(
@@ -695,7 +695,7 @@ class FormulaViewSet(viewsets.ModelViewSet):
 
     def filter_queryset(self, queryset):
         user = self.request.user
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return queryset.none()
         # TODO (optional): take into account collaboration
         return queryset.filter(experiment__owner=user)

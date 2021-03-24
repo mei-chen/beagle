@@ -42,6 +42,7 @@ def strings(f, min=4):
     """
     result = ""
     for c in f.read():
+        c = str(c)
         if c in string.printable:
             result += c
             continue

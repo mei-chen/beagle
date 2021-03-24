@@ -11,6 +11,8 @@ collectstatic/
 .idea/
 venv/
 
+### Node ###
+node_modules/
 
 ### Kibble ###
 Kibble/wkhtmltox

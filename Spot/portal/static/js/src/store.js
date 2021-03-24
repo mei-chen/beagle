@@ -29,7 +29,7 @@ let serverAddress;
 
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   // If local bind the port
-  serverAddress = `${window.location.protocol}//${window.location.hostname}:4000`;
+  serverAddress = `${window.location.protocol}//${window.location.hostname}:4002`;
 } else {
   serverAddress = `${window.location.protocol}//${window.location.hostname}`;
 }
