@@ -4,13 +4,13 @@
 ## Running in Dev
 
 ### Vagrant environment
-- Install [Ansible](http://docs.ansible.com/ansible/intro_installation.html), [Vagrant](https://www.vagrantup.com/), [VirtualBox](https://www.virtualbox.org/)
+- Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html), [Vagrant](https://www.vagrantup.com/), [VirtualBox](https://www.virtualbox.org/)
 - `$ vagrant up`
 - Make sure to run the vagrant environment in the base beagle folder. We then have separate provisioners for Kibble, Spot and Dogbone using ansible playbooks.
 
 ## Configure Kibble
 ### Configure Dev envirnoment
-- Create the file `local_settings.py` in the `Kibble/kibbleapp_settings/` directory, where the file contents include:
+- Create the file `local_settings.py` in the `Kibble/kibble/app_settings/` directory, where the file contents include:
     - `DEBUG = True`
     - `HOT_LOAD = False` (TODO: Fix for True)
 - Create the file `secret.yml` in the ` ansible/vars/` directory, where the file contents include (should be created already):
@@ -35,7 +35,6 @@ superuser_password: [required]
 - `$ vagrant provision --provision-with kibble`
 
 ### Django server
-- `$ vagrant up`
 - `$ vagrant ssh`
 - `$ cd /srv/kibble`
 - `$ source ../venv/bin/activate`

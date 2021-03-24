@@ -100,6 +100,7 @@ def sentence_splitting(document_id, session):
             session, "Start sentence splitting for %s" % document.name
         )
         api = SentenceSplittingRemoteAPI(text_file)
+
         success, message, sentences = api.process()
 
         if success and sentences:
@@ -108,7 +109,7 @@ def sentence_splitting(document_id, session):
             sentences = [s for s in sentences if len(s.split()) >= threshold]
 
             # Try to perform the most optimal batch vectorization (if possible)
-            vectors = SentenceVectorAPI(sentences).vectorize()
+            success, message, vectors = SentenceVectorAPI(sentences).process() #.vectorize()
             if vectors is None:
                 Sentence.objects.bulk_create([
                     Sentence(document=document, text=sentence)
@@ -117,7 +118,7 @@ def sentence_splitting(document_id, session):
             else:
                 Sentence.objects.bulk_create([
                     Sentence(document=document, text=sentence,
-                             vectorization=list(vector))
+                             vectorization=vector)
                     for sentence, vector in zip(sentences, vectors)
                 ])
 

@@ -1,5 +1,6 @@
 import numpy as np
 import requests
+import json
 
 from django.conf import settings
 from django.template.defaultfilters import pluralize
@@ -44,7 +45,7 @@ class SentenceVectorAPI(object):
         return np.array(str_array.strip('[]').split()).astype(float)
 
     def _post_process(self, payload):
-        payload['vectors'] = map(self._np_array_from_str, payload['vectors'])
+        payload['vectors'] = list(map(self._np_array_from_str, payload['vectors']))
         return payload
 
     def process(self):
@@ -56,7 +57,7 @@ class SentenceVectorAPI(object):
                 'Successfully vectorized {} sentence{}'.format(
                     len(self.sentences), pluralize(len(self.sentences))
                 ),
-                self._post_process(response.json())
+                self._post_process(json.loads(response.json()))
             )
         else:
             try:
@@ -67,7 +68,6 @@ class SentenceVectorAPI(object):
 
     def vectorize(self):
         success, message, result = self.process()
-        print(message)
         vectors = result.get('vectors') if success else None
         return (vectors[0]
                 if vectors is not None and self.singleton else

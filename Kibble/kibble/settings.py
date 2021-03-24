@@ -284,7 +284,11 @@ TOC_ITEM_MAX_LENGTH = 170
 
 # Sentence Splitting
 SENTENCE_SPLITTING_TOKEN = 'p03O4qlvnoykdAiz1pPvwLG4XfNzu7AbkqjumXAho1WVS3S91ffx1YYWWSF2X0bQV17euAUc4iAkgQImLouFAm9vXeej6hLMMZ'
-SENTENCE_SPLITTING_ENDPOINT = 'https://kyhk5y2ub3.execute-api.us-west-2.amazonaws.com/dev'
+# SENTENCE_SPLITTING_ENDPOINT = 'https://kyhk5y2ub3.execute-api.us-west-2.amazonaws.com/dev'
+SENTENCE_SPLITTING_ENDPOINT = 'http://127.0.0.1:3000/sentence_splitting'
+
+
+
 
 # Default user.profile settings
 FILE_AUTO_PROCESS = True
@@ -324,7 +328,10 @@ MOST_SIMILAR_PASSWORD = 'GreatBeagleAI'
 SYNONYMS_ENDPOINT = 'https://wordsapiv1.p.mashape.com/words/%s/synonyms'
 SYNONYMS_API_KEY = 'a7nUoIQHnEmsho5sOHGXuGueRx0Ap1ld01LjsnAddQybg9aDMu'
 
-SENTENCE_VECTOR_ENDPOINT = 'http://api.research.beagle.ai:8001/sentence_vector_notag'
+# SENTENCE_VECTOR_ENDPOINT = 'http://api.research.beagle.ai:8001/sentence_vector_notag'
+SENTENCE_VECTOR_ENDPOINT = 'http://127.0.0.1:3000/sentence_vector'
+
+
 SENTENCE_VECTOR_DEFAULT_MODEL = 'lawinsider_notag'
 SENTENCE_VECTOR_DEFAULT_ALGORITHM = 'sif'
 SENTENCE_VECTOR_DEFAULT_ALPHA = '3'

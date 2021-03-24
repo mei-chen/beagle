@@ -1,6 +1,7 @@
 import os
 import re
 import requests
+import json
 
 from django.conf import settings
 
@@ -15,7 +16,7 @@ class SentenceSplittingRemoteAPI(object):
     def _get_payload(self):
         self.file.seek(0)
         payload = {
-            'text': self.file.read()
+            'text': self.file.read().decode('utf-8')
         }
         self.file.seek(0)
         return payload
@@ -39,6 +40,7 @@ class SentenceSplittingRemoteAPI(object):
 
     def process(self):
         response = self._make_request()
+        #print(response.status_code)
 
         if response.ok:
             return (
@@ -46,7 +48,7 @@ class SentenceSplittingRemoteAPI(object):
                 'Successfully split sentences from {}'.format(
                     os.path.basename(self.file.name)
                 ),
-                self._post_process(response.json())
+                self._post_process(json.loads(response.json())['sentences'])
             )
         else:
             try:
