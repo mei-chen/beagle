@@ -1,4 +1,4 @@
-### Django ###
+### Django/Python ###
 *.log
 *.pot
 *.pyc
@@ -9,11 +9,14 @@ db.sqlite3
 b.sqlite3-journal
 media/
 collectstatic/
+.idea/
+venv/
+
 
 ### Kibble ###
 Kibble/wkhtmltox
 Kibble/uploads
-
+Kibble/celerybeat-schedule
 
 ### Vagrant ###
 .vagrant/
@@ -21,3 +24,7 @@ secret.yml
 
 ### MAC files ###
 .DS_Store
+
+### Delorean ###
+Delorean/cc.en.300.bin
+Delorean/models/

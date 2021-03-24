@@ -61,7 +61,7 @@ class Profile(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=200, unique=True)
     owner = models.ForeignKey(User, null=True, blank=True,
-                              related_name='projects',on_delete=models.DO_NOTHING,)
+                              related_name='projects',on_delete=models.CASCADE)
     status = models.SmallIntegerField(choices=ProjectStatus.choices(),
                                       default=ProjectStatus.Active.value)
     created_at = models.DateTimeField(auto_now_add=True)

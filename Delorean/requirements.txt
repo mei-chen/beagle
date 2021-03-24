@@ -1,0 +1,3 @@
+spacy
+falcon_multipart
+falcon_cors
