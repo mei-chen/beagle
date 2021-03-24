@@ -83,17 +83,17 @@ Vagrant.configure("2") do |config|
   # SHELL
 
   config.vm.provision "kibble", type: "ansible", run: "never" do |ansible|
-    ansible.playbook = "kibble/ansible/vagrant.yml"
+    ansible.playbook = "Kibble/ansible/vagrant.yml"
     ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
   end
 
   config.vm.provision "spot", type: "ansible",  run: "never" do |ansible|
-    ansible.playbook = "spot/ansible/vagrant.yml"
+    ansible.playbook = "Spot/ansible/vagrant.yml"
     ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
   end
 
   config.vm.provision "dogbone", type: "ansible", run: "never" do |ansible|
-    ansible.playbook = "dogbone/playbooks/vagrant.yml"
+    ansible.playbook = "Dogbone/playbooks/vagrant.yml"
     ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
   end
 
