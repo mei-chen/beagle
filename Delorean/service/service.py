@@ -22,7 +22,7 @@ from sentence_vector_gensim.sentence_vector import sentenceVectorizer
 
 # from sense2vec_service_sentence.jmt import JMT
 #
-from sense2vec_service_word.modelSelection import load_EUlaw_300    #load_FWCA_300,load_FWCA_200,load_FWCA_128,load_FWCA_plain_128,load_FWCA_plain_200,load_FWCA_plain_300,load_EUlaw_300,load_EUlaw_128,load_EUlaw_200,load_wiki_300,load_GoogleNews_300
+# from sense2vec_service_word.modelSelection import load_EUlaw_300    #load_FWCA_300,load_FWCA_200,load_FWCA_128,load_FWCA_plain_128,load_FWCA_plain_200,load_FWCA_plain_300,load_EUlaw_300,load_EUlaw_128,load_EUlaw_200,load_wiki_300,load_GoogleNews_300
 #
 from sense2vec_service_word.similarity import Similarity_EUlaw_300    #Similarity, Similarity_FWCA_300,Similarity_FWCA_200,Similarity_FWCA_128,Similarity_FWCA_plain_128,Similarity_FWCA_plain_200,Similarity_FWCA_plain_300,Similarity_EUlaw_300,Similarity_EUlaw_128,Similarity_EUlaw_200,Similarity_wiki_300,Similarity_GoogleNews_300
 #
@@ -32,8 +32,6 @@ from sense2vec_service_word.similarity import Similarity_EUlaw_300    #Similarit
 #
 # from DefinitionTools.extractDefintions import definitions
 # from NameEntities.nameEntities import nameEntities
-
-
 
 #from textGeneration.TextGeneration import  TextGeneration
 
@@ -71,7 +69,7 @@ class SimilarityService(object):
         #     spacy.load('en', parser=False, entity=False),
         #     load_EUlaw_300())
         #
-        self.handler_EUlaw_300 = Similarity_EUlaw_300(load_EUlaw_300())
+        self.handler_EUlaw_300 = Similarity_EUlaw_300(spacy.load("en_core_web_sm"))
 
         # self.handler_EUlaw_200 = Similarity_EUlaw_200(
         #     spacy.load('en', parser=False, entity=False),
@@ -88,8 +86,7 @@ class SimilarityService(object):
         query={}
         for key_val in temp:
             query[key_val.split("=")[0]]=key_val.split("=")[1]
-
-        resp.body = json.dumps(self.handler_EUlaw_300(query['word']))
+        resp.media = json.dumps(self.handler_EUlaw_300(query['word']))
 
 
         # query1=query.split("&")
@@ -341,6 +338,7 @@ class SimilarityService(object):
 #                     resp.body = ('\n Provide correct user or password.')
 #                 else:
 #                     resp.body = json.dumps(self.handler_default(sent))
+
 
 
 class SentenceSplittingService(object):

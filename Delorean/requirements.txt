@@ -1,3 +1,8 @@
-spacy
+
 falcon_multipart
 falcon_cors
+pandas
+faiss-cpu
+sentence-transformers
+gensim
+python-Levenshtein
