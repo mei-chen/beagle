@@ -222,7 +222,7 @@ class LearnerFacade:
 
         if candidates:
             # Randomly sample based on computed probabilities
-            candidate_probas = map(cls._features_to_proba, candidates)
+            candidate_probas = list(map(cls._features_to_proba, candidates))
             proba_sum = sum(candidate_probas)
             norm_probas = [p / (float(proba_sum) or 0.0001) for p in candidate_probas]
             chosen = np.random.choice(candidates,

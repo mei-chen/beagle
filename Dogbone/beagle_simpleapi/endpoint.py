@@ -1,7 +1,7 @@
 import logging
 import math
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from .base import EndpointView, ModelView
 
@@ -184,7 +184,7 @@ class ListView(ModelView):
 
         filtered_object_list = filter(self.has_access, self.object_list)
 
-        serialized_list = map(self.to_dict, filtered_object_list)
+        serialized_list = list(map(self.to_dict, filtered_object_list))
 
         # Add the URL
         for idx, item in enumerate(serialized_list):

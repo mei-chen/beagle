@@ -27,7 +27,7 @@ fillin_underscore_re = re.compile(r'\b(_+)\b')
 ws_re = re.compile(r'\s+')
 
 quoted_re = re.compile(r'\"[a-zA-Z0-9_\.*#$%@~&\({\[<][a-zA-Z0-9 \-_\.*#$%@~&\(\){}\[\]/\\<>]+\"')
-unicode_quote_re = re.compile(ur'([“”]|\xe2\x80\x9d|\xe2\x80\x9c)+', re.UNICODE)
+unicode_quote_re = re.compile(r'([“”]|\xe2\x80\x9d|\xe2\x80\x9c)+', re.UNICODE)
 betw_and_re = re.compile(r'between (?:the )?([\w_"\-]+) and (?:the )?([\w_"\-]+)', re.IGNORECASE)
 by_re = re.compile(r'(?: |\n)by (?!the)(?!any)([^ .,]+)', re.IGNORECASE)
 
@@ -168,9 +168,9 @@ def get_unicode(strOrUnicode, encoding='utf-8'):
         return converted_str
 
     strOrUnicode = __if_number_get_string(strOrUnicode)
-    if isinstance(strOrUnicode, unicode):
+    if isinstance(strOrUnicode, str):
         return strOrUnicode
-    return unicode(strOrUnicode, encoding, errors='ignore')
+    return str(strOrUnicode, encoding, errors='ignore')
 
 
 halfed_words = [
@@ -483,11 +483,11 @@ def merge_bad_sentsplits(sentences):
 
 
 sentence_split_re = re.compile(
-    ur'((?<=[^A-Z].[.?!])\s+(?=[A-Z])|(?<=[^A-Z].[.?!])\s*[\n\r]+|[\n\r]\s*[\n\r]+|'
+    r'((?<=[^A-Z].[.?!])\s+(?=[A-Z])|(?<=[^A-Z].[.?!])\s*[\n\r]+|[\n\r]\s*[\n\r]+|'
     # Those 2 again for the case of <Text "quoted." New sent.>
-    ur'(?<=[^A-Z].[.?!]["\'“”])\s+(?=[A-Z])|(?<=[^A-Z].[.?!]["\'“”])\s*[\n\r]+|[\n\r]\s*[\n\r]+|'
+    r'(?<=[^A-Z].[.?!]["\'“”])\s+(?=[A-Z])|(?<=[^A-Z].[.?!]["\'“”])\s*[\n\r]+|[\n\r]\s*[\n\r]+|'
     # And the case of ALL-CAPS
-    ur'(?<=[^a-z][.?!])\s+(?=[A-Z])|(?<=[^a-z][.?!])\s*[\n\r]+|[\n\r]\s*[\n\r]+)',
+    r'(?<=[^a-z][.?!])\s+(?=[A-Z])|(?<=[^a-z][.?!])\s*[\n\r]+|[\n\r]\s*[\n\r]+)',
     re.UNICODE
 )
 

@@ -1,4 +1,4 @@
-import StringIO
+from io import StringIO
 from django.test import TestCase
 from mock import Mock, patch
 from rufus.commands import RufusCommandDispatcher, HelpCommand, SubjectURLProcessCommand, \

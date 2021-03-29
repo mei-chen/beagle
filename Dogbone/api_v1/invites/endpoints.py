@@ -4,7 +4,7 @@ from itertools import chain
 
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from itsdangerous import URLSafeSerializer
 
 from beagle_simpleapi.endpoint import ListView
@@ -19,7 +19,7 @@ from dogbone.actions import has_permission
 
 class CurrentUserReceivedInvitationsListView(ListView):
     model = CollaborationInvite
-    url_pattern = r'/user/me/received_invitations$'
+    url_pattern = r'user/me/received_invitations$'
     endpoint_name = 'me_received_invitations_list_view'
 
     _cached_object_count = None
@@ -61,7 +61,7 @@ class CurrentUserReceivedInvitationsListView(ListView):
 
 class CurrentUserIssuedInvitationsListView(ListView, PostListModelMixin):
     model = CollaborationInvite
-    url_pattern = r'/user/me/issued_invitations$'
+    url_pattern = r'user/me/issued_invitations$'
     endpoint_name = 'me_issued_invitations_list_view'
 
     def get_list(self, request, *args, **kwargs):
@@ -86,7 +86,7 @@ class CurrentUserIssuedInvitationsListView(ListView, PostListModelMixin):
 
 class DocumentReceivedInvitationsListView(ListView):
     model = CollaborationInvite
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/received_invitations$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/received_invitations$'
     endpoint_name = 'document_received_invitations_list_view'
 
     def get_document(self, request, *args, **kwargs):
@@ -150,7 +150,7 @@ class DocumentReceivedInvitationsListView(ListView):
 
 class DocumentIssuedInvitationsListView(ListView, PostListModelMixin):
     model = CollaborationInvite
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/issued_invitations$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/issued_invitations$'
     endpoint_name = 'document_issued_invitations_list_view'
 
     def get_document(self, request, *args, **kwargs):

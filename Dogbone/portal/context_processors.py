@@ -29,7 +29,7 @@ class GitHeadRevisionTag(object):
         except IOError:
             ref = random_str(20)
 
-        return unicode(ref)
+        return str(ref)
 
     @staticmethod
     def get_head():
@@ -62,7 +62,7 @@ def server_side_data(request):
     user_json_data = {}
     subscription_json_data = {}
     try:
-        if request.user and not request.user.is_anonymous():
+        if request.user and not request.user.is_anonymous:
             user_json_data = user_to_dict(request.user)
             subscription_json_data = CurrentUserActiveSubscriptionDetailView.to_dict(request.user)
     except Exception as e:

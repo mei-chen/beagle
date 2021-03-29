@@ -1,5 +1,5 @@
 import re, sys, os, math, tempfile, collections
-import sbd_util, word_tokenize
+from . import sbd_util, word_tokenize
 
 """
 Utilities for disambiguating sentence boundaries
@@ -511,7 +511,7 @@ class SVM_Model(Model):
 
         ## get predictions
         total = 0
-        preds = map(float, open(pred_file).read().splitlines())
+        preds = list(map(float, open(pred_file).read().splitlines()))
         frag = doc.frag
         while frag:
             frag.pred = sbd_util.logit(preds[total])
@@ -631,12 +631,12 @@ class Doc:
                 else:
                     w2 = '<EOF>'
                 if verbose:
-                    print '[%d] [%1.4f] %s?? %s' % (frag.label, frag.pred, w1, w2)
+                    print('[%d] [%1.4f] %s?? %s' % (frag.label, frag.pred, w1, w2))
 
             frag = frag.next
 
         error = 1 - (1.0 * correct / total)
-        print 'correct [%d] total [%d] error [%1.4f]' %(correct, total, error)
+        print('correct [%d] total [%d] error [%1.4f]' %(correct, total, error))
 
 
 class Frag:

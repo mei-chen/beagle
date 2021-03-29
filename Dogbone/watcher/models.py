@@ -26,7 +26,7 @@ class Folder(TimeStampedModel):
 
     title = models.CharField(max_length=120, null=False)
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     cloud = models.CharField(max_length=64,
                              choices=CloudTypes.HUMAN_READABLE.items())
@@ -35,7 +35,7 @@ class Folder(TimeStampedModel):
     def human_readable_cloud(self):
         return CloudTypes.HUMAN_READABLE[self.cloud]
 
-    def __unicode__(self):
+    def __str__(self):
         return u'[{}] ({}) {}'.format(
             self.user, self.human_readable_cloud, self.title
         )
@@ -49,10 +49,10 @@ class Folder(TimeStampedModel):
 
 
 class CloudAccess(TimeStampedModel):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    def __unicode__(self):
-        return unicode(self.user)
+    def __str__(self):
+        return str(self.user)
 
     class Meta:
         abstract = True
@@ -75,14 +75,14 @@ class GoogleDriveAccess(CloudAccess):
 class Synchronized(TimeStampedModel):
     cloud_id = models.CharField(max_length=200, null=False, db_index=True)
 
-    folder = models.ForeignKey(Folder)
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
 
     original_name = models.CharField(max_length=200, null=False)
 
-    document = models.OneToOneField(Document, null=True)
+    document = models.OneToOneField(Document, null=True, on_delete=models.CASCADE)
 
-    def __unicode__(self):
-        return os.path.join(unicode(self.folder), self.original_name)
+    def __str__(self):
+        return os.path.join(str(self.folder), self.original_name)
 
 
 class Queue(TimeStampedModel):
@@ -91,9 +91,9 @@ class Queue(TimeStampedModel):
     # Only for dropbox
     cloud_path = models.CharField(max_length=300, null=True, blank=True)
 
-    folder = models.ForeignKey(Folder)
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=200, null=False)
 
-    def __unicode__(self):
-        return os.path.join(unicode(self.folder), self.title)
+    def __str__(self):
+        return os.path.join(str(self.folder), self.title)

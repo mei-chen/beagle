@@ -23,8 +23,8 @@ for root, dirnames, filenames in os.walk('resources'):
         text = filedecode(os.path.join(root, filename))
         # wholetext += ' ' + text
         # toks.extend(word_tokenize(text))
-        curr_toks = map(remove_linebreak_markers,
-                        split_sentences(unidecode(text)))
+        curr_toks = list(map(remove_linebreak_markers,
+                        split_sentences(unidecode(text))))
         for t in curr_toks:
             toks.extend([(filename, sent)
                          for sent in split_sentences(t)])
@@ -104,5 +104,5 @@ with open('jurisdiction6.csv', 'w') as csvfile:
         csvwriter.writerow(r)
 
 for f in fnames:
-    if f not in map(lambda x: x[0], catches):
-        print f
+    if f not in list(map(lambda x: x[0], catches)):
+        print(f)

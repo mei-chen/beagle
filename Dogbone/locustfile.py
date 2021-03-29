@@ -1,7 +1,7 @@
 import os
 import sys
 from locust import HttpLocust, TaskSet
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 import requests
 from portal.tools import random_str
 

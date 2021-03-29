@@ -1,6 +1,6 @@
 from datetime import timedelta
 from django.utils.timezone import now
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dogbone.testing.base import BeagleWebTest
 from marketing.models import PurchasedSubscription, Coupon
 from dogbone.app_settings.marketing_settings import YearlyPaidSubscription

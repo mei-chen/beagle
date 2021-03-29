@@ -23,6 +23,9 @@ SELENIUM_WEBDRIVER = {
 # Change this to False, run them on local
 SKIP_SELENIUM_TESTS = True
 
+SILENCED_SYSTEM_CHECKS = ['admin.E130']
+
+
 ######################################################################################
 #
 #  Sessions, Middleware, Authentication
@@ -36,7 +39,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # For persisting messages between pages
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -45,22 +48,22 @@ MIDDLEWARE_CLASSES = (
     'authentication.middleware.TokenAuthMiddleware',
     'portal.middleware.UserCookieMiddleware',
     'marketing.middleware.ActionManagerMiddleware',
-    'portal.middleware.ExtendedMobileDetectionMiddleware',
-    'django_mobile.middleware.SetFlavourMiddleware',
+    #'portal.middleware.ExtendedMobileDetectionMiddleware',
+    #'django_mobile.middleware.SetFlavourMiddleware',
     'utils.django_utils.middleware.ClientAddressMiddleware',
     'portal.middleware.UserTimezoneMiddleware',
-    'tracking.middleware.VisitorTrackingMiddleware',
+    #'tracking.middleware.VisitorTrackingMiddleware',
 
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'authentication.backends.AuthTokenBackend',
     'authentication.backends.OneTimeLoginHashModelBackend',
     'authentication.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
-)
+]
 
 ######################################################################################
 #
@@ -76,12 +79,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.sessions',
 
-    'south',
+    #'south',
     'user_sessions',
     'notifications',
     'paypal.standard.ipn',
-    'django_mobile',
+    #'django_mobile',
     'constance',
 
     'watchman',
@@ -97,12 +101,13 @@ INSTALLED_APPS = (
     'django_reports',
     'clauses_statistics',
     'authentication',
-    'tracking',
+    #'tracking',
     'watcher',
     'statistics',
 
     # Keeps causing migrations to fail, so need to put it at the end
-    'longerusernameandemail',
+    # don't need this anymore
+    #'longerusernameandemail',
 
     # Overwrites the default user admin pages along with longerusernameandemail,
     # so need to put it even after longerusernameandemail
@@ -121,32 +126,47 @@ NOTIFICATIONS_SOFT_DELETE = False
 #
 ######################################################################################
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.request",
-    "portal.context_processors.git_revision",
-    "portal.context_processors.global_settings",
-    "portal.context_processors.server_side_data",
-    "django_mobile.context_processors.flavour",
-)
-
 TEMPLATE_LOADERS = (
-    'django_mobile.loader.Loader',
+    #'django_mobile.loader.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.filesystem.Loader',
 )
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        #'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
+                "portal.context_processors.git_revision",
+                "portal.context_processors.global_settings",
+                "portal.context_processors.server_side_data",
+                "django_mobile.context_processors.flavour",
+            ],
+            'loaders': [
+                # insert your TEMPLATE_LOADERS here
+                #'django_mobile.loader.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'django.template.loaders.filesystem.Loader',
+            ]
+        },
+    },
+]
+
+
+
 
 ######################################################################################
 #
@@ -154,10 +174,10 @@ TEMPLATE_LOADERS = (
 #
 ######################################################################################
 
-SOUTH_MIGRATION_MODULES = {
-    'user_sessions': 'user_sessions.south_migrations',
-}
-SOUTH_TESTS_MIGRATE = False
+#SOUTH_MIGRATION_MODULES = {
+#    'user_sessions': 'user_sessions.south_migrations',
+#}
+#SOUTH_TESTS_MIGRATE = False
 
 ######################################################################################
 #

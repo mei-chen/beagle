@@ -233,7 +233,7 @@ class DocxTest(TestCase):
         plaintext = nodes_to_plaintext(nodes)
         txtsentences = split_sentences(plaintext)
         node_sentences = apply_sentences_to_nodes(txtsentences, nodes)
-        self.assertEqual(map(reconstruct_xml, node_sentences), sentsxml)
+        self.assertEqual(list(map(reconstruct_xml, node_sentences)), sentsxml)
 
     def test_fix_runs_nodes(self):
         """ Test closing/opening runs at sentence boundary. """
@@ -242,7 +242,7 @@ class DocxTest(TestCase):
         nodes = tokenize_xml(u'''<w:p xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"><w:pPr><w:pStyle w:val="P1"/></w:pPr><w:r><w:t>This is first sentence. I'm second sentence. This is </w:t></w:r><w:r><w:rPr><w:rStyle w:val="T1"/></w:rPr><w:t>bold</w:t></w:r><w:r><w:t> text. This is </w:t></w:r><w:r><w:rPr><w:rStyle w:val="T1"/></w:rPr><w:t>bold</w:t></w:r><w:r><w:t> and </w:t></w:r><w:r><w:rPr><w:rStyle w:val="T2"/></w:rPr><w:t>underlined</w:t></w:r><w:r><w:t> text. This is </w:t></w:r><w:r><w:rPr><w:rStyle w:val="T3"/></w:rPr><w:t>bold-italic</w:t></w:r><w:r><w:t> text.</w:t></w:r></w:p>''')
         node_sentences = apply_sentences_to_nodes(txtsentences, nodes)
         node_sentences = fix_runs_nodes(node_sentences)
-        sentsxml = map(reconstruct_xml, node_sentences)
+        sentsxml = list(map(reconstruct_xml, node_sentences))
         expected = [
             u'<w:p xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"><w:pPr><w:pStyle w:val="P1"/></w:pPr><w:r><w:t>This is first sentence. </w:t></w:r>',
             u"<w:r><w:t>I'm second sentence. </w:t></w:r>",
@@ -480,13 +480,13 @@ class DocxTest(TestCase):
         parsed_comment_xml = bs4.BeautifulSoup(initial_xml, features='xml')
         add_comment_to_xml(parsed_comment_xml, comment)
         expected = u'<?xml version="1.0" encoding="utf-8"?>\n<w:comments xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" xmlns:lc="http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><w:comment w:author="user_for_xmldiff_test" w:date="2016-12-19T11:19:00+00:00" w:id="1"><w:p><w:r><w:t>Comment 1</w:t></w:r></w:p></w:comment></w:comments>'
-        self.assertEqual(expected, unicode(parsed_comment_xml))
+        self.assertEqual(expected, str(parsed_comment_xml))
 
         tz_name = 'Europe/Kiev'
         parsed_comment_xml_tz_aware = bs4.BeautifulSoup(initial_xml, features='xml')
         add_comment_to_xml(parsed_comment_xml_tz_aware, comment, tz_name)
         expected_tz_aware = u'<?xml version="1.0" encoding="utf-8"?>\n<w:comments xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" xmlns:lc="http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><w:comment w:author="user_for_xmldiff_test" w:date="2016-12-19T13:19:00+02:00" w:id="1"><w:p><w:r><w:t>Comment 1</w:t></w:r></w:p></w:comment></w:comments>'
-        self.assertEqual(expected_tz_aware, unicode(parsed_comment_xml_tz_aware))
+        self.assertEqual(expected_tz_aware, str(parsed_comment_xml_tz_aware))
 
     def test_get_comments_xml(self):
         document = self._create_document()
@@ -776,7 +776,7 @@ class IndentlevelAndNumbering(TestCase):
 
     def test_decimal_counter(self):
         counter = create_numbering_counter('decimal')
-        expected = map(str, range(1, 11))
+        expected = list(map(str, range(1, 11)))
         actual = get_counter_values(counter, 10)
         self.assertEqual(expected, actual)
 

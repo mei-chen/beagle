@@ -21,7 +21,7 @@ from richtext.xmlstyles import (
     parse_size_value, parse_bold_value, parse_underline_value,
     estimate_sentences_style, normalize_styles_size, STYLE_DEFAULTS_LABEL
 )
-from StringIO import StringIO
+from io import StringIO
 import utils.conversion
 from utils.conversion import filedecode, contentsdecode
 from nlplib.utils import split_sentences
@@ -192,7 +192,7 @@ def parse_docx(filename):
     normalized_sentence_styles = normalize_styles_size(sentence_styles)
 
     # Regenerate plaintext sentences with markers included this time
-    txtsentences = map(nodes_to_plaintext, node_sentences)
+    txtsentences = list(map(nodes_to_plaintext, node_sentences))
 
     # Get commented sentences with comment ids
     if comments:

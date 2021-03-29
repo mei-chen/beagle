@@ -1,18 +1,19 @@
-import hotshot
+#import hotshot
 import os
 import time
 import sys
 import cProfile
 import tempfile
-from cStringIO import StringIO
+from io import StringIO
 from django.conf import settings
+from django.utils.deprecation import MiddlewareMixin
 
 try:
     PROFILE_LOG_BASE = settings.PROFILE_LOG_BASE
 except:
     PROFILE_LOG_BASE = tempfile.gettempdir()
 
-
+'''
 def profile(log_file):
     """Profile some callable.
 
@@ -47,9 +48,9 @@ def profile(log_file):
 
         return _inner
     return _outer
+'''
 
-
-class ProfilerMiddleware(object):
+class ProfilerMiddleware(MiddlewareMixin):
     def process_view(self, request, callback, callback_args, callback_kwargs):
         if settings.DEBUG and 'prof' in request.GET:
             self.profiler = cProfile.Profile()

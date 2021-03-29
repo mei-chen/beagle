@@ -6,7 +6,7 @@ from django.db import IntegrityError
 
 class SearchKeywordDetailView(DetailView, DeleteDetailModelMixin, PutDetailModelMixin):
     model = SearchKeyword
-    url_pattern = r'/keywords/(?P<keyword>.+)$'
+    url_pattern = r'keywords/(?P<keyword>.+)$'
     endpoint_name = 'keyword_detail_view'
 
     model_key_name = 'keyword'
@@ -22,7 +22,7 @@ class SearchKeywordDetailView(DetailView, DeleteDetailModelMixin, PutDetailModel
 
 class SearchKeywordActivateActionView(ActionView):
     model = SearchKeyword
-    url_pattern = r'/keywords/(?P<keyword>.+)/activate$'
+    url_pattern = r'keywords/(?P<keyword>.+)/activate$'
     endpoint_name = 'keyword_activate_action_view'
 
     model_key_name = 'keyword'
@@ -42,7 +42,7 @@ class SearchKeywordActivateActionView(ActionView):
 
 class SearchKeywordDeactivateActionView(ActionView):
     model = SearchKeyword
-    url_pattern = r'/keywords/(?P<keyword>.+)/deactivate$'
+    url_pattern = r'keywords/(?P<keyword>.+)/deactivate$'
     endpoint_name = 'keyword_deactivate_action_view'
 
     model_key_name = 'keyword'
@@ -62,7 +62,7 @@ class SearchKeywordDeactivateActionView(ActionView):
 
 class SearchKeywordListView(ListView, PostListModelMixin):
     model = SearchKeyword
-    url_pattern = r'/keywords/?$'
+    url_pattern = r'keywords/?$'
     endpoint_name = 'keyword_list_view'
 
     def get_list(self, request, *args, **kwargs):

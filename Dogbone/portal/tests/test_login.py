@@ -1,6 +1,6 @@
 from dogbone.testing.base import BeagleWebTest
 from authentication.models import OneTimeLoginHash
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 class LoginTestCase(BeagleWebTest):

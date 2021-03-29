@@ -20,7 +20,7 @@ class ClausesStatistic(TimeStampedModel):
         def word_count(s):
             return len(s.split())
 
-        wcs = map(word_count, clauses)
+        wcs = list(map(word_count, clauses))
         avg = sum(wcs) / float(len(wcs))
         self.avg_word_count = int(avg)
         self.save()
@@ -32,5 +32,5 @@ class ClausesStatistic(TimeStampedModel):
             'avg_word_count': self.avg_word_count,
         }
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Clauses Statistic [%s]' % (self.tag)

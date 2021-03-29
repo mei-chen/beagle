@@ -58,7 +58,7 @@ class SearchKeyword(TimeStampedModel, ActiveModel):
     """
     keyword = models.CharField(max_length=200)
     exact_match = models.BooleanField(default=False)
-    owner = models.ForeignKey(User, related_name='keywords')
+    owner = models.ForeignKey(User, related_name='keywords', on_delete=models.CASCADE)
 
     @staticmethod
     def make_standard(keyword):
@@ -146,7 +146,7 @@ class SearchKeyword(TimeStampedModel, ActiveModel):
             'exact_match': self.exact_match
         }
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s%s - <%s>" % ('' if self.active else '[!] ', self.owner, self.keyword)
 
     class Meta:

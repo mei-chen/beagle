@@ -5,7 +5,7 @@ import base64
 import uuid
 from freezegun import freeze_time
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import User, Group
 from django.utils import timezone
 

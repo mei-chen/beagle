@@ -13,7 +13,7 @@ import string
 import subprocess
 import time
 
-import pyPdf
+import PyPDF2
 
 from constance import config
 from dogbone.exceptions import DocumentSizeOverLimitException
@@ -65,7 +65,7 @@ def execute(args):
         process = subprocess.Popen(
             args, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
-        stdout, stderr = map(str.strip, process.communicate())
+        stdout, stderr = list(map(str.strip, process.communicate()))
 
     if process.returncode:
         if stderr:
@@ -147,7 +147,7 @@ def pdf_to_docx(filename):
         logging.info('Document %s needs OCR' % filename)
         try:
             pdfin = open(upload)
-            reader = pyPdf.PdfFileReader(pdfin)
+            reader = PyPDF2.PdfFileReader(pdfin)
             num_pages = reader.getNumPages()
         except Exception as e:
             # Log the exception and move on

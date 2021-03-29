@@ -1,6 +1,6 @@
 import json
 import logging
-from urllib2 import Request, urlopen, URLError, quote
+from urllib.request import Request, urlopen, URLError, quote
 
 
 class LUIS:
@@ -39,4 +39,4 @@ class LUIS:
 
 if __name__ == '__main__':
     luis = LUIS()
-    print luis.ask('Is a responsibility actually a right denial?')
+    print(luis.ask('Is a responsibility actually a right denial?'))

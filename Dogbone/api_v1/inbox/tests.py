@@ -3,7 +3,7 @@ import mock
 from core.models import Sentence
 from core.tasks import store_activity_notification
 from dogbone.testing.base import BeagleWebTest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from notifications.models import Notification
 
 

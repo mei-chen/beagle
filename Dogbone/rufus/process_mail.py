@@ -47,7 +47,7 @@ def main(message, current_env):
 
     except Exception as e:
         import traceback
-        print traceback.format_exc()
+        print(traceback.format_exc())
         logger.error("Exception occurred: %s" % str(e))
 
 

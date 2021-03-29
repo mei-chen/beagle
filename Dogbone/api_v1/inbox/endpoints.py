@@ -9,7 +9,7 @@ from core.tasks import fully_refresh_persistent_notifications
 
 class InboxListView(ListView):
     model = Notification
-    url_pattern = r'/user/me/inbox'
+    url_pattern = r'user/me/inbox'
     endpoint_name = 'inbox_list_view'
 
     DEFAULT_RESULTS_PER_PAGE = 20
@@ -54,7 +54,7 @@ class InboxListView(ListView):
 
 class InboxDetailView(DetailView, PutDetailModelMixin):
     model = Notification
-    url_pattern = r'/user/me/inbox/(?P<id>[0-9]+)'
+    url_pattern = r'user/me/inbox/(?P<id>[0-9]+)'
     endpoint_name = 'inbox_detail_view'
 
     @classmethod
@@ -81,7 +81,7 @@ class InboxDetailView(DetailView, PutDetailModelMixin):
 
 class InboxMarkAllView(ActionView):
     model = User
-    url_pattern = r'/user/me/inbox/mark_all'
+    url_pattern = r'user/me/inbox/mark_all'
     endpoint_name = 'inbox_mark_all_view'
 
     def get_object(self, request, *args, **kwargs):

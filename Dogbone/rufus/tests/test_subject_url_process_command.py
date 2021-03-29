@@ -1,5 +1,5 @@
 import urllib
-import StringIO
+from io import StringIO
 from collections import namedtuple
 from django.test import TestCase
 from mock import Mock, patch

@@ -26,7 +26,7 @@ if (argv.hasOwnProperty('syslog')) {
 // Init the logger and log level
 logger.setLevel('INFO');
 
-config = { listen_port: 4000, redis_url: 'redis://localhost:6379' };
+config = { listen_port: 4003, redis_url: 'redis://localhost:6379' };
 
 if(process.env.PORT) {
     config.listen_port = process.env.PORT;

@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
@@ -42,7 +42,7 @@ def error400(request, message):
     return render(request, '400.html', {'message': message}, status=400)
 
 
-def error404(request):
+def error404(request, exception):
     return render(request, '404.html', status=404)
 
 
@@ -52,14 +52,14 @@ def error403(request):
 
 def index(request):
     """ Homepage """
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account'))
     return render(request, 'index.html', {})
 
 
 def login(request):
     """ Login form page """
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.GET.get('next'):
             return HttpResponseRedirect(request.GET['next'])
         else:
@@ -193,7 +193,7 @@ def _authorize(service, request):
                   'must be specified in query string'
         return error400(request, message)
 
-    if user.is_authenticated():
+    if user.is_authenticated:
         redirect_uri = _connect(service, user, connect_uri, login_uri)
         return HttpResponseRedirect(redirect_uri)
 
@@ -222,7 +222,7 @@ def kibble_authorize(request):
 
 
 def reset_password(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.GET.get('next'):
             return HttpResponseRedirect(request.GET['next'])
         else:
@@ -253,7 +253,7 @@ def reset_password(request):
 
 
 def update_password(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.GET.get('next'):
             return HttpResponseRedirect(request.GET['next'])
         else:
@@ -291,7 +291,7 @@ def update_password(request):
 
 def register_browser_extension(request):
     """ Register Form page """
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account'))
 
     register_form = BrowserExtensionRegisterForm()
@@ -487,7 +487,7 @@ def getstarted(request):
 
 def logout(request):
     """ Logout and redirect to homepage """
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
 
@@ -791,7 +791,7 @@ def purchase_route(request):
         else:
             redirect_url = reverse('purchase')
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         # If the user is authenticated and is already a paid user
         current_subscriptions = PurchasedSubscription.get_current_subscriptions(request.user)
         if any([PaidSubscription.includes(subscription.get_subscription()) for subscription in current_subscriptions]):

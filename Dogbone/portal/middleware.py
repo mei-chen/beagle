@@ -7,6 +7,7 @@ from django_mobile.middleware import MobileDetectionMiddleware
 from django_mobile import set_flavour
 from django.conf import settings
 from django.utils import timezone
+from django.utils.deprecation import MiddlewareMixin
 
 
 logger = logging.getLogger(__name__)
@@ -49,18 +50,18 @@ class ExtendedMobileDetectionMiddleware(MobileDetectionMiddleware):
             set_flavour(settings.FLAVOURS[2], request)
 
 
-class UserCookieMiddleware(object):
+class UserCookieMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         if hasattr(request, 'user'):
-            if request.user.is_authenticated() and not request.COOKIES.get('user'):
+            if request.user.is_authenticated and not request.COOKIES.get('user'):
                 response.set_cookie('user', request.user.email)
-            elif request.COOKIES.get('user') and not request.user.is_authenticated():
+            elif request.COOKIES.get('user') and not request.user.is_authenticated:
                 response.delete_cookie('user')
         return response
 
 
-class UserTimezoneMiddleware(object):
+class UserTimezoneMiddleware(MiddlewareMixin):
 
     LOCALHOST_IP = '127.0.0.1'
     FREEGEOIP_URL = 'http://freegeoip.net/json/%s'

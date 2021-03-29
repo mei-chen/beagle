@@ -67,7 +67,7 @@ Waiver
         ])
 
     # print analyzer.render_grammar(analyzer.mention_clusters[0])
-    print analyzer.render_grammar(analyzer.mention_clusters[1])
+    print(analyzer.render_grammar(analyzer.mention_clusters[1]))
 
     # pprint(analyzer._process_liabilities(analyzer.mention_clusters[0]))
     pprint(analyzer._process_liabilities(analyzer.mention_clusters[1]))

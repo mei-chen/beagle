@@ -4,7 +4,7 @@ from clauses_statistics.models import ClausesStatistic
 
 class ClausesStatisticDetailView(DetailView):
     model = ClausesStatistic
-    url_pattern = r'/clauses_statistics/(?P<tag>[^/]+)$'
+    url_pattern = r'clauses_statistics/(?P<tag>[^/]+)$'
     endpoint_name = 'clauses_statistic_detail_view'
 
     model_key_name = 'tag'
@@ -13,5 +13,5 @@ class ClausesStatisticDetailView(DetailView):
 
 class ClausesStatisticListView(ListView):
     model = ClausesStatistic
-    url_pattern = r'/clauses_statistics$'
+    url_pattern = r'clauses_statistics$'
     endpoint_name = 'clauses_statistic_list_view'

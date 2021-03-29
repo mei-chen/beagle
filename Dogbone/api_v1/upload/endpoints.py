@@ -35,7 +35,7 @@ class RestrictedUploadViewMixin(UploadViewMixin):
 
 class ProcessEncryptedArchiveComputeView(ComputeView, RestrictedUploadViewMixin):
 
-    url_pattern = r'/upload/set_password_for_zip$'
+    url_pattern = r'upload/set_password_for_zip$'
     endpoint_name = 'set_password_for_zip'
 
     def compute(self, request, *args, **kwargs):
@@ -56,7 +56,7 @@ class ProcessEncryptedArchiveComputeView(ComputeView, RestrictedUploadViewMixin)
 
 class GetCloudAccessStatusView(StatusView, UploadViewMixin):
 
-    url_pattern = r'/upload/get_cloud_access$'
+    url_pattern = r'upload/get_cloud_access$'
     endpoint_name = 'get_cloud_access'
 
     def status(self, request, *args, **kwargs):
@@ -72,7 +72,7 @@ class GetCloudAccessStatusView(StatusView, UploadViewMixin):
 
 class SetDropboxTokenComputeView(ComputeView, RestrictedUploadViewMixin):
 
-    url_pattern = r'/upload/set_dropbox_token$'
+    url_pattern = r'upload/set_dropbox_token$'
     endpoint_name = 'set_dropbox_token'
 
     def compute(self, request, *args, **kwargs):
@@ -91,7 +91,7 @@ class SetDropboxTokenComputeView(ComputeView, RestrictedUploadViewMixin):
 
 class SetGoogleDriveSecretStatusView(StatusView, RestrictedUploadViewMixin):
 
-    url_pattern = r'/upload/set_google_drive_secret'
+    url_pattern = r'upload/set_google_drive_secret'
     endpoint_name = 'set_google_drive_secret'
 
     def status(self, request, *args, **kwargs):
@@ -104,7 +104,7 @@ class SetGoogleDriveSecretStatusView(StatusView, RestrictedUploadViewMixin):
 
 class AddCloudFolderComputeView(ComputeView, RestrictedUploadViewMixin):
 
-    url_pattern = r'/upload/add_cloud_folder$'
+    url_pattern = r'upload/add_cloud_folder$'
     endpoint_name = 'add_cloud_folder'
 
     def compute(self, request, *args, **kwargs):
@@ -127,7 +127,7 @@ class AddCloudFolderComputeView(ComputeView, RestrictedUploadViewMixin):
 
 class GetCloudFoldersListView(ListView, UploadViewMixin):
 
-    url_pattern = r'/upload/get_cloud_folders$'
+    url_pattern = r'upload/get_cloud_folders$'
     endpoint_name = 'get_cloud_folders'
 
     model = Folder
@@ -150,7 +150,7 @@ class GetCloudFoldersListView(ListView, UploadViewMixin):
 
 class DeleteCloudFolderComputeView(ComputeView, UploadViewMixin):
 
-    url_pattern = r'/upload/delete_cloud_folder$'
+    url_pattern = r'upload/delete_cloud_folder$'
     endpoint_name = 'delete_cloud_folder'
 
     def compute(self, request, *args, **kwargs):
@@ -166,7 +166,7 @@ class DeleteCloudFolderComputeView(ComputeView, UploadViewMixin):
 
 class RevokeGoogleDriveAccessView(StatusView, UploadViewMixin):
 
-    url_pattern = r'/upload/revoke_google_drive_access$'
+    url_pattern = r'upload/revoke_google_drive_access$'
     endpoint_name = 'revoke_google_drive_access'
 
     model = GoogleDriveAccess
@@ -180,7 +180,7 @@ class RevokeGoogleDriveAccessView(StatusView, UploadViewMixin):
 
 class RevokeDropboxAccessView(StatusView, UploadViewMixin):
 
-    url_pattern = r'/upload/revoke_dropbox_access$'
+    url_pattern = r'upload/revoke_dropbox_access$'
     endpoint_name = 'revoke_dropbox_access'
 
     model = DropboxAccess

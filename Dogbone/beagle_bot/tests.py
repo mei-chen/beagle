@@ -2,7 +2,7 @@
 import mock
 import json
 from unittest import TestCase, skip
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dogbone.testing.base import BeagleWebTest
 from beagle_bot.luis import LUIS
 from beagle_bot.bot import BeagleBot

@@ -1,7 +1,7 @@
 import docx
 import os
 import zipfile
-from StringIO import StringIO
+from io import StringIO
 from xml.sax.saxutils import escape as xmlescape
 
 from bs4 import BeautifulSoup
@@ -178,7 +178,7 @@ def reconstruct_docx(initial_doc, sentences, redlines=True, tz_name=None):
     p_tag.append(r_tag)
     sectPr_tag.insert_before(p_tag)
 
-    return unicode(soup)
+    return str(soup)
 
 
 def get_modifier_name(sentence):

@@ -38,7 +38,7 @@ You must comply with all applicable laws regarding use of the SOFTWARE PRODUCT(S
 
 def demo():
     parsed_sentences = [parse_mentions(wt) for wt in text2wordtag(preprocess_text(text))]
-    print parsed_sentences
+    print(parsed_sentences)
 
     typed_mentions = collections.defaultdict(list)
     mention_types = ['PRONOUN_MENTION', 'COMPANY_MENTION', 'ENTITY_MENTION']

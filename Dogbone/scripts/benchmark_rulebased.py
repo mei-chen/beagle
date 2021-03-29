@@ -34,13 +34,13 @@ with open(DATASET, 'rb') as csvfile:
 global_gold = []
 global_pred = []
 global_sents = []
-for ((you, them), d) in data.iteritems():
+for ((you, them), d) in data.items():
     print '--- ---', you, them, '--- ---'
-    sents = map(lambda x: x[0], d)
+    sents = list(map(lambda x: x[0], d))
     global_sents.extend(sents)
     fcd = NlplibFacade(parties=(them, you, None), sentences=sents)
 
-    gold = map(lambda x: x[1].startswith('T'), d)
+    gold = list(map(lambda x: x[1].startswith('T'), d))
     pred = [False] * len(sents)
     
     terms = fcd.terminations(you)

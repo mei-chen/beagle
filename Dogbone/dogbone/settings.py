@@ -1,6 +1,6 @@
 import os
 import socket
-from app_settings.common_settings import *
+from .app_settings.common_settings import *
 import dj_database_url
 from dotenv import load_dotenv, find_dotenv
 
@@ -119,7 +119,7 @@ CELERY_RESULT_BACKEND = BROKER_URL
 #
 ######################################################################################
 
-REACT_LOCAL_ADDRESS = 'http://127.0.0.1:3000'
+REACT_LOCAL_ADDRESS = 'http://10.0.2.2:3000'#'http://127.0.0.1:3000'
 
 INTERCOM_ENV = 'dev'
 
@@ -144,9 +144,9 @@ INTERNAL_IPS = (
 #
 ######################################################################################
 
-DATABASES = {
-    'default': dj_database_url.config()
-}
+#DATABASES = {
+#    'default': dj_database_url.config()
+#}
 
 ######################################################################################
 #
@@ -154,7 +154,7 @@ DATABASES = {
 #
 ######################################################################################
 
-NODEJS_SERVER = socket.getfqdn() if SOCKET_DOMAIN else "localhost:4000"
+NODEJS_SERVER = socket.getfqdn() if SOCKET_DOMAIN else "localhost:4003"
 
 ######################################################################################
 #
@@ -189,7 +189,7 @@ LOGGING = {
     'handlers': {
         'null': {
             'level': 'DEBUG',
-            'class': 'django.utils.log.NullHandler',
+            'class': 'logging.NullHandler',
         },
         'default': DEFAULT_LOG,
         'console': {
@@ -242,10 +242,10 @@ LOGGING = {
     }
 }
 
-MIDDLEWARE_CLASSES += (
+MIDDLEWARE.extend([
     'utils.prof.ProfilerMiddleware',
     'qinspect.middleware.QueryInspectMiddleware',
-)
+])
 
 # Query Inspector works only in DEBUG mode!
 QUERY_INSPECT_ENABLED = True
@@ -341,11 +341,11 @@ UPLOADED_DOCUMENTS_BUCKET = 'beagle.s3.documents'
 CONSTANCE_REDIS_CONNECTION = BROKER_URL
 
 try:
-    from app_settings.local_settings import *
+    from .app_settings.production_settings import *
 except ImportError:
-    print 'Local settings have not been set'
+    print('Production settings have not been set')
 
 try:
-    from app_settings.production_settings import *
+    from .app_settings.local_settings import *
 except ImportError:
-    print 'Production settings have not been set'
+    print('Local settings have not been set')

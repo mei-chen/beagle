@@ -9,7 +9,6 @@ import numpy as np
 
 from collections import defaultdict
 from copy import deepcopy
-from itertools import ifilter
 from unidecode import unidecode
 from model_utils.models import TimeStampedModel
 from notifications.models import Notification
@@ -20,7 +19,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_in
 from django.db.models import Q
@@ -56,7 +55,7 @@ multispaces_re = re.compile('\s+', re.UNICODE)
 
 
 class CollaboratorList(TimeStampedModel):
-    user = models.OneToOneField(User, related_name='collaborator_aggregate')
+    user = models.OneToOneField(User, related_name='collaborator_aggregate', on_delete=models.CASCADE)
 
     # A json formatted: {'suggestions': [{'email': user.email} for user in collaborators]}
     collaborator_suggestions = jsonfield.JSONField(null=True)
@@ -109,8 +108,8 @@ class CollaboratorList(TimeStampedModel):
         self.collaborator_suggestions['suggestions'].append({'email': email})
         self.save()
 
-    def __unicode__(self):
-        return unicode(self.user)
+    def __str__(self):
+        return str(self.user)
 
 
 # Create a CollaboratorList each time a new User is created
@@ -150,7 +149,7 @@ class Batch(TimeStampedModel, TrashableModel, PendingModel):
     docs = jsonfield.JSONField(null=True)  # IMPORTANT: use `documents` property instead
 
     # The user that uploaded the batch
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # The list of invalid document IDs that also were inside the batch
     # (temporary data used only once during the first processing immediately
@@ -312,7 +311,7 @@ class Batch(TimeStampedModel, TrashableModel, PendingModel):
         """ Checks whether `user` has access to the batch. """
         return user.is_superuser or self.owner == user
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def delete(self, using=None):
@@ -388,7 +387,7 @@ class Document(TimeStampedModel, TrashableModel, PendingModel):
     # uuid, suitable for embedding in urls
     uuid = models.CharField('UUID', max_length=100, unique=True)
 
-    batch = models.ForeignKey(Batch, default=None, null=True, blank=True)
+    batch = models.ForeignKey(Batch, default=None, null=True, blank=True, on_delete=models.CASCADE)
 
     # document category
     GENERIC = '-'
@@ -456,7 +455,7 @@ class Document(TimeStampedModel, TrashableModel, PendingModel):
                               help_text='Format: bucket:filename')
 
     # the user that uploaded the document
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # List of sentence IDs that make up the document
     sents = jsonfield.JSONField(null=True)  # IMPORTANT: Use `model.sentences` property instead
@@ -747,7 +746,7 @@ class Document(TimeStampedModel, TrashableModel, PendingModel):
             # For the annotations involving a single party
             for annotation in [a for a in s.get('annotations', []) if a['party'] != 'both']:
                 # If there isn't another identical annotation involving both parties
-                if next(ifilter(lambda item: item['label'] == annotation['label'] and
+                if next(filter(lambda item: item['label'] == annotation['label'] and
                         item['sublabel'] == annotation['sublabel'], annotations), None) is None:
                     # Add the single party annotation to the sentence annotations
                     annotations.append(annotation)
@@ -1234,7 +1233,7 @@ class Document(TimeStampedModel, TrashableModel, PendingModel):
 
         return result
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -1256,8 +1255,8 @@ class UserLastViewDate(models.Model):
     Updates when document is viewed by same user again.
     """
 
-    document = models.ForeignKey(Document)
-    user = models.ForeignKey(User)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField()
 
     @staticmethod
@@ -1280,7 +1279,7 @@ class UserLastViewDate(models.Model):
 
 class SentenceLock(TimeStampedModel):
     # Owner of this lock
-    owner = models.ForeignKey(User, null=True, default=None)
+    owner = models.ForeignKey(User, null=True, default=None, on_delete=models.CASCADE)
     # Life time of this lock (minutes until expiry)
     lifetime = models.IntegerField(default=60)
 
@@ -1304,7 +1303,7 @@ class SentenceLock(TimeStampedModel):
             'expiry_time': str(self.expiry_time)
         }
 
-    def __unicode__(self):
+    def __str__(self):
         return "Lock [%s] %s" % (str(self.owner), str(self.is_expired))
 
     class SentenceLockException(Exception):
@@ -1373,15 +1372,15 @@ class Sentence(TimeStampedModel):
     # Rejected flag
     rejected = models.BooleanField('Is it rejected?', default=False)
     # Edit lock
-    lock = models.OneToOneField(SentenceLock, null=True, blank=True)
+    lock = models.OneToOneField(SentenceLock, null=True, blank=True, on_delete=models.CASCADE)
     # Comments thread
     comments = jsonfield.JSONField('List of comments', null=True, blank=True)
     # Ext Refs
     extrefs = jsonfield.JSONField('List of external references', null=True, blank=True)
     # Parent document
-    doc = models.ForeignKey(Document)
+    doc = models.ForeignKey(Document, on_delete=models.CASCADE)
     # User that created this version
-    modified_by = models.ForeignKey(User)
+    modified_by = models.ForeignKey(User, on_delete=models.CASCADE)
     # List of users that liked/disliked it
     likes = jsonfield.JSONField('Likes', null=True, blank=True)
     # Number of trailing line-breaks
@@ -1391,7 +1390,7 @@ class Sentence(TimeStampedModel):
     annotations = jsonfield.JSONField('Annotations', null=True, blank=True, default=None)
 
     # History navigation
-    prev_revision = models.OneToOneField('Sentence', null=True, blank=True, related_name='next_revision')
+    prev_revision = models.OneToOneField('Sentence', null=True, blank=True, related_name='next_revision', on_delete=models.CASCADE)
 
     def get_report_url(self, sentence_index):
         return sentence_url(self, sentence_index)
@@ -1946,27 +1945,27 @@ class Sentence(TimeStampedModel):
 
     ### Magic methods
 
-    def __unicode__(self):
+    def __str__(self):
         """
         We don't need the actual text representation of the sentence for the admin
-        - We will use the unicode of the document because it helps us with notification display
+        - We will use the str of the document because it helps us with notification display
         """
-        return unicode(self.doc)
+        return str(self.doc)
 
 
 class CollaborationInvite(TimeStampedModel):
     # The person that invites
-    inviter = models.ForeignKey(User, related_name='invitations_sent')
+    inviter = models.ForeignKey(User, related_name='invitations_sent', on_delete=models.CASCADE)
 
     # The person that is invited
-    invitee = models.ForeignKey(User, related_name='invitations_received')
+    invitee = models.ForeignKey(User, related_name='invitations_received', on_delete=models.CASCADE)
 
     # The document that the person is invited to
-    document = models.ForeignKey(Document)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
 
     # The invite might have a sentence attached (which we don't even expose through API),
     # used just to redirect the invited user to the right place
-    sentence = models.ForeignKey(Sentence, null=True)
+    sentence = models.ForeignKey(Sentence, null=True, on_delete=models.CASCADE)
 
     def to_dict(self):
         return {
@@ -1981,11 +1980,11 @@ class CollaborationInvite(TimeStampedModel):
     def to_user_dict(self):
         return user_to_dict(self.invitee)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"From: '%s' To: '%s' On: '%s'" % (
             self.inviter.email,
             self.invitee.email,
-            unicode(self.document),
+            str(self.document),
         )
 
 
@@ -2010,13 +2009,13 @@ class ExternalInvite(TimeStampedModel, PendingModel):
     email = models.EmailField()
 
     # The document the user is invited to
-    document = models.ForeignKey(Document, null=True, default=None)
+    document = models.ForeignKey(Document, null=True, default=None, on_delete=models.CASCADE)
 
     # The specific sentence the user might be invited to
-    sentence = models.ForeignKey(Sentence, null=True, default=None)
+    sentence = models.ForeignKey(Sentence, null=True, default=None, on_delete=models.CASCADE)
 
     # The user that issued the invite
-    inviter = models.ForeignKey(User)
+    inviter = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # The timestamp when the invite email was sent
     email_sent_date = models.DateTimeField(null=True)
@@ -2075,7 +2074,7 @@ class ExternalInvite(TimeStampedModel, PendingModel):
         self.save()
         return invite
 
-    def __unicode__(self):
+    def __str__(self):
         return self.email
 
     class Meta:
@@ -2175,8 +2174,8 @@ class DelayedNotification(TimeStampedModel):
         finally:
             self.delete()
 
-    def __unicode__(self):
-        return unicode(self.notification)
+    def __str__(self):
+        return str(self.notification)
 
 
 ###############################################################################

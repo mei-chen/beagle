@@ -41,7 +41,7 @@ for root, dirnames, filenames in os.walk(os.path.join(CONTRACTS_ROOT, CONTRACT_P
         try:
             print filename
             xmlsents = parse_docx(os.path.join(CONTRACTS_ROOT, CONTRACT_PATH, filename))
-            sents = map(lambda x: unidecode(x), xmlsents[0])
+            sents = list(map(lambda x: unidecode(x), xmlsents[0]))
             # plaintext = filedecode(os.path.join(root, filename))
             # sents = split_sentences(unidecode(plaintext))
 
@@ -73,8 +73,8 @@ for root, dirnames, filenames in os.walk(os.path.join(CONTRACTS_ROOT, CONTRACT_P
                     already_seen.add(masked_clause)
 
 
-            print '       ', len(rows)
-            print
+            print('       ', len(rows))
+            print()
 
         except KeyboardInterrupt:
             break

@@ -57,6 +57,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "Kibble/", "/srv/kibble"
   config.vm.synced_folder "Spot/", "/srv/spot"
   config.vm.synced_folder "Dogbone/", "/srv/dogbone"
+  config.vm.synced_folder "Delorean/", "/srv/delorean"
 
 
   # Provider-specific configuration so you can fine-tune various

@@ -2,7 +2,7 @@ import re
 import os
 import quopri
 import logging
-import StringIO
+from io import StringIO
 from bs4 import BeautifulSoup
 from settings import DOCUMENT_INDEX, DOCUMENT_REPOSITORY_PATH, ACCEPTED_EXTENSIONS
 
@@ -109,7 +109,7 @@ def get_attachments(msg):
 
     # Make attachments in memory files
     file_attachments = {}
-    for fname, c_attachment in attachments.iteritems():
+    for fname, c_attachment in attachments.items():
         str_file = StringIO.StringIO()
         str_file.write(c_attachment)
         str_file.seek(0)
@@ -127,7 +127,7 @@ def get_default_document(phrase):
 
     canonical_phrase = re.sub(' +', ' ', phrase.lower())
     logger.info("Searching for canonical phrase = '%s'" % canonical_phrase)
-    for file_name, file_details in DOCUMENT_INDEX.iteritems():
+    for file_name, file_details in DOCUMENT_INDEX.items():
         if canonical_phrase in file_details['key_phrases']:
             try:
                 file_path = os.path.join(DOCUMENT_REPOSITORY_PATH, file_name)

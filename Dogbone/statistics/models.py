@@ -19,8 +19,8 @@ EVENT_TYPES = {
 class Event(TimeStampedModel):
 
     name = models.CharField(max_length=100, choices=EVENT_TYPES.items())
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     data = jsonfield.JSONField(blank=True, default=None, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'<Event: name="%s", user=%s>' % (self.name, self.user)

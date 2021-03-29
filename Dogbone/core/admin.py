@@ -130,7 +130,7 @@ admin.site.register(ExternalInvite, ExternalInviteAdmin)
 class DelayedNotificationAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_filter = ('created', )
-    list_display = ('__unicode__', 'email', 'created',)
+    list_display = ('__str__', 'email', 'created',)
 
 
 admin.site.register(DelayedNotification, DelayedNotificationAdmin)

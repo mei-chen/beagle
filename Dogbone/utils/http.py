@@ -1,4 +1,4 @@
-import urlparse
+import urllib.parse
 
 
 def filename_from_url(url, default_filename=None, default_extension=None):
@@ -14,7 +14,7 @@ def filename_from_url(url, default_filename=None, default_extension=None):
     :param default_extension: In case the document doesn't have an extension, add this default one
     :return: The file name
     """
-    path = urlparse.urlsplit(url).path
+    path = urllib.parse.urlsplit(url).path
 
     if path is None:
         return default_filename if not callable(default_filename) else str(default_filename())

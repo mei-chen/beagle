@@ -4,7 +4,7 @@ import datetime
 import unittest
 
 from user_sessions.models import Session
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import User
 from freezegun import freeze_time
 
@@ -659,7 +659,7 @@ class ExternalRegisterTestCase(BeagleWebTest):
                 # Check that the send email request was properly called
                 mock_send_invite.assert_called_once_with(ext_invites[0].pk, mock.ANY)
                 register_url = mock_send_invite.call_args[0][1]
-                print 'REGISTER_URL', register_url
+                print('REGISTER_URL', register_url)
 
                 # Check that the email redirects properly
                 self.logout()

@@ -1,9 +1,9 @@
-import StringIO
+from io import StringIO
 
 from django.conf import settings
 from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import TestCase, LiveServerTestCase
 import mock
 from selenium.common.exceptions import NoSuchElementException

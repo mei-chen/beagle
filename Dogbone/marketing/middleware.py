@@ -1,7 +1,8 @@
 from .manager import ActionManager
+from django.utils.deprecation import MiddlewareMixin
 
 
-class ActionManagerMiddleware(object):
+class ActionManagerMiddleware(MiddlewareMixin):
     """ Attach an action_manager object to the request if the user object is available """
 
     def process_request(self, request):
@@ -13,7 +14,7 @@ class ActionManagerMiddleware(object):
         if (hasattr(request, 'user')
                 and hasattr(request.user, 'is_authenticated')
                 and request.user.is_authenticated
-                and not request.user.is_anonymous()):
+                and not request.user.is_anonymous):
 
             request.action_manager = ActionManager(request.user)
         else:

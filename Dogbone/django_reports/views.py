@@ -4,7 +4,7 @@ import urllib
 from django.template.defaultfilters import slugify
 from django.shortcuts import render
 from django.http import Http404, HttpResponse
-from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
 from django.contrib.admin.views.decorators import staff_member_required
 
 from . import Report
@@ -28,7 +28,7 @@ def report_details(request, module_name, class_name, *args, **kwargs):
 
     if request.method == 'POST':
         report.bind(request)
-        if report.is_valid():
+        if report.is_valid:
             # Start background job and redirect to confirmation page
             build_report.delay(request.user.pk, module_name, class_name, params=report.params)
             return render(request, 'report_success.html')

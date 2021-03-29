@@ -9,6 +9,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for user in User.objects.all():
             try:
-                initialize_sample_docs.delay(user)
+                initialize_sample_docs.delay(user.id)
             except:
                 pass

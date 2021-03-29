@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login
+from django.utils.deprecation import MiddlewareMixin
 
 
-class TokenAuthMiddleware(object):
+class TokenAuthMiddleware(MiddlewareMixin):
     """ Authentication Middleware for authenticating a user via token """
 
     def process_request(self, request):

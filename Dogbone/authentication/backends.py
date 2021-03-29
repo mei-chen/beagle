@@ -7,7 +7,7 @@ from .models import OneTimeLoginHash, AuthToken
 class EmailOrUsernameModelBackend(object):
     """ Authenticate user by username or email """
 
-    def authenticate(self, username=None, password=None):
+    def authenticate(self, request, username=None, password=None):
         if '@' in username:
             kwargs = {'email': username.lower()}
         else:
@@ -32,7 +32,7 @@ class EmailOrUsernameModelBackend(object):
 class OneTimeLoginHashModelBackend(object):
     """ Authenticate user by GET request hash """
 
-    def authenticate(self, login_hash, resolve_after=True):
+    def authenticate(self, request, login_hash, resolve_after=True):
 
         try:
             login_secret = OneTimeLoginHash.get_secret(login_hash)
@@ -56,7 +56,7 @@ class OneTimeLoginHashModelBackend(object):
 class AuthTokenBackend(object):
     """ Authenticate user by token """
 
-    def authenticate(self, token=None):
+    def authenticate(self, request, token=None):
         if token is None:
             return None
 

@@ -57,7 +57,7 @@ class NlplibFacade:
     def party_counter(self):
         if self._party_counter is None:
             clean_txt = remove_linebreak_markers(self.text)
-            clean_sents = map(remove_linebreak_markers, self.sentences)
+            clean_sents = list(map(remove_linebreak_markers, self.sentences))
             self._party_counter = PartyCounterExtractor(clean_txt, clean_sents)
 
         return self._party_counter
@@ -128,13 +128,13 @@ class NlplibFacade:
     @property
     def processed_text(self):
         if self._processed_text is None:
-            self._processed_text = map(postprocess_text, self.preprocessed_sentences)
+            self._processed_text = list(map(postprocess_text, self.preprocessed_sentences))
         return self._processed_text
 
     @property
     def preprocessed_sentences(self):
         if self._preprocessed_sentences is None:
-            self._preprocessed_sentences = map(preprocess_text, self.sentences)
+            self._preprocessed_sentences = list(map(preprocess_text, self.sentences))
 
         return self._preprocessed_sentences
 

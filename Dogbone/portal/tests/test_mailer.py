@@ -1,12 +1,12 @@
 import mock
-import urlparse
+import urllib.parse
 import unittest
 from datetime import datetime, timedelta
 
 from django.template import Template
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from notifications.models import Notification
 from django.test.utils import override_settings
 
@@ -264,7 +264,7 @@ class BeagleMailerTest(BeagleWebTest):
                                                      subject='Meet Rufus: Your Automatic Contract Guide')
 
             url = mock_mailer_send.call_args_list[0][1]['args']['follow_url']
-            o = urlparse.urlparse(url)
+            o = urllib.parse.urllib.parse(url)
             str_hash = dict(urlparse.parse_qsl(o.query))['hash']
             hash_model = OneTimeLoginHash.get_onetime_model(str_hash)
             self.assertEqual(hash_model, h)

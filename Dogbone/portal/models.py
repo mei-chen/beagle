@@ -43,7 +43,7 @@ def generate_default_rlte_flags():
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name='details')
+    user = models.OneToOneField(User, related_name='details', on_delete=models.CASCADE)
     job_title = models.TextField(default='', null=True, blank=True)
     company = models.TextField(default='', null=True, blank=True)
     phone = models.TextField(default='', max_length=25, null=True, blank=True)
@@ -170,7 +170,7 @@ class UserProfile(models.Model):
             return
 
         rlte_flags_dict = {
-            key: value for key, value in six.iteritems(rlte_flags_dict)
+            key: value for key, value in six.items(rlte_flags_dict)
             if key in RLTE_FLAGS  # discard invalid entries
         }
 
@@ -192,7 +192,7 @@ class UserProfile(models.Model):
             'settings': self.settings,
         }
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Details for %s %s (%s)' % (self.user.first_name, self.user.last_name, self.user.email)
 
     class Meta:
@@ -282,14 +282,14 @@ def create_auth_token(sender, **kwargs):
 def add_init_samples(sender, **kwargs):
     from core.tasks import initialize_sample_docs
     if kwargs['created']:
-        initialize_sample_docs.delay(kwargs['instance'])
+        initialize_sample_docs.delay(kwargs['instance'].id)
 
 # Trigger adding pre-trained learners to a new User
 @receiver(post_save, sender=User)
 def add_pretrained(sender, **kwargs):
     from core.tasks import install_pretrained
     if kwargs['created']:
-        install_pretrained.delay(kwargs['instance'])
+        install_pretrained.delay(kwargs['instance'].id)
 
 # Delete a UserProfile each time a User is deleted
 @receiver(pre_delete, sender=User)
@@ -372,7 +372,7 @@ def create_collaboration_invites(sender, instance, created, **kwargs):
             documents_invited_to = list(set(documents_invited_to))
 
             from core.tasks import parse_comments_on_external_invite_delete, bounce_delayed_notifications
-            parse_comments_on_external_invite_delete.delay(documents_invited_to, instance)
+            parse_comments_on_external_invite_delete.delay(documents_invited_to, instance.id)
             bounce_delayed_notifications.delay(email=instance.email)
         except ProgrammingError:
             logging.error("ExternalInvites table does not exist yet")
@@ -380,15 +380,15 @@ def create_collaboration_invites(sender, instance, created, **kwargs):
 
 class WrongAnalysisFlag(models.Model):
     # User inserted
-    user = models.ForeignKey(User)
-    doc = models.ForeignKey(Document)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    doc = models.ForeignKey(Document, on_delete=models.CASCADE)
     comments = models.TextField(default='', blank=True, null=True)
 
     # Resolution
     resolved = models.BooleanField('Resolved?', default=False)
     resolution_comments = models.TextField(default='', blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Flag: %s%s (%s)' % (self.doc.original_name[:25],
                                     '...' if len(self.doc.original_name) > 25 else '',
                                     self.user.email)
@@ -406,7 +406,7 @@ class WrongAnalysisFlag(models.Model):
 
 
 from paypal.standard.models import ST_PP_COMPLETED
-from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received, payment_was_flagged
+from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received
 
 
 def handle_successful_transaction(sender, **kwargs):
@@ -570,7 +570,7 @@ class PDFUploadMonitor(models.Model):
             stat.pages += pages
         stat.save()
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s-%s: %dpg / %dd (%dpg / %dd OCR)' % (
                     str(self.startdate.month), str(self.startdate.year),
                     self.pages, self.docs,

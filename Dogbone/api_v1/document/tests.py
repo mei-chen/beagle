@@ -10,7 +10,7 @@ from core.models import (
 from portal.models import WrongAnalysisFlag
 from dogbone.testing.base import BeagleWebTest
 from beagle_realtime.notifications import NotificationManager
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from django.test.utils import override_settings
 from django.utils.timezone import get_current_timezone

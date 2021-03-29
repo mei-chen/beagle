@@ -1,21 +1,21 @@
-import re, cPickle, os, gzip, sys, math
+import re, pickle, os, gzip, sys, math
 
 def save_pickle(data, path):
     o = gzip.open(path, 'wb')
-    cPickle.dump(data, o)
+    pickle.dump(data, o)
     o.close()
 
 ZCAT = 'gzcat' if 'Darwin' in os.popen('uname -a').read().split() else 'zcat'
 
 def load_pickle(path):
-    #i = gzip.open(path, 'rb')
-    i = os.popen(ZCAT + ' ' + path)
-    data = cPickle.load(i)
+    i = gzip.open(path, 'rb')
+    #i = os.popen(ZCAT + ' ' + path)
+    data = pickle.load(i)
     i.close()
     return data
 
 def die(msg):
-    print '\nERROR: %s' %msg
+    print('\nERROR: %s' %msg)
     sys.exit()
 
 def logit(x, y=1):
@@ -96,7 +96,7 @@ class Counter(dict):
        """
        for key, value in self.items():
            s = str(key) + ': ' + str(value)
-           print s
+           print(s)
 
    def displaySorted(self, N=10):
        """
@@ -105,7 +105,7 @@ class Counter(dict):
        sortedKeys = self.sortedKeys()
        for key in sortedKeys[:N]:
            s = str(key) + ': ' + str(self[key])
-           print s
+           print(s)
 
 def normalize(counter):
    """

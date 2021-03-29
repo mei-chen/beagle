@@ -31,7 +31,7 @@ class ReportTestCase(TestCase):
 
         report = CustomReport()
         report.bind(request)
-        self.assertFalse(report.is_valid(), False)
+        self.assertFalse(report.is_valid, False)
 
     def test_generate(self):
         class CustomForm(forms.Form):

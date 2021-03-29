@@ -1,7 +1,7 @@
 import logging
 import requests
 
-from EasyPDFCloudExceptions import EasyPDFCloudArgumentException, EasyPDFCloudHTTPException
+from .EasyPDFCloudExceptions import EasyPDFCloudArgumentException, EasyPDFCloudHTTPException
 
 
 # URL Endpoints.

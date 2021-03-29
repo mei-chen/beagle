@@ -1,7 +1,7 @@
 import json
 import os
 import mock
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dogbone.testing.base import BeagleWebTest
 from core.models import Document
 
@@ -33,7 +33,7 @@ class UploadDocumentTest(BeagleWebTest):
 
         data = {'info': '{"0":{"file":{},"file_name":"","filesource":"local","fileurl":"","accessToken":""}}'}
         response = self.client.post(reverse('upload'), data)
-        print response
+        print(response)
         self.assertEqual(response.status_code, 302)
 
     # TODO Rewrite test using new functionality

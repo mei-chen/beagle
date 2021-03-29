@@ -1,9 +1,18 @@
 
 - stat:
     path: "{{ virtualenv_path }}/lib/python3.6/site-packages/en_core_web_md/en_core_web_md-3.0.0"
-  register: spacy_model
+  register: spacy_model_md
 
-- name: Install spacy
+- name: Install spacy_md
   shell: "{{ virtualenv_path }}/bin/python -m spacy download en_core_web_md"
-  when: spacy_model.stat.exists == False
+  when: spacy_model_md.stat.exists == False
+  tags: spacy
+
+- stat:
+    path: "{{ virtualenv_path }}/lib/python3.6/site-packages/en_core_web_sm/en_core_web_sm-3.0.0"
+  register: spacy_model_sm
+
+- name: Install spacy_sm
+  shell: "{{ virtualenv_path }}/bin/python -m spacy download en_core_web_sm"
+  when: spacy_model_sm.stat.exists == False
   tags: spacy

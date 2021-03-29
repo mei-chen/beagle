@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django_reports import Report
 from django_reports.tasks import build_report
 from django_reports.models import GeneratedReport

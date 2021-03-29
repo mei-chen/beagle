@@ -2,7 +2,7 @@ import logging
 
 from dogbone.tools import absolutify
 from django.core.mail import EmailMultiAlternatives
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template import Context
 from django.template.loader import get_template
 from django.conf import settings

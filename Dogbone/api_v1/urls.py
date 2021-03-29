@@ -1,4 +1,3 @@
-from django.conf.urls import patterns
 
 from .document.endpoints import (
     DocumentListView,
@@ -133,8 +132,7 @@ from .batch.endpoints import (
 )
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     ApplicationStatusView.to_url(),
     DocumentAggregatedListView.to_url(),
     DocumentListView.to_url(),
@@ -227,4 +225,4 @@ urlpatterns = patterns(
     BatchPrepareExportView.to_url(),
     BatchExportView.to_url(),
     BatchExportSummaryView.to_url(),
-)
+]

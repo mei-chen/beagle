@@ -24,8 +24,8 @@ class TerminationTest(TestCase):
         for idx, (noli, them_party, you_party) in enumerate(term):
             facade = NlplibFacade(noli, parties=(them_party, you_party, None))
             actual_lens = (
-                len(filter(filter_fn, facade.terminations(them_party).iteritems())),
-                len(filter(filter_fn, facade.terminations(you_party).iteritems())),
-                len(filter(filter_fn, facade.terminations('both').iteritems())),
+                len(filter(filter_fn, facade.terminations(them_party).items())),
+                len(filter(filter_fn, facade.terminations(you_party).items())),
+                len(filter(filter_fn, facade.terminations('both').items())),
             )
             self.assertEqual(expected_lens[idx], actual_lens)

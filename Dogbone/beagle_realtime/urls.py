@@ -1,6 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from . import views
 
-
-urlpatterns = patterns('',
-    url(r'/debug$', 'beagle_realtime.views.debug', name='realtime_debug'),
-)
+urlpatterns = [
+    url(r'debug$', views.debug, name='realtime_debug'),
+]

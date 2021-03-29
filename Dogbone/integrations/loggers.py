@@ -3,12 +3,12 @@ import json
 import logging
 import random
 
+
 try:
     from django.conf import settings
 except ImportError:
     pass
 
-from .tasks import slack
 from django.utils import timezone
 
 class SlackLogHandler(logging.Handler):
@@ -66,6 +66,8 @@ class SlackLogHandler(logging.Handler):
             return
 
         try:
+            from .tasks import slack
+
             kwargs = {
                 'webhook': self.webhook,
                 'message': self.format(record),
@@ -85,6 +87,8 @@ class SlackLogHandler(logging.Handler):
 
 
 def slack_log(message, level):
+    from .tasks import slack
+
     slack.delay(
         webhook=settings.SLACK_WEBHOOK,
         channel=settings.SLACK_CHANNEL,

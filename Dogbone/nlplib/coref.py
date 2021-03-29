@@ -221,15 +221,15 @@ if __name__ == '__main__':
     mentions = get_mentions(tagged_sents, get_regex_chunker())
 
     for m in mentions:
-        print m['form']
+        print(m['form'])
 
     chains = init_chains(mentions)
-    print 'Finished init_chains'
+    print('Finished init_chains')
     # print "NUMBER OF CHAINS:", len(chains)
     # print '============================================'
 
     chains = string_match_sieve(chains)
-    print 'Finished string_match_sieve'
+    print('Finished string_match_sieve')
     # print 'AFTER "string_match_sieve"'
     # print '============================================'
     # print "NUMBER OF CHAINS:", len(chains)
@@ -238,7 +238,7 @@ if __name__ == '__main__':
 
 
     chains = pronoun_person_sieve(chains)
-    print 'Finished pronoun_person_sieve'
+    print('Finished pronoun_person_sieve')
     # print 'AFTER "pronoun_person_sieve"'
     # print '============================================'
     # print "NUMBER OF CHAINS:", len(chains)
@@ -252,4 +252,4 @@ if __name__ == '__main__':
     # print '============================================'
     # print "NUMBER OF CHAINS:", len(chains)
     for chain in chains:
-        print [m['form'] for m in chain[:10]]
+        print([m['form'] for m in chain[:10]])

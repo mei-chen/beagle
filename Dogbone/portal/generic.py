@@ -1,13 +1,13 @@
 import urllib
 import logging
-import urlparse
+import urllib.parse
 import itsdangerous
 
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse, resolve
+from django.urls import reverse, resolve
 from django.contrib import auth
 from django.utils.timezone import now
 from django.utils.datastructures import MultiValueDictKeyError
@@ -66,7 +66,7 @@ class RegisterView(View):
                                       data=data)
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return redirect('account')
 
         email = None
@@ -160,14 +160,14 @@ class RegisterView(View):
                 if register_form.coupon and not register_form.coupon.is_free:
                     # Small hack to get to override the URL coupon with the one in the form
                     if request.GET.get('next'):
-                        parsed_url = urlparse.urlsplit(request.GET['next'])
+                        parsed_url = urllib.parse.urlsplit(request.GET['next'])
                         resolved_url = resolve(parsed_url.path)
 
                         if resolved_url.url_name not in ['purchase_subscription', 'purchase']:
                             return redirect(request.GET['next'])
 
                         # Override the coupon code in the query params
-                        query_params = dict(urlparse.parse_qsl(parsed_url.query))
+                        query_params = dict(urllib.parse.parse_qsl(parsed_url.query))
                         query_params['coupon'] = register_form.coupon.code
                         rebuilt_url = '%s?%s' % (parsed_url.path, urllib.urlencode(query_params.items()))
 

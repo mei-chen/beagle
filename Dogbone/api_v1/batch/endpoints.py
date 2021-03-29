@@ -15,7 +15,7 @@ from portal.services import export_batch, prepare_batch
 
 class BatchDetailView(DetailView, DeleteDetailModelMixin):
     model = Batch
-    url_pattern = r'/batch/(?P<id>\d+)$'
+    url_pattern = r'batch/(?P<id>\d+)$'
     endpoint_name = 'batch_detail_view'
 
     model_key_name = 'id'
@@ -42,7 +42,7 @@ class BatchDetailView(DetailView, DeleteDetailModelMixin):
 
 class BatchReanalysisActionView(ActionView):
     model = Batch
-    url_pattern = r'/batch/(?P<id>\d+)/reanalysis$'
+    url_pattern = r'batch/(?P<id>\d+)/reanalysis$'
     endpoint_name = 'batch_reanalysis_action_view'
 
     model_key_name = 'id'
@@ -67,7 +67,7 @@ class BatchReanalysisActionView(ActionView):
 
 
 class BatchCheckAnalysisStatusView(StatusView):
-    url_pattern = r'/batch/(?P<id>\d+)/check_analysis$'
+    url_pattern = r'batch/(?P<id>\d+)/check_analysis$'
     endpoint_name = 'batch_check_analysis_status_view'
 
     def has_access(self, instance=None):
@@ -106,7 +106,7 @@ class BatchCheckAnalysisStatusView(StatusView):
 
 class BatchPrepareExportView(ActionView):
     model = Batch
-    url_pattern = r'/batch/(?P<id>\d+)/prepare_export$'
+    url_pattern = r'batch/(?P<id>\d+)/prepare_export$'
     endpoint_name = 'batch_prepare_export_view'
 
     model_key_name = 'id'
@@ -133,7 +133,7 @@ class BatchPrepareExportView(ActionView):
 
 class BatchExportView(DetailView):
     model = Batch
-    url_pattern = r'/batch/(?P<id>\d+)/export$'
+    url_pattern = r'batch/(?P<id>\d+)/export$'
     endpoint_name = 'batch_export_view'
 
     model_key_name = 'id'
@@ -171,7 +171,7 @@ class BatchExportView(DetailView):
 
 class BatchExportSummaryView(DetailView):
     model = Batch
-    url_pattern = r'/batch/(?P<id>\d+)/export_summary$'
+    url_pattern = r'batch/(?P<id>\d+)/export_summary$'
     endpoint_name = 'batch_export_summary_view'
 
     model_key_name = 'id'

@@ -1,4 +1,4 @@
-import pyPdf
+import PyPDF2
 import logging
 
 from celery import shared_task
@@ -62,7 +62,7 @@ def update_PDFUploadMonitor(fpath, need_ocr):
 
     # Add page count
     with open(fpath) as pdfin:
-        reader = pyPdf.PdfFileReader(pdfin)
+        reader = PyPDF2.PdfFileReader(pdfin)
         stat.add_doc(pages=reader.getNumPages(), ocr=need_ocr)
 
 

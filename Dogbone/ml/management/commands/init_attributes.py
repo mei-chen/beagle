@@ -27,10 +27,10 @@ class Command(BaseCommand):
             valid = True
             for i, (sample, flags, label) in enumerate(data):
                 if label not in value_range:
-                    print
-                    print 'ERROR: Sample %d has invalid label: %s'
-                    print '   ', sample
-                    print '-' * 90
+                    print()
+                    print('ERROR: Sample %d has invalid label: %s')
+                    print('   ', sample)
+                    print('-' * 90)
                     valid = False
             return valid
 
@@ -49,8 +49,8 @@ class Command(BaseCommand):
             datasets_path = path.join(datasets_path, tag)
         datasets_path = path.join(datasets_path, '*')
 
-        print
-        print 'Installing attributes for [%s]' % tag
+        print()
+        print('Installing attributes for [%s]' % tag)
 
         for filename in glob(datasets_path):
             if filename.endswith('.json'):
@@ -93,7 +93,7 @@ class Command(BaseCommand):
                         # but API requires some X with n_samples rows
                         X_dummy = np.zeros(len(y))
                         for train_index, test_index in spl.split(X_dummy, y):
-                            print 'Split: %d, %d' % (len(train_index), len(test_index))
+                            print('Split: %d, %d' % (len(train_index), len(test_index)))
 
                             train_text = [X_text[i] for i in train_index]
                             train_flags = [X_flags[i] for i in train_index]
@@ -109,26 +109,26 @@ class Command(BaseCommand):
                             pred = clf_candidate.predict(test_text, test_flags)
 
                             f1score = f1_score(gold, pred)
-                            print 'Precision:', precision_score(gold, pred)
-                            print 'Recall:   ', recall_score(gold, pred)
-                            print 'F1 score: ', f1score
-                            print
+                            print('Precision:', precision_score(gold, pred))
+                            print('Recall:   ', recall_score(gold, pred))
+                            print('F1 score: ', f1score)
+                            print()
 
                             candidates.append(clf_candidate)
                             scores.append(f1score)
 
                         i = np.argmax(scores)
                         attr_clf = candidates[i]
-                        print
-                        print '-' * 80
-                        print 'Picked the model [%s/%s] with Fscore:' % (tag, attr), scores[i]
-                        print
+                        print()
+                        print('-' * 80)
+                        print('Picked the model [%s/%s] with Fscore:' % (tag, attr), scores[i])
+                        print()
 
-                        print 'Saving the ML model and vectorizer'
+                        print('Saving the ML model and vectorizer')
                         attr_clf.save_models()
-                        print 'Saving the DB model'
+                        print('Saving the DB model')
                         attr_db.save()
                     else:
-                        print 'Pretrained Learner model doesn\'t exist [%s]' % tag
-                        print 'Attribute [%s] was not installed' % attr
-                        print
+                        print('Pretrained Learner model doesn\'t exist [%s]' % tag)
+                        print('Attribute [%s] was not installed' % attr)
+                        print()

@@ -1,6 +1,6 @@
 import mock
 import json
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dogbone.testing.base import BeagleWebTest
 from core.tools import render_notification
 from core.models import CollaborationInvite, Sentence

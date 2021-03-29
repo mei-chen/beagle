@@ -1,6 +1,6 @@
 import mock
 import json
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.client import RequestFactory
 from django.http import HttpResponse
 from dogbone.testing.base import BeagleWebTest

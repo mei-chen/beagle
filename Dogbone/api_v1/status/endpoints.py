@@ -3,7 +3,7 @@ from constance import config as beagle_app
 
 
 class ApplicationStatusView(StatusView):
-    url_pattern = r'/status'
+    url_pattern = r'status'
     endpoint_name = 'app_status_view'
 
     def authenticate_user(self):

@@ -4,7 +4,7 @@ import json
 import time
 import requests
 from contextlib import contextmanager
-from StringIO import StringIO
+from io import StringIO
 
 # fabric
 from fabric.colors import green, red
@@ -27,8 +27,7 @@ RUFUS_ALIASES_PATH = '/etc/aliases'
 RUFUS_ALIASES_TEMPLATE_PATH = 'dogbone/conf/rufus/aliases.template'
 
 ADMIN_EMAILS = (
-    'cian@beagle.ai',
-    'iulius@sniffthefineprint.com',
+    'sunabcsun71@gmail.com',
 )
 
 POST_DEPLOY_REQUEST_COUNT = 6  # number of requests
@@ -399,13 +398,13 @@ def rufus_generate_aliases(git_branch='dev'):
     print("GitHub URL for aliases.template: %s" % github_url)
 
     file_contents = download_github_file(github_url)
-    print "Retrieved template: %s" % file_contents
+    print("Retrieved template: %s" % file_contents)
 
     file_contents = file_contents.replace('{{ RUFUS_FOLDER }}', env.rufus_folder)
     file_contents = file_contents.replace('{{ ENVIRONMENT }}', env.environment)
     file_contents = file_contents.replace('{{ RUFUS_USER }}', 'ubuntu')
 
-    print "Generated: %s" % file_contents
+    print("Generated: %s" % file_contents)
 
     result = put(StringIO(file_contents), RUFUS_ALIASES_PATH, use_sudo=True)
 

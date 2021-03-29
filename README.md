@@ -3,34 +3,31 @@
 # Beagle
 ## Running in Dev
 
-### Vagrant environment
+### Install the required libraries
 - Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html), [Vagrant](https://www.vagrantup.com/), [VirtualBox](https://www.virtualbox.org/)
+- To make sure both Vagrant and Ansible are installed, run:
+- `$ vagrant --version`
+- `$ ansible --version`
+- You should be able to see the version of both vagrant and ansible if they are installed properly.
+
+### Start the Vagrant VM environment
+- To launch the VM, go into the beagle folder of the workspace before launching vagrant:
 - `$ vagrant up`
-- Make sure to run the vagrant environment in the base beagle folder. We then have separate provisioners for Kibble, Spot and Dogbone using ansible playbooks.
+- We then have separate provisioners for Kibble, Spot and Dogbone using ansible playbooks.
+- Any subsequence vagrant related commands need to be ran in the beagle folder.
 
+# Kibble
 ## Configure Kibble
-### Configure Dev envirnoment
-- Create the file `secret.yml` in the ` ansible/vars/` directory, where the file contents include (should be created already):
-
-```
-AWS_SECRET_ACCESS_KEY: ... (if you omit this and 3 below files will be saved locally)
-AWS_ACCESS_KEY_ID: ...
-AWS_STORAGE_BUCKET_NAME: ...
-AWS_S3_REGION_NAME: ...
-DROPBOX_APP_KEY: ...
-DROPBOX_APP_SECRET: ...
-GOOGLE_DRIVE_CLIENT_ID: ...
-GOOGLE_DRIVE_CLIENT_SECRET: ...
-SENDGRID_API_KEY: [required]
-db_password: ...
-public_key: ~/.ssh/<your_rsa>.pub
-superuser_username: [required]
-superuser_password: [required]
-```
+### First time setup
+- Fill in the required variables in the file `secret.yml` in the `Kibble/ansible/vars/` directory.
+- The only mandatory variables to run locally are the `superuser_username` and `superuser_username`.
+- In the `local_settings.py` under `Kibble/kibble/app_settings`, make sure `DEBUG` is set to `True`. The `HOT_LOAD` variable is required if hot reload is wanted for the React-webpack front end.
 
 ### Provisioning
+- Provisioning with vagrant will run the related ansible scripts to install the required libraries on the VM and will automatically configure any environment settings.
 - `$ vagrant provision --provision-with kibble`
 
+## Launching Kibble
 ### Django server
 - `$ vagrant ssh`
 - `$ cd /srv/kibble`
@@ -81,3 +78,11 @@ Outside vagrant environment
     - `$ npm start`
 
 If you use npm run dist, make sure to run collectstatic to group up the static files.
+
+# Delorean
+## Launching Delorean
+- Run this in the vagrant VM
+- `$ vagrant ssh`
+- `$ cd /srv/delorean`
+- `$ source ../venv/bin/activate`
+- `$ python app.py`

@@ -156,17 +156,17 @@ class Coupon(TimeStampedModel, TimeFramedModel):
         self.code = self.code.upper()
         super(Coupon, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
 
 
 class PurchasedSubscription(TimeStampedModel, TimeFramedModel):
-    buyer = models.ForeignKey(User, help_text="The user that bought something")
+    buyer = models.ForeignKey(User, help_text="The user that bought something", on_delete=models.CASCADE)
     subscription = models.CharField('Subscription', max_length=200,
                                     choices=Subscription.choices(),
                                     help_text="The subscription package")
     coupon_used = models.ForeignKey(Coupon, null=True, blank=True,
-                                    help_text="The coupon the user used to get this subscription")
+                                    help_text="The coupon the user used to get this subscription", on_delete=models.CASCADE)
 
     expired = models.BooleanField('Is expired', default=False)
     expire_info_emailed = models.DateTimeField('About to expire email DateTime', blank=True, null=True,
@@ -386,19 +386,19 @@ class PurchasedSubscription(TimeStampedModel, TimeFramedModel):
             }
         }
 
-    def __unicode__(self):
-        return unicode(self.buyer) + ' - ' + unicode(self.get_subscription())
+    def __str__(self):
+        return str(self.buyer) + ' - ' + str(self.get_subscription())
 
 
 class PaymentRecord(TimeStampedModel):
-    buyer = models.ForeignKey(User, help_text="The user that bought something")
+    buyer = models.ForeignKey(User, help_text="The user that bought something", on_delete=models.CASCADE)
     redeemed_coupon = models.ForeignKey(Coupon, null=True,
-                                        help_text="In case the user redeemed a coupon")
+                                        help_text="In case the user redeemed a coupon", on_delete=models.CASCADE)
     purchased_subscription = models.ForeignKey(PurchasedSubscription,
-                                               help_text="What the user bought")
+                                               help_text="What the user bought", on_delete=models.CASCADE)
     amount = models.FloatField('Paid Amount')
     currency = models.TextField('Currency', choices=zip(Currency.ALL, Currency.ALL))
-    ip_address = models.IPAddressField('Address', null=True)
+    ip_address = models.GenericIPAddressField('Address', null=True)
     browser = models.TextField('Browser', null=True)
     processing_time = models.FloatField('Processing Time in seconds', null=True)
 

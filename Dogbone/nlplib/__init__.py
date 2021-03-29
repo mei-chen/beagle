@@ -19,7 +19,7 @@ def doclevel_process(text=None, sentences=None):
     facade = NlplibFacade(text=text, sentences=sentences)
 
     them_party, you_party, confidence = facade.parties
-    them_confid, you_confid = map(norm_confid, confidence)
+    them_confid, you_confid = list(map(norm_confid, confidence))
 
     parties_information = {
         'them': {
@@ -88,7 +88,7 @@ def sentlevel_process(text=None, sentences=None, parties=None, user=None):
                                          if r['sent_idx'] == i]
 
     for label, index, party in clauses:
-        for sentence_idx, sublabel in six.iteritems(index):
+        for sentence_idx, sublabel in six.items(index):
             if 'annotations' not in analysis['sentences'][sentence_idx]:
                 analysis['sentences'][sentence_idx]['annotations'] = []
 

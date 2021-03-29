@@ -3,7 +3,7 @@ import logging
 
 from django.conf import settings
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 
 from marketing.models import PurchasedSubscription
@@ -94,7 +94,7 @@ def user_to_dict(user):
 
     cache_key = 'user:dict:%d' % user.id
 
-    data = cache.get(cache_key)
+    data = cache.get(str(cache_key))
 
     if data is None:
         data = {
@@ -198,14 +198,14 @@ def render_notification(notification):
         if notification.actor == notification.recipient:
             render_string = render_string.replace('(actor)', 'You')
         else:
-            render_string = render_string.replace('(actor)', unicode(notification.actor))
+            render_string = render_string.replace('(actor)', str(notification.actor))
 
         if notification.target == notification.recipient:
             render_string = render_string.replace('(target)', 'You')
         else:
-            render_string = render_string.replace('(target)', unicode(notification.target))
+            render_string = render_string.replace('(target)', str(notification.target))
 
-        render_string = render_string.replace('(action_object)', unicode(notification.action_object))
+        render_string = render_string.replace('(action_object)', str(notification.action_object))
         render_string = render_string.replace('(verb)', notification.verb)
         return render_string
 

@@ -2,8 +2,8 @@ import os
 import uuid
 import logging
 import jsonfield
-import StringIO
-import cPickle as pickle
+from io import StringIO
+import pickle
 
 from collections import OrderedDict
 
@@ -27,7 +27,7 @@ class OnlineLearner(TimeStampedModel):
                                 help_text='Format: bucket:filename')
 
     # The user that trains this classifier
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # Triggering tag
     tag = models.CharField('Tag', max_length=300)
@@ -172,7 +172,7 @@ class OnlineLearner(TimeStampedModel):
 
         return super(OnlineLearner, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Tag [%s] - %s' % (self.tag, self.owner.username)
 
 
@@ -271,7 +271,7 @@ class PretrainedLearner(AbstractPretrainedLearner):
     def is_mature(self):
         return True
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Pretrained Tag [%s]' % (self.tag)
 
     def to_dict(self):
@@ -295,7 +295,7 @@ class LearnerAttribute(AbstractPretrainedLearner):
     name = models.CharField('Name', max_length=300, default='', blank=True)
 
     # Parent PretrainedLearner
-    parent_learner = models.ForeignKey(PretrainedLearner, related_name='learner_attribute', null=True, default=None)
+    parent_learner = models.ForeignKey(PretrainedLearner, related_name='learner_attribute', null=True, default=None, on_delete=models.CASCADE)
 
     # List of all the possible labels/outputs
     output_range = jsonfield.JSONField(null=True, blank=True, default=None)
@@ -308,7 +308,7 @@ class LearnerAttribute(AbstractPretrainedLearner):
     def stored_vectorizer_name(cls, tag):
         return 'vectorizer_%s_attr.pkl' % tag
 
-    def __unicode__(self):
+    def __str__(self):
         return u'LearnerAttribute [%s/%s]' % (self.tag or self.parent_learner.tag, self.name)
 
     def to_dict(self):

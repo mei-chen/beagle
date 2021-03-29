@@ -28,7 +28,7 @@ from utils.django_utils.query import get_user_by_identifier
 
 class InternalUserDetailView(DetailView):
     model = User
-    url_pattern = r'/_internal/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)$'
+    url_pattern = r'_internal/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)$'
     endpoint_name = 'internal_user_detail_view'
 
     @classmethod
@@ -57,7 +57,7 @@ class InternalUserDetailView(DetailView):
 
 class InternalUserListView(DetailView, PostListModelMixin):
     model = User
-    url_pattern = r'/_internal/user$'
+    url_pattern = r'_internal/user$'
     endpoint_name = 'internal_user_list_view'
 
     @classmethod
@@ -142,7 +142,7 @@ class InternalUserListView(DetailView, PostListModelMixin):
 
 
 class InternalDocumentUploadComputeView(DocumentUploadComputeView):
-    url_pattern = r'/_internal/document/upload$'
+    url_pattern = r'_internal/document/upload$'
     endpoint_name = 'internal_document_upload_compute_view'
 
     @method_decorator(internal_or_exception)
@@ -161,14 +161,14 @@ class InternalDocumentUploadComputeView(DocumentUploadComputeView):
             self.user = user
 
             return user
-        except KeyError, User.DoesNotExist:
+        except (KeyError, User.DoesNotExist) as e:
             raise self.UnauthenticatedException("Please specify an existing user in GET from={{ email }}")
 
 
 class InternalAddSubscriptionActionView(ActionView):
     model = User
-    url_pattern = r'/_internal/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)' \
-                  r'/subscription/(?P<subscription_id>[a-zA-Z0-9\-_@%\.]+)$'
+    url_pattern = r'_internal/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)' \
+                  r'subscription/(?P<subscription_id>[a-zA-Z0-9\-_@%\.]+)$'
     endpoint_name = 'internal_add_subscription_action_view'
 
     @method_decorator(internal_or_exception)
@@ -203,8 +203,8 @@ class InternalAddSubscriptionActionView(ActionView):
 
 class InternalNotifyUserView(ActionView):
     model = User
-    url_pattern = r'/_internal/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)' \
-                  r'/notify/(?P<notification_type>[a-zA-Z0-9\-_@%\.]+)$'
+    url_pattern = r'_internal/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)' \
+                  r'notify/(?P<notification_type>[a-zA-Z0-9\-_@%\.]+)$'
     endpoint_name = 'internal_user_notify_action_view'
 
     @method_decorator(internal_or_exception)

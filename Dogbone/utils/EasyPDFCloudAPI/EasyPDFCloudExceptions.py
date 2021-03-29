@@ -1,5 +1,4 @@
-import httplib
-
+import http.client
 
 class EasyPDFCloudArgumentException(Exception):
     """ Used to handle all invalid arguments passed to functions in the API. """
@@ -15,11 +14,11 @@ class EasyPDFCloudArgumentException(Exception):
         return "EasyPDFCloudArgumentException(%r)" % self.message
 
 
-class EasyPDFCloudHTTPException(httplib.HTTPException):
+class EasyPDFCloudHTTPException(http.client.HTTPException):
     """ Used to handle all HTTP related exceptions in the API. """
 
     def __init__(self, status_code, reason, error=None, description_or_source=None):
-        super(httplib.HTTPException, self).__init__()
+        super(http.client.HTTPException, self).__init__()
         self.status_code = status_code
         self.reason = reason
         self.error = error or "N/A"

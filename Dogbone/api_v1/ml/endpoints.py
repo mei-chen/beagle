@@ -43,8 +43,8 @@ class OnlineLearnerDetailView(OnlineLearnerViewMixin,
                               PutDetailModelMixin):
 
     # NOTE: this least specific greedy pattern must be added only
-    # after all more specific (r'/ml/(?P<tag>.+)/action$') ones!
-    url_pattern = r'/ml/(?P<tag>.+)$'
+    # after all more specific (r'ml/(?P<tag>.+)/action$') ones!
+    url_pattern = r'ml/(?P<tag>.+)$'
     endpoint_name = 'online_learner_detail_view'
 
     def delete_model(self, model, request, *args, **kwargs):
@@ -63,7 +63,7 @@ class OnlineLearnerDetailView(OnlineLearnerViewMixin,
 class OnlineLearnerSamplesDetailView(OnlineLearnerViewMixin,
                                      DetailView):
 
-    url_pattern = r'/ml/(?P<tag>.+)/samples$'
+    url_pattern = r'ml/(?P<tag>.+)/samples$'
     endpoint_name = 'online_learner_samples_detail_view'
 
     def to_dict(self, instance):
@@ -74,7 +74,7 @@ class OnlineLearnerActiveView(OnlineLearnerViewMixin,
                               DetailView,
                               DeleteDetailModelMixin):
 
-    url_pattern = r'/ml/(?P<tag>.+)/active$'
+    url_pattern = r'ml/(?P<tag>.+)/active$'
     endpoint_name = 'online_learner_active_view'
 
     def to_dict(self, instance):
@@ -108,7 +108,7 @@ class OnlineLearnerActiveView(OnlineLearnerViewMixin,
 class OnlineLearnerResetView(OnlineLearnerViewMixin,
                              DetailView):
 
-    url_pattern = r'/ml/(?P<tag>.+)/reset$'
+    url_pattern = r'ml/(?P<tag>.+)/reset$'
     endpoint_name = 'online_learner_reset_view'
 
     def to_dict(self, instance):
@@ -142,7 +142,7 @@ class OnlineLearnerTrainView(OnlineLearnerViewMixin,
     (where polarity is true if the tag applies to the content)
     """
 
-    url_pattern = r'/ml/(?P<tag>.+)/train$'
+    url_pattern = r'ml/(?P<tag>.+)/train$'
     endpoint_name = 'online_learner_train_view'
 
     def action(self, request, *args, **kwargs):

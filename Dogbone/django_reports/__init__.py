@@ -9,7 +9,7 @@ def autodiscover():
     """
 
     from django.conf import settings
-    from django.utils.importlib import import_module
+    from importlib import import_module
     from django.utils.module_loading import module_has_submodule
 
     for app in settings.INSTALLED_APPS:
@@ -60,7 +60,7 @@ class Report(object):
 
     def is_valid(self):
         if self.__class__.form_class is not None:
-            return self.form.is_valid()
+            return self.form.is_valid
         return True
 
     def generate(self, **kwargs):

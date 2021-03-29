@@ -14,7 +14,7 @@ from dogbone.tools import absolutify
 from django.db.models import Q
 from django.utils import timezone
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -946,7 +946,14 @@ def prepare_docx_export(doc_id, s3_path, batch=None, include_comments=False, inc
 
 
 @shared_task
-def initialize_sample_docs(user):
+def initialize_sample_docs(user_id):
+
+    # get user from id
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return 
+    
     samples = init_sample_docs()
 
     for s in samples:
@@ -972,7 +979,13 @@ def initialize_sample_docs(user):
 
 
 @shared_task
-def install_pretrained(user):
+def install_pretrained(user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        logging.error("User %s does not exist" % (user_id))
+        return
+
     """ Generates a Learner for all the pretrained learners available """
     for pl in LearnerFacade.get_all(preload=False):
         if pl.db_model.exclusivity and pl.db_model.exclusivity != user.username:
@@ -1262,13 +1275,14 @@ def bounce_delayed_notifications(email):
 
 
 @shared_task
-def parse_comments_on_external_invite_delete(documents, user):
+def parse_comments_on_external_invite_delete(documents, user_id):
     from core.models import Sentence
     from core.signals import comment_posted
     from django.contrib.auth.models import User
 
     for document in documents:
         try:
+            user = User.objects.get(id=user_id)
             sentences = Sentence.objects.filter(doc=document,
                                                 comments__icontains='@[%s](%s)' % (user.email, user.email))
             for sentence in sentences:
@@ -1285,7 +1299,7 @@ def parse_comments_on_external_invite_delete(documents, user):
 
                     logging.info('"comment_posted" signal emitted in '
                                  'parse_comments_on_external_invite_delete '
-                                 'for "%s", comment author: "%s"' % (unicode(document), user.username))
+                                 'for "%s", comment author: "%s"' % (str(document), user.username))
                 sentence.save()
 
         except Exception as e:

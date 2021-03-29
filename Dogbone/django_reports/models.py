@@ -11,12 +11,12 @@ class GeneratedReport(TimeStampedModel):
     Generated report model
     it holds the result of the generated report inside the `data` field
     """
-    author = models.ForeignKey(User, null=True)
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     title = models.CharField('Title', max_length=300)
     params = jsonfield.JSONField(null=True)
     data = models.TextField('Data')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:

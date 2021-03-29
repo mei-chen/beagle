@@ -4,7 +4,7 @@ import mock
 import uuid
 import tempfile
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 from dogbone.testing.base import BeagleWebTest

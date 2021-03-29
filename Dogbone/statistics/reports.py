@@ -42,5 +42,5 @@ class ViewsUsageReport(Report):
 
         yield ('VIEW', 'HITS')
 
-        for event, count in six.iteritems(events_counts):
+        for event, count in six.items(events_counts):
             yield (event, count)

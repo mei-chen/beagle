@@ -30,7 +30,7 @@ def process(s):
 
 class VWLearnersListView(ListView):
     model = PretrainedLearner
-    url_pattern = r'/vw/learners$'
+    url_pattern = r'vw/learners$'
     endpoint_name = 'vw_learners_list_view'
 
     def has_access(self, instance):
@@ -45,7 +45,7 @@ class VWLearnersListView(ListView):
 
 class VWLearnerDetailView(DetailView, PutDetailModelMixin):
     model = PretrainedLearner
-    url_pattern = r'/vw/(?P<tag>[^/]+)/details$'
+    url_pattern = r'vw/(?P<tag>[^/]+)/details$'
     endpoint_name = 'vw_learner_detail_view'
 
     model_key_name = 'tag'
@@ -66,7 +66,7 @@ class VWLearnerDetailView(DetailView, PutDetailModelMixin):
 
 class VWLearnerResetView(DetailView):
     model = OnlineLearner
-    url_pattern = r'/vw/(?P<tag>[^/]+)/reset$'
+    url_pattern = r'vw/(?P<tag>[^/]+)/reset$'
     endpoint_name = 'vw_learner_reset_view'
 
     model_key_name = 'tag'
@@ -109,7 +109,7 @@ class VWLearnerPredictView(ActionView):
          {'supplier_comment': 'text 2'}]
     """
     model = OnlineLearner
-    url_pattern = r'/vw/(?P<tag>[^/]+)/predict$'
+    url_pattern = r'vw/(?P<tag>[^/]+)/predict$'
     endpoint_name = 'vw_learner_predict_view'
 
     model_key_name = 'tag'
@@ -182,7 +182,7 @@ class VWLearnerTrainView(ActionView):
     (where label is true if the tag applies to the supplier_comment)
     """
     model = OnlineLearner
-    url_pattern = r'/vw/(?P<tag>[^/]+)/train$'
+    url_pattern = r'vw/(?P<tag>[^/]+)/train$'
     endpoint_name = 'vw_learner_train_view'
 
     model_key_name = 'tag'
@@ -249,7 +249,7 @@ class VWLearnerInitView(ActionView):
     (where label is true if the tag applies to the supplier_comment)
     """
     model = OnlineLearner
-    url_pattern = r'/vw/(?P<tag>[^/]+)/(?P<lang>[^/]+)/init$'
+    url_pattern = r'vw/(?P<tag>[^/]+)/(?P<lang>[^/]+)/init$'
     endpoint_name = 'vw_learner_init_view'
 
     model_key_name = 'tag'
@@ -288,7 +288,7 @@ class VWLearnerInitView(ActionView):
         # but API requires some X with n_samples rows
         X_dummy = np.zeros(len(y))
         for train_index, test_index in spl.split(X_dummy, y):
-            print 'Split: %d, %d' % (len(train_index), len(test_index))
+            print('Split: %d, %d' % (len(train_index), len(test_index)))
             train_text = [X_text[i] for i in train_index]
             train_y = [y[i] for i in train_index]
 
@@ -301,10 +301,10 @@ class VWLearnerInitView(ActionView):
             pred = clf_candidate.predict(texts)
 
             f1score = f1_score(gold, pred)
-            print 'Precision:', precision_score(gold, pred)
-            print 'Recall:   ', recall_score(gold, pred)
-            print 'F1 score: ', f1score
-            print
+            print('Precision:', precision_score(gold, pred))
+            print('Recall:   ', recall_score(gold, pred))
+            print('F1 score: ', f1score)
+            print()
 
             candidates.append(clf_candidate)
             scores.append(f1score)
@@ -312,19 +312,19 @@ class VWLearnerInitView(ActionView):
         i = np.argmax(scores)
         clf = candidates[i]
         print
-        print '-' * 80
-        print 'Picked the model [%s] with Fscore:' % learner_name, scores[i]
-        print
+        print('-' * 80)
+        print('Picked the model [%s] with Fscore:' % learner_name, scores[i])
+        print()
 
-        print 'Saving the ML model and the ML vectorizer'
+        print('Saving the ML model and the ML vectorizer')
         clf.ml_model.save_models()
-        print 'Saving the DB model'
+        print('Saving the DB model')
         clf.db_model.exclusivity = 'vw'
         clf.db_model.save()
 
         # Redo the ClausesStatistic whether or not it already exists
         cstat = ClausesStatistic.objects.get_or_create(tag=learner_name)[0]
         cstat.set_avgwordcount([d['supplier_comment'] for d in data if d['label']])
-        print 'ClausesStatistic regenerated for [%s]: %d' % (learner_name, cstat.avg_word_count)
+        print('ClausesStatistic regenerated for [%s]: %d' % (learner_name, cstat.avg_word_count))
 
         return {'status': 1, 'message': 'OK', 'f-score': scores[i]}

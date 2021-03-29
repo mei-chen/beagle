@@ -10,23 +10,26 @@ class Command(BaseCommand):
         self.stdout.write('[*] Starting command\n')
         from dogbone import init_db
 
-        for username, user_dict in init_db.USERS.iteritems():
-            user = User(username=username,
-                        email=user_dict['email'],
-                        is_superuser=True,
-                        is_staff=True,
-                        first_name=user_dict['first_name'],
-                        last_name=user_dict['last_name'])
+        for username, user_dict in init_db.USERS.items():
 
-            self.stdout.write('[*] Saving user `%s`\n' % str(user))
-            user.set_password(user_dict['password'])
+            #user = User(username=username,
+            #            email=user_dict['email'],
+            #            is_superuser=True,
+            #            is_staff=True,
+            #            first_name=user_dict['first_name'],
+            #            last_name=user_dict['last_name'])
 
-            self.stdout.write('[*] Password set for user: %s \n' % user.username)
+            #self.stdout.write('[*] Saving user `%s`\n' % str(user))
+            #user.set_password(user_dict['password'])
+
+            #self.stdout.write('[*] Password set for user: %s \n' % user.username)
 
             try:
-                user.save()
-                self.stdout.write('[*] User `%s` created\n' % user.username)
+                User.objects.create_superuser(username, user_dict['email'], user_dict['password'], is_staff=True, first_name=user_dict['first_name'],
+                        last_name=user_dict['last_name'])
+
+                self.stdout.write('[*] User `%s` created\n' % username)
 
             except Exception as e:
-                self.stdout.write('[!] User `%s` could not be created (%s)\n' % (user.username, str(e)))
+                self.stdout.write('[!] User `%s` could not be created (%s)\n' % (username, str(e)))
 

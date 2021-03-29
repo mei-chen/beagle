@@ -1,6 +1,6 @@
 import json
 import mock
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dogbone.testing.base import BeagleWebTest, MultiUserBeagleWebTest
 from core.models import Sentence, Document, CollaborationInvite
 from api_v1.sentence.endpoints import SentenceAnnotations
@@ -1876,7 +1876,7 @@ class SentenceCommentsListViewTest(BeagleWebTest):
         comm_msg = lambda c: c['message']
 
         # Because we have rejected this revision, we get back the previous version back
-        self.assertEqual(map(comm_msg, data['comments']), gen_comms[:5])
+        self.assertEqual(list(map(comm_msg, data['comments'])), gen_comms[:5])
 
     def test_delete(self):
         self.make_paid(self.user)

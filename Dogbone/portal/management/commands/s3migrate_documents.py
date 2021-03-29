@@ -23,4 +23,4 @@ class Command(BaseCommand):
                 document.docx_file = None
                 document.save()
             except:
-                print traceback.print_exc()
+                print(traceback.print_exc())

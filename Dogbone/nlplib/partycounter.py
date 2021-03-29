@@ -26,8 +26,8 @@ class PartyCounterExtractor:
         if rawsentences is None:
             self.rawsentences = sent_tokenize(rawtext)
         else:
-            self.rawsentences = map(unifyquotes, rawsentences)
-            self.rawsentences = map(rmfillin, rawsentences)
+            self.rawsentences = list(map(unifyquotes, rawsentences))
+            self.rawsentences = list(map(rmfillin, rawsentences))
         self.stopwords = nonPR_stopwords + legal_specific_words
         # self.lemmzr = nltk.WordNetLemmatizer()
 

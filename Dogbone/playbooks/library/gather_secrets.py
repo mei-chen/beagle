@@ -23,9 +23,9 @@ if line:
 if "DATABASE_URL" in environment:
     environment["db_password"] = re.search(':[^:]*:([^@]+)@', environment["DATABASE_URL"]).group(1)
 
-print json.dumps({
+print(json.dumps({
     "changed": True,
     "ansible_facts": {
         "gather_secrets": environment
     }
-})
+}))

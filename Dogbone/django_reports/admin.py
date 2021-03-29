@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import GeneratedReport
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 class GeneratedReportAdmin(admin.ModelAdmin):

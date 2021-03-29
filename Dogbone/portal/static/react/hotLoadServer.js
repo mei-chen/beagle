@@ -16,7 +16,8 @@ new WebpackDevServer(webpack(config), {
     colors: true,
     chunks: false,
     chunkModules: false
-  }
+  },
+  disableHostCheck: true
 }).listen(port, host, function (err, result) {
   if (err) {
     console.log(err);

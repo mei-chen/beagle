@@ -16,4 +16,4 @@ class Command(BaseCommand):
             if 'xml' in sentence.formatting:
                 sentence.formatting = sentence.formatting['xml']
                 sentence.save()
-                print '.'
+                print('.')

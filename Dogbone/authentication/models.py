@@ -22,7 +22,7 @@ class AuthToken(TimeStampedModel):
 
     DEFAULT_EXPIRE_TIME = 60 * 60 * 24 * 30  # 30 days
 
-    user = models.OneToOneField(User, related_name='auth_token')
+    user = models.OneToOneField(User, related_name='auth_token', on_delete=models.CASCADE)
     key = models.CharField(max_length=100, db_index=True)
     key_expire = models.DateTimeField(null=True, default=None)
 
@@ -154,7 +154,7 @@ class AuthToken(TimeStampedModel):
 
 
 class PasswordResetRequest(TimeStampedModel):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     resolved = models.BooleanField(default=False)
     secret = models.CharField(max_length=100)
     email_sent_date = models.DateTimeField(null=True)
@@ -175,7 +175,7 @@ class PasswordResetRequest(TimeStampedModel):
         verbose_name = 'Password Reset Request'
         verbose_name_plural = 'Password Reset Requests'
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Request From: %s on %s ' % (str(self.user), str(self.created))
 
 
@@ -183,7 +183,7 @@ class OneTimeLoginHash(TimeStampedModel, TimeFramedModel):
 
     DEFAULT_EXPIRE_TIME = datetime.timedelta(days=3)
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     resolved = models.BooleanField(default=False)
     secret = models.CharField(max_length=100, unique=True)
     email_sent_date = models.DateTimeField(null=True, blank=True)
@@ -224,5 +224,5 @@ class OneTimeLoginHash(TimeStampedModel, TimeFramedModel):
         verbose_name = 'One Time Login Hash'
         verbose_name_plural = 'One Time Login Hashes'
 
-    def __unicode__(self):
+    def __str__(self):
         return 'One Time Login for: %s created on: %s ' % (str(self.user), str(self.created))

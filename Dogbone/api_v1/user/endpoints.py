@@ -28,7 +28,7 @@ from authentication.models import AuthToken
 
 class CurrentUserDetailView(DetailView, PutDetailModelMixin):
     model = User
-    url_pattern = r'/user/me$'
+    url_pattern = r'user/me$'
     endpoint_name = 'me_detail_view'
 
     @classmethod
@@ -104,7 +104,7 @@ class CurrentUserDetailView(DetailView, PutDetailModelMixin):
 
 class UserDetailView(DetailView):
     model = User
-    url_pattern = r'/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)$'
+    url_pattern = r'user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)$'
     endpoint_name = 'user_detail_view'
 
     @classmethod
@@ -132,7 +132,7 @@ class UserUnviewedDocsView(UserDetailView):
     Format is: [document1.uuid, document2.uuid]
     """
 
-    url_pattern = r'/user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)/unviewed_docs$'
+    url_pattern = r'user/(?P<identifier>[a-zA-Z0-9\-\+_@%\.]+)/unviewed_docs$'
     endpoint_name = 'user_unviewed_docs_view'
 
     @classmethod
@@ -145,7 +145,7 @@ class UserUnviewedDocsView(UserDetailView):
 
 
 class UserAuthenticationView(ComputeView):
-    url_pattern = r'/user/auth'
+    url_pattern = r'user/auth'
     endpoint_name = 'user_auth_compute_view'
 
     def authenticate_user(self):
@@ -187,7 +187,7 @@ class UserAuthenticationView(ComputeView):
 
 class CurrentUserProfileDetailView(DetailView):
     model = UserProfile
-    url_pattern = r'/user/me/details$'
+    url_pattern = r'user/me/details$'
     endpoint_name = 'me_profile_detail_view'
 
     def get_object(self, request, *args, **kwargs):
@@ -196,7 +196,7 @@ class CurrentUserProfileDetailView(DetailView):
 
 class CurrentUserInitialSampleDocsView(DetailView):
     model = User
-    url_pattern = r'/user/me/initial_sample_docs$'
+    url_pattern = r'user/me/initial_sample_docs$'
     endpoint_name = 'me_initial_sample_docs_view'
 
     @classmethod
@@ -210,7 +210,7 @@ class CurrentUserInitialSampleDocsView(DetailView):
 
 class CurrentUserCollaboratorsListView(ListView):
     model = User
-    url_pattern = r'/user/me/collaborators$'
+    url_pattern = r'user/me/collaborators$'
     endpoint_name = 'me_collaborators_list_view'
 
     @classmethod
@@ -243,7 +243,7 @@ class CurrentUserCollaboratorsListView(ListView):
 
 class CurrentUserActiveSubscriptionDetailView(DetailView):
     model = User
-    url_pattern = r'/user/me/subscription$'
+    url_pattern = r'user/me/subscription$'
     endpoint_name = 'me_subscription_detail_view'
 
     def get_object(self, request, *args, **kwargs):
@@ -266,7 +266,7 @@ class CurrentUserActiveSubscriptionDetailView(DetailView):
 
 class CurrentUserSubscriptionsListView(ListView):
     model = PurchasedSubscription
-    url_pattern = r'/user/me/subscriptions$'
+    url_pattern = r'user/me/subscriptions$'
     endpoint_name = 'me_subscriptions_list_view'
 
     def get_list(self, request, *args, **kwargs):
@@ -285,7 +285,7 @@ class CurrentUserSubscriptionsListView(ListView):
 
 class OnlineLearnersListView(ListView):
     model = User
-    url_pattern = r'/user/me/learners$'
+    url_pattern = r'user/me/learners$'
     endpoint_name = 'me_learners_list_view'
 
     def get_list(self, request, *args, **kwargs):
@@ -301,7 +301,7 @@ class UserSettingsDetailView(DetailView, PutDetailModelMixin):
       {"setting_A": True, "setting_B": "awesome"}
     """
     model = UserProfile
-    url_pattern = r'/user/me/settings/?$'
+    url_pattern = r'user/me/settings/?$'
     endpoint_name = 'me_settings_detail_view'
 
     def get_object(self, request, *args, **kwargs):
@@ -322,7 +322,7 @@ class UserRLTEFlagsDetailView(DetailView, PutDetailModelMixin):
       {"rlte_flag_A": True, "rlte_flag_B": False}
     """
     model = UserProfile
-    url_pattern = r'/user/me/rlte_flags/?$'
+    url_pattern = r'user/me/rlte_flags/?$'
     endpoint_name = 'me_rlte_flags_detail_view'
 
     def get_object(self, request, *args, **kwargs):
@@ -338,7 +338,7 @@ class UserRLTEFlagsDetailView(DetailView, PutDetailModelMixin):
 
 
 class UserSpotExperimentsStatusView(StatusView):
-    url_pattern = r'/user/me/spot/experiments/?$'
+    url_pattern = r'user/me/spot/experiments/?$'
     endpoint_name = 'me_spot_experiments_status_view'
 
     def status(self, request, *args, **kwargs):
@@ -347,7 +347,7 @@ class UserSpotExperimentsStatusView(StatusView):
 
 
 class UserSpotSuggestionsStatusView(StatusView):
-    url_pattern = r'/user/me/spot/suggestions/?$'
+    url_pattern = r'user/me/spot/suggestions/?$'
     endpoint_name = 'me_spot_suggestions_status_view'
 
     def status(self, request, *args, **kwargs):
@@ -368,7 +368,7 @@ class UserSpotSuggestionsStatusView(StatusView):
 
 
 class UserAddSpotExperimentComputeView(ComputeView):
-    url_pattern = r'/user/me/spot/experiments/add/?$'
+    url_pattern = r'user/me/spot/experiments/add/?$'
     endpoint_name = 'me_add_spot_experiment_compute_view'
 
     def compute(self, request, *args, **kwargs):
@@ -408,7 +408,7 @@ class UserAddSpotExperimentComputeView(ComputeView):
 
 
 class UserRemoveSpotExperimentComputeView(ComputeView):
-    url_pattern = r'/user/me/spot/experiments/remove/?$'
+    url_pattern = r'user/me/spot/experiments/remove/?$'
     endpoint_name = 'me_remove_spot_experiment_compute_view'
 
     def compute(self, request, *args, **kwargs):
@@ -425,7 +425,7 @@ class UserRemoveSpotExperimentComputeView(ComputeView):
 
 
 class UserResetSpotExperimentComputeView(ComputeView):
-    url_pattern = r'/user/me/spot/experiments/reset/?$'
+    url_pattern = r'user/me/spot/experiments/reset/?$'
     endpoint_name = 'me_reset_spot_experiment_compute_view'
 
     def compute(self, request, *args, **kwargs):
@@ -471,7 +471,7 @@ class UserActualCollaboratorsStatusView(StatusView):
     specific author.
     """
 
-    url_pattern = r'/user/me/actual_collaborators/?$'
+    url_pattern = r'user/me/actual_collaborators/?$'
     endpoint_name = 'me_actual_collaborators_status_view'
 
     def status(self, request, *args, **kwargs):
@@ -490,7 +490,7 @@ class UserProjectsListView(ListView):
     as a collaborator). Also includes advanced search and filtering.
     """
 
-    url_pattern = r'/user/me/projects/?$'
+    url_pattern = r'user/me/projects/?$'
     endpoint_name = 'me_projects_list_view'
 
     _cached_object_count = None
@@ -806,4 +806,4 @@ class UserProjectsListView(ListView):
         return models[self.get_slice()]
 
     def get(self, request, *args, **kwargs):
-        return map(self.to_dict, self.get_list(request, *args, **kwargs))
+        return list(map(self.to_dict, self.get_list(request, *args, **kwargs)))

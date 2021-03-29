@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.admin.options import csrf_protect_m
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
-from django.contrib.admin.util import unquote
+from django.contrib.admin.utils import unquote
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import transaction
 from django.http.response import HttpResponseRedirect, Http404
 from django.utils.encoding import force_text

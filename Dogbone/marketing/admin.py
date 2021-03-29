@@ -118,7 +118,7 @@ admin.site.register(Coupon, CouponAdmin)
 
 
 class PurchasedSubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'buyer', 'expires_in', 'purchased_on', 'active', 'coupon_used')
+    list_display = ('__str__', 'buyer', 'expires_in', 'purchased_on', 'active', 'coupon_used')
     list_filter = ('created', ('end', FutureDateFieldListFilter), 'subscription')
     search_fields = ('subscription', 'buyer__username', 'buyer__email', 'buyer__first_name', 'buyer__last_name')
     actions = [extend_by_7days, extend_by_14days, extend_by_30days, end_now]

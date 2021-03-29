@@ -352,7 +352,7 @@ class DocumentDigestTestCase(BeagleWebTest):
             }
         )
 
-    def test_unicode_digest(self):
+    def test_str_digest(self):
         sentences = [u"I like \u2013 flowers.", u"I don't like butter."]
         document = self.create_analysed_document(u'My \u2013 beautiful document',
                                                  sentences, self.user)

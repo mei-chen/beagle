@@ -71,7 +71,7 @@ class SentenceMixin(object):
 
 class SentenceDetailView(SentenceMixin, DetailView, DeleteDetailModelMixin, PutDetailModelMixin):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)$'
     endpoint_name = 'sentence_detail_view'
 
     def delete_model(self, model, request, *args, **kwargs):
@@ -104,7 +104,7 @@ class SentenceDetailView(SentenceMixin, DetailView, DeleteDetailModelMixin, PutD
 
 class SentenceAcceptActionView(SentenceMixin, ActionView):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/accept$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/accept$'
     endpoint_name = 'sentence_accept_view'
 
     model_key_name = 'uuid'
@@ -130,7 +130,7 @@ class SentenceAcceptActionView(SentenceMixin, ActionView):
 
 class SentenceRejectActionView(SentenceMixin, ActionView):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/reject'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/reject'
     endpoint_name = 'sentence_reject_view'
 
     model_key_name = 'uuid'
@@ -156,7 +156,7 @@ class SentenceRejectActionView(SentenceMixin, ActionView):
 
 class SentenceUndoActionView(SentenceMixin, ActionView):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/undo'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/undo'
     endpoint_name = 'sentence_undo_view'
 
     model_key_name = 'uuid'
@@ -177,7 +177,7 @@ class SentenceUndoActionView(SentenceMixin, ActionView):
 
 class SentenceLikeActionView(SentenceMixin, ActionView):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/like$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/like$'
     endpoint_name = 'sentence_like_view'
 
     model_key_name = 'uuid'
@@ -229,7 +229,7 @@ class SentenceLikeActionView(SentenceMixin, ActionView):
 
 class SentenceDislikeActionView(SentenceMixin, ActionView):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/dislike$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/dislike$'
     endpoint_name = 'sentence_dislike_view'
 
     model_key_name = 'uuid'
@@ -281,7 +281,7 @@ class SentenceDislikeActionView(SentenceMixin, ActionView):
 
 class SentenceTagsView(SentenceMixin, ActionView):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/tags$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/tags$'
     endpoint_name = 'sentence_tags_view'
 
     model_key_name = 'uuid'
@@ -390,7 +390,7 @@ class SentenceTagsView(SentenceMixin, ActionView):
 
 class SentenceSuggestedTagsView(SentenceMixin, ActionView, PutDetailModelMixin):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/sugg_tags$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/sugg_tags$'
     endpoint_name = 'sentence_sugg_tags_view'
 
     model_key_name = 'uuid'
@@ -542,7 +542,7 @@ class SentenceSuggestedTagsView(SentenceMixin, ActionView, PutDetailModelMixin):
 
 class SentenceBulkTagsView(ActionView):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/tags$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/tags$'
     endpoint_name = 'sentence_bulk_tags_view'
 
     model_key_name = 'uuid'
@@ -783,7 +783,7 @@ class SentenceHistoryListView(ListView, SentenceMixin):
     TODO: Check permissions on the document
     """
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/history$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/history$'
     endpoint_name = 'sentence_history_list_view'
 
     def get_steps(self, request, *args, **kwargs):
@@ -814,7 +814,7 @@ class SentenceHistoryListView(ListView, SentenceMixin):
 
 class SentenceCommentsListView(ListView, SentenceMixin):
     model = Sentence
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/comments'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/comments'
     endpoint_name = 'sentence_comments_list_view'
 
     DEFAULT_RESULTS_PER_PAGE = settings.COMMENTS_PER_PAGE
@@ -942,7 +942,7 @@ class SentenceCommentsListView(ListView, SentenceMixin):
 
 class SentenceLockDetailView(DetailView, SentenceMixin):
     model = SentenceLock
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/lock'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/(?P<s_idx>[0-9]+)/lock'
     endpoint_name = 'sentence_lock_detail_view'
 
     def sentence_lock_response(self, sentence_index, sentence, response,

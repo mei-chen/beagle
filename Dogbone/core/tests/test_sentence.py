@@ -232,9 +232,9 @@ class SentenceOperationsTest(BeagleWebTest):
         self.s.add_comment(self.user, 'comment2')
         comments = self.s.comments['comments']
         get_comm_msg = lambda c: c['message']
-        self.assertEqual(map(get_comm_msg, comments), ['comment2', 'comment1'])
+        self.assertEqual(list(map(get_comm_msg, comments)), ['comment2', 'comment1'])
         self.s.remove_comment(self.user, comments[1]['uuid'])
-        self.assertEqual(map(get_comm_msg, self.s.comments['comments']), ['comment2'])
+        self.assertEqual(list(map(get_comm_msg, self.s.comments['comments'])), ['comment2'])
 
     def test_new_version(self):
         """ Checks how many versions are present after a few operations """

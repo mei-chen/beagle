@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dogbone.testing.base import BeagleWebTest
 from authentication.models import OneTimeLoginHash
 from django.contrib.auth import authenticate

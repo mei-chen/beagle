@@ -2,8 +2,9 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
-from longerusernameandemail.admin import LongerUsernameAndEmailUserAdmin
+#from longerusernameandemail.admin import LongerUsernameAndEmailUserAdmin
 
 from core.models import Document
 from marketing.models import PurchasedSubscription
@@ -78,6 +79,7 @@ class UserProfileInlineForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
+        fields = '__all__'
 
 
 class UserProfileAdminInline(admin.StackedInline):
@@ -115,7 +117,7 @@ class DocumentAdminInline(admin.TabularInline):
         return qs.order_by('-created')
 
 
-class UserExtendedAdmin(DeleteWithoutConfirmationAdminMixin, LongerUsernameAndEmailUserAdmin):
+class UserExtendedAdmin(DeleteWithoutConfirmationAdminMixin, UserAdmin):
     add_fieldsets = (
         (None, {'classes': ('wide',),
                 'fields': ('username', 'email', 'password1', 'password2')}

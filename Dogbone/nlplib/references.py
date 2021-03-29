@@ -5,7 +5,7 @@ from nlplib.utils import extract_nodes, tree2str, TLDS, postprocess_text
 
 
 # URL_RE = re.compile(r'((http|ftp|https)://[a-zA-Z][a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,5}[^\s\)\(:]*)')
-URL_RE = re.compile(ur'(?i)\b((?:https?://|www\d{0,3}\.|[a-z0-9.\-]+\.[a-z]{2,6}/)(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\))+(?:\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))\b')
+URL_RE = re.compile(r'(?i)\b((?:https?://|www\d{0,3}\.|[a-z0-9.\-]+\.[a-z]{2,6}/)(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\))+(?:\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))\b')
 EMAIL_RE = re.compile(r'([a-z0-9_\-\.]+@[a-z0-9_\-\.]+\.[a-z]{2,3})', re.IGNORECASE)
 DOMAIN_RE = re.compile(r'\b([a-z0-9\-\.]+\.(?:' + '|'.join(TLDS) + '))\b', re.IGNORECASE)
 

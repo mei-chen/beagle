@@ -1,8 +1,8 @@
 import os
 
 from django.conf import settings
-from EasyPDFCloudAPI import EasyPDFCloudAPI
-from EasyPDFCloudExceptions import EasyPDFCloudArgumentException
+from .EasyPDFCloudAPI import EasyPDFCloudAPI
+from .EasyPDFCloudExceptions import EasyPDFCloudArgumentException
 
 
 def pdf_convert(in_file_name, ocr):

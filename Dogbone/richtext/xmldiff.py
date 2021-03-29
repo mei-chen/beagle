@@ -1,6 +1,6 @@
 import copy
 import datetime
-import HTMLParser
+from html.parser import HTMLParser
 import pydiff
 import pytz
 import re
@@ -19,7 +19,7 @@ from django.utils import timezone
 from utils.functional import first as find_first
 
 
-html = HTMLParser.HTMLParser()
+html = HTMLParser()
 
 
 DOCX_DOCUMENT_FNAME = 'word/document.xml'
@@ -756,7 +756,7 @@ def get_ordered_comments_list(fixed_node_sentences, comments):
                                           comment['timestamp'],
                                           comment['author']))
 
-        comments_for_sentence.sort(key=lambda (text, timestamp, author): timestamp)
+        comments_for_sentence.sort(key=lambda x: x[1]) #(text, timestamp, author): timestamp
 
         comment_list.append(comments_for_sentence)
 
@@ -1278,7 +1278,7 @@ def get_comments_xml(comment_xml, new_comments, tz_name=None):
         for comment in com_group:
             add_comment_to_xml(parsed_comment_xml, comment, tz_name)
 
-    return unicode(parsed_comment_xml)
+    return str(parsed_comment_xml)
 
 
 def _add_comment_ids(comment_xml, new_comments):
@@ -1428,7 +1428,7 @@ def add_comments_to_doc(sent_com_dict, decoded_doc, sentences):
             r_tag_last.insert_after(com_end_tag)
             com_end_tag.insert_after(run_com_tag)
 
-    return unicode(parsed_doc)
+    return str(parsed_doc)
 
 
 def add_comment_to_xml(parsed_comment_xml, comment, tz_name=None):
@@ -1540,7 +1540,7 @@ def add_comment_relations(initial_contenttypes, initial_rels):
     rels_tag[u'Target'] = 'comments.xml'
     parsed_rels.Relationships.append(rels_tag)
 
-    return unicode(parsed_contenttypes), unicode(parsed_rels)
+    return str(parsed_contenttypes), str(parsed_rels)
 
 
 def get_annotations(sentences, included_annotations):
@@ -1642,7 +1642,7 @@ def add_image_relations(initial_contenttypes, initial_rels, image_name):
     rels_tag[u'Target'] = 'media/%s' % image_name
     parsed_rels.Relationships.append(rels_tag)
 
-    return unicode(parsed_contenttypes), unicode(parsed_rels), rId
+    return str(parsed_contenttypes), str(parsed_rels), rId
 
 
 def add_annotations_formatting(sentences, sent_ann_dict, img_rid, min_img_id):
@@ -1881,7 +1881,7 @@ def add_annotations_to_doc(sent_ann_dict, decoded_doc, sentences, img_rid):
 
     add_xmlns_tags_to_parsed_doc(parsed_doc)
 
-    return unicode(parsed_doc)
+    return str(parsed_doc)
 
 
 def add_xmlns_tags_to_sentence(sent):
@@ -1937,7 +1937,7 @@ def add_xmlns_tags_to_settings(settings):
         parsed_settings.settings['xmlns:a'] = 'http://schemas.openxmlformats.org/drawingml/2006/main'
     if not parsed_settings.settings.get('xmlns:wp'):
         parsed_settings.settings['xmlns:wp'] = 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'
-    return unicode(parsed_settings)
+    return str(parsed_settings)
 
 
 def find_min_img_id(decoded_doc):
@@ -1969,7 +1969,7 @@ def remove_doc_annotations(doc):
             # Remove commentReference tag
             run.next_sibling.decompose()
             run.decompose()
-    return unicode(parsed_doc)
+    return str(parsed_doc)
 
 
 def remove_image_relations(rels):
@@ -1978,7 +1978,7 @@ def remove_image_relations(rels):
         if rel.get('Target') == 'media/%s' % ANNOTATION_IMG_NAME:
             rel.decompose()
             break
-    return unicode(parsed_rels)
+    return str(parsed_rels)
 
 
 def remove_comments_annotations(comments):
@@ -1986,7 +1986,7 @@ def remove_comments_annotations(comments):
     for comment in parsed_comments.find_all('comment'):
         if comment.get('w:author') == 'Beagle':
             comment.decompose()
-    return unicode(parsed_comments)
+    return str(parsed_comments)
 
 
 def fix_comments_dates(comments, tz_name):
@@ -1996,4 +1996,4 @@ def fix_comments_dates(comments, tz_name):
         if date:
             new_date = get_timezone_aware_datetime(date, tz_name).isoformat()
             comment['w:date'] = new_date
-    return unicode(parsed_comments)
+    return str(parsed_comments)

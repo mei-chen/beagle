@@ -10,7 +10,7 @@ class StatisticsComputeView(ComputeView):
     new user-related statistic events.
     """
 
-    url_pattern = r'/statistics$'
+    url_pattern = r'statistics$'
     endpoint_name = 'statistics_compute_view'
 
     def compute(self, request, *args, **kwargs):

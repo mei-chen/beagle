@@ -49,7 +49,7 @@ from utils.django_utils.query import get_user_by_identifier
 
 class DocumentDetailView(DetailView, DeleteDetailModelMixin):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)$'
     endpoint_name = 'document_detail_view'
 
     model_key_name = 'uuid'
@@ -101,7 +101,7 @@ class DocumentViewedByView(DetailView):
     """
 
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/viewed_by$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/viewed_by$'
     endpoint_name = 'document_viewed_by_view'
 
     model_key_name = 'uuid'
@@ -117,7 +117,7 @@ class DocumentViewedByView(DetailView):
 
 class DocumentListView(ListView):
     model = Batch
-    url_pattern = r'/document$'
+    url_pattern = r'document$'
     endpoint_name = 'document_list_view'
 
     _cached_object_count = None
@@ -172,7 +172,7 @@ class DocumentSortedListView(DocumentListView):
     """
 
     model = Document
-    url_pattern = r'/document-sorted$'
+    url_pattern = r'document-sorted$'
     endpoint_name = 'document_sorted_list_view'
 
     def _sort_by_viewdate(self, queryset, user, reversed):
@@ -223,7 +223,7 @@ class DocumentSortedListView(DocumentListView):
 
 class DocumentAggregatedListView(ListView):
     model = Document
-    url_pattern = r'/document/aggregated$'
+    url_pattern = r'document/aggregated$'
     endpoint_name = 'document_aggregated_list_view'
 
     @classmethod
@@ -237,7 +237,7 @@ class DocumentAggregatedListView(ListView):
 
 class FlagDocumentActionView(ActionView):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/flag$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/flag$'
     endpoint_name = 'document_flag_action_view'
 
     model_key_name = 'uuid'
@@ -260,7 +260,7 @@ class FlagDocumentActionView(ActionView):
 
 class ChangePartiesActionView(ActionView):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/parties$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/parties$'
     endpoint_name = 'document_change_parties_action_view'
 
     model_key_name = 'uuid'
@@ -322,7 +322,7 @@ class ChangePartiesActionView(ActionView):
 
 class ReanalysisActionView(ActionView):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/reanalysis$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/reanalysis$'
     endpoint_name = 'document_reanalysis_action_view'
 
     model_key_name = 'uuid'
@@ -344,7 +344,7 @@ class ReanalysisActionView(ActionView):
 
 class ChangeOwnerActionView(ActionView):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/owner$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/owner$'
     endpoint_name = 'document_change_owner_action_view'
 
     model_key_name = 'uuid'
@@ -406,7 +406,7 @@ class ChangeOwnerActionView(ActionView):
 
 class IssueSentenceInvitesActionView(ActionView):
     model = Document
-    url_pattern = r'/document/(?P<uuid>[a-z0-9\-]+)/sentence/assign$'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/sentence/assign$'
     endpoint_name = 'document_sentence_assign_action_view'
 
     model_key_name = 'uuid'
@@ -482,7 +482,7 @@ class IssueSentenceInvitesActionView(ActionView):
 
 
 class UploadRawTextComputeView(ComputeView):
-    url_pattern = r'/document/upload/text'
+    url_pattern = r'document/upload/text'
     endpoint_name = 'document_upload_text_compute_view'
 
     def has_access(self):
@@ -525,7 +525,7 @@ class UploadRawTextComputeView(ComputeView):
 
 
 class DocumentUploadComputeView(ComputeView):
-    url_pattern = r'/document/upload$'
+    url_pattern = r'document/upload$'
     endpoint_name = 'document_upload_compute_view'
 
     HTML_CONTENT_TYPES = ('text/html', 'text/plain', 'application/xhtml+xml', 'application/xml')
@@ -561,10 +561,10 @@ class DocumentUploadComputeView(ComputeView):
         returns a core.models.Document
         """
         response = requests.get(source_url)
-        if any(map(lambda ct: ct in response.headers.get('content-type'), self.HTML_CONTENT_TYPES)):
+        if any(list(map(lambda ct: ct in response.headers.get('content-type'), self.HTML_CONTENT_TYPES))):
             return self.handle_html(html=response.content, title=title, source_url=source_url)
 
-        elif any(map(lambda ct: ct in response.headers.get('content-type'), self.DOCX_CONTENT_TYPES)):
+        elif any(list(map(lambda ct: ct in response.headers.get('content-type'), self.DOCX_CONTENT_TYPES))):
             filename = filename_from_url(source_url, 'file.docx', 'docx')
             input_file = TemporaryFile()
 
@@ -572,7 +572,7 @@ class DocumentUploadComputeView(ComputeView):
             input_file.seek(0)
             return self.handle_attached_file(filename=filename, uploaded_file=input_file)
 
-        elif any(map(lambda ct: ct in response.headers.get('content-type'), self.DOC_CONTENT_TYPES)):
+        elif any(list(map(lambda ct: ct in response.headers.get('content-type'), self.DOC_CONTENT_TYPES))):
             filename = filename_from_url(source_url, 'file.doc', 'doc')
             input_file = TemporaryFile()
 
@@ -580,7 +580,7 @@ class DocumentUploadComputeView(ComputeView):
             input_file.seek(0)
             return self.handle_attached_file(filename=filename, uploaded_file=input_file)
 
-        elif any(map(lambda ct: ct in response.headers.get('content-type'), self.PDF_CONTENT_TYPES)):
+        elif any(list(map(lambda ct: ct in response.headers.get('content-type'), self.PDF_CONTENT_TYPES))):
             filename = filename_from_url(source_url, 'file.pdf', 'pdf')
             input_file = TemporaryFile()
 
@@ -730,7 +730,7 @@ class DocumentPrepareExportView(ActionView):
     (See DocumentExportView to actually serve this file after it's generated)
     """
 
-    url_pattern = '/document/(?P<uuid>[a-z0-9\-]+)/prepare_export'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/prepare_export'
     endpoint_name = 'document_prepare_export_view'
     model = Document
     model_key_name = 'uuid'
@@ -797,7 +797,7 @@ class DocumentExportView(DetailView):
     Note: it has to be generated first, by a call to DocumentPrepareExportView
     """
 
-    url_pattern = '/document/(?P<uuid>[a-z0-9\-]+)/export'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/export'
     endpoint_name = 'document_export_view'
     model = Document
     model_key_name = 'uuid'
@@ -857,7 +857,7 @@ class DocumentExportView(DetailView):
 class DocumentAnnotationsView(DetailView):
     """ Returns all non-keyword tags that exist in provided document. """
 
-    url_pattern = '/document/(?P<uuid>[a-z0-9\-]+)/annotations'
+    url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)/annotations'
     endpoint_name = 'document_annotations_view'
     model = Document
     model_key_name = 'uuid'
