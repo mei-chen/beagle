@@ -53,6 +53,6 @@ def load_EUlaw_300():
 #     vector_map.load('/mnt/model_EUlaw_200')
 #     return vector_map
 
-
-model=Word2Vec.load('models/model_EULaw/EULaw.word2vec')
-print(model.vector_size)
+#
+# model=Word2Vec.load('models/model_EULaw/EULaw.word2vec')
+# print(model.vector_size)

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import logging
-
+from gensim.models import Word2Vec
     
 class Similarity(object):
     '''
@@ -549,10 +549,10 @@ class Similarity_EUlaw_300(object):
     '''
     Handle sense2vec similarity queries.
     '''
-    def __init__(self, spacy_nlp, sense2vec_vector_map):
+    def __init__(self, spacy_nlp):
         self.nlp = spacy_nlp
-        self.w2v = sense2vec_vector_map
-        self.lemmatizer = self.nlp.vocab.morphology.lemmatizer
+        self.w2v = Word2Vec.load('models/model_EULaw/EULaw.word2vec')
+        # self.lemmatizer = self.nlp.vocab.morphology.lemmatizer
         self.parts_of_speech = ['NOUN', 'VERB', 'ADJ', 'ORG', 'PERSON', 'FAC',
                                 'PRODUCT', 'LOC', 'GPE']
         logging.info("Serve")
@@ -571,25 +571,20 @@ class Similarity_EUlaw_300(object):
 
         seen.add(self._find_head(key))
         for entry, score in self.get_similar(key, n * 2):
-
             head = self._find_head(entry)
-            freq, _ = self.w2v[entry]
             if head not in seen:
                 results.append(
                     {
                         'score': score,
                          'key': entry,
                          'text': entry.split('|')[0].replace('_', ' '),
-                         'count': freq,
                          'head': head
                     })
                 seen.add(head)
             if len(results) >= n:
                 break
-        freq, _ = self.w2v[key]
 
         return {'text': text, 'key': key, 'results': results,
-                'count': freq,
                 'head': self._find_head(key)}
 
     def _find_best_key(self, query):
@@ -613,21 +608,17 @@ class Similarity_EUlaw_300(object):
             return entry.lower()
         text, pos = entry.rsplit('|', 1)
         head = text.split('_')[-1]
-        return min(self.lemmatizer(head, pos))
+        # return min(self.lemmatizer(head, pos))
+        return min(head, pos)
 
     def get_similar(self, query, n):
-        print(query)
         if query not in self.w2v:
             print('not in word set')
             return []
-        freq, query_vector = self.w2v[query]
+        # freq, query_vector = self.w2v[query]
         # print(freq)
         # print(query_vector)
-        words, scores = self.w2v.most_similar(query_vector, n)
-        # print(words)
-        # print(scores)
-        return zip(words, scores)
-
+        return self.w2v.wv.most_similar(query)
 
 
 class Similarity_EUlaw_128(object):
