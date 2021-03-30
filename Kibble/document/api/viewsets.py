@@ -201,7 +201,7 @@ class PersonalDataAPI(ModelViewSet):
                 entry.batch,
                 entry.document,
                 entry.type,
-                entry.text.encode('utf-8'),
+                entry.text,
                 entry.location
             ])
 

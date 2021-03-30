@@ -365,8 +365,9 @@ class Sentence(models.Model):
     class Meta:
         ordering = ['id']
 
-    def _get_vector(self):
-        # Lazy vectorization
+    @property
+    def vector(self):
+        # Lazy vectorization    
         if self.vectorization is None:
             vector = SentenceVectorAPI(self.text).vectorize()
             if vector is not None:
@@ -377,12 +378,11 @@ class Sentence(models.Model):
             None if self.vectorization is None else np.array(self.vectorization)
         )
 
-    def _set_vector(self, vector):
+    @vector.setter
+    def vector(self, sentence_vector):
         # `numpy.ndarray` "is not JSON serializable"
-        self.vectorization = None if vector is None else list(vector)
+        self.vectorization = None if sentence_vector is None else list(sentence_vector)
         self.save()
-
-    vector = property(_get_vector, _set_vector)
 
     def __str__(self):
         return self.text
@@ -394,8 +394,8 @@ class PersonalData(models.Model):
     type = models.CharField(max_length=255)
     text = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    document = models.ForeignKey(Document,on_delete=models.DO_NOTHING,)
-    user = models.ForeignKey(User, null=True,on_delete=models.DO_NOTHING,)
+    document = models.ForeignKey(Document,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True,on_delete=models.CASCADE)
     selected = models.BooleanField(default=True)
 
     def __str__(self):

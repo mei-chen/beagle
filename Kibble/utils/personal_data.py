@@ -8,7 +8,7 @@ import zipfile
 from collections import defaultdict, OrderedDict
 from copy import copy
 from random import randrange
-from io import StringIO
+from io import BytesIO
 
 import chardet
 import Stemmer
@@ -1148,7 +1148,7 @@ def highlight_text(highlight_color, text, replacements):
 
 def obfuscate_document(instance, sents):
     initial_docx = instance.content_file
-    result_docx = StringIO()
+    result_docx = BytesIO()
     user = instance.source_file.batch.owner
     pd_types = user.profile.personal_data_types
     obf_str = instance.source_file.batch.owner.profile.obfuscate_string

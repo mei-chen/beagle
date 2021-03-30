@@ -360,6 +360,7 @@ class SentenceVectorService(object):
         sentences = json.load(req.bounded_stream)
         print("-------")
         print(sentences)
+        print(self.handler_default(sentences['sentences']))
         resp.media = json.dumps(self.handler_default(sentences['sentences']))
 
 

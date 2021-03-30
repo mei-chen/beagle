@@ -57,7 +57,8 @@ class SentenceVectorAPI(object):
                 'Successfully vectorized {} sentence{}'.format(
                     len(self.sentences), pluralize(len(self.sentences))
                 ),
-                self._post_process(json.loads(response.json()))
+                json.loads(response.json()).get('vectors')
+                #self._post_process(json.loads(response.json()))
             )
         else:
             try:
@@ -66,9 +67,10 @@ class SentenceVectorAPI(object):
                 message = 'An error occurred. Status: {}'.format(response.status_code)
             return False, message, []
 
+    # vectorize single sentence
     def vectorize(self):
         success, message, result = self.process()
-        vectors = result.get('vectors') if success else None
+        vectors = result if success else None
         return (vectors[0]
                 if vectors is not None and self.singleton else
                 vectors)

@@ -222,7 +222,7 @@ class BatchAPI(ModelViewSet):
             for i in range(len(obfuscated_docs)):
                 name, doc = obfuscated_docs[i]
                 path = os.path.join(tmp_dir, '%s.docx' % name)
-                fl = open(path, 'w')
+                fl = open(path, 'wb')
                 fl.write(doc.read())
                 fl.close()
                 docx_to_pdf(tmp_dir, path)

@@ -45,7 +45,7 @@ class RegEx(models.Model):
 class Report(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    batch = models.ForeignKey(Batch, related_name='reports',on_delete=models.DO_NOTHING)
+    batch = models.ForeignKey(Batch, related_name='reports',on_delete=models.CASCADE)
     json = models.TextField(default=json.dumps([]))
     name = models.CharField(max_length=4096)
     report_type = models.SmallIntegerField(choices=ReportTypes.choices())
@@ -238,11 +238,12 @@ class Report(models.Model):
         if vector is None:
             raise SentenceVectorAPIError
 
+        vector = np.array(vector).astype(float)
+
         sentences = Sentence.objects.filter(
             document__source_file__batch=self.batch
         )
         vectors = [s.vector for s in sentences]
-
         scores = cosine_similarity(
             vector.reshape((1, -1)), np.array(vectors)
         ).ravel()
