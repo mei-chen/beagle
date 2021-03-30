@@ -197,8 +197,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = ""
 
-AWS_ACCESS_KEY_ID = "AKIAUSQDI7ETALHKQQHW" #os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = "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" #os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 PREDICTION_MODELS_BUCKET = 'spot.s3.local.models'
 
