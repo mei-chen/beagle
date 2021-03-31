@@ -67,7 +67,7 @@ class DocumentAPI(ModelViewSet):
         if user.profile.obfuscated_export_ext == 'PDF':
             tmp_dir = tempfile.mkdtemp()
             path = os.path.join(tmp_dir, '%s.docx' % document.name)
-            fl = open(path, 'w')
+            fl = open(path, 'wb')
             fl.write(obfuscated.read())
             fl.close()
             docx_to_pdf(tmp_dir, path)

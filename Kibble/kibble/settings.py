@@ -320,7 +320,8 @@ PERSONAL_DATA_TYPES = {
 }
 
 # keyword list analysis
-MOST_SIMILAR_ENDPOINT = 'http://api.research.beagle.ai:8000/most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
+#MOST_SIMILAR_ENDPOINT = 'http://api.research.beagle.ai:8000/most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
+MOST_SIMILAR_ENDPOINT = 'http://127.0.0.1:3000/most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
 MOST_SIMILAR_DEFAULT_NUMBER = 15
 MOST_SIMILAR_USER = 'Beagle'
 MOST_SIMILAR_PASSWORD = 'GreatBeagleAI'

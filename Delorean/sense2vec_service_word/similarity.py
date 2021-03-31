@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import logging
 from gensim.models import Word2Vec
-    
+
 class Similarity(object):
     '''
     Handle sense2vec similarity queries.
@@ -85,9 +85,6 @@ class Similarity(object):
         # print(words)
         # print(scores)
         return zip(words, scores)
-
-
-
 
 class Similarity_FWCA_300(object):
     '''
@@ -592,15 +589,15 @@ class Similarity_EUlaw_300(object):
         if '|' in query:
             text, pos = query.rsplit('|', 1)
             key = text + '|' + pos.upper()
-            return key if key in self.w2v else None
+            return key if key in self.w2v.wv else None
 
         freqs = []
         casings = [query, query.upper(), query.title()] if query.islower() else [query]
         for text in casings:
             for pos in self.parts_of_speech:
                 key = text + '|' + pos
-                if key in self.w2v:
-                    freqs.append((self.w2v[key][0], key))
+                if key in self.w2v.wv:
+                    freqs.append((self.w2v.wv[key][0], key))
         return max(freqs)[1] if freqs else None
 
     def _find_head(self, entry):
@@ -612,7 +609,7 @@ class Similarity_EUlaw_300(object):
         return min(head, pos)
 
     def get_similar(self, query, n):
-        if query not in self.w2v:
+        if query not in self.w2v.wv:
             print('not in word set')
             return []
         # freq, query_vector = self.w2v[query]

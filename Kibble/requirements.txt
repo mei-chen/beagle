@@ -32,7 +32,6 @@ django-allauth==0.36.0
 django-bulk-update==1.1.6
 django-constance==2.0.0
 django-filter==2.4.0
-#django-jsonfield==1.4.0
 django-jsonview==2.0.0
 django-longerusernameandemail==0.5.7
 django-mobile==0.7.0

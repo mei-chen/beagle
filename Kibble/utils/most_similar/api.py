@@ -1,6 +1,7 @@
 import requests
 
 from django.conf import settings
+import json
 
 
 class MostSimmilarModelAPI(object):
@@ -28,7 +29,7 @@ class MostSimmilarModelAPI(object):
             return (
                 True,
                 'Successfully acquired recommendations for {}'.format(self.word),
-                response.json()
+                json.loads(response.json())
             )
         else:
             try:

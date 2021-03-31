@@ -369,7 +369,7 @@ class Report(models.Model):
         writer.writeheader()
         for row in json.loads(self.json):
             payload = {
-                k.encode('utf-8'): v.encode('utf-8') for k, v in row.items()
+                k: v for k, v in row.items()
             }
             writer.writerow(payload)
         return filelike
