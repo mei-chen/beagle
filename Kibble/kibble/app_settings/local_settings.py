@@ -1,2 +1,2 @@
 DEBUG = True
-HOT_LOAD = False
+HOT_LOAD = True
