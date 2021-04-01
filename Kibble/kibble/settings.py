@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get("SESSION_SECRET", '==sxke5!cp)49fx(2--zy*9#c95!@2vr%
 #DEBUG = int(os.environ.get("DJANGO_DEBUG", 0)) == 1
 DEBUG = False
 HOT_LOAD = int(os.environ.get("HOT_LOAD", 0)) == 1
-
+DELOREAN_VM = True
 ALLOWED_HOSTS = ["*", "localhost"]
 
 ######################################################################################
@@ -282,12 +282,6 @@ TOC_ITEM_VALID_STARTS = ('part',)
 TOC_ITEM_VALID_ENDS = ('page',)
 TOC_ITEM_MAX_LENGTH = 170
 
-# Sentence Splitting
-SENTENCE_SPLITTING_TOKEN = 'p03O4qlvnoykdAiz1pPvwLG4XfNzu7AbkqjumXAho1WVS3S91ffx1YYWWSF2X0bQV17euAUc4iAkgQImLouFAm9vXeej6hLMMZ'
-# SENTENCE_SPLITTING_ENDPOINT = 'https://kyhk5y2ub3.execute-api.us-west-2.amazonaws.com/dev'
-SENTENCE_SPLITTING_ENDPOINT = 'http://127.0.0.1:3000/sentence_splitting'
-
-
 
 
 # Default user.profile settings
@@ -319,25 +313,9 @@ PERSONAL_DATA_TYPES = {
     'Street Address': (True, 'string')
 }
 
-# keyword list analysis
-#MOST_SIMILAR_ENDPOINT = 'http://api.research.beagle.ai:8000/most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
-MOST_SIMILAR_ENDPOINT = 'http://127.0.0.1:3000/most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
-MOST_SIMILAR_DEFAULT_NUMBER = 15
-MOST_SIMILAR_USER = 'Beagle'
-MOST_SIMILAR_PASSWORD = 'GreatBeagleAI'
-
-SYNONYMS_ENDPOINT = 'https://wordsapiv1.p.mashape.com/words/%s/synonyms'
-SYNONYMS_API_KEY = 'a7nUoIQHnEmsho5sOHGXuGueRx0Ap1ld01LjsnAddQybg9aDMu'
-
-# SENTENCE_VECTOR_ENDPOINT = 'http://api.research.beagle.ai:8001/sentence_vector_notag'
-SENTENCE_VECTOR_ENDPOINT = 'http://127.0.0.1:3000/sentence_vector'
 
 
-SENTENCE_VECTOR_DEFAULT_MODEL = 'lawinsider_notag'
-SENTENCE_VECTOR_DEFAULT_ALGORITHM = 'sif'
-SENTENCE_VECTOR_DEFAULT_ALPHA = '3'
-SENTENCE_VECTOR_USER = 'Beagle'
-SENTENCE_VECTOR_PASSWORD = 'GreatBeagleAI'
+
 
 # defined later check purpose only
 AWS_STORAGE_BUCKET_NAME = None
@@ -375,6 +353,34 @@ try:
     from .app_settings.local_settings import *
 except ImportError:
     pass
+
+
+# keyword list analysis
+DELOREAN_ENDPOINT = 'http://127.0.0.1:3000/' if DELOREAN_VM else 'http://10.0.2.2:3000/'
+
+#MOST_SIMILAR_ENDPOINT = 'http://api.research.beagle.ai:8000/most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
+MOST_SIMILAR_ENDPOINT = DELOREAN_ENDPOINT + 'most_similar/word={word}&model={model}&number={number}&user={user}&password={password}'
+MOST_SIMILAR_DEFAULT_NUMBER = 15
+MOST_SIMILAR_USER = 'Beagle'
+MOST_SIMILAR_PASSWORD = 'GreatBeagleAI'
+
+SYNONYMS_ENDPOINT = 'https://wordsapiv1.p.mashape.com/words/%s/synonyms'
+SYNONYMS_API_KEY = 'a7nUoIQHnEmsho5sOHGXuGueRx0Ap1ld01LjsnAddQybg9aDMu'
+
+# SENTENCE_VECTOR_ENDPOINT = 'http://api.research.beagle.ai:8001/sentence_vector_notag'
+SENTENCE_VECTOR_ENDPOINT = DELOREAN_ENDPOINT + 'sentence_vector'
+
+
+SENTENCE_VECTOR_DEFAULT_MODEL = 'lawinsider_notag'
+SENTENCE_VECTOR_DEFAULT_ALGORITHM = 'sif'
+SENTENCE_VECTOR_DEFAULT_ALPHA = '3'
+SENTENCE_VECTOR_USER = 'Beagle'
+SENTENCE_VECTOR_PASSWORD = 'GreatBeagleAI'
+
+# Sentence Splitting
+SENTENCE_SPLITTING_TOKEN = 'p03O4qlvnoykdAiz1pPvwLG4XfNzu7AbkqjumXAho1WVS3S91ffx1YYWWSF2X0bQV17euAUc4iAkgQImLouFAm9vXeej6hLMMZ'
+# SENTENCE_SPLITTING_ENDPOINT = 'https://kyhk5y2ub3.execute-api.us-west-2.amazonaws.com/dev'
+SENTENCE_SPLITTING_ENDPOINT = DELOREAN_ENDPOINT + 'sentence_splitting'
 
 # Celery settings
 CELERY_BROKER_URL = BROKER_URL
