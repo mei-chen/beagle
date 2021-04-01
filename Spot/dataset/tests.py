@@ -1,5 +1,6 @@
 import mock
-from urllib.parse import urlencode
+#from urllib.parse import urlencode
+import urllib
 
 # App
 from core.models import (
@@ -242,7 +243,7 @@ class DatasetViewSetTest(LoggedInUserTestCaseBase):
             email=user_x.email, inviter=self.user, dataset=self.dataset
         )
 
-        expected_data = map(user_to_dict, [self.user, user_y, user_z])
+        expected_data = list(map(user_to_dict, [self.user, user_y, user_z]))
 
         self.client.force_authenticate(user=self.user)
         response = self.client.get(self.get_url('allowed_users'))
@@ -262,7 +263,7 @@ class DatasetViewSetTest(LoggedInUserTestCaseBase):
         # invite should have already been converted to a collaboration invite
         user_x.save()
 
-        expected_data = map(user_to_dict, [self.user, user_x, user_y, user_z])
+        expected_data = list(map(user_to_dict, [self.user, user_x, user_y, user_z]))
 
         self.client.force_authenticate(user=self.user)
         response = self.client.get(self.get_url('allowed_users'))
@@ -311,7 +312,7 @@ class SampleViewSetTest(LoggedInUserTestCaseBase):
         if sample_index is not None:
             url += '%s/' % sample_index
         if query_params is not None:
-            url += '?' + urlencode(query_params.items(), doseq=True)
+            url += '?' + urllib.parse.urlencode(query_params, doseq=True)
         return url
 
     @property

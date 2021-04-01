@@ -56,7 +56,7 @@ class AccessToken(models.Model):
         # If no ValidationError was raised, then try to save token to db
         super(AccessToken, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value
 
 
@@ -92,7 +92,7 @@ class DatasetCollaborationInvite(CollaborationInvite):
     inviter = models.ForeignKey(User, related_name='dataset_collaboration_invites_sent', on_delete=models.CASCADE)
     dataset = models.ForeignKey(Dataset, related_name='collaboration_invites', on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
             self.inviter, self.invitee, self.dataset
         )
@@ -110,7 +110,7 @@ class DatasetExternalInvite(ExternalInvite):
         self.delete()
         return collaboration_invite
 
-    def __unicode__(self):
+    def __str__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
             self.inviter, self.email, self.dataset
         )
@@ -122,7 +122,7 @@ class ExperimentCollaborationInvite(CollaborationInvite):
     inviter = models.ForeignKey(User, related_name='experiment_collaboration_invites_sent', on_delete=models.CASCADE)
     experiment = models.ForeignKey(Experiment, related_name='collaboration_invites', on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
             self.inviter, self.invitee, self.experiment
         )
@@ -140,7 +140,7 @@ class ExperimentExternalInvite(ExternalInvite):
         self.delete()
         return collaboration_invite
 
-    def __unicode__(self):
+    def __str__(self):
         return u"From: '%s', To: '%s', On: '%s'" % (
             self.inviter, self.email, self.experiment
         )

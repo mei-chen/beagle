@@ -222,7 +222,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
         experiment = self.get_object()
         self._check_owner(request, experiment)
         payload = {
-            'collaborators': map(user_to_dict, experiment.collaborators),
+            'collaborators': list(map(user_to_dict, experiment.collaborators)),
             'pending_invites': experiment.pending_invites
         }
         return Response(payload)
@@ -395,7 +395,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         experiment_dict = experiment.to_dict()
         online_learners_dict = {}
         online_learners = experiment.online_learners.filter(
-            tag__in=map(experiment.build_online_learner_tag, tags)
+            tag__in=list(map(experiment.build_online_learner_tag, tags))
         )
         for online_learner in online_learners:
             # Format: <username>#<experiment_uuid>
@@ -459,7 +459,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         payload = {'tagged': [], 'inferred': []}
         samples = online_learner.samples
         if samples:
-            for index, (text, label, infered) in enumerate(itertools.izip(
+            for index, (text, label, infered) in enumerate(zip(
                 samples['text'], samples['label'], samples['infered']
             )):
                 entry = {'index': index, 'text': text}
@@ -518,7 +518,7 @@ class PublishViewSet(viewsets.GenericViewSet):
     @action(detail=False,methods=['GET'])
     def suggestions(self, request, *args, **kwargs):
         experiments = self.filter_queryset(self.get_queryset())
-        payload = map(Experiment.to_dict, experiments)
+        payload = list(map(Experiment.to_dict, experiments))
         return Response(payload)
 
     @action(detail=True, methods=['POST'])
@@ -534,7 +534,7 @@ class PublishViewSet(viewsets.GenericViewSet):
         labels = []
         samples = online_learner.samples
         if samples:
-            for index, (text, label, infered) in enumerate(itertools.izip(
+            for index, (text, label, infered) in enumerate(zip(
                 samples['text'], samples['label'], samples['infered']
             )):
                 if data['include_inferred'] or not infered:

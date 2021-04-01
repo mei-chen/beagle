@@ -35,7 +35,7 @@ class ValidateRegex(APIView):
         except re.error as e:
             response = {
                 'regex_is_valid': False,
-                'error': e.message
+                'error': e.msg
             }
 
         return JsonResponse(response)
@@ -71,7 +71,7 @@ class ExportPredicted(APIView):
 
         writer.writerow(['BODY', 'LABEL'])
 
-        for text, label in itertools.izip(X, y):
+        for text, label in zip(X, y):
             # In Python 2 csv module does not support Unicode input, so make
             # sure to encode the text manually.
             # Also convert the binary label to 0 or 1 for the sake of
@@ -108,7 +108,7 @@ class DiffPredicted(APIView):
 
         results = [{'text': text, 'label': label_pred, 'gold': label_true}
                    for text, label_true, label_pred
-                   in itertools.izip(X, y_true, y_pred)
+                   in zip(X, y_true, y_pred)
                    if label_pred != label_true]
 
         count = len(results)

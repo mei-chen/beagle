@@ -197,8 +197,8 @@ class Formula(TimeStampedModel):
         # The most common use case
         return boolean_predictions
 
-    def __unicode__(self):
-        return unicode(self.uuid)
+    def __str__(self):
+        return str(self.uuid)
 
 
 @receiver(models.signals.pre_delete, sender=Formula)
@@ -342,7 +342,7 @@ class Experiment(ExperimentBase):
             self.name = generate_default_experiment_name(self.owner, manager)
         super(Experiment, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'[%s] %s' % (self.owner or '-', self.name)
 
     def to_dict(self):
@@ -476,8 +476,8 @@ class GenericClassifier(TimeStampedModel):
         """
         raise NotImplementedError
 
-    def __unicode__(self):
-        return unicode(self.uuid)
+    def __str__(self):
+        return str(self.uuid)
 
     def __repr__(self):
         return '<%s: %s>' % (self.__class__.__name__, self.uuid)
@@ -553,9 +553,9 @@ class RegexClassifier(GenericClassifier):
         return self._re_expression.finditer(text)
 
     def predict(self, X):
-        predictions = map(bool, map(self._search, X))
+        predictions = list(map(bool, list(map(self._search, X))))
         if self.reverse:
-            predictions = map(operator.not_, predictions)
+            predictions = list(map(operator.not_, predictions))
         return np.array(predictions)
 
     def split(self, text):

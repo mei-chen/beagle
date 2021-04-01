@@ -61,7 +61,7 @@ class Dataset(TimeStampedModel):
         qs = self.external_invites.values_list('email', flat=True)
         return list(qs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'[%s] %s' % (self.owner or '-', self.name)
 
     def klass_to_index(self, klass):
@@ -228,7 +228,7 @@ class DatasetMapping(TimeStampedModel):
         filtered_texts = []
         mapped_labels = []
         for text, klass_label in \
-                itertools.izip(self.dataset.texts, self.dataset.klass_labels):
+                zip(self.dataset.texts, self.dataset.klass_labels):
             label = self.map(klass_label)
             if label is not None:
                 filtered_texts.append(text)
@@ -268,7 +268,7 @@ class LabelingTask(TimeStampedModel):
         self.evaluation_set = evaluation_set
         self.save()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s -> [%s] %s' % (self.dataset, self.owner, self.name)
 
 
@@ -358,7 +358,7 @@ class Assignment(TimeStampedModel):
         """ Filters out skipped samples. """
         texts = []
         labels = []
-        for text, label in itertools.izip(self.texts, self.labels):
+        for text, label in zip(self.texts, self.labels):
             if label is not None:
                 texts.append(text)
                 labels.append(label)
@@ -371,7 +371,7 @@ class Assignment(TimeStampedModel):
             return None
 
         owner_index_label_map = dict(
-            itertools.izip(self.labeling_task.evaluation_set['indices'],
+            zip(self.labeling_task.evaluation_set['indices'],
                            self.labeling_task.evaluation_set['labels'])
         )
 
@@ -379,7 +379,7 @@ class Assignment(TimeStampedModel):
             return None
 
         assignee_index_label_map = dict(
-            itertools.izip(self.stages[0]['indices'],
+            zip(self.stages[0]['indices'],
                            self.stages[0]['labels'])
         )
 
@@ -419,7 +419,7 @@ class Assignment(TimeStampedModel):
             self.score = self._compute_evaluation_score()
         self.save()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s -> %s' % (self.labeling_task, self.assignee)
 
 

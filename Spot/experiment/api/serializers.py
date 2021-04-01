@@ -73,10 +73,19 @@ class ExperimentSerializer(ExperimentSerializerBase):
         help_text='Content',
         style={'base_template': 'textarea.html', 'rows': 10}
     )
+    class Meta:
+        model = Experiment
+        exclude = ['owner']
+        read_only_fields = ['uuid']
 
 
 class ExperimentSerializerExtended(ExperimentSerializerBase):
     formula = FormulaSerializerExtended()
+
+    class Meta:
+        model = Experiment
+        exclude = ['owner']
+        read_only_fields = ['uuid']
 
     online_learners = serializers.SerializerMethodField()
 
@@ -90,5 +99,5 @@ class ExperimentSerializerExtended(ExperimentSerializerBase):
         return online_learner_dict
 
     def get_online_learners(self, obj):
-        return map(self.online_learner_to_dict,
-                   obj.online_learners.order_by('tag'))
+        return list(map(self.online_learner_to_dict,
+                   obj.online_learners.order_by('tag')))

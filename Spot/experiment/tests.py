@@ -81,7 +81,7 @@ class ValidateRegexTest(LoggedInUserTestCaseBase):
                                     content_type='application/json')
         self.assertEqual(
             {'regex_is_valid': False,
-             'error': 'unexpected end of regular expression'},
+             'error': 'unterminated character set'},
             json.loads(response.content)
         )
 
@@ -718,9 +718,9 @@ class FormulaTest(TestCase):
     def update_weights(self, weights=None):
         if weights is None:
             weights = [0] * len(self.clfs)
-        self.formula.content = map(
-            lambda (c, w): {'uuid': c.uuid, 'weight': w},
-            zip(self.clfs, weights)
+        self.formula.content = list(map(
+            lambda t: {'uuid': t[0].uuid, 'weight': t[1]},
+            zip(self.clfs, weights))
         )
         self.formula.save()
 

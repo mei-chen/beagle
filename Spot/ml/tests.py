@@ -249,7 +249,7 @@ class OnlineLearnerTestCase(MLTestCase):
         # but API requires some X with n_samples rows
         X_dummy = np.zeros(len(y))
         for train_index, test_index in spl.split(X_dummy, y):
-            print '\nSplit: %d, %d' % (len(train_index), len(test_index))
+            print('\nSplit: %d, %d' % (len(train_index), len(test_index)))
             model = TagLearner(OnlineLearner(tag='tag', uuid='1234'))
 
             n_train_pos = 0
@@ -294,32 +294,32 @@ class OnlineLearnerTestCase(MLTestCase):
             mean_precision += precision
             mean_recall += recall
 
-            print '((Train set: %d pos  -  %d neg))' % (n_train_pos, n_train_neg)
-            print '((Test set:  %d pos  -  %d neg))' % (true_pos + false_neg, true_neg + false_pos)
-            print 'Precision: %.2f%% (%d/%d)' % (precision * 100, true_pos, true_pos + false_pos)
-            print 'Recall:    %.2f%% (%d/%d)' % (recall * 100, true_pos, true_pos + false_neg)
+            print( '((Train set: %d pos  -  %d neg))' % (n_train_pos, n_train_neg))
+            print( '((Test set:  %d pos  -  %d neg))' % (true_pos + false_neg, true_neg + false_pos))
+            print( 'Precision: %.2f%% (%d/%d)' % (precision * 100, true_pos, true_pos + false_pos))
+            print( 'Recall:    %.2f%% (%d/%d)' % (recall * 100, true_pos, true_pos + false_neg))
             accur = metrics.accuracy_score(y_test, preds)
-            print 'Accuracy: %0.3f' % accur
+            print( 'Accuracy: %0.3f' % accur)
             fscore = 2 * precision * recall / (precision + recall)
-            print 'F-Score:   %.2f%%' % (fscore * 100)
+            print( 'F-Score:   %.2f%%' % (fscore * 100))
 
-            print 'Confusion matrix:'
-            print metrics.confusion_matrix(map(int, y_test), map(int, preds))
+            print( 'Confusion matrix:')
+            print( metrics.confusion_matrix(list(map(int, y_test)), list(map(int, preds))))
 
         finish_time = time.time()
 
-        print '\nElapsed:   %.3f s' % (finish_time - start_time)
+        print( '\nElapsed:   %.3f s' % (finish_time - start_time))
         mean_precision /= float(N_ITERS)
         mean_recall /= float(N_ITERS)
-        print
-        print '--- ' * 22
-        print 'Precision: %.2f%%' % (mean_precision * 100)
-        print 'Recall:    %.2f%%' % (mean_recall * 100)
-        print '--- ' * 22
+        print()
+        print( '--- ' * 22)
+        print( 'Precision: %.2f%%' % (mean_precision * 100))
+        print( 'Recall:    %.2f%%' % (mean_recall * 100))
+        print( '--- ' * 22)
         fscore = 2 * mean_precision * mean_recall / (mean_precision + mean_recall)
-        print 'F-Score:   %.2f%%' % (fscore * 100)
-        print '--- ' * 22
-        print
+        print( 'F-Score:   %.2f%%' % (fscore * 100))
+        print( '--- ' * 22)
+        print()
 
     @unittest.skip('Slow and not assert. Used only for plotting performance.')
     def test_plot_learning_curve(self):
@@ -348,8 +348,8 @@ class OnlineLearnerTestCase(MLTestCase):
         # but API requires some X with n_samples rows
         X_dummy = np.zeros(len(y))
         for k, (train_index, test_index) in enumerate(spl.split(X_dummy, y)):
-            print '\nStarted iteration', (k + 1)
-            print 'Split: %d, %d' % (len(train_index), len(test_index))
+            print( '\nStarted iteration', (k + 1))
+            print( 'Split: %d, %d' % (len(train_index), len(test_index)))
             model = TagLearner(OnlineLearner(tag='tag', uuid='1234'))
 
             n_train, n_test = len(train_index), len(test_index)
@@ -357,7 +357,7 @@ class OnlineLearnerTestCase(MLTestCase):
             # Train sample by sample
             for i, idx in enumerate(train_index):
                 if i and i % 50 == 0:
-                    print '> %d/%d' % (i, n_train)
+                    print( '> %d/%d' % (i, n_train))
 
                 model.fit([X[idx][0]], [X[idx][1]], [y[idx]])
 
@@ -398,9 +398,9 @@ class OnlineLearnerTestCase(MLTestCase):
         # Plotting
 
         norm_fn = lambda x: x / float(N_ITERS)
-        prec = map(norm_fn, prec)
-        recl = map(norm_fn, recl)
-        fscr = map(norm_fn, fscr)
+        prec = list(map(norm_fn, prec))
+        recl = list(map(norm_fn, recl))
+        fscr = list(map(norm_fn, fscr))
 
         plt.plot(range(1, len(prec) + 1), prec, color='red', alpha=0.25, label='Precision')
         plt.plot(range(1, len(recl) + 1), recl, color='blue', alpha=0.25, label='Recall')
@@ -635,7 +635,7 @@ class OnlineLearnerTestCase(MLTestCase):
         self.assertFalse(clf.ml_model.loaded_from_pkl)
 
         sents = ['Aaaa Aaaa', 'Bbbb Bbbb', 'Cccc Cccc']
-        capsules = map(Capsule, sents)
+        capsules = list(map(Capsule, sents))
         labels = [False, True, False]
 
         # Train the classifier and save its data to S3

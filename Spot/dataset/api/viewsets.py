@@ -111,7 +111,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
         if mapping and mapping['neg'] and mapping['pos']:
             mapped_labels = []
             mapped_texts = []
-            for text, label in itertools.izip(texts, labels):
+            for text, label in zip(texts, labels):
                 if label in mapping['pos']:
                     mapped_labels.append('True')
                     mapped_texts.append(text)
@@ -122,7 +122,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
             labels = mapped_labels
 
         # Replace missing labels with the empty string
-        klass_labels = map(lambda label: label or '', labels)
+        klass_labels = list(map(lambda label: label or '', labels))
 
         klasses = sorted(set(klass_labels))
         # If all labels turned out to be null (i.e. None),
@@ -176,7 +176,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
 
             labels = dataset.klass_labels
 
-            for b, l in itertools.izip(body, labels):
+            for b, l in zip(body, labels):
                 writer.writerow([b.encode('utf-8'), l.encode('utf-8')])
 
         else:
@@ -222,7 +222,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
         dataset = self.get_object()
         self._check_owner(request, dataset)
         payload = {
-            'collaborators': map(user_to_dict, dataset.collaborators),
+            'collaborators': list(map(user_to_dict, dataset.collaborators)),
             'pending_invites': dataset.pending_invites
         }
         return JsonResponse(payload)
@@ -265,7 +265,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def allowed_users(self, request, *args, **kwargs):
         dataset = self.get_object()
-        payload = map(user_to_dict, [dataset.owner] + dataset.collaborators)
+        payload = list(map(user_to_dict, [dataset.owner] + dataset.collaborators))
         return JsonResponse(payload, safe=False)
 
     @action(detail=True, methods=['POST'])
@@ -497,7 +497,7 @@ class LabelingTaskViewSet(viewsets.ModelViewSet):
         labeling_task = self.get_object()
         data = request.data
         self._check_field(data, 'assignees')
-        assignees_ids = map(int, data['assignees'])
+        assignees_ids = list(map(int, data['assignees']))
         invalid_assignees_ids = set(assignees_ids)
         # An assignee is considered to be valid,
         # if it exists and has access to the dataset

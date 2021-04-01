@@ -152,7 +152,7 @@ class S3FileManager(object):
         # read string content of file
         try: 
             response = self.s3_client.get_object(Bucket=self.BUCKET_NAME, Key=key)
-            return response['Body'].read().decode('utf-8')
+            return response['Body'].read()#.decode('utf-8')
         except botocore.exceptions.ClientError as e:
             error_code = int(e.response['Error']['Code'])
             if error_code == 404:
