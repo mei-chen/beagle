@@ -9,8 +9,7 @@
 # from nltk.tokenize import word_tokenize,sent_tokenize
 # import spacy
 
-from spacy.lang.en import English
-import fasttext.util
+
 import gensim.downloader as api
 import numpy as np
 

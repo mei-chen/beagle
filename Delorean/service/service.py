@@ -20,11 +20,8 @@ from falcon_cors import CORS
 from Sentence_splitting.sentence_splitting import sentenceTokenizer
 from sentence_vector_gensim.sentence_vector import sentenceVectorizer
 
-# from sense2vec_service_sentence.jmt import JMT
-#
-# from sense2vec_service_word.modelSelection import load_EUlaw_300    #load_FWCA_300,load_FWCA_200,load_FWCA_128,load_FWCA_plain_128,load_FWCA_plain_200,load_FWCA_plain_300,load_EUlaw_300,load_EUlaw_128,load_EUlaw_200,load_wiki_300,load_GoogleNews_300
-#
-from sense2vec_service_word.similarity import Similarity_EUlaw_300    #Similarity, Similarity_FWCA_300,Similarity_FWCA_200,Similarity_FWCA_128,Similarity_FWCA_plain_128,Similarity_FWCA_plain_200,Similarity_FWCA_plain_300,Similarity_EUlaw_300,Similarity_EUlaw_128,Similarity_EUlaw_200,Similarity_wiki_300,Similarity_GoogleNews_300
+from sense2vec_service_word.modelSelection import load_models
+from sense2vec_service_word.similarity import Similarity, Similarity_GoogleNews
 #
 # from sense2vec_service_word.similarity import SimilarityScore_wiki_300,SimilarityScore_GoogleNews_300,SimilarityScore, SimilarityScore_FWCA_300,SimilarityScore_FWCA_200,SimilarityScore_FWCA_128,SimilarityScore_EUlaw_300,SimilarityScore_EUlaw_128,SimilarityScore_EUlaw_200,SimilarityScore_FWCA_plain_128,SimilarityScore_FWCA_plain_200,SimilarityScore_FWCA_plain_300
 #
@@ -39,115 +36,20 @@ from sense2vec_service_word.similarity import Similarity_EUlaw_300    #Similarit
 class SimilarityService(object):
     '''Expose a sense2vec handler as a GET service for falcon.'''
     def __init__(self):
-        # self.handler_default = Similarity(
-        #     spacy.load('en', parser=False, entity=False),
-        #     sense2vec.load())
-        #
-        # self.handler_FWCA_300 = Similarity_FWCA_300(
-        #     spacy.load('en', parser=False, entity=False),
-        #     load_FWCA_300())
-        #
-        # self.handler_FWCA_200 = Similarity_FWCA_200(
-        #     spacy.load('en', parser=False, entity=False),
-        #     load_FWCA_200())
-        #
-        # self.handler_FWCA_128 = Similarity_FWCA_128(
-        #     spacy.load('en', parser=False, entity=False),
-        #     load_FWCA_128())
-        #
-        # self.handler_FWCA_plain_128 = Similarity_FWCA_plain_128(
-        #     load_FWCA_plain_128())
-        #
-        # self.handler_FWCA_plain_200 = Similarity_FWCA_plain_200(
-        #     load_FWCA_plain_200())
-        #
-        # self.handler_FWCA_plain_300 = Similarity_FWCA_plain_300(
-        #     load_FWCA_plain_300())
-        #
-        #
-        # self.handler_EUlaw_300 = Similarity_EUlaw_300(
-        #     spacy.load('en', parser=False, entity=False),
-        #     load_EUlaw_300())
-        #
-        self.handler_EUlaw_300 = Similarity_EUlaw_300(spacy.load("en_core_web_sm"))
+        google_news, eu_law, us_law=load_models()
+        self.handler_GoogleNews = Similarity_GoogleNews(google_news)
+        self.handler_EUlaw = Similarity(spacy.load("en_core_web_sm"),eu_law)
+        self.handler_USlaw = Similarity(spacy.load("en_core_web_sm"),us_law)
 
-        # self.handler_EUlaw_200 = Similarity_EUlaw_200(
-        #     spacy.load('en', parser=False, entity=False),
-        #     load_EUlaw_200())
-        #
-        # self.handler_wiki_300 = Similarity_wiki_300(
-        #     load_wiki_300())
-        #
-        # self.handler_GoogleNews_300 = Similarity_GoogleNews_300(
-        #     load_GoogleNews_300())
+    def on_get(self, req, resp, word='',model='us_law',number=10):
 
-    def on_get(self, req, resp, query=''):
-        temp = query.split("&")
-        query={}
-        for key_val in temp:
-            query[key_val.split("=")[0]]=key_val.split("=")[1]
-        resp.media = json.dumps(self.handler_EUlaw_300(query['word']))
+        if model=='googlenews':
+            resp.media = json.dumps(self.handler_GoogleNews(word))
+        if model=='eulaw':
+            resp.media = json.dumps(self.handler_EUlaw(word))
+        if model == 'lawinsider':
+            resp.media = json.dumps(self.handler_USlaw(word))
 
-
-        # query1=query.split("&")
-        # newquery={}
-        # newquery["word"]=''
-        # newquery["model"]='default'
-        # newquery["number"] = 10
-        # newquery['user']=''
-        # newquery['password']=''
-        # for each in query1:
-        #     try:
-        #         if each.split("=")[0]=='word':
-        #             newquery["word"] = each.split("=")[1]
-        #         if each.split("=")[0] == 'model':
-        #            newquery["model"] = each.split("=")[1]
-        #         if each.split("=")[0] == 'number':
-        #            newquery["number"] = int(each.split("=")[1])
-        #         try:
-        #             if each.split("=")[0]=='user':
-        #                 newquery["user"] = each.split("=")[1]
-        #             if each.split("=")[0]=='password':
-        #                 newquery["password"] = each.split("=")[1]
-        #         except:
-        #             resp.body = ('\n Provide user and password.')
-        #     except:
-        #         resp.body = ('\n Provide correct query.\n''\n''    ~ Beagle Inc.\n\n')
-        #
-        # if newquery["user"]!='Beagle' or  newquery["password"]!='GreatBeagleAI':
-        #     resp.body = ('\n Provide correct user or password.')
-        # else:
-        #     if newquery['word']=='':
-        #         resp.body = ('\n Provide one word.\n''\n''    ~ Beagle Inc.\n\n')
-        #     else:
-        #         if newquery["model"]=='default':
-        #             resp.body = json.dumps(self.handler_default(unquote(newquery['word']),newquery["number"]))
-        #         elif newquery["model"]=='FWCA_300':
-        #             resp.body = json.dumps(self.handler_FWCA_300(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='FWCA_200':
-        #             resp.body = json.dumps(self.handler_FWCA_200(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='FWCA_128':
-        #             resp.body = json.dumps(self.handler_FWCA_128(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='FWCA_plain_128':
-        #             resp.body = json.dumps(self.handler_FWCA_plain_128(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='FWCA_plain_200':
-        #             resp.body = json.dumps(self.handler_FWCA_plain_200(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='FWCA_plain_300':
-        #             resp.body = json.dumps(self.handler_FWCA_plain_300(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='EUlaw_300':
-        #             resp.body = json.dumps(self.handler_EUlaw_300(unquote(newquery['word']), newquery["number"]))
-        #         elif newquery["model"]=='EUlaw_128':
-                #     resp.body = json.dumps(self.handler_EUlaw_128(unquote(newquery['word']), newquery["number"]))
-                # elif newquery["model"]=='EUlaw_200':
-                #     resp.body = json.dumps(self.handler_EUlaw_200(unquote(newquery['word']), newquery["number"]))
-                # elif newquery["model"]=='wiki':
-                #     resp.body = json.dumps(self.handler_wiki_300(unquote(newquery['word']), newquery["number"]))
-                # elif newquery["model"] == 'googlenews':
-                #     resp.body = json.dumps(self.handler_GoogleNews_300(unquote(newquery['word']), newquery["number"]))
-                #
-                # else:
-                #     resp.body = ('\n Provide one model.\n''\n''    ~ Beagle Inc.\n\n')
-#
 # class SimilarityScoreService(object):
 #     '''Expose a sense2vec handler as a GET service for falcon.'''
 #     def __init__(self):
@@ -355,13 +257,13 @@ class SentenceVectorService(object):
     '''Expose a sentence list'''
 
     def __init__(self):
-        self.handler_default = sentenceVectorizer()
+        self.handler = sentenceVectorizer()
     def on_post(self, req, resp):
         sentences = json.load(req.bounded_stream)
         print("-------")
         print(sentences)
         print(self.handler_default(sentences['sentences']))
-        resp.media = json.dumps(self.handler_default(sentences['sentences']))
+        resp.media = json.dumps(self.handler(sentences['sentences']))
 
 
 # class SentenceGeneration(object):
@@ -419,7 +321,7 @@ def load():
     cors = CORS(allow_all_origins=True, allow_all_methods=True, allow_all_headers=True)
     app = falcon.API(middleware=[cors.middleware,MultipartMiddleware()])
 
-    app.add_route('/most_similar/{query}', SimilarityService())
+    app.add_route('/most_similar/word={word}&model={model}&number={number}', SimilarityService())
     # app.add_route('/similarity_score/{query}', SimilarityScoreService())
     # app.add_route('/sentence_score/{query}', SentenceScoreService_JMT())
     # app.add_route('/nda_parties', PartyIdentifierService())
