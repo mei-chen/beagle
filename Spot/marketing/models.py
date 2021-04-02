@@ -65,5 +65,5 @@ class Coupon(TimeStampedModel):
         coupon = cls.get_by_code(code)
         return coupon.apply() if coupon else False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code

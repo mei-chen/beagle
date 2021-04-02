@@ -16,12 +16,12 @@ class LearnerFacade:
     @staticmethod
     def _retrain_generic(db_model, ml_model):
         ml_model.reset(
-            initial_samples=zip(
+            initial_samples=list(zip(
                 db_model.samples['text'],
                 db_model.samples['flags'],
                 db_model.samples['label'],
             )
-        )
+        ))
 
     def _retrain(self):
         self._retrain_generic(self.db_model, self.ml_model)
@@ -316,8 +316,8 @@ class LearnerFacade:
     def is_mature(self):
         return self.db_model.is_mature
 
-    def __unicode__(self):
-        return unicode(self.db_model)
+    def __str__(self):
+        return str(self.db_model)
 
     def __eq__(self, other):
         return self.db_model == other.db_model

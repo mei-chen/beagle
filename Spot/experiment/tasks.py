@@ -151,7 +151,7 @@ def simulate_classification(session_key, experiment_pk, sample, task_uuid):
         )
         if per_clf:
             for clf_prediction, clf_windows_predictions, clf_scores in \
-                    itertools.izip(prediction_per_clf,
+                    zip(prediction_per_clf,
                                    windows_predictions_per_clf,
                                    scores_per_clf):
                 if clf_prediction['status']:
@@ -200,17 +200,17 @@ def simulate_classification(session_key, experiment_pk, sample, task_uuid):
         # turned out to be too small for the specific sample
         if max_score > 0:
             scores /= max_score
-        payload['results']['sample'] = zip(tokens, scores)
+        payload['results']['sample'] = list(zip(tokens, scores))
         if per_clf:
             payload['results_per_classifier'] = []
             for clf_prediction, clf_scores in \
-                    itertools.izip(prediction_per_clf, scores_per_clf):
+                    zip(prediction_per_clf, scores_per_clf):
                 if clf_prediction['status']:
                     clf_scores = np.sum(clf_scores, axis=0)
                     clf_max_score = np.max(clf_scores)
                     if clf_max_score > 0:
                         clf_scores /= clf_max_score
-                    clf_prediction['sample'] = zip(tokens, clf_scores)
+                    clf_prediction['sample'] = list(zip(tokens, clf_scores))
                 # The actual classifier is redundant and also
                 # "is not JSON serializable"
                 del clf_prediction['classifier']
@@ -278,7 +278,7 @@ def preview_dataset(X, y):
 
     return {
         'results': [{'text': text, 'label': label}
-                    for text, label in itertools.izip(X, y)],
+                    for text, label in zip(X, y)],
         'stats': {
             'positive': positive,
             'negative': negative,
@@ -390,7 +390,7 @@ def generate_predictions(session_key, experiment_pk, dataset_pk,
 
     # Make sure to convert the obtained predictions to `bool`,
     # since `numpy.bool_` "is not JSON serializable"
-    predictions = map(bool, experiment.predict(X))
+    predictions = list(map(bool, experiment.predict(X)))
 
     preview = preview_dataset(X, predictions)
 
@@ -418,7 +418,7 @@ def _build_classifier_confidence_distribution(clf, X, y):
 
     positive_samples, positive_scores = [], []
     negative_samples, negative_scores = [], []
-    for text, label, score in itertools.izip(X, y, scores):
+    for text, label, score in zip(X, y, scores):
         if label:
             positive_samples.append(text)
             positive_scores.append(score)
@@ -433,7 +433,7 @@ def _build_classifier_confidence_distribution(clf, X, y):
         np.histogram(positive_scores, **histogram_options)
 
     positive_samples_per_bin = [[] for _ in range(HISTOGRAM_BINS)]
-    for text, score in itertools.izip(positive_samples, positive_scores):
+    for text, score in zip(positive_samples, positive_scores):
         # All but the last bin is half-open, i.e. looks like [a, b)
         index = bisect.bisect_right(positive_bin_edges, score) - 1
         if index == HISTOGRAM_BINS:
@@ -444,7 +444,7 @@ def _build_classifier_confidence_distribution(clf, X, y):
         np.histogram(negative_scores, **histogram_options)
 
     negative_samples_per_bin = [[] for _ in range(HISTOGRAM_BINS)]
-    for text, score in itertools.izip(negative_samples, negative_scores):
+    for text, score in zip(negative_samples, negative_scores):
         # All but the last bin is half-open, i.e. looks like [a, b)
         index = bisect.bisect_right(negative_bin_edges, score) - 1
         if index == HISTOGRAM_BINS:
@@ -456,7 +456,7 @@ def _build_classifier_confidence_distribution(clf, X, y):
 
     # Take into account that `numpy.ndarray` "is not JSON serializable"
     return {
-        'histogram': map(np.ndarray.tolist, histogram),
+        'histogram': list(map(np.ndarray.tolist, histogram)),
         'samples': samples,
         'range': histogram_options['range']
     }
@@ -557,7 +557,7 @@ def train_classifier(session_key, clf_uuid):
         # Test predictions were already flipped, so ground truth test labels
         # must also be flipped, since the reverse flag exchanges the meaning
         # between positive and negative labels
-        y_test_full = map(operator.not_, y_test_full)
+        y_test_full = list(map(operator.not_, y_test_full))
 
     test_predictions = clf.predict(X_test_full)
 
@@ -650,7 +650,7 @@ def plot_classifier_decision_function(session_key, clf_uuid):
     if clf.reverse:
         # Ground truth test labels must be flipped, since the reverse flag
         # exchanges the meaning between positive and negative labels
-        y_test_full = map(operator.not_, y_test_full)
+        y_test_full = list(map(operator.not_, y_test_full))
 
     # Build the distribution of negative/positive (test) samples
     # over the confidence axis (an interactive histogram
@@ -807,7 +807,7 @@ def make_combined_predictions(experiment_pk, tag, samples):
                        'for tag=%s is not mature yet', experiment_pk, tag)
 
     # `numpy.bool_` "is not JSON serializable"
-    return map(bool, predictions)
+    return list(map(bool, predictions))
 
 
 # OnlineLearner API
@@ -839,8 +839,8 @@ def learner_facade_get_all(user_pk=None, active_only=None, mature_only=None,
     }
     # Optimize things significantly
     options['preload'] = False
-    return map(lambda lf: lf.db_model.to_dict(),
-               LearnerFacade.get_all(user, **options))
+    return list(map(lambda lf: lf.db_model.to_dict(),
+               LearnerFacade.get_all(user, **options)))
 
 
 @shared_task
@@ -851,12 +851,12 @@ def learner_facade_train(user_pk, tag, texts, labels, flags=None,
     if flags is None:
         flags = [None] * len(texts)
     capsules = [Capsule(text=t, flags=fs)
-                for t, fs in itertools.izip(texts, flags)]
+                for t, fs in zip(texts, flags)]
     if isinstance(infered_negatives, dict):
         texts = infered_negatives['texts']
         flags = infered_negatives['flags']
         infered_negative_capsules = [Capsule(text=t, flags=fs)
-                                     for t, fs in itertools.izip(texts, flags)]
+                                     for t, fs in zip(texts, flags)]
     elif isinstance(infered_negatives, list):  # only texts, no flags
         texts = infered_negatives
         infered_negative_capsules = [Capsule(text=t) for t in texts]
@@ -873,13 +873,13 @@ def learner_facade_predict(user_pk, tag, texts, flags=None,
     if flags is None:
         flags = [None] * len(texts)
     capsules = [Capsule(text=t, flags=fs)
-                for t, fs in itertools.izip(texts, flags)]
+                for t, fs in zip(texts, flags)]
     if include_attributes is None:
         include_attributes = False
     predictions = learner_facade.predict(capsules, include_attributes)
     if not include_attributes:
         # `numpy.bool_` "is not JSON serializable"
-        predictions = map(bool, predictions)
+        predictions = list(map(bool, predictions))
     return predictions
 
 

@@ -177,13 +177,13 @@ def export_supervised_dataset(session_key, labeling_task_pk, name, description,
 
     for assignment in assignments:
         if assignment.assignee == labeling_task.owner:  # veto
-            for index, label in itertools.izip(assignment.indices,
+            for index, label in zip(assignment.indices,
                                                assignment.labels):
                 if label is not None:  # i.e. not skipped
                     labels[index] = label
 
         else:  # voting
-            for index, label in itertools.izip(assignment.indices,
+            for index, label in zip(assignment.indices,
                                                assignment.labels):
                 if label is not None:  # i.e. not skipped
                     labels_votings[index][label] += 1
@@ -203,7 +203,7 @@ def export_supervised_dataset(session_key, labeling_task_pk, name, description,
 
     final_texts, final_labels = zip(*[
         (text, int(label))  # convert boolean labels to integer indices
-        for text, label in itertools.izip(texts, labels) if label is not None
+        for text, label in zip(texts, labels) if label is not None
     ])
 
     dataset = Dataset.objects.create(
@@ -276,7 +276,7 @@ def expand_evaluation_score(session_key, assignment_pk, task_uuid):
 
         samples = [
             {'text': text, 'label': label, 'gold': gold}
-            for text, label, gold in itertools.izip(texts, labels, golds)
+            for text, label, gold in zip(texts, labels, golds)
         ]
 
     else:
@@ -295,7 +295,7 @@ def expand_evaluation_score(session_key, assignment_pk, task_uuid):
 def build_index_label_map(assignment):
     return {
         index: label
-        for index, label in itertools.izip(assignment.indices,
+        for index, label in zip(assignment.indices,
                                            assignment.labels)
         if label is not None  # discard skipped samples
     }
@@ -372,7 +372,7 @@ def build_experiment(session_key, assignment_pk, task_uuid):
 
     texts, labels = zip(*[
         (text, int(label))  # convert boolean labels to integer indices
-        for text, label in itertools.izip(assignment.texts, assignment.labels)
+        for text, label in zip(assignment.texts, assignment.labels)
         if label is not None  # discard skipped samples
     ])
 

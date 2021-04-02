@@ -100,7 +100,7 @@ class OnlineDataset(SetSizeMixin, TimeStampedModel):
         if not samples:
             return
         # Save the dataset only once immediately after adding all samples
-        for text, flags, label, infered in itertools.izip(samples['text'],
+        for text, flags, label, infered in zip(samples['text'],
                                                           samples['flags'],
                                                           samples['label'],
                                                           samples['infered']):
@@ -130,7 +130,7 @@ class OnlineDataset(SetSizeMixin, TimeStampedModel):
             self.uuid = str(uuid.uuid4())
         return super(OnlineDataset, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.uuid
 
 
@@ -167,7 +167,7 @@ class OnlineMLModelWrapperBase(MLModelWrapperBase):
 
     def partial_fit(self, X, y):
         classes = None
-        if self.ml_model.classes_ is None:
+        if not hasattr(self.ml_model, "classes_"):
             # On the very first run the classes are not initialized yet
             classes = [True, False]
         return self.ml_model.partial_fit(X, y, classes)
@@ -312,11 +312,16 @@ class OnlineLearner(ModelS3Mixin, SetSizeMixin, TimeStampedModel):
         # When no model is found, None is returned, so replace it with an
         # empty string (another exception will be raised anyway, but at least
         # it will be handled in the try-except block below)
-        serialized_model = manager.read_to_string(model_s3_path) or ''
+        serialized_model = manager.read_to_string(model_s3_path) or b''
 
-        temp_file = StringIO()
+        #temp_file = StringIO()
+        #temp_file.write(serialized_model)
+        #temp_file.seek(0)
+
+        temp_file = BytesIO()
         temp_file.write(serialized_model)
         temp_file.seek(0)
+
 
         try:
             logging.info('Loading online model from S3 path: %s' % model_s3_path)
@@ -331,7 +336,8 @@ class OnlineLearner(ModelS3Mixin, SetSizeMixin, TimeStampedModel):
 
         model_s3_path = self.model_s3.split(':')[1]
 
-        temp_file = StringIO()
+        #temp_file = StringIO()
+        temp_file = BytesIO()
 
         logging.info('Saving online model to S3 path: %s' % model_s3_path)
         self.serialize_ml_model(ml_model, temp_file)
@@ -354,7 +360,7 @@ class OnlineLearner(ModelS3Mixin, SetSizeMixin, TimeStampedModel):
             self.dataset.save()
         return super(OnlineLearner, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'OL: [%s] %s' % (self.owner, self.tag)
 
 
@@ -581,9 +587,13 @@ class AbstractPretrainedLearner(ModelS3Mixin, VectorizerS3Mixin, TimeStampedMode
         # When no model is found, None is returned, so replace it with an
         # empty string (another exception will be raised anyway, but at least
         # it will be handled in the try-except block below)
-        serialized_model = manager.read_to_string(model_s3_path) or ''
+        serialized_model = manager.read_to_string(model_s3_path) or b''
 
-        temp_file = StringIO()
+        #temp_file = StringIO()
+        #temp_file.write(serialized_model)
+        #temp_file.seek(0)
+
+        temp_file = BytesIO()
         temp_file.write(serialized_model)
         temp_file.seek(0)
 
@@ -619,9 +629,13 @@ class AbstractPretrainedLearner(ModelS3Mixin, VectorizerS3Mixin, TimeStampedMode
         # When no vectorizer is found, None is returned, so replace it with an
         # empty string (another exception will be raised anyway, but at least
         # it will be handled in the try-except block below)
-        serialized_vectorizer = manager.read_to_string(vectorizer_s3_path) or ''
+        serialized_vectorizer = manager.read_to_string(vectorizer_s3_path) or b''
 
-        temp_file = StringIO()
+        #temp_file = StringIO()
+        #temp_file.write(serialized_vectorizer)
+        #temp_file.seek(0)
+
+        temp_file = BytesIO()
         temp_file.write(serialized_vectorizer)
         temp_file.seek(0)
 
@@ -686,7 +700,7 @@ class PretrainedLearner(AbstractPretrainedLearner):
     def is_mature(self):
         return True
 
-    def __unicode__(self):
+    def __str__(self):
         return u'PL: %s' % self.tag
 
 
@@ -714,7 +728,7 @@ class LearnerAttribute(AbstractPretrainedLearner):
     def stored_vectorizer_name(cls, tag):
         return 'attrs/vectorizer_%s_attr.pkl' % tag
 
-    def __unicode__(self):
+    def __str__(self):
         return u'LearnerAttribute [%s/%s]' % (self.tag or self.parent_learner.tag, self.name)
 
     def to_dict(self):

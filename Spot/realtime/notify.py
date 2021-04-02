@@ -117,7 +117,7 @@ class NotificationManager:
         return {
             'message': message,
             'event_name': event_name,
-            'message_uuid': unicode(uuid.uuid4())
+            'message_uuid': str(uuid.uuid4())
         }
 
     @classmethod
