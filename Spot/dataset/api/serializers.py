@@ -35,7 +35,7 @@ class DatasetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dataset
         read_only_fields = ['uuid']
-        exclude = ['samples', 'samples_count']
+        exclude = ['samples_count']
 
     def get_owner_username(self, obj):
         return obj.owner.username
@@ -212,4 +212,4 @@ class AssignmentSerializerOutput(AssignmentSerializerOutputSimple):
     class Meta:
         model = Assignment
         exclude = ['stages', 'stages_count', 'labeled_samples_count',
-                   'skipped_samples_count', 'labeling_task', 'score']
+                   'skipped_samples_count', 'score']

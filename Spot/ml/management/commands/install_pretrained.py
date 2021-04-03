@@ -10,15 +10,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # TODO: make sure to delete these lines as soon as possible
-        print 'Not working yet!'
+        print('Not working yet!')
         return
 
-        print
-        print '=' * 80
-        print
+        print()
+        print('=' * 80)
+        print()
 
         for u in User.objects.order_by('username'):
-            print 'Installing for user: %s' % u
+            print('Installing for user: %s' % u)
 
             for pl in LearnerFacade.get_all(preload=False):
                 if pl.db_model.exclusivity and pl.db_model.exclusivity != u.username:
@@ -30,12 +30,12 @@ class Command(BaseCommand):
 
                 ol = OnlineLearner.objects.filter(tag=tag, owner=u).last()
                 if not ol:
-                    print '>>> Adding learner for tag: %s' % tag
+                    print('>>> Adding learner for tag: %s' % tag)
                     LearnerFacade.get_or_create(tag, u, preload=False)
                 elif not ol.pretrained:
                     ol.pretrained = True
                     ol.save()
 
-            print
-            print '=' * 80
-            print
+            print()
+            print('=' * 80)
+            print()
