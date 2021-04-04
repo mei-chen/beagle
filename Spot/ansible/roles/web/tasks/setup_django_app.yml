@@ -1,10 +1,10 @@
 ---
 
-- name: Upgrade setuptools
-  pip: name=setuptools state=latest virtualenv={{ virtualenv_path }}
+#- name: Upgrade setuptools
+#  pip: name=setuptools state=latest virtualenv={{ virtualenv_path }}
 
-- name: Install packages required by the Django app inside virtualenv
-  pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
+#- name: Install packages required by the Django app inside virtualenv
+#  pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
 
 - name: Create the production django settings file
   template: src=production_settings.j2

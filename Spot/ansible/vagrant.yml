@@ -26,8 +26,8 @@
       SYSLOG: 1
 
   roles:
-    - base
+    #- base
     - postgres
     - redis
-    - node
+    #- node
     - web
