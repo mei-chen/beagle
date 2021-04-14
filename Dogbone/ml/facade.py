@@ -159,11 +159,11 @@ class LearnerFacade:
                     pass
         if should_retrain:
             # Now that the dataset is consistent again, retrain
-            self.ml_model.reset(initial_samples=zip(
+            self.ml_model.reset(initial_samples=list(zip(
                 self.db_model.samples['text'],
                 self.db_model.samples['flags'],
                 self.db_model.samples['label'],
-            ))
+            )))
 
     def _fit_samples(self, texts, flags, labels, infered=False):
         for txt, flg, lbl in zip(texts, flags, labels):
@@ -348,11 +348,11 @@ class LearnerFacade:
         # Don't remove, change to negative and retrain
         self.db_model.samples['label'][sample_idx] = False
 
-        self.ml_model.reset(initial_samples=zip(
+        self.ml_model.reset(initial_samples=list(zip(
             self.db_model.samples['text'],
             self.db_model.samples['flags'],
             self.db_model.samples['label'],
-        ))
+        )))
 
         self.db_model.save()
         self.ml_model.save_online_model()

@@ -73,11 +73,13 @@ class HandleCloudFile:
                                                     time_zone=None)
 
         store_activity_notification.delay(
-            actor=queue_obj.folder.user,
-            recipient=queue_obj.folder.user,
+            actor_id=queue_obj.folder.user.id,
+            recipient_id=queue_obj.folder.user.id,
             verb='started processing',
-            target=document,
-            action_object=document,
+            target_id=document.id,
+            target_type="Document",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string='%s watcher (verb) of (action_object)' % CloudTypes.HUMAN_READABLE[cloud]
         )
 

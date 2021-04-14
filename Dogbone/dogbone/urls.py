@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^', include('portal.urls')),
     url(r'^adm/office/', admin.site.urls),
     url(r'^realtime', include('beagle_realtime.urls')),
-    url(r'^api/v1', include('api_v1.urls')),
+    url(r'^api/v1/', include('api_v1.urls')),
     url(r'^reports/', include('django_reports.urls')),
     url(r'^payments/paypal/', include('paypal.standard.ipn.urls')),
     url(r'^watchman/', include(('watchman.urls', 'watchman'), namespace='watchman')),

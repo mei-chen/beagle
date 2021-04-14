@@ -60,7 +60,7 @@ class Report(object):
 
     def is_valid(self):
         if self.__class__.form_class is not None:
-            return self.form.is_valid
+            return self.form.is_valid()
         return True
 
     def generate(self, **kwargs):

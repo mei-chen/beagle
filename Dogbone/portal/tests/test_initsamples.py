@@ -13,7 +13,7 @@ class InitSamplesTest(TestCase):
         """ Checks that the celery task that inits the sample docs is called """
         with mock.patch('core.tasks.initialize_sample_docs.delay') as mock_task:
             user = User.objects.create(username='Tester1')
-            mock_task.assert_called_once_with(user)
+            mock_task.assert_called_once_with(user.id)
 
     # TODO: unskip this when we add initial samples back
     @skip('No docs to test on at the moment')

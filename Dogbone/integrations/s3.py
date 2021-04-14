@@ -63,8 +63,6 @@ class S3FileManager(object):
 
 
         # create the client
-        print(self.ACCESS_KEY_ID)
-        print(self.SECRET_ACCESS_KEY)
         self.s3_client = boto3.client('s3', config=config,aws_access_key_id=self.ACCESS_KEY_ID, aws_secret_access_key=self.SECRET_ACCESS_KEY)
 
         # create the bucket if it does not exist
@@ -79,6 +77,7 @@ class S3FileManager(object):
                 self.s3_client.create_bucket(Bucket=self.BUCKET_NAME)
                 if cors_conf is not None:
                     self.s3_client.put_bucket_cors(Bucket=self.BUCKET_NAME, CORSConfiguration=cors_conf)
+                return
             raise e
 
 
@@ -152,7 +151,7 @@ class S3FileManager(object):
         # read string content of file
         try: 
             response = self.s3_client.get_object(Bucket=self.BUCKET_NAME, Key=key)
-            return response['Body'].read().decode('utf-8')
+            return response['Body'].read()
         except botocore.exceptions.ClientError as e:
             error_code = int(e.response['Error']['Code'])
             if error_code == 404:

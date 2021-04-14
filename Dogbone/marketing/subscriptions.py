@@ -14,12 +14,11 @@ class MetaSubscription(type):
                (self.name, self.description)
 
 
-class Subscription:
+class Subscription(metaclass=MetaSubscription):
 
     def __init__(self):
         pass
 
-    __metaclass__ = MetaSubscription
     __abstract__ = True
 
     # Naming

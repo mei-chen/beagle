@@ -71,17 +71,17 @@ class BeagleWebTest(TestCase):
             'portal.middleware.UserTimezoneMiddleware.process_request',
             side_effect=lambda *args, **kwargs: None
         )
-        cls.visitor_tracking_middleware_patcher = mock.patch(
-            'tracking.middleware.VisitorTrackingMiddleware.process_request',
-            side_effect=lambda *args, **kwargs: None
-        )
+        #cls.visitor_tracking_middleware_patcher = mock.patch(
+        #    'tracking.middleware.VisitorTrackingMiddleware.process_request',
+        #    side_effect=lambda *args, **kwargs: None
+        #)
 
         cls.user_time_zone_middleware_patcher.start()
-        cls.visitor_tracking_middleware_patcher.start()
+        #cls.visitor_tracking_middleware_patcher.start()
 
     @classmethod
     def tearDownClass(cls):
-        cls.visitor_tracking_middleware_patcher.stop()
+        #cls.visitor_tracking_middleware_patcher.stop()
         cls.user_time_zone_middleware_patcher.stop()
 
         cls.cache_delete_patcher.stop()
@@ -106,9 +106,9 @@ class BeagleWebTest(TestCase):
         if content is None:
             content = cls.DUMMY_TEXT_FILE
 
-        io = StringIO.StringIO()
-        io.write(content)
-        text_file = InMemoryUploadedFile(io, None, title, 'text/plain', io.len, None)
+        io = StringIO()
+        size = io.write(content)
+        text_file = InMemoryUploadedFile(io, None, title, 'text/plain', size, None)
         text_file.seek(0)
         return text_file
 

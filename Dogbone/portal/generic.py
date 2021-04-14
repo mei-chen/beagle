@@ -169,7 +169,7 @@ class RegisterView(View):
                         # Override the coupon code in the query params
                         query_params = dict(urllib.parse.parse_qsl(parsed_url.query))
                         query_params['coupon'] = register_form.coupon.code
-                        rebuilt_url = '%s?%s' % (parsed_url.path, urllib.urlencode(query_params.items()))
+                        rebuilt_url = '%s?%s' % (parsed_url.path, urllib.parse.urlencode(query_params.items()))
 
                         return redirect(rebuilt_url)
 

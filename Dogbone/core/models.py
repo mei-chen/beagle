@@ -40,7 +40,7 @@ from core.signals import (
 )
 from core.exceptions import TooManyCommentsException
 from dogbone.tools import lazydict
-from utils.django_utils.model_utils import PendingModel, TrashableModel
+from utils.django_utils.model_utils import PendingModel, TrashableModel, NotTrashManager
 from beagle_realtime.notifications import NotificationManager
 from beagle_bot.tasks import ask_beagle
 from integrations.s3 import get_s3_bucket_manager
@@ -134,7 +134,7 @@ class NotTrashLightweightManager(models.Manager):
     - Makes the objects much more lightweight when loaded in memory
     """
 
-    def get_query_set(self):
+    def get_queryset(self):
         return super(NotTrashLightweightManager, self).get_queryset() \
             .defer('cached_analysis') \
             .defer('sents') \
@@ -142,6 +142,7 @@ class NotTrashLightweightManager(models.Manager):
 
 
 class Batch(TimeStampedModel, TrashableModel, PendingModel):
+
     # The name of the batch
     name = models.CharField(max_length=200, null=False)
 
@@ -378,6 +379,7 @@ def invalidate_batch_owner_cache_on_delete(sender, **kwargs):
 
 
 class Document(TimeStampedModel, TrashableModel, PendingModel):
+
     # How the document was originally named
     original_name = models.CharField('Original Name', max_length=300)
 
@@ -510,7 +512,7 @@ class Document(TimeStampedModel, TrashableModel, PendingModel):
 
         document.save()
 
-        process_document_conversion.delay(document.pk, file_path, send_notifications)
+        process_document_conversion(document.pk, file_path, send_notifications)
 
         return document
 
@@ -2189,20 +2191,24 @@ def notify_external_invite_transformed(sender, external_invite, collaboration_in
     from .tasks import store_activity_notification
 
     store_activity_notification.delay(
-        actor=collaboration_invite.invitee,
-        recipient=collaboration_invite.inviter,
+        actor_id=collaboration_invite.invitee.id,
+        recipient_id=collaboration_invite.inviter.id,
         verb='joined',
-        target=collaboration_invite.inviter,
-        action_object=collaboration_invite.document,
+        target_id=collaboration_invite.inviter.id,
+        target_type="User",
+        action_object_id=collaboration_invite.document.id,
+        action_object_type="Document",
         render_string="(actor) joined (target) on (action_object)",
         transient=False)
 
     store_activity_notification.delay(
-        actor=collaboration_invite.invitee,
-        recipient=collaboration_invite.invitee,
+        actor_id=collaboration_invite.invitee.id,
+        recipient_id=collaboration_invite.invitee.id,
         verb='joined',
-        target=collaboration_invite.inviter,
-        action_object=collaboration_invite.document,
+        target_id=collaboration_invite.inviter.id,
+        target_type="User",
+        action_object_id=collaboration_invite.document.id,
+        action_object_type="Document",
         render_string="(actor) joined (target) on (action_object)",
         transient=False)
 
@@ -2212,11 +2218,13 @@ def notify_collaboration_invite_creation(sender, instance, *args, **kwargs):
     from .tasks import store_activity_notification
     if kwargs.get('created', False):
         store_activity_notification.delay(
-            actor=instance.inviter,
-            recipient=instance.invitee,
+            actor_id=instance.inviter.id,
+            recipient_id=instance.invitee.id,
             verb='invited',
-            target=instance.invitee,
-            action_object=instance.document,
+            target_id=instance.invitee.id,
+            target_type="User",
+            action_object_id=instance.document.id,
+            action_object_type="Document",
             render_string="(actor) invited (target) to collaborate on (action_object)",
             transient=False)
 
@@ -2234,11 +2242,13 @@ def notify_sentence_liked(sender, **kwargs):
 
     for notified_user in all_users:
         store_activity_notification.delay(
-            actor=user,
-            recipient=notified_user,
+            actor_id=user.id,
+            recipient_id=notified_user.id,
             verb='liked',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) liked a clause on (action_object)",
             transient=False)
 
@@ -2256,11 +2266,13 @@ def notify_sentence_disliked(sender, **kwargs):
 
     for notified_user in all_users:
         store_activity_notification.delay(
-            actor=user,
-            recipient=notified_user,
+            actor_id=user.id,
+            recipient_id=notified_user.id,
             verb='liked',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) disliked a clause on (action_object)",
             transient=False)
 
@@ -2276,11 +2288,13 @@ def notify_sentence_accepted(sender, **kwargs):
 
     for notified_user in all_users:
         store_activity_notification.delay(
-            actor=owner,
-            recipient=notified_user,
+            actor_id=owner.id,
+            recipient_id=notified_user.id,
             verb='accepted',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) accepted a clause on (action_object)",
             transient=False)
 
@@ -2296,11 +2310,13 @@ def notify_sentence_rejected(sender, **kwargs):
 
     for notified_user in all_users:
         store_activity_notification.delay(
-            actor=owner,
-            recipient=notified_user,
+            actor_id=owner.id,
+            recipient_id=notified_user.id,
             verb='rejected',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) rejected a clause on (action_object)",
             transient=False)
 
@@ -2318,11 +2334,13 @@ def notify_sentence_edited(sender, **kwargs):
 
     for notified_user in all_users:
         store_activity_notification.delay(
-            actor=author,
-            recipient=notified_user,
+            actor_id=author.id,
+            recipient_id=notified_user.id,
             verb='edited',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) edited a clause on (action_object)",
             transient=False)
 
@@ -2411,11 +2429,13 @@ def process_comment_posted(sender, **kwargs):
             logging.info('process_comment_posted: storing new mention notification: %s', str(mentioned_user))
 
             store_activity_notification.delay(
-                actor=author,
-                recipient=mentioned_user,
+                actor_id=author.id,
+                recipient_id=mentioned_user.id,
                 verb='mentioned',
-                target=mentioned_user,
-                action_object=sentence,
+                target_id=mentioned_user.id,
+                target_type="User",
+                action_object_id=sentence.id,
+                action_object_type="Sentence",
                 render_string="(actor) mentioned (target) in a comment on (action_object)",
                 transient=False,
                 created=created)
@@ -2463,11 +2483,13 @@ def process_collaboration_invite_delete(sender, **kwargs):
         ).delete()
 
     store_activity_notification.delay(
-        actor=actor,
-        recipient=recipient,
+        actor_id=actor.id,
+        recipient_id=recipient.id,
         verb=verb,
-        target=target,
-        action_object=action_object,
+        target_id=target.id,
+        target_type="User",
+        action_object_id=action_object.id,
+        action_object_type="Document",        
         render_string=render_string,
         transient=False
     )

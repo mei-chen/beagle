@@ -30,7 +30,7 @@ class ResetPasswordTest(BeagleWebTest):
         """ Check that the form contains the appropriate field """
         response = self.client.get(reverse('reset_password'))
         self.assertIn('<input class="form-control" id="id_email" name="email" placeholder="Email Address" type="text" />',
-                      response.content)
+                      response.content.decode('utf-8'))
 
     def test_reset_password_redirect_logged_in(self):
         """ Check that if logged in we get a redirect to the dashboard """

@@ -2,14 +2,14 @@ from django.db import models
 
 
 class PendingManager(models.Manager):
-    def get_query_set(self):
-        return super(PendingManager, self).get_query_set().filter(
+    def get_queryset(self):
+        return super(PendingManager, self).get_queryset().filter(
             pending=True)
 
 
 class ReadyManager(models.Manager):
-    def get_query_set(self):
-        return super(ReadyManager, self).get_query_set().filter(
+    def get_queryset(self):
+        return super(ReadyManager, self).get_queryset().filter(
             pending=False)
 
 
@@ -17,16 +17,16 @@ class TrashManager(models.Manager):
     """
     Get all objects that are deleted
     """
-    def get_query_set(self):
-        return super(TrashManager, self).get_query_set().filter(trash=True)
+    def get_queryset(self):
+        return super(TrashManager, self).get_queryset().filter(trash=True)
 
 
 class NotTrashManager(models.Manager):
     """
     Get all objects that aren't deleted
     """
-    def get_query_set(self):
-        return super(NotTrashManager, self).get_query_set().filter(trash=False)
+    def get_queryset(self):
+        return super(NotTrashManager, self).get_queryset().filter(trash=False)
 
 
 class PendingModel(models.Model):
@@ -55,7 +55,6 @@ class PendingModel(models.Model):
 
     class Meta:
         abstract = True
-
 
 class TrashableModel(models.Model):
     """

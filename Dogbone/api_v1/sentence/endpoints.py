@@ -318,7 +318,7 @@ class SentenceTagsView(SentenceMixin, ActionView):
         self.user.details.add_tag(label)
 
         # Train the appropriate Online Learner
-        onlinelearner_train_task.delay(label, self.user, self.instance, kwargs['s_idx'])
+        onlinelearner_train_task.delay(label, self.user.id, self.instance.id, kwargs['s_idx'])
 
         # Also send socket notif for everybody else to receive changes
         self.send_notification(self.get_sentence_index(request, *args, **kwargs),
@@ -366,16 +366,16 @@ class SentenceTagsView(SentenceMixin, ActionView):
         if annotation:
             if atype == SentenceAnnotations.MANUAL_TAG_TYPE:
                 # Remove the sample and retrain the appropriate Online Learner
-                onlinelearner_removesample_task.delay(label, request.user, self.instance, kwargs['s_idx'])
+                onlinelearner_removesample_task.delay(label, request.user.id, self.instance.id, kwargs['s_idx'])
 
             elif atype == SentenceAnnotations.SUGGESTED_TAG_TYPE:
                 experiment_uuid = annotation.get('experiment_uuid')
                 if experiment_uuid:
                     # Reject the tag suggested by the Spot experiment
-                    spot_experiment_reject_sentence.delay(experiment_uuid, self.instance)
+                    spot_experiment_reject_sentence.delay(experiment_uuid, self.instance.id)
                 else:
                     # Train the appropriate Online Learner with neg sample
-                    onlinelearner_negative_train_task.delay(label, request.user, self.instance, kwargs['s_idx'])
+                    onlinelearner_negative_train_task.delay(label, request.user.id, self.instance.id, kwargs['s_idx'])
 
             # Also send socket notif for everybody else to receive changes
             self.send_notification(sentence_idx, self.instance)
@@ -461,10 +461,10 @@ class SentenceSuggestedTagsView(SentenceMixin, ActionView, PutDetailModelMixin):
             experiment_uuid = annotation.get('experiment_uuid')
             if experiment_uuid:
                 # Reject the tag suggested by the Spot experiment
-                spot_experiment_reject_sentence.delay(experiment_uuid, self.instance)
+                spot_experiment_reject_sentence.delay(experiment_uuid, self.instance.id)
             else:
                 # Train the appropriate Online Learner with neg sample
-                onlinelearner_negative_train_task.delay(label, request.user, self.instance, kwargs['s_idx'])
+                onlinelearner_negative_train_task.delay(label, request.user.id, self.instance.id, kwargs['s_idx'])
 
             # Also send socket notif for everybody else to receive changes
             self.send_notification(sentence_idx, self.instance)
@@ -523,10 +523,10 @@ class SentenceSuggestedTagsView(SentenceMixin, ActionView, PutDetailModelMixin):
 
         if experiment_uuid:
             # Accept the tag suggested by the Spot experiment
-            spot_experiment_accept_sentence.delay(label, experiment_uuid, self.instance, kwargs['s_idx'])
+            spot_experiment_accept_sentence.delay(label, experiment_uuid, self.instance.id, kwargs['s_idx'])
         else:
             # Train the appropriate Online Learner
-            onlinelearner_train_task.delay(label, self.user, self.instance, kwargs['s_idx'])
+            onlinelearner_train_task.delay(label, self.user.id, self.instance.id, kwargs['s_idx'])
 
         # Also send socket notification for everybody else to receive changes
         self.send_notification(
@@ -613,7 +613,7 @@ class SentenceBulkTagsView(ActionView):
 
                 self.user.details.add_tag(label)
 
-                onlinelearner_train_task.delay(label, self.user, sentence, sentence_idx)
+                onlinelearner_train_task.delay(label, self.user.id, sentence.id, sentence_idx)
 
             response['sentences'].append(sentence_instance)
             payload['sentences'].append(sentence.to_dict())
@@ -675,11 +675,11 @@ class SentenceBulkTagsView(ActionView):
                         experiment_uuid = annotation_full.get('experiment_uuid')
                         if experiment_uuid:
                             # Reject the tag suggested by the Spot experiment
-                            spot_experiment_reject_sentence.delay(experiment_uuid, sentence)
+                            spot_experiment_reject_sentence.delay(experiment_uuid, sentence.id)
                         else:
-                            onlinelearner_negative_train_task.delay(label, request.user, sentence, sentence_idx)
+                            onlinelearner_negative_train_task.delay(label, request.user.id, sentence.id, sentence_idx)
                     else:
-                        onlinelearner_removesample_task.delay(label, request.user, sentence, sentence_idx)
+                        onlinelearner_removesample_task.delay(label, request.user.id, sentence.id, sentence_idx)
                 else:
                     not_found_annotations.append(annotation)
 
@@ -764,10 +764,10 @@ class SentenceBulkTagsView(ActionView):
 
                 if experiment_uuid:
                     # Accept the tag suggested by the Spot experiment
-                    spot_experiment_accept_sentence.delay(label, experiment_uuid, sentence, sentence_idx)
+                    spot_experiment_accept_sentence.delay(label, experiment_uuid, sentence.id, sentence_idx)
                 else:
                     # Train the appropriate Online Learner
-                    onlinelearner_train_task.delay(label, request.user, sentence, sentence_idx)
+                    onlinelearner_train_task.delay(label, request.user.id, sentence.id, sentence_idx)
 
             response['sentences'].append(sentence_instance)
             payload['sentences'].append(sentence.to_dict())

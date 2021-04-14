@@ -28,6 +28,7 @@ def strings(filename, min=4):
     with open(filename, "rb") as f:
         result = ""
         for c in f.read():
+            c = str(c)
             if c in string.printable:
                 result += c
                 continue
@@ -142,11 +143,12 @@ def pdf_to_docx(filename):
 
     upload = os.path.abspath(filename)
     need_ocr = requires_ocr(upload)
-
+    if not os.path.isfile(upload):
+        raise Exception('File %s does not exist.' % upload)
     if need_ocr:
         logging.info('Document %s needs OCR' % filename)
         try:
-            pdfin = open(upload)
+            pdfin = open(upload, "rb")
             reader = PyPDF2.PdfFileReader(pdfin)
             num_pages = reader.getNumPages()
         except Exception as e:

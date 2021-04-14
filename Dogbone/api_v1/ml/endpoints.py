@@ -25,7 +25,7 @@ class OnlineLearnerViewMixin(object):
 
     @classmethod
     def key_getter(cls, request, *args, **kwargs):
-        return urllib.unquote(kwargs[cls.url_key_name])
+        return urllib.parse.unquote(kwargs[cls.url_key_name])
 
     def get_object(self, request, *args, **kwargs):
         return self.model.objects.get(**{
@@ -67,7 +67,7 @@ class OnlineLearnerSamplesDetailView(OnlineLearnerViewMixin,
     endpoint_name = 'online_learner_samples_detail_view'
 
     def to_dict(self, instance):
-        return {'samples': zip(instance.samples['text'], instance.samples['label']) if instance.samples else []}
+        return {'samples': list(zip(instance.samples['text'], instance.samples['label'])) if instance.samples else []}
 
 
 class OnlineLearnerActiveView(OnlineLearnerViewMixin,

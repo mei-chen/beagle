@@ -25,11 +25,13 @@ class NotificationTaskTest(BeagleWebTest):
                         return_value=return_mock) as _:
 
             store_activity_notification(
-                actor=self.user,
-                recipient=self.user,
+                actor_id=self.user.id,
+                recipient_id=self.user.id,
                 verb=' invited ',
-                target=other_user,
-                action_object=document,
+                target_id=other_user.id,
+                target_type="User",
+                action_object_id=document.id,
+                action_object_type="Document",
                 render_string='(actor) invited (target) to collaborate on (action_object)',
             )
             sessions = [s.session_key for s in Session.objects.all()]
@@ -233,30 +235,35 @@ class AutoMarkAsReadNotificationTest(BeagleWebTest):
 
         # The invited user comments on the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user comments on the sentence again
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user likes the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='liked',
-            target=sentence,
+            target_id=sentence.id,
+            target_type="Sentence",
             render_string="(actor) liked (target)",
             transient=False)
 
@@ -303,30 +310,35 @@ class AutoMarkAsReadNotificationTest(BeagleWebTest):
 
         # The invited user comments on the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user comments on the sentence again
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user likes the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='liked',
-            target=sentence,
+            target_id=sentence.id,
+            target_type="Sentence",
             render_string="(actor) liked (target)",
             transient=False)
 
@@ -376,30 +388,35 @@ class AutoMarkAsReadNotificationTest(BeagleWebTest):
 
         # The invited user comments on the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user comments on the sentence again
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user likes the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='liked',
-            target=sentence,
+            target_id=sentence.id,
+            target_type="Sentence",
             render_string="(actor) liked (target)",
             transient=False)
 
@@ -445,30 +462,35 @@ class AutoMarkAsReadNotificationTest(BeagleWebTest):
 
         # The invited user comments on the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user comments on the sentence again
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='mentioned',
-            target=self.user,
-            action_object=sentence,
+            target_id=self.user.id,
+            target_type="User",
+            action_object_id=sentence.id,
+            action_object_type="Sentence",
             render_string="(actor) mentioned (target) in a comment on (action_object)",
             transient=False)
 
         # The invited user likes the sentence
         store_activity_notification(
-            actor=other_user,
-            recipient=self.user,
+            actor_id=other_user.id,
+            recipient_id=self.user.id,
             verb='liked',
-            target=sentence,
+            target_id=sentence.id,
+            target_type="Sentence",
             render_string="(actor) liked (target)",
             transient=False)
 

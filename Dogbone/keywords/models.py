@@ -11,16 +11,16 @@ class ActiveManager(models.Manager):
     """
     Get all objects that are active
     """
-    def get_query_set(self):
-        return super(ActiveManager, self).get_query_set().filter(active=True)
+    def get_queryset(self):
+        return super(ActiveManager, self).get_queryset().filter(active=True)
 
 
 class InactiveManager(models.Manager):
     """
     Get all objects that aren't active
     """
-    def get_query_set(self):
-        return super(InactiveManager, self).get_query_set().filter(active=False)
+    def get_queryset(self):
+        return super(InactiveManager, self).get_queryset().filter(active=False)
 
 
 class ActiveModel(models.Model):

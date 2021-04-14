@@ -95,7 +95,7 @@ class InboxMarkAllView(ActionView):
 
         if request_data.get('read'):
             self.user.notifications.all().mark_all_as_read()
-            fully_refresh_persistent_notifications.delay(self.user)
+            fully_refresh_persistent_notifications.delay(self.user.id)
         elif request_data.get('unread'):
             self.user.notifications.all().mark_all_as_unread()
 

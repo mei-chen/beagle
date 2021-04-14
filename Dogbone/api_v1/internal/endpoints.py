@@ -41,7 +41,7 @@ class InternalUserDetailView(DetailView):
 
     def get_object(self, request, *args, **kwargs):
         try:
-            identifier = urllib.unquote(kwargs['identifier'])
+            identifier = urllib.parse.unquote(kwargs['identifier'])
         except KeyError:
             raise self.BadRequestException("Please provide a valid identifier")
 
@@ -180,7 +180,7 @@ class InternalAddSubscriptionActionView(ActionView):
         return model
 
     def get_object(self, request, *args, **kwargs):
-        identifier = urllib.unquote(kwargs['identifier'])
+        identifier = urllib.parse.unquote(kwargs['identifier'])
         user = get_user_by_identifier(identifier)
 
         if user is None:
@@ -219,7 +219,7 @@ class InternalNotifyUserView(ActionView):
         return None
 
     def get_object(self, request, *args, **kwargs):
-        identifier = urllib.unquote(kwargs['identifier'])
+        identifier = urllib.parse.unquote(kwargs['identifier'])
         user = get_user_by_identifier(identifier)
 
         if user is None:

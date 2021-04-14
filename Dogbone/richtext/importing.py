@@ -61,7 +61,7 @@ def get_named_styles_from_docx(filename):
 
         stylestext = zin.read(DOCX_STYLES_FNAME)
         parsed = BeautifulSoup(stylestext)
-        xmlstyles = parsed.find_all('w:style')
+        xmlstyles = parsed.find_all({'w:style'})
 
         for s in xmlstyles:
             styles[s['w:styleid']] = extract_style_from_node(s)
@@ -244,7 +244,7 @@ def source_handler(source):
 
             filename, extension = os.path.splitext(file_url)
             filename = filename[filename.rfind('/')+1:]
-            filename = urllib.unquote(filename).decode('utf8')
+            filename = urllib.parse.unquote(filename)
             original_filename = "%s%s" % (filename, extension)
 
             temp_file_handle = tempfile.TemporaryFile()
@@ -367,7 +367,7 @@ def conversion_handler(file_extension):
             tempfilename = filename + '.doc'
 
             with open(filename, 'rb') as read_file:
-                with open(tempfilename, 'w+') as doc_tempfile:
+                with open(tempfilename, 'wb+') as doc_tempfile:
                     doc_tempfile.write(read_file.read())
                 read_file.seek(0)
                 document.save_doc(read_file)
@@ -383,13 +383,13 @@ def conversion_handler(file_extension):
             tempfilename = filename + '.pdf'
 
             with open(filename, 'rb') as read_file:
-                with open(tempfilename, 'w+') as pdf_tempfile:
+                with open(tempfilename, 'wb+') as pdf_tempfile:
                     pdf_tempfile.write(read_file.read())
                 read_file.seek(0)
                 document.save_pdf(read_file)
 
             # First convert to a docx file
-            docxfile = utils.conversion.pdf_to_docx(tempfilename)
+            docxfile = utils.conversion.pdf_to_docx(filename)
             converter_class = DocXConverter
             if docxfile.endswith('.txt'):
                 # External APIs for converting pdf to docx were not available,

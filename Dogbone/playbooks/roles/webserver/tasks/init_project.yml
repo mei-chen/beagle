@@ -20,33 +20,33 @@
   when:
     - env != "vagrant"  # Avoid cloning as the files are already synced
 
-- name: "Permissions on {{ virtualenv_path }}"
-  file:
-    state=directory
-    path="{{ virtualenv_path }}"
-    owner="{{ run_user }}"
-    group="{{ run_user }}"
-    mode=2775
-  become: true
-  become_user: root
+#- name: "Permissions on {{ virtualenv_path }}"
+#  file:
+#    state=directory
+#    path="{{ virtualenv_path }}"
+#    owner="{{ run_user }}"
+#    group="{{ run_user }}"
+#    mode=2775
+#  become: true
+#  become_user: root
 
-- name: Upgrade pip in virtualenv
-  pip:
-    name=pip
-    state=latest
-    virtualenv="{{ virtualenv_path }}"
-  tags: packages
+#- name: Upgrade pip in virtualenv
+#  pip:
+#    name=pip
+#    state=latest
+#    virtualenv="{{ virtualenv_path }}"
+#  tags: packages
 
-- name: Upgrade setuptools in virtualenv
-  pip:
-    name=setuptools
-    state=latest
-  tags: packages
+#- name: Upgrade setuptools in virtualenv
+#  pip:
+#    name=setuptools
+#    state=latest
+#  tags: packages
 
-- name: Pip the Packages
-  pip:
-    requirements="{{ app_location }}/requirements.txt"
-    virtualenv="{{ virtualenv_path }}"
+#- name: Pip the Packages
+#  pip:
+#    requirements="{{ app_location }}/requirements.txt"
+#    virtualenv="{{ virtualenv_path }}"
 
 - name: "Permissions on {{ app_env.NLTK_DATA }}"
   file:

@@ -10,6 +10,8 @@ from authentication.models import AuthToken
 
 
 class AllowedActionsTestCase(BeagleWebTest):
+
+    #TODO: broken url
     def test_url_send_for_extension_user(self):
         """
         Check if a chrome extension user can upload a document via API

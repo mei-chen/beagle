@@ -113,7 +113,7 @@ class UserDetailView(DetailView):
 
     def get_object(self, request, *args, **kwargs):
         try:
-            identifier = urllib.unquote(kwargs['identifier'])
+            identifier = urllib.parse.unquote(kwargs['identifier'])
         except KeyError:
             raise self.BadRequestException("Please provide a valid identifier")
 
@@ -381,7 +381,7 @@ class UserAddSpotExperimentComputeView(ComputeView):
         # so simply use the username of the requesting user
         tag = request.user.username
         url = (os.path.join(config.SPOT_API_URL, 'publish', uuid) + '/' +
-               '?' + urllib.urlencode({'tag': tag}))
+               '?' + urllib.parse.urlencode({'tag': tag}))
         headers = {'X-Access-Token': user_profile.spot_access_token}
         response = requests.get(url, headers=headers)
         if response.status_code == 403:
@@ -539,22 +539,23 @@ class UserProjectsListView(ListView):
                 model_meta['batch_name'] = model.name
                 model_meta['created'] = model.created.isoformat()
 
-        if model_type == 'document':
-            model_dict['documents_count'] = 1
+        if model is not None:
+            if model_type == 'document':
+                model_dict['documents_count'] = 1
 
-            model_meta['uuid'] = model.uuid
-            model_meta['status'] = int(model.is_ready)
-            model_meta['failed'] = model.failed
-            model_meta['title'] = model.title
-            model_meta['agreement_type'] = model.get_agreement_type()
-            model_meta['processing_begin_timestamp'] = (
-                model.processing_begin_timestamp.isoformat()
-                if model.processing_begin_timestamp else
-                None
-            )
-            model_meta['parties'] = model.get_parties_full()
+                model_meta['uuid'] = model.uuid
+                model_meta['status'] = int(model.is_ready)
+                model_meta['failed'] = model.failed
+                model_meta['title'] = model.title
+                model_meta['agreement_type'] = model.get_agreement_type()
+                model_meta['processing_begin_timestamp'] = (
+                    model.processing_begin_timestamp.isoformat()
+                    if model.processing_begin_timestamp else
+                    None
+                )
+                model_meta['parties'] = model.get_parties_full()
 
-        model_dict['report_url'] = model.get_report_url()
+            model_dict['report_url'] = model.get_report_url()
 
         model_dict['meta'] = model_meta
 

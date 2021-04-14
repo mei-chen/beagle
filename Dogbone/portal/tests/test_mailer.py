@@ -264,8 +264,8 @@ class BeagleMailerTest(BeagleWebTest):
                                                      subject='Meet Rufus: Your Automatic Contract Guide')
 
             url = mock_mailer_send.call_args_list[0][1]['args']['follow_url']
-            o = urllib.parse.urllib.parse(url)
-            str_hash = dict(urlparse.parse_qsl(o.query))['hash']
+            o = urllib.parse.urlparse(url)
+            str_hash = dict(urllib.parse.parse_qsl(o.query))['hash']
             hash_model = OneTimeLoginHash.get_onetime_model(str_hash)
             self.assertEqual(hash_model, h)
 
@@ -273,19 +273,23 @@ class BeagleMailerTest(BeagleWebTest):
         other_user = self.create_user('ivanov.george.bogdan@gmail.com', 'ivanov.g', 'lambada')
         self.make_paid(other_user)
         document = self.create_document('SomeImportantDoc', owner=self.user, pending=False)
-        notif1_pk = store_activity_notification(actor=other_user,
-                                                recipient=self.user,
+        notif1_pk = store_activity_notification(actor_id=other_user.id,
+                                                recipient_id=self.user.id,
                                                 verb='did',
-                                                target=other_user,
-                                                action_object=document,
+                                                target_id=other_user.id,
+                                                target_type="User",
+                                                action_object_id=document.id,
+                                                action_object_type="Document",
                                                 render_string="(actor) did something to (target) using (action_object)",
                                                 created=datetime.now() - timedelta(minutes=20))
 
-        notif2_pk = store_activity_notification(actor=self.user,
-                                                recipient=other_user,
+        notif2_pk = store_activity_notification(actor_id=self.user.id,
+                                                recipient_id=other_user.id,
                                                 verb='did',
-                                                target=other_user,
-                                                action_object=document,
+                                                target_id=other_user.id,
+                                                target_type="User",
+                                                action_object_id=document.id,
+                                                action_object_type="Document",
                                                 render_string="(actor) did something to (target) using (action_object)",
                                                 created=datetime.now() - timedelta(minutes=20))
 

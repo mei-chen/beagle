@@ -25,8 +25,8 @@ class ResponsibilityTest(TestCase):
         for idx, (noli, them_party, you_party) in enumerate(resp):
             facade = NlplibFacade(noli, parties=(them_party, you_party, None))
             actual_lens = (
-                len(filter(filter_fn, facade.responsibilities(them_party).items())),
-                len(filter(filter_fn, facade.responsibilities(you_party).items())),
-                len(filter(filter_fn, facade.responsibilities('both').items())),
+                len(list(filter(filter_fn, facade.responsibilities(them_party).items()))),
+                len(list(filter(filter_fn, facade.responsibilities(you_party).items()))),
+                len(list(filter(filter_fn, facade.responsibilities('both').items()))),
             )
             self.assertEqual(expected_lens[idx], actual_lens)

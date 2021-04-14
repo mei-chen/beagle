@@ -11,10 +11,18 @@ from django.conf import settings
 from ml.capsules import Capsule
 from ml.facade import LearnerFacade
 
+from core.models import Sentence
+from django.contrib.auth.models import User
+
 
 @shared_task
-def onlinelearner_train_task(tag, user, sentence, s_idx):
+def onlinelearner_train_task(tag, user_id, sentence_id, s_idx):
+
+    user = User.objects.get(id=user_id)
+    sentence = Sentence.objects.get(id=sentence_id)
+
     logging.info("Celery: starting `onlinelearner train task` sentence_uuid=%s" % sentence.uuid)
+
 
     document = sentence.doc
     if not document.is_ready:
@@ -35,7 +43,11 @@ def onlinelearner_train_task(tag, user, sentence, s_idx):
 
 
 @shared_task
-def onlinelearner_removesample_task(tag, user, sentence, s_idx):
+def onlinelearner_removesample_task(tag, user_id, sentence_id, s_idx):
+
+    user = User.objects.get(id=user_id)
+    sentence = Sentence.objects.get(id=sentence_id)
+
     logging.info("Celery: starting `onlinelearner removesample task` sentence_uuid=%s" % sentence.uuid)
 
     document = sentence.doc
@@ -55,7 +67,11 @@ def onlinelearner_removesample_task(tag, user, sentence, s_idx):
 
 
 @shared_task
-def onlinelearner_negative_train_task(tag, user, sentence, s_idx):
+def onlinelearner_negative_train_task(tag, user_id, sentence_id, s_idx):
+
+    user = User.objects.get(id=user_id)
+    sentence = Sentence.objects.get(id=sentence_id)
+
     logging.info("Celery: starting `onlinelearner negative train task` sentence_uuid=%s" % sentence.uuid)
 
     document = sentence.doc
@@ -76,7 +92,11 @@ def onlinelearner_negative_train_task(tag, user, sentence, s_idx):
 
 
 @shared_task
-def spot_experiment_accept_sentence(tag, experiment_uuid, sentence, sentence_idx):
+def spot_experiment_accept_sentence(tag, experiment_uuid, sentence_id, sentence_idx):
+
+    sentence = Sentence.objects.get(id=sentence_id)
+
+
     logging.info('Starting: accept sentence=%s by Spot experiment=%s',
                  sentence.uuid, experiment_uuid)
 
@@ -132,7 +152,11 @@ def spot_experiment_accept_sentence(tag, experiment_uuid, sentence, sentence_idx
 
 
 @shared_task
-def spot_experiment_reject_sentence(experiment_uuid, sentence):
+def spot_experiment_reject_sentence(experiment_uuid, sentence_id):
+
+    sentence = Sentence.objects.get(id=sentence_id)
+
+
     logging.info('Starting: reject sentence=%s by Spot experiment=%s',
                  sentence.uuid, experiment_uuid)
 

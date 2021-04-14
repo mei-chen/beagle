@@ -1,7 +1,6 @@
 from datetime import date
 import jsonfield
 import logging
-import six
 
 from django.db import models
 from django.utils import timezone
@@ -170,7 +169,7 @@ class UserProfile(models.Model):
             return
 
         rlte_flags_dict = {
-            key: value for key, value in six.items(rlte_flags_dict)
+            key: value for key, value in rlte_flags_dict.items()
             if key in RLTE_FLAGS  # discard invalid entries
         }
 
@@ -332,7 +331,7 @@ def log_statistics_document_upload(sender, **kwargs):
         }
 
         log_statistic_event.delay(event_name='document_uploaded',
-                                  event_user=kwargs['instance'].owner,
+                                  event_user_id=kwargs['instance'].owner.id,
                                   event_data=upload_metadata)
 
 
@@ -340,7 +339,9 @@ def log_statistics_document_upload(sender, **kwargs):
 def update_intercom_document_uploaded_count(sender, **kwargs):
     if kwargs['created']:
         # Update Intercom document upload count
-        update_intercom_document_count.delay(email=kwargs['instance'].owner.email)
+        from django.conf import settings
+        if not settings.DEBUG:
+            update_intercom_document_count.delay(email=kwargs['instance'].owner.email)
 
 
 @receiver(models.signals.post_save, sender=Document)
@@ -372,7 +373,8 @@ def create_collaboration_invites(sender, instance, created, **kwargs):
             documents_invited_to = list(set(documents_invited_to))
 
             from core.tasks import parse_comments_on_external_invite_delete, bounce_delayed_notifications
-            parse_comments_on_external_invite_delete.delay(documents_invited_to, instance.id)
+            document_ids = [d.id for d in documents_invited_to]
+            parse_comments_on_external_invite_delete.delay(document_ids, instance.id)
             bounce_delayed_notifications.delay(email=instance.email)
         except ProgrammingError:
             logging.error("ExternalInvites table does not exist yet")
@@ -478,8 +480,9 @@ def hubspot_notify_subscription_purchased(sender, user, purchased_subscription, 
     from django.conf import settings
 
     coupon_code = purchased_subscription.coupon_used.code if purchased_subscription.coupon_used else None
+    if not settings.DEBUG:
 
-    hubspot_submit_form.delay(settings.HUBSPOT_SUBSCRIPTION_STARTED_FORM_GUID,
+        hubspot_submit_form.delay(settings.HUBSPOT_SUBSCRIPTION_STARTED_FORM_GUID,
                               page_name='PurchaseSubscriptionForm',
                               url=None, ip=None, hutk=None,
                               data={
@@ -497,8 +500,9 @@ def hubspot_notify_subscription_purchased(sender, user, purchased_subscription, 
 def hubspot_notify_subscription_extended(sender, user, purchased_subscription, **kwargs):
     from .tasks import hubspot_submit_form
     from django.conf import settings
+    if not settings.DEBUG:
 
-    hubspot_submit_form.delay(settings.HUBSPOT_SUBSCRIPTION_STARTED_FORM_GUID,
+        hubspot_submit_form.delay(settings.HUBSPOT_SUBSCRIPTION_STARTED_FORM_GUID,
                               page_name='ExtendSubscriptionForm',
                               url=None, ip=None, hutk=None,
                               data={
@@ -515,7 +519,8 @@ def hubspot_notify_subscription_expired(sender, user, purchased_subscription, **
     from .tasks import hubspot_submit_form
     from django.conf import settings
 
-    hubspot_submit_form.delay(settings.HUBSPOT_SUBSCRIPTION_STARTED_FORM_GUID,
+    if not settings.DEBUG:
+        hubspot_submit_form.delay(settings.HUBSPOT_SUBSCRIPTION_STARTED_FORM_GUID,
                               page_name='ExpireSubscriptionForm',
                               url=None, ip=None, hutk=None,
                               data={

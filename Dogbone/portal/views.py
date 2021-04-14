@@ -814,4 +814,4 @@ def purchase_route(request):
     if subscription:
         kwargs['subscription'] = subscription_uid
 
-    return redirect(reverse('signup') + '?%s' % urllib.urlencode(kwargs.items()))
+    return redirect(reverse('signup') + '?%s' % urllib.parse.urlencode(kwargs))

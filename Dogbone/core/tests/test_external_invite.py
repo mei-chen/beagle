@@ -114,7 +114,7 @@ class ExternalInviteTest(BeagleWebTest):
             user = User(username='external_guy', email='external@email.com')
             user.set_password('external')
             user.save()
-            patched_parse.assert_called_once_with([document], user)
+            patched_parse.assert_called_once_with([document.id], user.id)
 
     def test_comment_parse_task(self):
         self.login()
@@ -141,7 +141,7 @@ class ExternalInviteTest(BeagleWebTest):
 
             with mock.patch('core.tasks.store_activity_notification.delay') as mock_activity_notification:
                 # Run the actual task
-                parse_comments_on_external_invite_delete([document], user)
+                parse_comments_on_external_invite_delete([document.id], user.id)
 
                 sentence = Sentence.objects.get(pk=document.sentences_pks[0])
                 self.assertEqual(sentence.comments, {'comments': [
@@ -151,11 +151,13 @@ class ExternalInviteTest(BeagleWebTest):
                      'author': self.user.username}]})
 
                 mock_activity_notification.assert_called_once_with(
-                    target=user,
+                    target_id=user.id,
+                    target_type="User",
                     transient=False,
-                    actor=self.user,
+                    actor_id=self.user.id,
                     verb='mentioned',
-                    action_object=sentence,
-                    recipient=user,
+                    action_object_id=sentence.id,
+                    action_object_type="Sentence",
+                    recipient_id=user.id,
                     render_string='(actor) mentioned (target) in a comment on (action_object)',
                     created=mock.ANY)

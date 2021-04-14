@@ -25,7 +25,7 @@ class StatisticsComputeViewTestCase(BeagleWebTest):
         self.assertEqual(response.status_code, 200)
         log_statistic_event_mock.assert_called_once_with(
             event_name=payload['event'],
-            event_user=mock.ANY,
+            event_user_id=mock.ANY,
             event_data=payload['attributes']
         )
 
@@ -60,6 +60,6 @@ class StatisticsComputeViewTestCase(BeagleWebTest):
         self.assertEqual(response.status_code, 200)
         log_statistic_event_mock.assert_called_once_with(
             event_name=payload['event'],
-            event_user=mock.ANY,
+            event_user_id=mock.ANY,
             event_data=None
         )

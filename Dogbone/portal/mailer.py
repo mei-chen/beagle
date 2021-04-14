@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.template import Context
 from django.template.loader import get_template
 from django.conf import settings
+from django.template.base import Template
 
 from nlplib.utils import preformat_markers
 from portal.settings import UserSettings
@@ -29,8 +30,19 @@ class Mailer(object):
         :return:
         """
         context = Context(args)
-        rendered_body = get_template(template).render(context)
-        rendered_html_body = get_template(html_template).render(context)
+        body_template = get_template(template)
+        html_body_template = get_template(html_template)
+
+        if isinstance(body_template, Template):
+            rendered_body = body_template.render(context)
+        else:
+            rendered_body = body_template.render(args)
+
+        if isinstance(html_body_template, Template):
+            rendered_html_body = html_body_template.render(context)
+        else:
+            rendered_html_body = html_body_template.render(args)
+
 
         if not isinstance(to_email, list) and not isinstance(to_email, tuple):
             to_email = [to_email]

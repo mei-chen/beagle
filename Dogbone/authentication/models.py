@@ -58,7 +58,8 @@ class AuthToken(TimeStampedModel):
         :param key: the key of the token
         :return: the base64 encoded token
         """
-        return base64.b64encode("%s:%s" % (user_id, key))
+        s = "%s:%s" % (user_id, key)
+        return base64.b64encode(s.encode('utf-8')).decode('utf-8')
 
     @classmethod
     def decompose_token(cls, token):
@@ -68,6 +69,7 @@ class AuthToken(TimeStampedModel):
         :return: tuple(user_id, key)
         """
         decoded = base64.b64decode(token)
+        decoded = decoded.decode("utf-8")
         user_id, key = decoded.split(':')
         return user_id, key
 

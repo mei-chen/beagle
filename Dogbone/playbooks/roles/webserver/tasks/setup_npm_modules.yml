@@ -8,9 +8,10 @@
 - name: Install app nodemodules
   npm:
     path: "{{ npm_frontend_path }}"
-
+  when: env != "vagrant"
 
 - name: Run build command
   command: "npm run prod"
   args:
     chdir: "{{ npm_frontend_path }}"
+  when: env != "vagrant"

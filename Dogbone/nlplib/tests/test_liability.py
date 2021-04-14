@@ -36,8 +36,8 @@ class LiabilityTest(TestCase):
         for idx, (noli, them_party, you_party) in enumerate(no_liabs):
             facade = NlplibFacade(noli)
             actual_lens = (
-                len(filter(filter_fn, facade.liabilities(them_party).items())),
-                len(filter(filter_fn, facade.liabilities(you_party).items())),
-                len(filter(filter_fn, facade.liabilities('both').items())),
+                len(list(filter(filter_fn, facade.liabilities(them_party).items()))),
+                len(list(filter(filter_fn, facade.liabilities(you_party).items()))),
+                len(list(filter(filter_fn, facade.liabilities('both').items()))),
             )
             self.assertEqual(expected_lens[idx], actual_lens)

@@ -18,11 +18,11 @@ clf = LearnerFacade.get_or_create(sys.argv[1], user)
 
 print 'Resetting Online Learner for <%s>' % clf.db_model.tag
 
-clf.ml_model.reset(initial_samples=zip(
+clf.ml_model.reset(initial_samples=list(zip(
     clf.db_model.samples['text'],
     clf.db_model.samples['flags'],
     clf.db_model.samples['label'],
-))
+)))
 
 print 'Saving the ML model'
 

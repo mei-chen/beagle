@@ -12,8 +12,11 @@ from keywords.models import SearchKeyword
 
 @shared_task
 def hubspot_submit_form(form_id, url, ip, hutk, page_name, data):
-    hubspot = HubspotAPI(portal_id=settings.HUBSPOT_PORTAL_ID)
-    return hubspot.submit_form(form_id, url, ip, hutk, page_name, data)
+    from django.conf import settings
+    if settings.DEBUG is False:
+
+        hubspot = HubspotAPI(portal_id=settings.HUBSPOT_PORTAL_ID)
+        return hubspot.submit_form(form_id, url, ip, hutk, page_name, data)
 
 @shared_task
 def hubspot_get_vid(email):
@@ -22,8 +25,10 @@ def hubspot_get_vid(email):
     :param email: The user to be updated's email
     :return: User's hubspot vid #
     """
-    hubspot = HubspotAPI(api_key=settings.HUBSPOT_API_KEY)
-    return hubspot.get_contact_vid(email)
+    from django.conf import settings
+    if settings.DEBUG is False:
+        hubspot = HubspotAPI(api_key=settings.HUBSPOT_API_KEY)
+        return hubspot.get_contact_vid(email)
 
 @shared_task
 def hubspot_update_contact_properties(email, data):
@@ -44,9 +49,11 @@ def hubspot_update_contact_properties(email, data):
     ]
     :return: True/False
     """
-    vid = hubspot_get_vid(email)
-    hubspot = HubspotAPI(api_key=settings.HUBSPOT_API_KEY)
-    return hubspot.update_contact_properties(vid, data)
+    from django.conf import settings
+    if settings.DEBUG is False:
+        vid = hubspot_get_vid(email)
+        hubspot = HubspotAPI(api_key=settings.HUBSPOT_API_KEY)
+        return hubspot.update_contact_properties(vid, data)
 
 
 @shared_task

@@ -355,6 +355,7 @@ class InternalDocumentUploadComputeViewTestCase(BeagleWebTest):
     def test_get(self):
         self.assertEqual(self.client.get(self.API_URL + '?from=%s' % self.DUMMY_EMAIL, REMOTE_ADDR='127.0.0.1').status_code, 403)
 
+    # TODO: example.com broken
     def test_post_url(self):
         data = {'url': 'http://example.com'}
 
@@ -415,6 +416,7 @@ class InternalDocumentUploadComputeViewTestCase(BeagleWebTest):
                     "processing_end_timestamp": mock.ANY,
                 })
 
+    # TODO: example.com broken
     def test_post_url_and_title(self):
         data = {'url': 'http://example.com', 'title': 'Super title'}
 
@@ -595,6 +597,8 @@ class InternalDocumentUploadComputeViewTestCase(BeagleWebTest):
     # TODO Rewrite test using new functionality
     def test_workflow_params_for_text(self):
         pass
+
+    # TODO: mock broken
     def test_process_document_conversion_params_for_url(self):
         data = {'url': 'http://example.com'}
 
@@ -625,6 +629,7 @@ class InternalDocumentUploadComputeViewTestCase(BeagleWebTest):
 
                 mock_conversion.assert_called_once_with(mock.ANY, 'media/RETURN_VALUE_FILE_PATH', True)
 
+    # TODO: Github page has changed
     def test_url_containing_unicode(self):
         data = {'url': 'https://github.com/contact'}
 
@@ -696,7 +701,7 @@ class InternalDocumentUploadComputeViewTestCase(BeagleWebTest):
 
     def test_upload_file(self):
         file_handler = tempfile.TemporaryFile()
-        file_handler.write("Hello World!")
+        file_handler.write("Hello World!".encode('utf-8'))
         file_handler.seek(0)
 
         with mock.patch('api_v1.document.endpoints.default_storage.save') as mock_save:
@@ -748,7 +753,7 @@ class InternalDocumentUploadComputeViewTestCase(BeagleWebTest):
 
     def test_upload_file_with_a_more_complex_name(self):
         file_handler = tempfile.TemporaryFile()
-        file_handler.write("Hello World!")
+        file_handler.write("Hello World!".encode('utf-8'))
         file_handler.seek(0)
 
         with mock.patch('api_v1.document.endpoints.default_storage.save') as mock_save:

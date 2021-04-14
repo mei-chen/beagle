@@ -83,7 +83,7 @@ class TagLearner:
             self.model = OnlineLearner.init_ml_model()
         X = self.online_vectorizer.transform(self.meta.tag, X_text, X_flags)
         classes = None
-        if self.model.classes_ is None:
+        if not hasattr(self.model, "classes_"):
             # On first run the classes are not initialized yet
             classes = [True, False]
         self.model.partial_fit(X, y, classes)
@@ -270,7 +270,7 @@ class AgreementTypeClassifier:
         return y_proba if not single_sample else y_proba[0]
 
     def load_model(self):
-        model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'agreement_type', 'model.pkl')
+        model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'agreement_type', 'updated_model.pkl')
         logging.info('Loading AgreementType model from path: %s' % model_path)
         if os.path.exists(model_path):
             with open(model_path, 'rb') as model_in:
@@ -279,7 +279,7 @@ class AgreementTypeClassifier:
             logging.error('Could not load the model from %s because file does not exist' % model_path)
 
     def load_vectorizer(self):
-        vec_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'agreement_type', 'vectorizer.pkl')
+        vec_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'agreement_type', 'updated_vectorizer.pkl')
         logging.info('Loading AgreementType vectorizer from path: %s' % vec_path)
         if os.path.exists(vec_path):
             with open(vec_path, 'rb') as vec_in:

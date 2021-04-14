@@ -1,5 +1,3 @@
-import six
-
 from django import forms
 from django.contrib.auth.models import User
 
@@ -42,5 +40,5 @@ class ViewsUsageReport(Report):
 
         yield ('VIEW', 'HITS')
 
-        for event, count in six.items(events_counts):
+        for event, count in events_counts.items():
             yield (event, count)

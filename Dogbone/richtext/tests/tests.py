@@ -68,7 +68,7 @@ def mocked_requests_get(*args, **kwargs):
 
     if args[0] == 'file://%s' % TEST_DOCX:
         headers = kwargs.get('headers')
-        return MockResponse(open(TEST_DOCX), headers)
+        return MockResponse(open(TEST_DOCX, "rb"), headers)
     else:
         return MockResponse('')
 
@@ -407,7 +407,7 @@ class DocxTest(TestCase):
                 if n[0].endswith('.'):
                     nodes.append((' ', 't'))
         newdoc = reconstruct_xml(nodes)
-        newdoc = markers_to_linebreaks(newdoc).encode('utf-8')
+        newdoc = markers_to_linebreaks(newdoc)
 
         self.assertEqual(resultxml, newdoc)
 
@@ -1015,7 +1015,7 @@ class ImportingTest(TestCase):
         uploader = importing.source_handler('local')
         err_msg = 'Error: Received an upload request without attachment or URL'
         result_err = uploader.process()
-        result = uploader.process(uploaded_file=open(TEST_DOCX))
+        result = uploader.process(uploaded_file=open(TEST_DOCX, "rb"))
 
         self.assertEqual((False, err_msg), result_err)
         self.assertTrue(result[0])

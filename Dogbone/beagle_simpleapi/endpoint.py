@@ -182,8 +182,7 @@ class ListView(ModelView):
 
         self.object_list = self.get_list(request, *args, **kwargs)
 
-        filtered_object_list = filter(self.has_access, self.object_list)
-
+        filtered_object_list = list(filter(self.has_access, self.object_list))
         serialized_list = list(map(self.to_dict, filtered_object_list))
 
         # Add the URL

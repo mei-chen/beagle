@@ -170,7 +170,7 @@ def estimate_sentences_style(node_sentences, named_styles={}):
                     szs_ws[sz] = 0
                 szs_ws[sz] += l
 
-        szs, ws = szs_ws.keys(), szs_ws.values()
+        szs, ws = list(szs_ws.keys()), list(szs_ws.values())
         if np.sum(ws) > 0:
             sent_style['size'] = int(np.round(np.average(szs, weights=ws)))
 

@@ -178,7 +178,7 @@ class EndpointView(CsrfExemptView):
                 http_status = result['http_status']
 
             wrapped_result = self.wrap_result(result)
-            return HttpResponse(self.serialize(dict(wrapped_result), request.GET.get('format', 'json')),
+            return HttpResponse(self.serialize(wrapped_result, request.GET.get('format', 'json')),
                                 status=http_status, content_type='application/json')
         except Exception as e:
             message = 'Exception encountered in Beagle SimpleAPI: %s' % str(e)

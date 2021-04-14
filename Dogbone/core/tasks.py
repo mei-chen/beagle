@@ -423,7 +423,7 @@ def process_document_task(doc_id, send_notifications=True, send_emails=True, doc
                                     metadata=processed_metadata)
     # Also send the same event to statistics
     log_statistic_event.delay(event_name='document_processed',
-                              event_user=document.owner,
+                              event_user_id=document.owner.id,
                               event_data=processed_metadata)
 
     # If the confidence is low, notify the front end of the WEAK_DOCUMENT_ANALYSIS
@@ -556,7 +556,7 @@ def cleanup_batch(batch_id):
     return True
 
 
-@shared_task
+#@shared_task
 def process_document_conversion(doc_id, temp_filename, send_notifications=True, send_emails=True):
     """
     Handle the document conversion. Send notifications along the way.
@@ -631,7 +631,7 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
                                         metadata=metadata)
         # Log event to Statistics
         log_statistic_event.delay(event_name='document_conversion_error',
-                                  event_user=document.owner,
+                                  event_user_id=document.owner.id,
                                   event_data=metadata)
 
         handle_invalid_document(
@@ -660,7 +660,7 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
                                         metadata=metadata)
         # Log event to Statistics
         log_statistic_event.delay(event_name='document_conversion_error',
-                                  event_user=document.owner,
+                                  event_user_id=document.owner.id,
                                   event_data=metadata)
 
         handle_invalid_document(
@@ -688,7 +688,7 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
                                         metadata=metadata)
         # Log event to Statistics
         log_statistic_event.delay(event_name='document_too_large_to_ocr',
-                                  event_user=document.owner,
+                                  event_user_id=document.owner.id,
                                   event_data=metadata)
 
         handle_invalid_document(
@@ -722,7 +722,7 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
                                         metadata=metadata)
         # Log event to Statistics
         log_statistic_event.delay(event_name='document_conversion_error',
-                                  event_user=document.owner,
+                                  event_user_id=document.owner.id,
                                   event_data=metadata)
 
         handle_invalid_document(
@@ -778,7 +778,7 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
                                         metadata=metadata)
         # Log event to Statistics
         log_statistic_event.delay(event_name='document_conversion_error',
-                                  event_user=document.owner,
+                                  event_user_id=document.owner.id,
                                   event_data=metadata)
 
         handle_invalid_document(
@@ -817,7 +817,7 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
                                             metadata=metadata)
             # Log event to Statistics
             log_statistic_event.delay(event_name='document_language_error',
-                                      event_user=document.owner,
+                                      event_user_id=document.owner.id,
                                       event_data=metadata)
 
             handle_invalid_document(
@@ -1275,11 +1275,11 @@ def bounce_delayed_notifications(email):
 
 
 @shared_task
-def parse_comments_on_external_invite_delete(documents, user_id):
+def parse_comments_on_external_invite_delete(document_ids, user_id):
     from core.models import Sentence
     from core.signals import comment_posted
     from django.contrib.auth.models import User
-
+    documents = Document.objects.filter(id__in=document_ids)
     for document in documents:
         try:
             user = User.objects.get(id=user_id)
@@ -1307,8 +1307,9 @@ def parse_comments_on_external_invite_delete(documents, user_id):
 
 
 @shared_task
-def store_activity_notification(actor, recipient, verb, target=None,
-                                action_object=None, render_string=None, transient=False, created=None):
+# modify this to use id
+def store_activity_notification(actor_id, recipient_id, verb, target_id=None, target_type=None,
+                                action_object_id=None, action_object_type=None, render_string=None, transient=False, created=None):
     """
     Task used for storing `notifications.models.Notification` (aka Activity Notifications)
     and then send Real Time Notifications through Redis to the recipient
@@ -1325,6 +1326,23 @@ def store_activity_notification(actor, recipient, verb, target=None,
     :return: True/False
     """
     from core.tools import notification_url
+    actor = User.objects.get(id=actor_id)
+    recipient = User.objects.get(id=recipient_id)
+    if target_type == "User":
+        target = User.objects.get(id=target_id)
+    elif target_type == "Document":
+        target = Document.objects.get(id=target_id)
+    elif target_type == "Sentence":
+        target = Sentence.objects.get(id=target_id)
+    else:
+        target = None
+
+    action_object = None
+    if action_object_type == "Document":
+        action_object = Document.objects.get(id=action_object_id)
+    elif action_object_type == "Sentence":
+        action_object = Sentence.objects.get(id=action_object_id)
+
     logging.info('store_activity_notification: actor=%s, recipient=%s, '
                  'verb=%s, target=%s, action_object=%s, render_string=%s' % (
                      str(actor), str(recipient), str(verb), str(target), str(action_object), render_string))
@@ -1386,11 +1404,12 @@ def mark_as_read_sentence_related_notifications(user_id, sentence_id):
                                 target_content_type=sentence_ctype)
         Notification.objects.filter(has_recipient & relates_to_sentence).update(unread=False)
 
-    fully_refresh_persistent_notifications.delay(User.objects.get(pk=user_id))
+    fully_refresh_persistent_notifications.delay(user_id)
 
 
 @shared_task
-def fully_refresh_persistent_notifications(recipient):
+def fully_refresh_persistent_notifications(recipient_id):
+    recipient = User.objects.get(id=recipient_id)
     NotificationManager.create_user_message(recipient,
                                             event_name='message',
                                             message={

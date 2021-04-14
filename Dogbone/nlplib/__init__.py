@@ -1,4 +1,3 @@
-import six
 
 from nlplib.facade import NlplibFacade
 from nlplib.utils import LINEBREAK_MARKER
@@ -88,7 +87,7 @@ def sentlevel_process(text=None, sentences=None, parties=None, user=None):
                                          if r['sent_idx'] == i]
 
     for label, index, party in clauses:
-        for sentence_idx, sublabel in six.items(index):
+        for sentence_idx, sublabel in index.items():
             if 'annotations' not in analysis['sentences'][sentence_idx]:
                 analysis['sentences'][sentence_idx]['annotations'] = []
 

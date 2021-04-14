@@ -11,19 +11,23 @@ class TestPeriodicSendNotificationReminders(BeagleWebTest):
         other_user = self.create_user('ivanov.george.bogdan@gmail.com', 'ivanov.g', 'lambada')
         document = self.create_document('SomeImportantDoc', owner=self.user, pending=False)
 
-        notif1_pk = store_activity_notification(actor=self.user,
-                                             recipient=self.user,
+        notif1_pk = store_activity_notification(actor_id=self.user.id,
+                                             recipient_id=self.user.id,
                                              verb='did',
-                                             target=other_user,
-                                             action_object=document,
+                                             target_id=other_user.id,
+                                             target_type="User",
+                                             action_object_id=document.id,
+                                             action_object_type="Document",
                                              render_string="(actor) did something to (target) using (action_object)",
                                              created=datetime.now() - timedelta(minutes=20))
 
-        notif2_pk = store_activity_notification(actor=self.user,
-                                             recipient=other_user,
+        notif2_pk = store_activity_notification(actor_id=self.user.id,
+                                             recipient_id=other_user.id,
                                              verb='did',
-                                             target=other_user,
-                                             action_object=document,
+                                             target_id=other_user.id,
+                                             target_type="User",
+                                             action_object_id=document.id,
+                                             action_object_type="Document",
                                              render_string="(actor) did something to (target) using (action_object)",
                                              created=datetime.now() - timedelta(minutes=20))
 
@@ -45,35 +49,43 @@ class TestPeriodicSendNotificationReminders(BeagleWebTest):
         self.make_paid(other_user)
         document = self.create_document('SomeImportantDoc', owner=self.user, pending=False)
 
-        notif1_pk = store_activity_notification(actor=self.user,
-                                             recipient=self.user,
+        notif1_pk = store_activity_notification(actor_id=self.user.id,
+                                             recipient_id=self.user.id,
                                              verb='did',
-                                             target=other_user,
-                                             action_object=document,
+                                             target_id=other_user.id,
+                                             target_type="User",
+                                             action_object_id=document.id,
+                                             action_object_type="Document",
                                              render_string="(actor) did something to (target) using (action_object)",
                                              created=datetime.now() - timedelta(minutes=20))
 
-        notif2_pk = store_activity_notification(actor=self.user,
-                                             recipient=other_user,
+        notif2_pk = store_activity_notification(actor_id=self.user.id,
+                                             recipient_id=other_user.id,
                                              verb='did',
-                                             target=other_user,
-                                             action_object=document,
+                                             target_id=other_user.id,
+                                             target_type="User",
+                                             action_object_id=document.id,
+                                             action_object_type="Document",
                                              render_string="(actor) did something to (target) using (action_object)",
                                              created=datetime.now() - timedelta(minutes=20))
 
-        notif3_pk = store_activity_notification(actor=self.user,
-                                             recipient=other_user,
+        notif3_pk = store_activity_notification(actor_id=self.user.id,
+                                             recipient_id=other_user.id,
                                              verb='did',
-                                             target=other_user,
-                                             action_object=document,
+                                             target_id=other_user.id,
+                                             target_type="User",
+                                             action_object_id=document.id,
+                                             action_object_type="Document",
                                              render_string="(actor) did something to (target) using (action_object)",
                                              created=datetime.now() - timedelta(minutes=20))
 
-        notif4_pk = store_activity_notification(actor=other_user,
-                                             recipient=self.user,
+        notif4_pk = store_activity_notification(actor_id=other_user.id,
+                                             recipient_id=self.user.id,
                                              verb='did',
-                                             target=other_user,
-                                             action_object=document,
+                                             target_id=other_user.id,
+                                             target_type="User",
+                                             action_object_id=document.id,
+                                             action_object_type="Document",
                                              render_string="(actor) did something to (target) using (action_object)",
                                              created=datetime.now() - timedelta(minutes=20))
 

@@ -13,7 +13,7 @@ def price_f(f):
     """
     def decorated_f(*args, **kwargs):
         price = f(*args, **kwargs)
-        if isinstance(price, (int, long, float)):
+        if isinstance(price, (int, float)):
             return round(price, 2)
         return 0.0
     return decorated_f
@@ -93,7 +93,7 @@ class ShoppingCartItem:
         return repr((self.item, self.quantity))
 
     def __str__(self):
-        return "Item=%s, Quantity=%s, Total=%s" % (self.item, self.quantity, self.total_price)
+        return "Item={}, Quantity={}, Total={}".format(self.item, self.quantity, self.total_price)
 
 
 class ShoppingCart:

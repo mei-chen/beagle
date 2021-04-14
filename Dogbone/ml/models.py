@@ -2,7 +2,7 @@ import os
 import uuid
 import logging
 import jsonfield
-from io import StringIO
+from io import BytesIO
 import pickle
 
 from collections import OrderedDict
@@ -127,7 +127,7 @@ class OnlineLearner(TimeStampedModel):
         manager = get_s3_bucket_manager(settings.PREDICTION_MODELS_BUCKET)
         serialized_model = manager.read_to_string(self.model_s3.split(':')[1])
 
-        temp_file = StringIO.StringIO()
+        temp_file = BytesIO()
         temp_file.write(serialized_model)
         temp_file.seek(0)
 
@@ -150,7 +150,7 @@ class OnlineLearner(TimeStampedModel):
         :return: None
         """
         manager = get_s3_bucket_manager(settings.PREDICTION_MODELS_BUCKET)
-        temp_file = StringIO.StringIO()
+        temp_file = BytesIO()
 
         # Only save the data, not the entire sklearn object
         pickle.dump((ml_model.coef_, ml_model.intercept_, ml_model.classes_), temp_file)

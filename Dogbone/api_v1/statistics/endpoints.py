@@ -31,7 +31,7 @@ class StatisticsComputeView(ComputeView):
         try:
             payload = json.loads(request.body)
             log_statistic_event.delay(event_name=payload['event'],
-                                      event_user=self.user,
+                                      event_user_id=self.user.id,
                                       event_data=payload.get('attributes'))
             return {"message": "OK", "http_status": 200}
         except Exception as e:

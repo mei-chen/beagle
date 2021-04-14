@@ -28,7 +28,7 @@ def report_details(request, module_name, class_name, *args, **kwargs):
 
     if request.method == 'POST':
         report.bind(request)
-        if report.is_valid:
+        if report.is_valid():
             # Start background job and redirect to confirmation page
             build_report.delay(request.user.pk, module_name, class_name, params=report.params)
             return render(request, 'report_success.html')
@@ -45,13 +45,12 @@ def report_download(request, report_id, *args, **kwargs):
     except (GeneratedReport.DoesNotExist, ValueError):
         raise Http404()
 
-    response_file = tempfile.TemporaryFile()
-    response_file.write(generated_report.data)
-
-    wrapper = FileWrapper(response_file)
-    response = HttpResponse(wrapper, content_type='application/force-download')
-    response['Content-Disposition'] = 'attachment; filename=%s.csv' % urllib.quote(slugify(generated_report.title))
-    response['Content-Length'] = response_file.tell()
-    response_file.seek(0)
+    with tempfile.TemporaryFile() as response_file:
+        response_file.write(generated_report.data.encode('utf-8'))
+        content_length = response_file.tell()
+        wrapper = FileWrapper(response_file)
+        response = HttpResponse(wrapper, content_type='application/force-download')
+        response['Content-Disposition'] = 'attachment; filename=%s.csv' % urllib.parse.quote(slugify(generated_report.title))
+        response['Content-Length'] = content_length
 
     return response

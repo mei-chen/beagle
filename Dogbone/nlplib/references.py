@@ -102,6 +102,10 @@ class ExternalReferencesAnalyzer:
             self._references = []
 
         return self._references
+    
+    @references.setter
+    def references(self, r):
+        self._references = r
 
     def _get_urls(self):
         for i, s in enumerate(self._sentences):

@@ -129,7 +129,7 @@ class MentionCluster:
 
     def __contains__(self, form):
         for m in self.mentions:
-            if isinstance(form, basestring) \
+            if isinstance(form, str) \
                     and MentionCluster.normalize(m['form']) == MentionCluster.normalize(form):
                 return True
             elif isinstance(form, dict) \

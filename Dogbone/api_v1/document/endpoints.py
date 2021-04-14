@@ -47,7 +47,7 @@ from utils.http import filename_from_url
 from utils.django_utils.query import get_user_by_identifier
 
 
-class DocumentDetailView(DetailView, DeleteDetailModelMixin):
+class DocumentDetailView(DeleteDetailModelMixin, DetailView):
     model = Document
     url_pattern = r'document/(?P<uuid>[a-z0-9\-]+)$'
     endpoint_name = 'document_detail_view'
@@ -392,11 +392,13 @@ class ChangeOwnerActionView(ActionView):
         }).send()
 
         store_activity_notification.delay(
-            actor=self.user,
-            recipient=owner,
+            actor_id=self.user.id,
+            recipient_id=owner.id,
             verb='assigned ownership',
-            target=owner,
-            action_object=self.instance,
+            target_id=owner.id,
+            target_type="User",
+            action_object_id=self.instance.id,
+            action_object_type="Document",
             render_string="(actor) assigned ownership of (action_object) to (target)",
             transient=True,
         )
@@ -439,11 +441,13 @@ class IssueSentenceInvitesActionView(ActionView):
                         continue
 
                     store_activity_notification.delay(
-                        actor=self.user,
-                        recipient=invitee,
+                        actor_id=self.user.id,
+                        recipient_id=invitee.id,
                         verb='assigned',
-                        target=invitee,
-                        action_object=sentence,
+                        target_id=invitee.id,
+                        target_type="User",
+                        action_object_id=sentence.id,
+                        action_object_type="Sentence",
                         render_string="(actor) assigned (target) to a clause on (action_object)",
                         transient=False, )
 
@@ -595,7 +599,7 @@ class DocumentUploadComputeView(ComputeView):
     @method_decorator(hide_exceptions(lambda _: (None, None, None)))
     def handle_html(self, source_url, title, html=None):
         article = Article(source_url)
-        article.download(html=html)
+        article.download(input_html=html)
         article.parse()
 
         text = article.text
@@ -613,7 +617,7 @@ class DocumentUploadComputeView(ComputeView):
 
         # Get the title value, the first non-None value from the list
         title = first((title, text[:50], str(now())), predicate=lambda item: item)
-        filename = urllib.quote_plus(title.encode('utf8')) + '.txt'
+        filename = urllib.parse.quote_plus(title.encode('utf8')) + '.txt'
         return title, filename, text
 
     @method_decorator(hide_exceptions(lambda _: (None, None, None)))

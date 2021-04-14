@@ -20,7 +20,7 @@ def build_report(user_id, module_name, class_name, params):
         if report is None:
             raise ReportNotFound("No %s report found in %s" % (class_name, module_name))
 
-        output = StringIO.StringIO()
+        output = StringIO()
         writer = csv.writer(output, quoting=csv.QUOTE_ALL)
 
         if report.sort_by_column is not None:

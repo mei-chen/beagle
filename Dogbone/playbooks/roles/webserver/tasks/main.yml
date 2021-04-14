@@ -1,14 +1,13 @@
 ---
 
-- include: install_packages.yml
+#- include: install_packages.yml
 
 - include: init_project.yml
 
-- include: setup_npm_modules.yml
-  when: env != "vagrant"  # Not working well on vagrant
+- include: setup_npm_modules.yml  # Not working well on vagrant
   tags: deploy
 
-- include: static_assets.yml
+#- include: static_assets.yml
 
 - include: run_manage.yml
 

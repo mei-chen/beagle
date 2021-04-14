@@ -575,11 +575,13 @@ class InboxEndpointListViewTest(BeagleWebTest):
 
         # Store the corresponding notification for the like action
         store_activity_notification(
-            actor=self.user,
-            recipient=self.user,
+            actor_id=self.user.id,
+            recipient_id=self.user.id,
             verb='liked',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) liked a clause on (action_object)",
             transient=False)
 
@@ -595,11 +597,13 @@ class InboxEndpointListViewTest(BeagleWebTest):
 
         # Store the corresponding notification for the edit action
         store_activity_notification(
-            actor=self.user,
-            recipient=self.user,
+            actor_id=self.user.id,
+            recipient_id=self.user.id,
             verb='edited',
-            target=sentence,
-            action_object=document,
+            target_id=sentence.id,
+            target_type="Sentence",
+            action_object_id=document.id,
+            action_object_type="Document",
             render_string="(actor) edited a clause on (action_object)",
             transient=False)
 

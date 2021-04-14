@@ -426,7 +426,7 @@ def login_resource_url(user, resource_url):
     to the base URL in order to access the resource immediately.
     """
 
-    from urllib import urlencode
+    from urllib.parse import urlencode
 
     from authentication.models import OneTimeLoginHash
 

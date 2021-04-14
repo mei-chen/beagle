@@ -529,7 +529,7 @@ class DocumentViewedByTest(BeagleWebTest):
                       kwargs={'uuid': document.uuid})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, '{}')
+        self.assertEqual(response.json(), {})
 
         doc_view = reverse('document_detail_view',
                            kwargs={'uuid': document.uuid})
@@ -773,28 +773,34 @@ class IssueSentenceInvitesActionViewTestCase(BeagleWebTest):
         response = self.client.post(api_url, json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-        mocked_store_activity_notification.assert_has_calls([mock.call(target=other_user,
-                                                                       transient=False,
-                                                                       actor=self.user,
-                                                                       verb='assigned',
-                                                                       action_object=document.get_sentence_by_index(0),
-                                                                       recipient=other_user,
-                                                                       render_string='(actor) assigned (target) to a clause on (action_object)'),
-                                                             mock.call(target=other_user,
-                                                                       transient=False,
-                                                                       actor=self.user,
-                                                                       verb='assigned',
-                                                                       action_object=document.get_sentence_by_index(3),
-                                                                       recipient=other_user,
-                                                                       render_string='(actor) assigned (target) to a clause on (action_object)'),
-                                                             mock.call(target=other_user,
-                                                                       transient=False,
-                                                                       actor=self.user,
-                                                                       verb='assigned',
-                                                                       action_object=document.get_sentence_by_index(4),
-                                                                       recipient=other_user,
-                                                                       render_string='(actor) assigned (target) to a clause on (action_object)')
-                                                             ])
+        mocked_store_activity_notification.assert_has_calls( [mock.call(target_id=other_user.id,
+                                                                        target_type="User",
+                                                                        transient=False,
+                                                                        actor_id=self.user.id,
+                                                                        verb='assigned',
+                                                                        action_object_id=document.get_sentence_by_index(0).id,
+                                                                        action_object_type="Sentence",
+                                                                        recipient_id=other_user.id,
+                                                                        render_string='(actor) assigned (target) to a clause on (action_object)'),
+                                                              mock.call(target_id=other_user.id,
+                                                                        target_type="User",
+                                                                        transient=False,
+                                                                        actor_id=self.user.id,
+                                                                        verb='assigned',
+                                                                        action_object_id=document.get_sentence_by_index(3).id,
+                                                                        action_object_type="Sentence",
+                                                                        recipient=other_user,
+                                                                        render_string='(actor) assigned (target) to a clause on (action_object)'),
+                                                              mock.call(target_id=other_user.id,
+                                                                        target_type="User",
+                                                                        transient=False,
+                                                                        actor_id=self.user.id,
+                                                                        verb='assigned',
+                                                                        action_object_id=document.get_sentence_by_index(4).id,
+                                                                        action_object_type="Sentence",
+                                                                        recipient=other_user,
+                                                                        render_string='(actor) assigned (target) to a clause on (action_object)')
+                                                             ], any_order=False)
 
     def test_no_collaboration_invite(self):
         self.make_paid(self.user)
@@ -1202,7 +1208,7 @@ class ReanalysisActionViewTestCase(BeagleWebTest):
     @override_settings(DEBUG=True)
     def test_successful(self):
         self.make_paid(self.user)
-        with mock.patch('core.tasks.process_document_task') as mock_process_document_task:
+        with mock.patch('core.tasks.process_document_task.delay') as mock_process_document_task:
             self.login()
             document = self.create_document('Title', self.user, pending=False)
             api_url = reverse('document_reanalysis_action_view', kwargs={'uuid': document.uuid})
@@ -1576,6 +1582,7 @@ class DocumentUploadComputeViewTestCase(BeagleWebTest):
         # Test out of date
         pass
 
+    # TODO Test is broken -> the mocks do not work
     def test_process_document_conversion_params_for_url(self):
         self.make_paid(self.user)
         self.login()
@@ -1608,6 +1615,7 @@ class DocumentUploadComputeViewTestCase(BeagleWebTest):
 
                 mock_conversion.assert_called_once_with(mock.ANY, 'media/RETURN_VALUE_FILE_PATH', True)
 
+    # This test is outdated, the github contact link is different.
     def test_url_containing_unicode(self):
         self.make_paid(self.user)
         self.login()
@@ -1682,7 +1690,7 @@ class DocumentUploadComputeViewTestCase(BeagleWebTest):
         self.login()
 
         file_handler = tempfile.TemporaryFile()
-        file_handler.write("Hello World!")
+        file_handler.write(b"Hello World!")
         file_handler.seek(0)
 
         with mock.patch('api_v1.document.endpoints.default_storage.save') as mock_save:

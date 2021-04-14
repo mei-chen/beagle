@@ -37,7 +37,7 @@ class AuthTokenTestCase(TestCase):
         self.assertTrue(created)
         self.assertEqual(token.user, user)
 
-        self.assertEqual(b64encode('%s:%s' % (user.pk, token.key)), token.token)
+        self.assertEqual(b64encode(('%s:%s' % (user.pk, token.key)).encode('utf-8')).decode('utf-8'), token.token)
         self.assertIsNotNone(token.key_expire)
 
     def test_already_created(self):
@@ -54,14 +54,14 @@ class AuthTokenTestCase(TestCase):
 
     def test_proper_key_generation(self):
         with mock.patch('authentication.models.uuid.uuid4') as mock_uuid4:
-            mock_uuid4.return_value = uuid.UUID(bytes='1234123412341234', version=4)
+            mock_uuid4.return_value = uuid.UUID(bytes='1234123412341234'.encode('utf-8'), version=4)
 
             user = User(username='username', email='email@mail.com')
             user.set_password('p@$$')
             user.save()
             token, _ = AuthToken.create_token_model(user)
 
-            expected_key = hmac.new(uuid.UUID(bytes='1234123412341234', version=4).bytes,
+            expected_key = hmac.new(uuid.UUID(bytes='1234123412341234'.encode('utf-8'), version=4).bytes,
                                     digestmod=hashlib.sha1).hexdigest()
 
             self.assertEqual(token.key, expected_key)

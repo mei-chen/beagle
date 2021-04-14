@@ -93,7 +93,7 @@ class ProcessDocumentConversionTest(BeagleWebTest):
                                                                                metadata=event_metadata)
                         # Test Statistics Event Is Sent
                         mock_log_statistic_event.assert_called_once_with(event_name='document_conversion_error',
-                                                                         event_user=self.user,
+                                                                         event_user_id=self.user.id,
                                                                          event_data=event_metadata)
 
                         # see that the task returns FALSE
@@ -139,7 +139,7 @@ class ProcessDocumentConversionTest(BeagleWebTest):
 
                             # Test Statistics Event Is Sent
                             mock_log_statistic_event.assert_called_once_with(event_name='document_conversion_error',
-                                                                             event_user=self.user,
+                                                                             event_user_id=self.user.id,
                                                                              event_data=event_metadata)
 
                             # see that the task returns FALSE
@@ -178,7 +178,7 @@ class ProcessDocumentConversionTest(BeagleWebTest):
 
                         # Test Statistics Event Is Sent
                         mock_log_statistic_event.assert_called_once_with(event_name='document_conversion_error',
-                                                                         event_user=self.user,
+                                                                         event_user_id=self.user.id,
                                                                          event_data=event_metadata)
 
                         # see that the task returns FALSE
@@ -267,10 +267,10 @@ class ProcessDocumentTaskTest(BeagleWebTest):
                                                                            email=self.user.email,
                                                                            metadata=event_metadata)
                     mock_log_statistic_event.assert_called_once_with(event_name='document_processed',
-                                                                     event_user=self.user,
+                                                                     event_user_id=self.user.id,
                                                                      event_data=event_metadata)
                     mock_send_slack_message.assert_called_once_with('  ({0}) recieved a low party confidence mean of '
-                                                                    '0%\nR: *0*\nL: *0*\nT: *0*\nE: *0*\n'
+                                                                    '0.0%\nR: *0*\nL: *0*\nT: *0*\nE: *0*\n'
                                                                     'on document _Some title_'.format(self.user.email),
                                                                     '#intercom')
 
