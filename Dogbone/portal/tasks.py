@@ -68,7 +68,7 @@ def update_PDFUploadMonitor(fpath, need_ocr):
         stat = PDFUploadMonitor.objects.latest()
 
     # Add page count
-    with open(fpath) as pdfin:
+    with open(fpath, "rb") as pdfin:
         reader = PyPDF2.PdfFileReader(pdfin)
         stat.add_doc(pages=reader.getNumPages(), ocr=need_ocr)
 

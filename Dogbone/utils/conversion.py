@@ -17,7 +17,9 @@ import PyPDF2
 
 from constance import config
 from dogbone.exceptions import DocumentSizeOverLimitException
-from utils.EasyPDFCloudAPI.EasyPDFCloudSample import pdf_convert, doc_convert
+from utils.EasyPDFCloudAPI.EasyPDFCloudSample import doc_convert
+from pdf2docx import Converter
+import ocrmypdf
 
 
 def strings(filename, min=4):
@@ -25,10 +27,9 @@ def strings(filename, min=4):
     Helper function to iterate through a file binary and pull out strings
     called by requires_ocr()
     """
-    with open(filename, "rb") as f:
+    with open(filename, errors="ignore") as f:
         result = ""
         for c in f.read():
-            c = str(c)
             if c in string.printable:
                 result += c
                 continue
@@ -237,3 +238,28 @@ def document2sentences(document, filename, extension):
 
     sentences = payload
     return sentences
+
+def pdf_convert(input_filename, ocr):
+	"""
+	Given in file name, check if ocr is needed
+	If so, used ocrmypdf to add text layer
+	then convert to docx
+	"""
+
+	if ocr:
+		pdf_ocr(input_filename)
+	
+	output_filename = '.'.join(os.path.abspath(input_filename).split('.')[:-1]) + '.docx'
+
+	# convert pdf to docx
+	cv = Converter(input_filename)
+	cv.convert(output_filename, start=0, end=None)
+	cv.close()
+
+	return output_filename
+
+
+def pdf_ocr(input_filename):
+
+    # overwrite old pdf with ocr pdf
+	ocrmypdf.ocr(input_filename, input_filename)

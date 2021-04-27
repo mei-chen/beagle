@@ -1,4 +1,4 @@
-from io import StringIO
+from io import BytesIO
 import logging
 import os
 
@@ -71,8 +71,8 @@ class S3FileManager(object):
         except botocore.exceptions.ClientError as e:
             # If a client error is thrown, then check that it was a 404 error.
             # If it was a 404 error, then the bucket does not exist.
-            error_code = int(e.response['Error']['Code'])
-            if error_code == 404:
+            error_code = e.response['Error']['Code']
+            if error_code == "NoSuchKey":
                 # bucket does not exist, create it
                 self.s3_client.create_bucket(Bucket=self.BUCKET_NAME)
                 if cors_conf is not None:
@@ -153,9 +153,9 @@ class S3FileManager(object):
             response = self.s3_client.get_object(Bucket=self.BUCKET_NAME, Key=key)
             return response['Body'].read()
         except botocore.exceptions.ClientError as e:
-            error_code = int(e.response['Error']['Code'])
-            if error_code == 404:
-                return None
+            error_code = e.response['Error']['Code']
+            if error_code == "NoSuchKey":
+                return b""
             raise e
 
     def save_filename(self, key, file_path, acl=None):
@@ -197,19 +197,16 @@ class S3FileManager(object):
         """
         API for reading to an open file from S3
         :param key: the key string
-        :return: StringIO() instance
+        :return: BytesIO() instance
         """
         logging.info('Reading file handle from S3. key=%s', key)
 
         try:
-            s = StringIO()
-            self.s3_client.upload_fileobj(Bucket=self.BUCKET_NAME, Key=key, Fileobj=s)
+            s = BytesIO()
+            self.s3_client.download_fileobj(Bucket=self.BUCKET_NAME, Key=key, Fileobj=s)
             s.seek(0)
             return s
         except botocore.exceptions.ClientError as e:
-            error_code = int(e.response['Error']['Code'])
-            if error_code == 404:
-                return None
             raise e
 
     def save_folder(self, key_prefix, folder_path, acl=None):

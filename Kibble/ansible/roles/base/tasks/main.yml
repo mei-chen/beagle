@@ -48,6 +48,21 @@
     - docx2txt
     - libjpeg-dev
     - libreoffice
+
+    # OCRmyPDF
+    - ghostscript
+    - icc-profiles-free
+    - liblept5
+    - libxml2
+    - pngquant
+    - python3-cffi
+    - python3-distutils
+    - python3-pkg-resources
+    - python3-reportlab
+    - qpdf
+    - tesseract-ocr
+    - zlib1g
+    - unpaper
   tags: packages
   become: true
   become_user: root

@@ -119,7 +119,7 @@ CELERY_RESULT_BACKEND = BROKER_URL
 #
 ######################################################################################
 
-REACT_LOCAL_ADDRESS = 'http://10.0.2.2:3000'#'http://127.0.0.1:3000'
+REACT_LOCAL_ADDRESS = 'http://127.0.0.1:3000'
 
 INTERCOM_ENV = 'dev'
 
@@ -349,3 +349,4 @@ try:
     from .app_settings.local_settings import *
 except ImportError:
     print('Local settings have not been set')
+

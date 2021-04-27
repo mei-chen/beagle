@@ -93,7 +93,7 @@ class OnlineLearner(TimeStampedModel):
         total_size = (len(self.samples['text'])
                       if self.samples and 'text' in self.samples
                       else 0)
-        noninfered_size = (len(filter(lambda x: not x, self.samples['infered']))
+        noninfered_size = (len(list(filter(lambda x: not x, self.samples['infered'])))
                            if self.samples and 'infered' in self.samples
                            else 0)
 

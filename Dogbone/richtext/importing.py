@@ -389,7 +389,7 @@ def conversion_handler(file_extension):
                 document.save_pdf(read_file)
 
             # First convert to a docx file
-            docxfile = utils.conversion.pdf_to_docx(filename)
+            docxfile = utils.conversion.pdf_to_docx(tempfilename)
             converter_class = DocXConverter
             if docxfile.endswith('.txt'):
                 # External APIs for converting pdf to docx were not available,

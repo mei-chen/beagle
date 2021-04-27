@@ -1,7 +1,7 @@
 import docx
 import os
 import zipfile
-from io import StringIO
+from io import BytesIO
 from xml.sax.saxutils import escape as xmlescape
 
 from bs4 import BeautifulSoup
@@ -40,14 +40,14 @@ def document_to_docx(document, s3_path,
     # Create an empty document using some default templates
     xdoc = docx.Document()
 
-    initial_temporary_archive = StringIO()
+    initial_temporary_archive = BytesIO()
 
     # Save the document as an initial archive
     xdoc.save(initial_temporary_archive)
 
     initial_temporary_archive.seek(0)
 
-    new_temporary_archive = StringIO()
+    new_temporary_archive = BytesIO()
 
     # Create a new archive by copying the initial archive,
     # but without document.xml; also read initial document.xml.
@@ -221,7 +221,7 @@ def document_to_rich_docx(document, s3_path,
         )
         return
 
-    temporary_archive = StringIO()
+    temporary_archive = BytesIO()
 
     # Create a temporary copy of the archive without document.xml
     with zipfile.ZipFile(docx_file, mode='r') as zin, \
@@ -240,7 +240,7 @@ def document_to_rich_docx(document, s3_path,
     # Now add document.xml with its new data
     with zipfile.ZipFile(temporary_archive, mode='a',
                          compression=zipfile.ZIP_DEFLATED) as zout:
-        zout.writestr(DOCX_DOCUMENT_FNAME, doc.encode('utf-8'))
+        zout.writestr(DOCX_DOCUMENT_FNAME, doc)
 
     temporary_archive.seek(0)
 
@@ -302,7 +302,7 @@ def add_comments_to_docx(temp_docx, sentences, from_plain=False, tz_name=None):
     initial_comments = None
     initial_contenttypes = None
     initial_rels = None
-    result_docx = StringIO()
+    result_docx = BytesIO()
 
     with zipfile.ZipFile(temp_docx, mode='r') as zin:
         for name in zin.namelist():
@@ -373,7 +373,7 @@ def add_annotations_to_docx(temp_docx, sentences, included_annotations, from_pla
     initial_comments = None
     initial_contenttypes = None
     initial_rels = None
-    result_docx = StringIO()
+    result_docx = BytesIO()
 
     with zipfile.ZipFile(temp_docx, mode='r') as zin:
         for name in zin.namelist():
