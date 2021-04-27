@@ -92,6 +92,8 @@ This guide targets a Linux environment with a Ubuntu-family system (Ubuntu, Mint
 
     ```
     $ python -m nltk.downloader book
+    $ python -m nltk.downloader punkt
+    $ python -m nltk.downloader averaged_perceptron_tagger
     ```
 
 6. Redis:
