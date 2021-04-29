@@ -473,6 +473,7 @@ class RFModelWrapper(OfflineMLModelWrapperBase):
 
     def deserialize(self, ml_model_params):
         self.ml_model.estimators_, self.ml_model.classes_, self.ml_model.n_outputs_ = ml_model_params
+        self.ml_model.n_classes_ = self.ml_model.classes_.shape[0]
 
 
 class AdaBoostModelWrapper(OfflineMLModelWrapperBase):
