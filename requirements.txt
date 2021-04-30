@@ -133,7 +133,7 @@ PyPDF2==1.26.0
 PyReadableDiff==0.2.3
 PyStemmer==2.0.1
 python-dateutil==2.6.0
-python-docx==0.8.6
+python-docx==0.8.10
 python-dotenv==0.15.0
 python-http-client==2.2.1
 python-intercom==2.1.1
