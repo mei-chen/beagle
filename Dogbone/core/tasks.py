@@ -556,7 +556,7 @@ def cleanup_batch(batch_id):
     return True
 
 
-#@shared_task
+@shared_task
 def process_document_conversion(doc_id, temp_filename, send_notifications=True, send_emails=True):
     """
     Handle the document conversion. Send notifications along the way.

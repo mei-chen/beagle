@@ -19,8 +19,9 @@ from bs4 import BeautifulSoup
 from bs4.element import NavigableString
 from django.conf import settings
 from docx import Document
+from pdf2docx import Converter
+import ocrmypdf
 
-from utils.EasyPDFCloudAPI.EasyPDFCloudSample import pdf_convert, doc_convert
 
 logger = logging.getLogger(__name__)
 
@@ -240,3 +241,33 @@ def html_to_pdf(html_path, pdf_path):
         logger.error(err.strip())
     else:
         logger.info(out.strip())
+
+
+def pdf_convert(input_filename, ocr):
+	"""
+	Given in file name, check if ocr is needed
+	If so, used ocrmypdf to add text layer
+	then convert to docx
+	"""
+
+	if ocr:
+		pdf_ocr(input_filename)
+	
+	output_filename = '.'.join(os.path.abspath(input_filename).split('.')[:-1]) + '.docx'
+
+	# convert pdf to docx
+	cv = Converter(input_filename)
+	cv.convert(output_filename, start=0, end=None)
+	cv.close()
+
+	return output_filename
+
+
+def pdf_ocr(input_filename):
+
+    # overwrite old pdf with ocr pdf
+	ocrmypdf.ocr(input_filename, input_filename)
+
+def doc_convert(input_filename):
+    output_directory = os.path.dirname(input_filename)
+    subprocess.call(['soffice', '--headless', '--convert-to', 'docx', '--out-dir', output_directory, input_filename])

@@ -17,7 +17,6 @@ import PyPDF2
 
 from constance import config
 from dogbone.exceptions import DocumentSizeOverLimitException
-from utils.EasyPDFCloudAPI.EasyPDFCloudSample import doc_convert
 from pdf2docx import Converter
 import ocrmypdf
 
@@ -263,3 +262,7 @@ def pdf_ocr(input_filename):
 
     # overwrite old pdf with ocr pdf
 	ocrmypdf.ocr(input_filename, input_filename)
+
+def doc_convert(input_filename):
+    output_directory = os.path.dirname(input_filename)
+    subprocess.call(['soffice', '--headless', '--convert-to', 'docx', '--out-dir', output_directory, input_filename])
