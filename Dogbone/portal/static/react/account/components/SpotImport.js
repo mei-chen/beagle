@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import CriticalActionButton from 'common/components/CriticalActionButton';
-import { postOnServer, deleteFromServer, resetOnServer, getSuggetstionsFromServer } from '../redux/modules/experiment';
+import { postOnServer, deleteFromServer, resetOnServer, getSuggetstionsFromServer, spotAuthorize } from '../redux/modules/experiment';
 require('./styles/SpotImport.scss');
 
 class SpotImport extends Component {
@@ -13,6 +13,7 @@ class SpotImport extends Component {
     this._handleBlur = this._handleBlur.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
     this._handleDeleteClick = this._handleDeleteClick.bind(this);
+    this._handleSpotAuthorize = this._handleSpotAuthorize.bind(this);
     this._renderExperiments = this._renderExperiments.bind(this);
     this._filterSuggestions = this._filterSuggestions.bind(this);
     this._renderSuggestions = this._renderSuggestions.bind(this);
@@ -54,6 +55,10 @@ class SpotImport extends Component {
   _handleResetClick(uuid) {
     const { dispatch } = this.props;
     dispatch(resetOnServer(uuid))
+  }
+
+  _handleSpotAuthorize() {
+    spotAuthorize()
   }
 
   _renderExperiments(experiments, disabled) {
@@ -130,10 +135,13 @@ class SpotImport extends Component {
         <form
           className="spot-import"
           onSubmit={this._handleSubmit}>
-          <label className="spot-import-label">
-            <img src="/static/img/Spot-logo-small-black.svg"/>Import from Spot:
-          </label>
 
+          <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip-left">Access Spot</Tooltip>}>
+
+            <button className="spot-import-label" onClick={() => { this._handleSpotAuthorize() }}>
+              <img src="/static/img/Spot-logo-small-black.svg"/>Import from Spot:
+            </button>
+          </OverlayTrigger>
           <div className="spot-import-uuid">
             <input
               className="spot-import-input"
@@ -154,6 +162,7 @@ class SpotImport extends Component {
             className="spot-import-button">
             <i className="fa fa-plus" />
           </button>
+
           <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-right">Ask us about this feature</Tooltip>}>
             <button className="spot-import-info-button" onClick={() => {window.Intercom('show')}}>
                 <i className="fa fa-info-circle"/>

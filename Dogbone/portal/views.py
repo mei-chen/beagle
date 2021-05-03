@@ -163,11 +163,8 @@ def _connect(service, user, connect_uri, login_uri):
 
     return redirect_uri
 
-
-_SUPPORTED_SERVICES = frozenset([
-    'spot',
-    'kibble',
-])
+# TODO: Move this somewhere else later
+_SUPPORTED_SERVICES = frozenset(['spot', 'kibble'])
 
 
 def _authorize(service, request):
@@ -212,10 +209,41 @@ def _authorize(service, request):
 
     return render(request, 'login.html', {'form': login_form})
 
+def _login(service, request):
+    """
+    Logs in a user to an external service using dogbone authentication.
+    The service must belong to the set of supported services.
+    """
+    SERVICES = {
+    'spot': { 'connect_uri': config.SPOT_API_URL + config.SPOT_CONNECT_ENDPOINT,  'login_uri': config.SPOT_API_URL + config.SPOT_LOGIN_ENDPOINT },
+    'kibble': { 'connect_uri': None, 'login_uri': None }
+} 
+    if service not in SERVICES:
+        message = "Service '%s' is unknown, supported services are %s" % (
+            service, sorted(list(SERVICES.keys()))
+        )
+        return error400(request, message)
+
+    user = request.user
+    connect_uri = SERVICES[service]['connect_uri']
+    login_uri = SERVICES[service]['login_uri']
+
+    if connect_uri is None or login_uri is None:
+        message = 'Both connect_uri and login_uri parameters ' \
+                  'must be specified in query string'
+        return error400(request, message)
+
+    if user.is_authenticated:
+        redirect_uri = _connect(service, user, connect_uri, login_uri)
+        return HttpResponseRedirect(redirect_uri)
+
+    return error400(request, "Must be logged into Dogbone")
 
 def spot_authorize(request):
     return _authorize('spot', request)
 
+def spot_login(request):
+    return _login('spot', request)
 
 def kibble_authorize(request):
     return _authorize('kibble', request)

@@ -9,6 +9,7 @@ import { MODULE_NAME } from 'common/utils/constants';
 const CURRENT_NAME = 'experiment';
 const EXPERIMENTS_URL = '/api/v1/user/me/spot/experiments';
 const SUGGESTIONS_URL = '/api/v1/user/me/spot/suggestions';
+const SPOT_AUTHORIZE_URL = '/spot/login';
 const POST_URL = `${EXPERIMENTS_URL}/add`;
 const DELETE_URL = `${EXPERIMENTS_URL}/remove`;
 const RESET_URL = `${EXPERIMENTS_URL}/reset`;
@@ -51,6 +52,8 @@ const resetError = data => ({ type: RESET_ERROR, data });
 const getSuggestionsRequest = () => ({ type: GET_SUGGESTIONS_REQUEST });
 
 const getSuggestionsSuccess = data => ({ type: GET_SUGGESTIONS_SUCCESS, data });
+
+//const spotAuthorizeRequest = () => ({type: SPOT_AUTHORIZE_});
 
 // Async actions
 export const getFromServer = () => dispatch => {
@@ -105,6 +108,16 @@ export const resetOnServer = uuid => dispatch => {
       log.error(err.response || err);
     });
 };
+
+// Don't need to dispatch, nothing to change
+export const spotAuthorize = () => {
+  //dispatch();
+  return axios.get(SPOT_AUTHORIZE_URL).then(() => {
+    //dispatch();
+  }).catch(err => {
+    log.error(err.response || err);
+  })
+}
 
 export const getSuggetstionsFromServer = () => dispatch => {
   dispatch(getSuggestionsRequest());

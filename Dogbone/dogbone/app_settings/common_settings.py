@@ -287,6 +287,8 @@ DEFAULT_GOOGLE_DRIVE_CLIENT_SECRET = 'AjgHIhJdGFGa3GTVKrt-McAn'
 ######################################################################################
 
 DEFAULT_SPOT_API_URL = 'http://spot.beagle.ai/api/v1/'
+DEFAULT_SPOT_CONNECT_ENDPOINT = 'connect/'
+DEFAULT_SPOT_LOGIN_ENDPOINT = 'login/'
 
 ######################################################################################
 #
@@ -307,6 +309,8 @@ CONSTANCE_CONFIG = {
     'GOOGLE_DRIVE_CLIENT_ID': (DEFAULT_GOOGLE_DRIVE_CLIENT_ID, 'Put "Client ID" from the Google API Console'),
     'GOOGLE_DRIVE_CLIENT_SECRET': (DEFAULT_GOOGLE_DRIVE_CLIENT_SECRET, 'Put "Client secret" from the Google API Console'),
     'SPOT_API_URL': (DEFAULT_SPOT_API_URL, 'The base URL for accessing the Spot API'),
+    'SPOT_CONNECT_ENDPOINT': (DEFAULT_SPOT_CONNECT_ENDPOINT, 'The endpoint for connecting Dogbone users with the Spot API'),
+    'SPOT_LOGIN_ENDPOINT': (DEFAULT_SPOT_LOGIN_ENDPOINT, 'The endpoint for login of Dogbone users in Spot')
 }
 
 ######################################################################################
