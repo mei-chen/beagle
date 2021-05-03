@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'constance',
     'rest_framework',
     'watchman',
+    'corsheaders',
 
     # Project
     'core',
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -99,6 +101,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'spot.wsgi.application'
 
+# Dogbone url
+CORS_ALLOWED_ORIGINS = ['http://18.207.159.186/']
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -279,3 +283,4 @@ if DEBUG:
     # (disabled by default because of excessive verbosity)
     QUERY_INSPECT_LOG_STATS = False
     QUERY_INSPECT_LOG_QUERIES = False
+    CORS_ALLOWED_ORIGINS.append('http://localhost:8003')
