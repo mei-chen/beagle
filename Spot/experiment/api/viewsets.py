@@ -284,7 +284,7 @@ class DogboneViewSet(viewsets.ViewSet):
         )
         dogbone_authorize_url = '{url}?{query}'.format(
             url=constance_settings.DOGBONE_AUTHORIZE_URL,
-            query=urllib.urlencode(
+            query=urllib.parse.urlencode(
                 {'connect_uri': connect_uri, 'login_uri': login_uri}
             )
         )
