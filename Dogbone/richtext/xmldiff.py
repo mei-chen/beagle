@@ -1539,8 +1539,10 @@ def add_comment_relations(initial_contenttypes, initial_rels):
     rels_tag[u'Type'] = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments'
     rels_tag[u'Target'] = 'comments.xml'
     parsed_rels.Relationships.append(rels_tag)
+    parsed_contenttypes = str(parsed_contenttypes).replace(":=", "=")
+    parsed_rels = str(parsed_rels).replace(":=", "=")
 
-    return str(parsed_contenttypes), str(parsed_rels)
+    return parsed_contenttypes, parsed_rels
 
 
 def get_annotations(sentences, included_annotations):
@@ -1642,7 +1644,10 @@ def add_image_relations(initial_contenttypes, initial_rels, image_name):
     rels_tag[u'Target'] = 'media/%s' % image_name
     parsed_rels.Relationships.append(rels_tag)
 
-    return str(parsed_contenttypes), str(parsed_rels), rId
+    parsed_contenttypes = str(parsed_contenttypes).replace(":=", "=")
+    parsed_rels = str(parsed_rels).replace(":=", "=")
+
+    return parsed_contenttypes, parsed_rels, rId
 
 
 def add_annotations_formatting(sentences, sent_ann_dict, img_rid, min_img_id):
