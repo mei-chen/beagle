@@ -287,8 +287,8 @@ DEFAULT_GOOGLE_DRIVE_CLIENT_SECRET = 'AjgHIhJdGFGa3GTVKrt-McAn'
 ######################################################################################
 
 DEFAULT_SPOT_API_URL = 'http://spot.beagle.ai/api/v1/'
-DEFAULT_SPOT_CONNECT_ENDPOINT = 'connect/'
-DEFAULT_SPOT_LOGIN_ENDPOINT = 'login/'
+DEFAULT_SPOT_CONNECT_ENDPOINT = 'dogbone/connect/'
+DEFAULT_SPOT_LOGIN_ENDPOINT = 'dogbone/login/'
 
 ######################################################################################
 #

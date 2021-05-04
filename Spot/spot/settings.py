@@ -102,7 +102,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'spot.wsgi.application'
 
 # Dogbone url
-CORS_ALLOWED_ORIGINS = ['http://18.207.159.186/']
+CORS_ALLOWED_ORIGINS = ['http://18.207.159.186']
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

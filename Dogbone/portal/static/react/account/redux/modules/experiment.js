@@ -111,9 +111,11 @@ export const resetOnServer = uuid => dispatch => {
 
 // Don't need to dispatch, nothing to change
 export const spotAuthorize = () => {
-  //dispatch();
-  return axios.get(SPOT_AUTHORIZE_URL).then(() => {
-    //dispatch();
+  return axios.get(SPOT_AUTHORIZE_URL).then(response => {
+    // redirect
+    let spot_uri = response.data
+    window.location.href = spot_uri
+
   }).catch(err => {
     log.error(err.response || err);
   })

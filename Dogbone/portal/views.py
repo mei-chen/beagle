@@ -235,8 +235,7 @@ def _login(service, request):
 
     if user.is_authenticated:
         redirect_uri = _connect(service, user, connect_uri, login_uri)
-        return HttpResponseRedirect(redirect_uri)
-
+        return HttpResponse(redirect_uri, content_type='text/plain')
     return error400(request, "Must be logged into Dogbone")
 
 def spot_authorize(request):
