@@ -1,0 +1,99 @@
+# Step 1
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+sudo apt update
+
+# Step 2
+sudo apt install python3-pip -y
+sudo python3 -m pip install --upgrade pip
+sudo apt install python3-venv -y
+sudo apt install libpq-dev -y
+sudo apt install postgresql -y
+sudo apt install nginx -y
+sudo apt install nodejs -y
+sudo apt install supervisor -y 
+sudo apt install unzip -y
+sudo apt install libreoffice -y
+sudo apt install xfonts-encodings xfonts-75dpi xfonts-base xfonts-utils -y
+sudo python3 -m pip install gunicorn
+sudo python3 -m pip install virtualenv
+
+# Step 3
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
+sudo dpkg -i wkhtmltox_0.12.6-1.bionic_amd64.deb
+rm wkhtmltox_0.12.6-1.bionic_amd64.deb
+
+# Step 4
+sudo chown ubuntu /var/www
+sudo chgrp ubuntu /var/www
+mkdir /var/www/logs
+sudo chown root ~/configs/*
+sudo chgrp root ~/configs/*
+sudo cp ~/configs/* /etc/supervisor/conf.d/
+sudo cp ~/nginx.conf /etc/nginx/nginx.conf
+sudo rm /etc/nginx/sites-enabled/default
+sudo mv ~/
+
+# Step 5
+cd /var/www/
+git clone git@github.com:mei-chen/beagle.git
+cd beagle
+git checkout develop
+
+# Step 6
+cd ..
+virtualenv venv
+source venv/bin/activate
+cd beagle/Kibble/
+pip3 install -r requirements.txt 
+python3 -m spacy download en_core_web_md
+
+# Step 7
+# app variables and environment variables
+cd /var/www/beagle/Kibble/
+rm kibble/app_settings/local_settings.py
+
+# Step 8
+cd realtime/node/
+npm install
+
+# Step 9
+ln -s /var/www/beagle/Kibble/static /var/www/static
+cd /var/www/beagle/Kibble/portal/static/js/src/
+npm install
+npm run dist
+cd /var/www/beagle/Kibble
+./manage.py collectstatic
+mv /var/www/beagle/Kibble/collectstatic /var/www/beagle/Kibble/static
+
+# Step 10
+sudo -i -u postgres psql<<ENDSQL
+CREATE DATABASE kibble;
+CREATE USER  kibble WITH PASSWORD 'password';
+ALTER ROLE kibble SET client_encoding TO 'utf8';
+ALTER ROLE kibble SET default_transaction_isolation TO 'read committed';
+ALTER ROLE kibble SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE kibble TO kibble;
+ENDSQL
+
+# Step 11
+./manage.py migrate
+./manage.py loaddata analysis/fixtures/initial_data.json
+
+# Step 12
+sudo supervisorctl<<endsup
+reload
+y
+endsup
+sleep 8
+sudo supervisorctl<<endsup
+endsup
+
+# Step 13
+sudo systemctl restart nginx
+
+# Step 14
+cd /var/www/beagle/Kibble/
+source /var/www/venv/bin/activate
+python3 manage.py createsuperuser

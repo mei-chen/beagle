@@ -1,0 +1,8 @@
+#!/bin/bash
+scp -i "~/.ssh/ec2_beagle.pem" app_settings ubuntu@$1:app_settings
+scp -i "~/.ssh/ec2_beagle.pem" local_settings ubuntu@$1:local_settings
+scp -i "~/.ssh/ec2_beagle.pem" ec2_setup_script ubuntu@$1:setup_script
+scp -i "~/.ssh/ec2_beagle.pem" nginx.conf ubuntu@$1:nginx.conf
+scp -i "~/.ssh/ec2_beagle.pem" -r configs ubuntu@$1:configs
+scp -i "~/.ssh/ec2_beagle.pem" github_key/config ubuntu@$1:~/.ssh/config
+scp -i "~/.ssh/ec2_beagle.pem" github_key/beag_github_key ubuntu@$1:~/.ssh/beag_github_key
