@@ -270,10 +270,12 @@ class IsNotAuthenticated(permissions.IsAuthenticated):
 
 
 class DogboneViewSet(viewsets.ViewSet):
-    permission_classes = [IsNotAuthenticated]
+    # Allow any authentication
+    permission_classes = [permissions.AllowAny]
 
     SERIALIZER_SECRET_KEY = '/*[dogbone]->(spot)*/'
 
+    # Authorize is from spot to login into Dogbone
     @action(detail=False,methods=['GET'])
     def authorize(self, request, *args, **kwargs):
         connect_uri = request.build_absolute_uri(
@@ -290,6 +292,7 @@ class DogboneViewSet(viewsets.ViewSet):
         )
         return HttpResponseRedirect(dogbone_authorize_url)
 
+    # Create user and authorize with access token
     @action(detail=False,methods=['POST'])
     def connect(self, request, *args, **kwargs):
         data = request.data
@@ -313,6 +316,7 @@ class DogboneViewSet(viewsets.ViewSet):
         payload = {'access_token': access_token}
         return Response(payload)
 
+    # Authentication and login
     @action(detail=False,methods=['GET'])
     def login(self, request, *args, **kwargs):
         try:
@@ -326,6 +330,9 @@ class DogboneViewSet(viewsets.ViewSet):
             # Login the user without a password, i.e. avoid calling:
             # user = auth.authenticate(**credentials)
             backend = django_settings.AUTHENTICATION_BACKENDS[0]
+
+            # Logout previous users if exists
+            auth.logout(request)
             auth.login(request, user, backend=backend)
 
         except:  # authentication failed
