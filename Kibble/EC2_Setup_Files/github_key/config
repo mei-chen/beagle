@@ -1,0 +1,4 @@
+Host github.com
+    IdentityFile ~/.ssh/beag_github_key
+    IdentitiesOnly yes
+    StrictHostKeyChecking no
