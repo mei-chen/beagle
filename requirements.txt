@@ -8,7 +8,7 @@ beautifulsoup4==4.6.0
 billiard==3.6.3.0
 blis==0.7.4
 boto3==1.17.62
-botocore==1.20.61
+botocore==1.20.62
 cachetools==4.2.1
 catalogue==2.0.1
 celery==5.0.5
@@ -160,7 +160,7 @@ requests==2.25.1
 requests-file==1.5.1
 requests-oauthlib==0.8.0
 rsa==4.7.2
-s3transfer==0.1.13
+s3transfer==0.4.2
 scikit-learn==0.24.1
 scipy==1.5.0
 selenium==2.53.6
