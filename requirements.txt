@@ -47,7 +47,7 @@ django-storages==1.6.5
 django-user-sessions==1.7.1
 django-watchman==0.15.0
 djangorestframework==3.12.2
-docutils==0.16
+docutils==0.15.2
 drf-nested-routers==0.93.3
 dropbox==11.3.0
 ecdsa==0.11
