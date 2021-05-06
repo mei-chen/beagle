@@ -2,6 +2,7 @@
 *.log
 *.pot
 *.pyc
+*.pkl
 __pycache__/
 db.sqlite3
 b.sqlite3-journal
@@ -12,6 +13,7 @@ venv/
 
 ### Node ###
 node_modules/
+package-log.json
 
 ### Kibble ###
 Kibble/wkhtmltox

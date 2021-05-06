@@ -21,7 +21,7 @@ from rest_framework import exceptions as drf_exceptions
 from rest_framework import status as drf_status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ViewSet
 
@@ -375,7 +375,7 @@ class IsNotAuthenticated(IsAuthenticated):
 
 
 class DogboneAPI(ViewSet):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [AllowAny]
 
     SERIALIZER_SECRET_KEY = '/*[dogbone]->(kibble)*/'
 
@@ -430,7 +430,7 @@ class DogboneAPI(ViewSet):
 
             # Login the user without a password
             backend = django_settings.AUTHENTICATION_BACKENDS[0]
-            
+
             # Logout previous users if exists
             auth.logout(request)
             auth.login(request, user, backend=backend)
