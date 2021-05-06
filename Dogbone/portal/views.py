@@ -216,7 +216,7 @@ def _login(service, request):
     """
     SERVICES = {
         'spot': { 'connect_uri': config.SPOT_API_URL + config.SPOT_CONNECT_ENDPOINT,  'login_uri': config.SPOT_API_URL + config.SPOT_LOGIN_ENDPOINT },
-        'kibble': { 'connect_uri': config.KIBBLE_API_URL + config.KIBBLE_CONNECT_ENDPOINT, 'login_uri': onfig.KIBBLE_API_URL + config.KIBBLE_LOGIN_ENDPOINT }
+        'kibble': { 'connect_uri': config.KIBBLE_API_URL + config.KIBBLE_CONNECT_ENDPOINT, 'login_uri': config.KIBBLE_API_URL + config.KIBBLE_LOGIN_ENDPOINT }
     } 
     if service not in SERVICES:
         message = "Service '%s' is unknown, supported services are %s" % (
