@@ -10,6 +10,7 @@ const CURRENT_NAME = 'experiment';
 const EXPERIMENTS_URL = '/api/v1/user/me/spot/experiments';
 const SUGGESTIONS_URL = '/api/v1/user/me/spot/suggestions';
 const SPOT_AUTHORIZE_URL = '/spot/login';
+const KIBBLE_AUTHORIZE_URL = '/kibble/login';
 const POST_URL = `${EXPERIMENTS_URL}/add`;
 const DELETE_URL = `${EXPERIMENTS_URL}/remove`;
 const RESET_URL = `${EXPERIMENTS_URL}/reset`;
@@ -115,7 +116,16 @@ export const spotAuthorize = () => {
     // redirect
     let spot_uri = response.data
     window.location.href = spot_uri
+  }).catch(err => {
+    log.error(err.response || err);
+  })
+}
 
+export const kibbleAuthorize = () => {
+  return axios.get(KIBBLE_AUTHORIZE_URL).then(response => {
+    // redirect
+    let kibble_uri = response.data
+    window.location.href = kibble_uri
   }).catch(err => {
     log.error(err.response || err);
   })

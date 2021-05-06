@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import CriticalActionButton from 'common/components/CriticalActionButton';
-import { postOnServer, deleteFromServer, resetOnServer, getSuggetstionsFromServer, spotAuthorize } from '../redux/modules/experiment';
+import { postOnServer, deleteFromServer, resetOnServer, getSuggetstionsFromServer, spotAuthorize, kibbleAuthorize } from '../redux/modules/experiment';
 require('./styles/SpotImport.scss');
 
 class SpotImport extends Component {
@@ -59,6 +59,10 @@ class SpotImport extends Component {
 
   _handleSpotAuthorize() {
     spotAuthorize()
+  }
+
+  _handleKibbleAuthorize() {
+    kibbleAuthorize()
   }
 
   _renderExperiments(experiments, disabled) {
@@ -172,6 +176,14 @@ class SpotImport extends Component {
         { !!errorMessage && (
           <div className="spot-import-error">{ errorMessage }</div>
         )}
+
+        <div className="spot-import">
+          <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip-left">Access Spot</Tooltip>}>
+            <button className="spot-import-label" onClick={() => { this._handleKibbleAuthorize() }}>
+              Kibble Access
+            </button>
+          </OverlayTrigger>
+        </div>
       </div>
     )
   }

@@ -292,6 +292,16 @@ DEFAULT_SPOT_LOGIN_ENDPOINT = 'dogbone/login/'
 
 ######################################################################################
 #
+#  KIBBLE SETTINGS (DEFAULT)
+#
+######################################################################################
+
+DEFAULT_KIBBLE_API_URL = 'http://kibble.beagle.ai/api/v1/'
+DEFAULT_KIBBLE_CONNECT_ENDPOINT = 'dogbone/connect/'
+DEFAULT_KIBBLE_LOGIN_ENDPOINT = 'dogbone/login/'
+
+######################################################################################
+#
 #  DYNAMIC SETTINGS
 #
 ######################################################################################
@@ -310,7 +320,10 @@ CONSTANCE_CONFIG = {
     'GOOGLE_DRIVE_CLIENT_SECRET': (DEFAULT_GOOGLE_DRIVE_CLIENT_SECRET, 'Put "Client secret" from the Google API Console'),
     'SPOT_API_URL': (DEFAULT_SPOT_API_URL, 'The base URL for accessing the Spot API'),
     'SPOT_CONNECT_ENDPOINT': (DEFAULT_SPOT_CONNECT_ENDPOINT, 'The endpoint for connecting Dogbone users with the Spot API'),
-    'SPOT_LOGIN_ENDPOINT': (DEFAULT_SPOT_LOGIN_ENDPOINT, 'The endpoint for login of Dogbone users in Spot')
+    'SPOT_LOGIN_ENDPOINT': (DEFAULT_SPOT_LOGIN_ENDPOINT, 'The endpoint for login of Dogbone users in Spot'),
+    'KIBBLE_API_URL': (DEFAULT_KIBBLE_API_URL, 'The base URL for accessing the KIBBLE API'),
+    'KIBBLE_CONNECT_ENDPOINT': (DEFAULT_KIBBLE_CONNECT_ENDPOINT, 'The endpoint for connecting Dogbone users with the KIBBLE API'),
+    'KIBBLE_LOGIN_ENDPOINT': (DEFAULT_KIBBLE_LOGIN_ENDPOINT, 'The endpoint for login of Dogbone users in KIBBLE')
 }
 
 ######################################################################################

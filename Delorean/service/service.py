@@ -262,7 +262,7 @@ class SentenceVectorService(object):
         sentences = json.load(req.bounded_stream)
         print("-------")
         print(sentences)
-        print(self.handler_default(sentences['sentences']))
+        print(self.handler(sentences['sentences']))
         resp.media = json.dumps(self.handler(sentences['sentences']))
 
 
@@ -321,7 +321,7 @@ def load():
     cors = CORS(allow_all_origins=True, allow_all_methods=True, allow_all_headers=True)
     app = falcon.API(middleware=[cors.middleware,MultipartMiddleware()])
 
-    app.add_route('/most_similar/word={word}&model={model}&number={number}', SimilarityService())
+    #app.add_route('/most_similar/word={word}&model={model}&number={number}', SimilarityService())
     # app.add_route('/similarity_score/{query}', SimilarityScoreService())
     # app.add_route('/sentence_score/{query}', SentenceScoreService_JMT())
     # app.add_route('/nda_parties', PartyIdentifierService())

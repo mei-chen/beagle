@@ -261,7 +261,11 @@ def pdf_convert(input_filename, ocr):
 def pdf_ocr(input_filename):
 
     # overwrite old pdf with ocr pdf
-	ocrmypdf.ocr(input_filename, input_filename)
+    try:
+	    ocrmypdf.ocr(input_filename, input_filename)
+    except:
+        # do nothing if error, doesn't matter
+        pass
 
 def doc_convert(input_filename):
     output_directory = os.path.dirname(input_filename)

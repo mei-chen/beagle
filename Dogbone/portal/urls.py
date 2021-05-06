@@ -49,4 +49,5 @@ urlpatterns = [
     url(r'^spot/authorize/?$', views.spot_authorize, name='spot_authorize'),
     url(r'^kibble/authorize/?$', views.kibble_authorize, name='kibble_authorize'),
     url(r'^spot/login/?$', views.spot_login, name='spot_login'),
+    url(r'^kibble/login/?$', views.kibble_login, name='kibble_login')
 ]

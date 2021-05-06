@@ -375,7 +375,7 @@ class IsNotAuthenticated(IsAuthenticated):
 
 
 class DogboneAPI(ViewSet):
-    permission_classes = [IsNotAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     SERIALIZER_SECRET_KEY = '/*[dogbone]->(kibble)*/'
 
@@ -430,6 +430,9 @@ class DogboneAPI(ViewSet):
 
             # Login the user without a password
             backend = django_settings.AUTHENTICATION_BACKENDS[0]
+            
+            # Logout previous users if exists
+            auth.logout(request)
             auth.login(request, user, backend=backend)
 
         except:  # authentication failed

@@ -215,9 +215,9 @@ def _login(service, request):
     The service must belong to the set of supported services.
     """
     SERVICES = {
-    'spot': { 'connect_uri': config.SPOT_API_URL + config.SPOT_CONNECT_ENDPOINT,  'login_uri': config.SPOT_API_URL + config.SPOT_LOGIN_ENDPOINT },
-    'kibble': { 'connect_uri': None, 'login_uri': None }
-} 
+        'spot': { 'connect_uri': config.SPOT_API_URL + config.SPOT_CONNECT_ENDPOINT,  'login_uri': config.SPOT_API_URL + config.SPOT_LOGIN_ENDPOINT },
+        'kibble': { 'connect_uri': config.KIBBLE_API_URL + config.KIBBLE_CONNECT_ENDPOINT, 'login_uri': onfig.KIBBLE_API_URL + config.KIBBLE_LOGIN_ENDPOINT }
+    } 
     if service not in SERVICES:
         message = "Service '%s' is unknown, supported services are %s" % (
             service, sorted(list(SERVICES.keys()))
@@ -243,6 +243,9 @@ def spot_authorize(request):
 
 def spot_login(request):
     return _login('spot', request)
+
+def kibble_login(request):
+    return _login('kibble', request)
 
 def kibble_authorize(request):
     return _authorize('kibble', request)

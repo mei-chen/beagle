@@ -512,7 +512,7 @@ class Document(TimeStampedModel, TrashableModel, PendingModel):
 
         document.save()
 
-        process_document_conversion(document.pk, file_path, send_notifications)
+        process_document_conversion.delay(document.pk, file_path, send_notifications)
 
         return document
 

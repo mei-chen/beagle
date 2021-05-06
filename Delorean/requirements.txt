@@ -1,8 +1,11 @@
 
-falcon_multipart
-falcon_cors
+falcon==2.0.0
+falcon-cors==1.1.7
+falcon-multipart==0.2.0
+gensim==4.0.0
+python-Levenshtein==0.12.2
+sentence-transformers==1.0.3
+faiss-cpu==1.7.0
 pandas
-faiss-cpu
-sentence-transformers
-gensim
-python-Levenshtein
+fasttext==0.9.2
+spacy==3.0.3
