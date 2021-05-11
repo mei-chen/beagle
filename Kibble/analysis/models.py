@@ -12,6 +12,7 @@ from django.conf import settings
 from django.db import models
 from django.dispatch import receiver
 from django.template.defaultfilters import truncatechars
+from django.contrib.auth.models import User
 
 from analysis.constants import ReportTypes
 from document.models import Sentence
@@ -37,7 +38,8 @@ class RegEx(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=255, unique=True)
     content = models.CharField(max_length=4096)
-
+    owner = models.ForeignKey(User, null=True, blank=True,
+                              related_name='regexes',on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
@@ -45,7 +47,7 @@ class RegEx(models.Model):
 class Report(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    batch = models.ForeignKey(Batch, related_name='reports',on_delete=models.CASCADE)
+    batch = models.ForeignKey(Batch, related_name='reports', on_delete=models.CASCADE)
     json = models.TextField(default=json.dumps([]))
     name = models.CharField(max_length=4096)
     report_type = models.SmallIntegerField(choices=ReportTypes.choices())
@@ -383,6 +385,8 @@ class KeywordList(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=255, unique=True)
     origin = models.CharField(max_length=4096)
+    owner = models.ForeignKey(User, null=True, blank=True,
+                              related_name='keywordlists', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

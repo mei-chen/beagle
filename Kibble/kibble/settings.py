@@ -74,6 +74,8 @@ INSTALLED_APPS = [
     'storages',
     'constance',
     'watchman',
+    'corsheaders',
+
 
     # Project
     'utils',
@@ -88,6 +90,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,6 +148,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+CORS_ALLOWED_ORIGINS = ['http://18.207.159.186']
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

@@ -74,9 +74,13 @@ class KeywordListSerializer(serializers.ModelSerializer):
                 keyword_list=instance, content=item['content'])
 
     def create(self, validated_data):
-        instance = KeywordList(
-            name=validated_data['name'], origin=validated_data['origin']
-        )
+
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        
+        instance = KeywordList(name=validated_data['name'], origin=validated_data['origin'], owner=user)
         instance.save()
 
         self.__create_keywords(instance, validated_data.get('keywords', []))

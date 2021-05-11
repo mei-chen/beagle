@@ -70,9 +70,17 @@ class KeywordAPI(ModelViewSet):
 
 
 class KeywordListAPI(ModelViewSet):
-    queryset = KeywordList.objects.all()
+    #queryset = KeywordList.objects.all()
     serializer_class = KeywordListSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return KeywordList.objects.filter(owner=user)
 
 
 class KeywordListSearchAPI(CreateModelMixin, ViewSet):
