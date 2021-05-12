@@ -233,7 +233,7 @@ def docx_to_pdf(folder, source):
 
 
 def html_to_pdf(html_path, pdf_path):
-    args = ['wkhtmltopdf', '--encoding utf-8', html_path, pdf_path]
+    args = ['wkhtmltopdf', '--encoding', 'utf-8', html_path, pdf_path]
     pp = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = pp.communicate()
 
