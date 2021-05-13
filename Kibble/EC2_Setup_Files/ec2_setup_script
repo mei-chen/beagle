@@ -11,9 +11,11 @@ sudo apt install python3-venv -y
 sudo apt install libpq-dev -y
 sudo apt install postgresql -y
 sudo apt install nginx -y
+sudo apt install redis-server -y
 sudo apt install nodejs -y
 sudo apt install supervisor -y 
 sudo apt install unzip -y
+sudo apt install tesseract-ocr -y
 sudo apt install libreoffice -y
 sudo apt install xfonts-encodings xfonts-75dpi xfonts-base xfonts-utils -y
 sudo python3 -m pip install gunicorn
@@ -82,6 +84,7 @@ ENDSQL
 ./manage.py loaddata analysis/fixtures/initial_data.json
 
 # Step 12
+sudo service redis-server restart
 sudo supervisorctl<<endsup
 reload
 y
@@ -89,11 +92,9 @@ endsup
 sleep 8
 sudo supervisorctl<<endsup
 endsup
-
-# Step 13
 sudo systemctl restart nginx
 
-# Step 14
+# Step 13
 cd /var/www/beagle/Kibble/
 source /var/www/venv/bin/activate
 python3 manage.py createsuperuser

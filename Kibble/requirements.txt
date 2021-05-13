@@ -31,6 +31,7 @@ Django==2.2
 django-allauth==0.36.0
 django-bulk-update==2.2.0
 django-constance==2.0.0
+django-cors-headers
 django-filter==2.4.0
 django-jsonview==2.0.0
 django-longerusernameandemail==0.5.7
@@ -73,7 +74,7 @@ gunicorn==19.6.0
 html5lib==0.999
 httplib2==0.18.1
 idna==2.10
-img2pdf==0.2.4
+img2pdf==0.3.1
 immutables==0.15
 importlib-metadata==3.7.0
 inflect==0.2.5
@@ -89,7 +90,7 @@ jsonfield==3.1.0
 kombu==5.0.2
 langdetect==1.0.5
 locustio==0.7.3
-lxml==3.7.3
+lxml==4.6.3
 marisa-trie==0.7.5
 MarkupSafe==1.1.1
 mccabe==0.5.3
@@ -133,7 +134,7 @@ PyPDF2==1.26.0
 PyReadableDiff==0.2.3
 PyStemmer==2.0.1
 python-dateutil==2.6.0
-python-docx==0.8.6
+python-docx==0.8.10
 python-dotenv==0.15.0
 python-http-client==2.2.1
 python-intercom==2.1.1
