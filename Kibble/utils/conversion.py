@@ -250,8 +250,8 @@ def pdf_convert(input_filename, ocr):
 	then convert to docx
 	"""
 
-	if ocr:
-		pdf_ocr(input_filename)
+	#if ocr:
+	pdf_ocr(input_filename)
 	
 	output_filename = '.'.join(os.path.abspath(input_filename).split('.')[:-1]) + '.docx'
 
@@ -265,12 +265,15 @@ def pdf_convert(input_filename, ocr):
 
 def pdf_ocr(input_filename):
 
-    # overwrite old pdf with ocr pdf
-    try:
-	    ocrmypdf.ocr(input_filename, input_filename)
-    except:
-        # do nothing if error, doesn't matter
-        pass
+    args = ['ocrmypdf', '--skip-text', '--output-type', 'pdf', input_filename, input_filename]
+    pp = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = pp.communicate()
+
+    if pp.returncode:
+        logger.error(err.strip())
+    else:
+        logger.info(out.strip())
+
 
 def doc_convert(input_filename):
     output_directory = os.path.dirname(input_filename)
