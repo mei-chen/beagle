@@ -20,9 +20,11 @@ Install a bunch of dependencies, including:
 - libpq-dev, which is needed for psycopg2 (which is in the kibble requirements.txt)
 - postgresql, the database
 - ngingx, a reverse proxy which sits in front of gunicorn. It handles what it can and passes the rest of the requests along.
+- redis-server, a database
 - nodejs, contains both npm and node
 - supervisor, which will be used to launch the gunicorn and celery processes, and which will keep logs of their activity.
 - unzip
+- tesseract-ocr
 - libreoffice
 - xfonts stuff, needed for the latest version of wkhtmltopdf
 - gunicorn, WSGI server for the frontend (installed with pip)
@@ -42,7 +44,7 @@ Move some files around and manage their ownership:
 - Make a directory for the supervisor log files to live in
 
 **Step 5**
-Move into that directory, clone the codebase, and switch into the develop branch (which has the latest code).
+Clone the codebase and switch into the develop branch (which has the latest code).
 Cloning the codebase is done with ssh to allow for key authentication which doesn't require the user to enter a password at the prompt.  The ssh key and corresponding config file are uploaded into ~/.ssh by the push_files script.
 
 **Step 6**
@@ -55,10 +57,10 @@ Create our virtual environment and activate it.  Install the project requirement
 Setup socket server
 
 **Step 9**
-“Setup and build frontend files.  The static files are collected into /var/www/beagle/Kibble/static, with a symlink at /var/www/static.
+Setup and build frontend files.  The static files are collected into /var/www/beagle/Kibble/static, with a symlink at /var/www/static.
 
 **Step 10**
-The next steps are to set up the database and do the Django migrations. Check that the database settings match what is in /var/www/beagle/Kibble/kibble/app_settings/production_settings.py:
+Set up the database. Check that the database settings match what is in /var/www/beagle/Kibble/kibble/app_settings/production_settings.py:
 
     DATABASES =  {
     'default':  {
@@ -72,13 +74,17 @@ The next steps are to set up the database and do the Django migrations. Check th
     }
 
 **Step 11**
-Migrate and load relatedness models.
+Migrate and load relatedness models. !!!!!! NOTE THE JSON NEEDS TO BE UPDATED !!!!! for the delorean "lightweight glove" dropdown menu.
 
 **Step 12**
-"Create" supervisor config files. (Move the pre-made files into the appropriate directory).
+Launch redis-server and supervisor processes.  Restart nginx.
 
-**Stuff**
-run gunicorn.  If done manually it needs to be in the same directory as kibble so that it knows where to look.  The nginx.conf needs to be set up correctly to forward.
+**Step 13**
+Set up superuser.
+
+**Other Stuff**
+
+Delorean should be launched on the same machine to provide the relatedness model for kibble.  Kibble looks for it on port 3000.  Create a delorean venv, put the "glove.50d.txt" file in the delorean directory, and install the delorean requirements and "python3 -m spacy download en\_core\_web_sm".  Launch "app.py" in a screen.
 
 # Other Information
 [This is an useful read](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04)
@@ -99,7 +105,7 @@ _Database:_
 
 _Installing Torch:_
 
-- On a .micro instance it hangs during the download because it doesn't have enough memory.  It will make it through this on a .small instance but it won't make it through the installation.  A .medium instance has enough memory.
+- On a .micro instance it hangs during the download because it doesn't have enough memory.  It will make it through this on a .small instance but it won't make it through the installation.  A .medium instance has enough memory. You can also use --no-cache-dir as a flag during the installation!
 
 _Installing pip3:_
 
