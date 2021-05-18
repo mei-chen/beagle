@@ -15,6 +15,7 @@ import {
   PATCH_ERROR,
   LIST_CLEANUP,
   LIST_APPEND,
+  LIST_PROGRESS,
   MODAL_SHOW,
   MODAL_HIDE
 } from 'base/redux/actions';
@@ -117,6 +118,12 @@ export function appendModalFilesList(file) {
   });
 }
 
+export function updateFileProgress(file, progress, error=null) {
+  return (dispatch) => dispatch({
+    type: LIST_PROGRESS('file'),
+    data: {...file, progress: progress, error: error}
+  })
+}
 
 /**
  * Fire multiple post request to a single url
@@ -136,6 +143,7 @@ export const multipleFileUpload = ({ dispatch, key, values, inject }) => {
       for (const item of values) {
         if (item.size && item.size > window.CONFIG.MAX_UPLOAD_SIZE) {
           reject(`File size is bigger then ${window.CONFIG.MAX_UPLOAD_SIZE} (${item.size}).`);
+          return;
         }
         requestList.push({ [key]: item, ...inject })
       }
@@ -147,12 +155,20 @@ export const multipleFileUpload = ({ dispatch, key, values, inject }) => {
       dispatch(postToServer({
         endpoint: ENDPOINT,
         data: formDataFrom(requestData),
-        successEvent: (r) => appendModalFilesList({ name: requestData[ key ].name }),
-        errorEvent: (e) => appendModalFilesList({
-          name: requestData[ key ].name,
-          error: e.data && e.data.non_field_errors || e.message || e.data.detail || 'Upload error'
-        }),
-        headers
+        successEvent: (r) => updateFileProgress({ name: requestData[ key ].name}, 100),
+        errorEvent: (e) => updateFileProgress({
+          name: requestData[ key ].name},
+          0,
+          e.data && e.data.non_field_errors || e.message || e.data.detail || 'Upload error',
+        ),
+        headers,
+        config: {
+          onUploadProgress: function(progressEvent) {
+            let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
+            // Dispatch
+            updateFileProgress({name: requestData[ key ].name}, percentCompleted)
+          }
+        }
       }))
     }
 
@@ -209,6 +225,31 @@ export default (state = initialState, action = {}) => {
         ...state,
         list: state.list.concat([ action.data ]),
       };
+    }
+
+    case LIST_PROGRESS('file'):
+    {
+      // Add file if not there and update progress
+      let list = []
+      let added = false
+      for (let i = 0; i < state.list.length; i++) {
+        if (state.list[i].name == action.data.name) {
+          list.push({...state.list[i], progress: action.data.progress, error: error})
+          added = true
+        } else {
+          list.push({...state.list[i]})
+        }
+      }
+
+      if (!added) {
+        list.push({...action.data})
+      }
+
+      return {
+        ...state,
+        list: list
+      }
+      
     }
 
     default:

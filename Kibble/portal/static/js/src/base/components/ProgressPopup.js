@@ -12,11 +12,11 @@ const ProgressPopup = ({ isOpen, onClose, title, items,
 
     <Modal.Body>
       {items.length < total ? `Uploading ${items.length} of ${total}...` : `Finished: uploaded ${items.length} files`}
-      {items.length < total ? <ProgressBar active now={items.length * 100 / total} /> :  <ProgressBar  now={100} /> }
+      {items.length < total ? <ProgressBar active now={items.length * 100 / total} /> :  <ProgressBar now={100} /> }
       <ListGroup fill>
         {items.reverse().map((el) => (
           <ListGroupItem bsStyle={el.error ? 'danger' : 'success'} key={el.name}>
-            {el.name} {el.error ? ': ' + el.error : ''}
+            {el.name} {el.progress == 100 ? <ProgressBar now={100}/> : <ProgressBar active now={el.progress}/>} {el.progress + '%'} {el.error ? ': ' + el.error : ''}
           </ListGroupItem>
         ))}
       </ListGroup>

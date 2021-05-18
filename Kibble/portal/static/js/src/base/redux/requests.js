@@ -23,11 +23,11 @@ export const getFromServer = (endpoint, params, processEvent, successEvent, erro
   }
 };
 
-export const postToServer = ({ endpoint, data, processEvent, successEvent, errorEvent, callbacks, headers }) => {
+export const postToServer = ({ endpoint, data, processEvent, successEvent, errorEvent, callbacks, headers, config}) => {
   return (dispatch) => {
     if (processEvent) dispatch(processEvent());
     axiosConf.headers[ 'X-CSRFToken' ] = cookies.get('csrftoken');
-    return axios.post(endpoint, data, Object.assign({}, axiosConf, headers))
+    return axios.post(endpoint, data, Object.assign({}, axiosConf, headers, config))
       .then(response => {
         dispatch(successEvent(response.data));
         if (typeof callbacks === 'function') {

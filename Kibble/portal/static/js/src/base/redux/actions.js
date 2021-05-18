@@ -12,6 +12,7 @@ export const DELETE_SUCCESS = (action) => `${action}/DELETE_SUCCESS`;
 export const DELETE_ERROR = (action) => `${action}/DELETE_ERROR`;
 export const LIST_CLEANUP = (action) => `${action}/LIST_CLEANUP`;
 export const LIST_APPEND = (action) => `${action}/LIST_APPEND`;
+export const LIST_PROGRESS = (action) => `${action}/LIST_PROGRESS`;
 export const MODAL_SHOW = (action) => `${action}/MODAL_SHOW`;
 export const MODAL_HIDE = (action) => `${action}/MODAL_HIDE`;
 export const TASK_RUN = (action) => `${action}/TASK_RUN`;

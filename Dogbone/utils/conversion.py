@@ -12,6 +12,7 @@ import os
 import string
 import subprocess
 import time
+import sys
 
 import PyPDF2
 
@@ -260,7 +261,7 @@ def pdf_convert(input_filename, ocr):
 
 def pdf_ocr(input_filename):
 
-    args = ['ocrmypdf', '--skip-text', '--output-type', 'pdf', input_filename, input_filename]
+    args = ["/".join(sys.executable.split("/")[:-1]) + "/ocrmypdf", '--skip-text', '--output-type', 'pdf', input_filename, input_filename]
     pp = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = pp.communicate()
 
