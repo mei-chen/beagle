@@ -463,7 +463,7 @@ class SettingsPannel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    settings: state.settings.toJS(),
+    settings: state.settings,
     cleanupTools: state.CleanupDocument.get('tools').toJS()
   };
 };

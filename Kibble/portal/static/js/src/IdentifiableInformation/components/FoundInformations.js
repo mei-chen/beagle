@@ -432,7 +432,7 @@ export default connect(
     files: state[ MODULE_NAME ].get('files').toJSON(),
     displayed_document_id :state[ MODULE_NAME ].get('displayed_document_id'),
     gathering_status: state[ MODULE_NAME ].get('gathering_status'),
-    settings: state.settings.toJS(),
+    settings: state.settings,
   }),
   (dispatch) => bindActionCreators({
     getPersonalData,

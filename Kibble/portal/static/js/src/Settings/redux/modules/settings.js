@@ -147,80 +147,84 @@ export const deletePersonalDataType = (uuid) => {
 }
 
 // REDUCERS
-const initialState = Map({
+const initialState = {
   isInitialized: false,
   isModalOpen:false,
   id:undefined,
   file_auto_process: false,
   obfuscated_export_ext:undefined,
-  personal_data_types: Map({}),
+  personal_data_types: {},
   auto_gather_personal_data: false,
   sentence_word_threshold: false,
   obfuscate_type: undefined,
   obfuscate_string: undefined,
   highlight_color: undefined,
-  auto_cleanup_tools: List(),
+  auto_cleanup_tools: [],
   user:undefined,
   change_success: undefined,
   isInitializedCustomPersonalData: false,
-  custom_personal_data: List(),
-  custom_type_names: List(),
-  set_all_personal_data:List()
-});
+  custom_personal_data: [],
+  custom_type_names: [],
+  set_all_personal_data: []
+};
 
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_REQUEST: {
-      return state.merge({
-        change_success:undefined
-      });
+      return {...state, change_success:undefined}
     }
 
     case GET_SUCCESS: {
-      return state.merge({
+      return {
+        ...state,
         isInitialized: true,
         ...action.data,
-      });
+      };
     }
 
     case GET_CUSTOM_PERSONAL_DATA_SUCCESS: {
-      var custom_personal_data = new List(action.data);
+      var custom_personal_data = action.data;
       var type_names = new Set();
       custom_personal_data.filter(item => {
         !type_names.has(item.type) && type_names.add(item.type)
       });
-      type_names = new List(type_names);
-      return state.merge({
+      type_names = Array.from(type_names);
+      return {
+        ...state,
         isInitializedCustomPersonalData: true,
         custom_personal_data: custom_personal_data,
         custom_type_names: type_names
-      });
+      };
     }
 
     case CHANGE_SUCCESS: {
-      return state.merge({
+      return {
+        ...state,
         change_success: 'success',
-      });
+      };
     }
 
     case CHANGE_FAIL: {
-      return state.merge({
+      return {
+        ...state,
         change_success: 'fail',
-      });
+      };
     }
 
     case SET_MODAL_OPEN: {
-      return state.merge({
+      return {
+        ...state,
         isModalOpen: action.open,
         change_success: undefined,
-      })
+      };
     }
 
     case GET_ACCESS: {
-      return state.merge({
+      return {
+        ...state,
         ... action.data,
-      });
+      };
     }
 
 

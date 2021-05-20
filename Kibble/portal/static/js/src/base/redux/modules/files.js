@@ -166,7 +166,7 @@ export const multipleFileUpload = ({ dispatch, key, values, inject }) => {
           onUploadProgress: function(progressEvent) {
             let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
             // Dispatch
-            updateFileProgress({name: requestData[ key ].name}, percentCompleted)
+            dispatch(updateFileProgress({name: requestData[ key ].name}, percentCompleted))
           }
         }
       }))
@@ -179,7 +179,7 @@ export const multipleFileUpload = ({ dispatch, key, values, inject }) => {
 
 // REDUCERS
 const initialState = {
-  list: [],
+  list: {},
   popup: false
 };
 
@@ -215,7 +215,7 @@ export default (state = initialState, action = {}) => {
     {
       return {
         ...state,
-        list: []
+        list: {}
       };
     }
 
@@ -230,26 +230,13 @@ export default (state = initialState, action = {}) => {
     case LIST_PROGRESS('file'):
     {
       // Add file if not there and update progress
-      let list = []
-      let added = false
-      for (let i = 0; i < state.list.length; i++) {
-        if (state.list[i].name == action.data.name) {
-          list.push({...state.list[i], progress: action.data.progress, error: error})
-          added = true
-        } else {
-          list.push({...state.list[i]})
-        }
-      }
-
-      if (!added) {
-        list.push({...action.data})
-      }
+      let list = { ...state.list }
+      list[action.data.name] = { progress: action.data.progress, error: action.data.error }
 
       return {
         ...state,
         list: list
       }
-      
     }
 
     default:

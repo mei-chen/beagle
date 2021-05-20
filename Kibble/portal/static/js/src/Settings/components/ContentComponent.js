@@ -30,8 +30,8 @@ ContentComponent.defaultProps = {
 };
 const mapStateToProps = (state) => {
   return {
-    isInitialized: state.settings.toJS().isInitialized,
-    isInitializedCustomPersonalData: state.settings.toJS().isInitializedCustomPersonalData,
+    isInitialized: state.settings.isInitialized,
+    isInitializedCustomPersonalData: state.settings.isInitializedCustomPersonalData,
     cleanupTools: state.CleanupDocument.get('tools')
   };
 };
