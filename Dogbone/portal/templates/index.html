@@ -1,5 +1,5 @@
 {% extends "_layout.html" %}
-
+{% load static %}
 
 {% block extended_header %}
 	<div class="headline">
@@ -15,7 +15,7 @@
       <h3>We show you what is there... fine print and all.</h3>
       <ul>
         <li>
-          <i class="one"><img src="/static/img/icon-time@2x.png" width="72" height="72"></i>
+          <i class="one"><img src="{% static 'img/icon-time@2x.png' %}" width="72" height="72"></i>
           <h4>Save Time</h4>
           <p>The days of reading are now gone. Near instant summaries of the most complex documents.</p>
         </li>

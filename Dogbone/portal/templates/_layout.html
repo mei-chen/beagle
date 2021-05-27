@@ -1,25 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width ,  user-scalable=no">
     <meta name="description" content="Beagle">
-    <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon-16x16.png' %}" sizes="16x16" />
     <title>{% block title %}Beagle{% endblock %}</title>
-    <link href="/static/css/styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <!-- global partials -->
     {% include "global_partials.html" %}
     <!-- /global partials -->
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
-    <script src="/static/js/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
   </head>
   <body {% block body_annotations %}{% endblock %}>
   {% block conversion_scripts %}{% endblock %}
   {% include "user_json_data.html" %}
-  <link rel="stylesheet" href="/static/css/base-header-style.css" />
+  <link rel="stylesheet" href="{% static 'css/base-header-style.css' %}" />
   <div id="react-header">
     <div id="header" class="beagle-header">
       <div class="header-wrap" data-reactid=".0.1">

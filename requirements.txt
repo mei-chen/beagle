@@ -28,7 +28,6 @@ cymem==2.0.5
 dataclasses==0.8
 decorator==4.0.9
 defusedxml==0.7.0
-dj-database-url==0.4.1
 Django==2.2
 django-allauth==0.36.0
 django-bulk-update==2.2.0
@@ -143,7 +142,7 @@ PyReadableDiff==0.2.3
 PyStemmer==2.0.1
 python-dateutil==2.6.0
 python-docx==0.8.10
-python-dotenv==0.15.0
+python-dotenv==0.17.1
 python-http-client==2.2.1
 python-intercom==2.1.1
 python-magic==0.4.13
