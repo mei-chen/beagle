@@ -1,13 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width ,  user-scalable=no">
     <meta name="description" content="Beagle">
-    <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon-16x16.png' %}" sizes="16x16" />
     <title>Beagle</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.css" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
   </head>
   <body>
     <style>
@@ -47,16 +48,16 @@
     <div id="modal-element" />
 
     <!-- libraries -->
-    <script type="text/javascript" src="/static/js/webgl-heatmap.js"></script>
-    <script src="/static/js/venn.js"></script>
+    <script type="text/javascript" src="{% static 'js/webgl-heatmap.js' %}"></script>
+    <script src="{% static 'js/venn.js' %}"></script>
     <!--end venn diagram-->
 
     <!-- introJs -->
     {% if include_tour %}
-      <link rel="stylesheet" href="/static/css/introjs.css" />
-      <link rel="stylesheet" href="/static/css/INTROJS_CUSTOM.css" />
-      <script src="/static/js/intro.js"></script>
-      <script src="/static/js/INTROJS_STEPS.js"></script>
+      <link rel="stylesheet" href="{% static 'css/introjs.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/INTROJS_CUSTOM.css' %}" />
+      <script src="{% static 'js/intro.js' %}"></script>
+      <script src="{% static 'js/INTROJS_STEPS.js' %}"></script>
     {% endif %}
     <!-- end introJs -->
 
@@ -64,7 +65,7 @@
     {% if HOT_LOAD %}
     <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/report.entry.js?"></script>
     {% else %}
-    <script type="text/javascript" src="/static/react/build/report.entry.js?{{ git_revision }}"></script>
+    <script type="text/javascript" src="{% static 'react/build/report.entry.js?{{ git_revision }}' %}"></script>
     {% endif %}
   </body>
 </html>

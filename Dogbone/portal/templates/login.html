@@ -1,4 +1,5 @@
 {% extends "_layout.html" %}
+{% load static %}
 
 {% block extra_css %}
 <link href="{% static 'css/landing.css'%}" rel="stylesheet" type="text/css" />
@@ -50,6 +51,6 @@
   {% if HOT_LOAD %}
     <script type="text/javascript" src="{{ REACT_LOCAL_ADDRESS }}/static/react/build/header.entry.js??"></script>
   {% else %}
-    <script type="text/javascript" src="/static/react/build/header.entry.js?{{ git_revision }}"></script>
+    <script type="text/javascript" src="{% static 'react/build/header.entry.js?{{ git_revision }}' %}"></script>
   {% endif %}
 {% endblock %}
