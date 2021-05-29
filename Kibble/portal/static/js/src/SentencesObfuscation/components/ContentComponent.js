@@ -55,7 +55,7 @@ const ReportsAndDocumentsBlock = ({
   loadingDownloads,
   initializedSettings,
   showDownloads,
-  selcetedSentences
+  selectedSentences
 }) => {
   if (batch <= 0) return null;
   return (
@@ -90,10 +90,10 @@ const ReportsAndDocumentsBlock = ({
               </div>
               {docs.map((doc, key) =>
               (<div key={key}>
-                <i className="fal fa-file-alt"></i>{' '}<a href={`/api/v1/document/${doc.id}/obfuscate?reports=${JSON.stringify(selcetedSentences)}`}>{doc.name}</a>
+                <i className="fal fa-file-alt"></i>{' '}<a href={`/api/v1/document/${doc.id}/obfuscate?reports=${JSON.stringify(selectedSentences)}`}>{doc.name}</a>
               </div>))}
               <div>
-                <i className="fal fa-archive"></i>{' '}<a href={`/api/v1/batch/${batch}/obfuscate?reports=${JSON.stringify(selcetedSentences)}`}>Download obfuscated batch as zip</a>
+                <i className="fal fa-archive"></i>{' '}<a href={`/api/v1/batch/${batch}/obfuscate?reports=${JSON.stringify(selectedSentences)}`}>Download obfuscated batch as zip</a>
               </div>
             </span>
           }
@@ -141,7 +141,7 @@ class ContentComponent extends React.Component {
       handleReportSelect,
       setModalOpen,
       markSentence,
-      selcetedSentences,
+      selectedSentences,
       docs,
       loading_downloads,
       show_downloads,
@@ -173,7 +173,7 @@ class ContentComponent extends React.Component {
                     docs={docs}
                     loadingDownloads={loading_downloads}
                     showDownloads={show_downloads}
-                    selcetedSentences={selcetedSentences}
+                    selectedSentences={selectedSentences}
                     default_export={default_export}
                     initializedSettings={initializedSettings}
                   />
@@ -213,7 +213,7 @@ export default connect(
     regex_reports: state[ MODULE_NAME ].get('regex_reports'),
     selected_reports: state[ MODULE_NAME ].get('selected_reports'),
     isModalOpen: state [ MODULE_NAME ].get('isModalOpen'),
-    selcetedSentences: state[ MODULE_NAME ].get('selceted_sentences').toJS(),
+    selectedSentences: state[ MODULE_NAME ].get('selected_sentences').toJS(),
     docs: state[ MODULE_NAME ].get('docs').toJS(),
     show_downloads: state[ MODULE_NAME ].get('show_downloads'),
     loading_downloads: state[ MODULE_NAME ].get('loading_downloads'),

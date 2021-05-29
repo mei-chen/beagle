@@ -35,7 +35,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
     this.state = {
       manualKeyword: '',
       synonymsKeyword: ''
-    }
+    };
   }
 
   componentWillMount() {
@@ -43,7 +43,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
   }
 
   filterChosen(keywords) {
-    return keywords.filter(keyword => keyword.status === 'success')
+    return keywords.filter(keyword => keyword.status === 'success');
   }
 
   handleInputChange(e) {
@@ -54,7 +54,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
     const { manualKeyword } = this.state;
     if(manualKeyword) {
       this.props.addNewKeyword(this.state.manualKeyword);
-      this.setState({ manualKeyword: '' })
+      this.setState({ manualKeyword: '' });
     }
   }
 
@@ -71,7 +71,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
       !this.filterChosen(this.props.recommendations).size &&
       !this.filterChosen(this.props.synonyms).size &&
       !this.filterChosen(this.props.manualkeywords).size
-    )
+    );
     return (
       <Grid>
         <Col xs={12} md={12} sm={12}>
@@ -87,7 +87,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
                 />
               </Col>
               <Col xs={6} md={6} sm={6}>
-                <h4>Generate recommendations</h4>
+                <h4>Generate Recommendations</h4>
                 <DebounceInput
                   type="text"
                   className="search-projects"
@@ -116,7 +116,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
                 />
               </Col>
               <Col xs={6} md={6} sm={6}>
-                <h4>Generate synonyms for</h4>
+                <h4>Generate Synonyms</h4>
                 <div className="input-wrapper">
                   <input
                     value={this.state.synonymsKeyword}
@@ -139,7 +139,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
                 />
               </Col>
               <Col xs={6} md={6} sm={6}>
-                <h4>Add manual key words</h4>
+                <h4>Add Key Words Manually</h4>
                 <div className="input-wrapper">
                   <input
                     value={this.state.manualKeyword}
@@ -159,7 +159,7 @@ class KeywordCreationComponent extends React.Component { // eslint-disable-line 
                     onClick={() => this.props.setModalOpen('create', true)}
                     disabled={isListCreationDisabled}
                   >
-                    Create New Keyword list
+                    Create New Keyword List
                   </Button>
                 </ButtonToolbar>
               </div>

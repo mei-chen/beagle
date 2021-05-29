@@ -11,7 +11,7 @@ export default () =>
     <Grid fluid>
       <Col xs={12} md={12}>
         <h1 id="content-header">
-          Regular expressions
+          Regular Expressions
         </h1>
       </Col>
     </Grid>

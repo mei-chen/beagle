@@ -210,11 +210,11 @@ class WebpackBaseConfig {
           CleanupSentences: `${this.srcPathAbsolute}/CleanupSentences/`,
           CleanupDocument: `${this.srcPathAbsolute}/CleanupDocument/`,
           FormatConverting: `${this.srcPathAbsolute}/FormatConverting/`,
-          SentenceSpliting: `${this.srcPathAbsolute}/SentenceSpliting/`,
+          SentenceSplitting: `${this.srcPathAbsolute}/SentenceSplitting/`,
           KeyWords: `${this.srcPathAbsolute}/KeyWords/`,
           RegEx: `${this.srcPathAbsolute}/RegEx/`,
           base: `${this.srcPathAbsolute}/base/`,
-          Messsages: `${this.srcPathAbsolute}/Messages/`,
+          Messages: `${this.srcPathAbsolute}/Messages/`,
         },
         extensions: ['.js', '.jsx'],
         modules: [

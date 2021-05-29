@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import 'Settings/scss/app.scss';
 import { getFromServer, getCustomPersonalData } from '../redux/modules/settings.js'
 import { getCleanupDocTools } from 'base/redux/modules/tools';
-import SettingsPannel from './SettingsPannel'
+import SettingsPanel from './SettingsPanel'
 import { Spinner } from 'base/components/misc.js'
 
 class ContentComponent extends React.Component {
@@ -19,7 +19,7 @@ class ContentComponent extends React.Component {
     return (
       <div className="wrapper online-wrapper">
         {isInitialized && isInitializedCustomPersonalData && cleanupTools.size > 0 ?
-        <SettingsPannel/> :
+        <SettingsPanel/> :
         <Spinner/>
         }
       </div>

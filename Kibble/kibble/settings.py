@@ -369,8 +369,9 @@ MOST_SIMILAR_DEFAULT_NUMBER = 15
 MOST_SIMILAR_USER = 'Beagle'
 MOST_SIMILAR_PASSWORD = 'GreatBeagleAI'
 
-SYNONYMS_ENDPOINT = 'https://wordsapiv1.p.mashape.com/words/%s/synonyms'
-SYNONYMS_API_KEY = 'a7nUoIQHnEmsho5sOHGXuGueRx0Ap1ld01LjsnAddQybg9aDMu'
+#SYNONYMS_ENDPOINT = 'https://wordsapiv1.p.mashape.com/words/%s/synonyms'
+SYNONYMS_ENDPOINT = DELOREAN_ENDPOINT + 'synonyms/word={word}'
+#SYNONYMS_API_KEY = 'a7nUoIQHnEmsho5sOHGXuGueRx0Ap1ld01LjsnAddQybg9aDMu'
 
 # SENTENCE_VECTOR_ENDPOINT = 'http://api.research.beagle.ai:8001/sentence_vector_notag'
 SENTENCE_VECTOR_ENDPOINT = DELOREAN_ENDPOINT + 'sentence_vector'

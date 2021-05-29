@@ -71,7 +71,7 @@ class BatchControls extends React.Component {
           <ButtonToolbar>
             <Button bsSize="small" onClick={this.onEdit}
                     disabled={!this.state.selectedBatch}>
-              Edit <i className="fal fa-edit"></i>
+              Edit Batch Details <i className="fal fa-edit"></i>
             </Button>
             <Button bsSize="small" onClick={showUserManagement}
                     disabled={!this.state.selectedBatch}>

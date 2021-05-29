@@ -337,13 +337,13 @@ class APIKeywordListTest(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         data = loads(response.content)
-        recieved = [sorted([
+        received = [sorted([
             k['content'] for k in d['keywords']]) for d in data]
         expected = [sorted([
             kw.content for kw in kwl.keywords.all()
         ]) for kwl in self.kw_lists]
         self.assertEqual(
-            sorted(recieved),
+            sorted(received),
             sorted(expected)
         )
 

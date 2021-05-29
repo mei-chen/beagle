@@ -32,7 +32,7 @@ class BatchUriSerializer(serializers.ModelSerializer):
         )
 
 
-class ProfileSerialzer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     auto_cleanup_tools = serializers.JSONField()
     personal_data_types = serializers.JSONField()
     class Meta:
@@ -45,7 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
     resource_uri = serializers.HyperlinkedIdentityField(
         view_name='user-detail'
     )
-    profile = ProfileSerialzer()
+    profile = ProfileSerializer()
 
     class Meta:
         model = User

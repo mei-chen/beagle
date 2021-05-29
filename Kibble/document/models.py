@@ -174,7 +174,7 @@ class Document(models.Model):
         )
         return copy
 
-    def converyor_error(self, message, session):
+    def converter_error(self, message, session):
         logger.warning(message)
         if session:
             NotificationManager.popup_notification(session, message, 'warning')
@@ -185,14 +185,14 @@ class Document(models.Model):
             cleanup_tool = self.get_tool(tool=tool)
             if cleanup_tool is None:
                 # Bad tool
-                doc.converyor_error('Skip unknown tool "%s"' % tool, session)
+                doc.converter_error('Skip unknown tool "%s"' % tool, session)
             elif cleanup_tool(doc):
                 # Tool succeed
                 DocumentTag.objects.create(
                     name=tool, document=self, order=index)
             else:
                 # Tool failed
-                doc.converyor_error(
+                doc.converter_error(
                     'Tool "%s" failed on %s!' % (tool, self.name), session)
         return doc
 

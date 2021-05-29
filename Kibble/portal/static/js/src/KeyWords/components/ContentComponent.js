@@ -98,7 +98,7 @@ class ContentComponent extends React.Component {
           <ModalForm
             isOpen={isModalOpen.get('create')}
             onClose={() => setModalOpen('create', false)}
-            title="Create new Keyword list"
+            title="Create new Keyword List"
           >
             <KeywordListCreateForm
               submit_label='Create'
@@ -111,7 +111,7 @@ class ContentComponent extends React.Component {
           <ModalForm
             isOpen={isModalOpen.get('edit')}
             onClose={() => setModalOpen('edit', false)}
-            title={`Edit Keyword list ${selectedKeywordList.get('name')}`}
+            title={`Edit Keyword List ${selectedKeywordList.get('name')}`}
           >
             <KeywordListEditForm
               submit_label='Edit'

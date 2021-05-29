@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import 'Settings/scss/app.scss';
-import 'Settings/scss/SettingsPannel.scss'
+import 'Settings/scss/SettingsPanel.scss'
 
 class DefaultExportSwitch extends React.Component {
 
@@ -28,7 +28,7 @@ class DefaultExportSwitch extends React.Component {
 
     return(
       <div className="setting-wrapper out-context">
-        <div className="setting-content row-allign">
+        <div className="setting-content row-align">
           <div className="title-wrapper">
             <i className="fal fa-cloud-upload" aria-hidden="true"/>
             <div>

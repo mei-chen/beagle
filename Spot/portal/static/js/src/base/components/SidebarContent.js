@@ -51,7 +51,7 @@ const SidebarContent = (props) => {
           <span style={styles.menuIcon}><i className="fa fa-pen-alt fa-fw"></i></span> Labeling
         </Link>
         <div style={styles.divider} />
-        by <a href="http://beagle.ai" title="Beagle.ai">Beagle</a>
+        by <a href="https://beagleai.com" title="Beagle.ai" target="_blank">Beagle</a>
       </div>
     </MaterialTitlePanel>
   );

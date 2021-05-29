@@ -21,7 +21,7 @@ import { PersonalDataTypeCustomizationModal } from './PersonalDataTypeCustomizat
 import { setActiveRootFolder, setActiveUrl } from 'base/redux/modules/sidebar';
 
 import '../scss/app.scss';
-import '../scss/SettingsPannel.scss';
+import '../scss/SettingsPanel.scss';
 
 class ToggleSetting extends React.Component {
   render() {
@@ -29,7 +29,7 @@ class ToggleSetting extends React.Component {
 
     return(
       <div className="setting-wrapper">
-        <div className="setting-content row-allign">
+        <div className="setting-content row-align">
           <div className="title-wrapper">
             <i className="fal fa-star" aria-hidden="true"/>
             <div>
@@ -53,7 +53,7 @@ class SimpleInputSetting extends React.Component {
     super(props);
 
     this.state = {
-      trehshold_value: this.props.settingState
+      threshold_value: this.props.settingState
     }
 
     this.onChangeString = this.onChangeString.bind(this);
@@ -61,7 +61,7 @@ class SimpleInputSetting extends React.Component {
 
   onChangeString(e) {
     this.setState({
-      trehshold_value:e.target.value
+      threshold_value:e.target.value
     })
   }
 
@@ -70,7 +70,7 @@ class SimpleInputSetting extends React.Component {
 
     return(
       <div className="setting-wrapper">
-        <div className="setting-content row-allign">
+        <div className="setting-content row-align">
           <div className="title-wrapper">
             <i className="fal fa-minus-hexagon" aria-hidden="true"/>
             <div>
@@ -80,11 +80,11 @@ class SimpleInputSetting extends React.Component {
           <div className="input-wrapper">
             <FormControl
               type="number"
-              value={this.state.trehshold_value}
+              value={this.state.threshold_value}
               onChange={this.onChangeString}
             />
             <Button
-              onClick={() => changeSetting(setting_name, this.state.trehshold_value) }
+              onClick={() => changeSetting(setting_name, this.state.threshold_value) }
             >
               Submit
             </Button>
@@ -154,11 +154,11 @@ export class DefaultObfuscationSetting extends React.Component {
 
     return(
       <div className="setting-wrapper">
-        <div className="setting-content column-allign">
+        <div className="setting-content column-align">
           <div className="title-wrapper">
             <i className="fal fa-user-secret" aria-hidden="true"/>
             <div>
-              Default personal information export handeling method
+              Default personal information export handling method
             </div>
           </div>
           <div className="hint-wrapper">
@@ -170,7 +170,7 @@ export class DefaultObfuscationSetting extends React.Component {
                   Identifiable information
                 </a>
                 <br/>
-                The selected mothod will also be used in{' '}
+                The selected method will also be used in{' '}
                 <a onClick={() => this.props.navTo('/sentences-obfuscation', 'Sentence')}>
                   Sentences Obfuscation
                 </a>, when exporting (select none if you wish not to use it)
@@ -249,7 +249,7 @@ class DefaultToolsSetting extends React.Component {
     }
     this.handleClickOnTool = this.handleClickOnTool.bind(this);
     this.moveTool = this.moveTool.bind(this);
-    this.apllyOnDrop = this.apllyOnDrop.bind(this);
+    this.applyOnDrop = this.applyOnDrop.bind(this);
   }
 
   handleClickOnTool(tool){
@@ -282,7 +282,7 @@ class DefaultToolsSetting extends React.Component {
     )
   }
 
-  apllyOnDrop() {
+  applyOnDrop() {
     const { changeSetting } = this.props;
     changeSetting('auto_cleanup_tools',this.state.auto_cleanup_tools.map(tool=>tool.tool_name));
   }
@@ -292,7 +292,7 @@ class DefaultToolsSetting extends React.Component {
 
     return(
       <div className="setting-wrapper">
-        <div className="setting-content column-allign">
+        <div className="setting-content column-align">
           <div className="title-wrapper">
             <i className="fal fa-list-ol" aria-hidden="true"/>
             <div>
@@ -319,7 +319,7 @@ class DefaultToolsSetting extends React.Component {
               handleClickOnTool={this.handleClickOnTool}
               auto_cleanup_tools={this.state.auto_cleanup_tools}
               moveTool={this.moveTool}
-              apllyOnDrop={this.apllyOnDrop}
+              applyOnDrop={this.applyOnDrop}
               changeSetting={changeSetting}
             />
             <br/>
@@ -345,7 +345,7 @@ class DefaultToolsSetting extends React.Component {
   }
 }
 
-class SettingsPannel extends React.Component {
+class SettingsPanel extends React.Component {
   constructor(props) {
     super(props);
 
@@ -385,9 +385,9 @@ class SettingsPannel extends React.Component {
       <div className="multiple-row-info">
         <i className="fal fa-info-circle"/>
         <div>
-          Automatically find and gather personal data informations when upload files
+          Automatically find and gather personal data information when upload files
           <br/>
-          You cand manually gather data for batches that were uploaded when this option was off in{' '}
+          You can manually gather data for batches that were uploaded when this option was off in{' '}
           <a onClick={() => this.navTo('/identifiable-information', 'Pre-process')}>
             Identifiable Information
           </a>
@@ -417,7 +417,7 @@ class SettingsPannel extends React.Component {
           hint={fileAutoProcessHint}
         />
         <SimpleInputSetting
-          title="Set sentence finding treshold value"
+          title="Set sentence finding threshold value"
           setting_name="sentence_word_threshold"
           changeSetting={changeSetting}
           settingState={settings.sentence_word_threshold}
@@ -477,4 +477,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   deletePersonalDataType
 }, dispatch);
 
-export default connect(mapStateToProps,mapDispatchToProps)(SettingsPannel);
+export default connect(mapStateToProps,mapDispatchToProps)(SettingsPanel);

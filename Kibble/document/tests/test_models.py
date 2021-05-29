@@ -619,35 +619,35 @@ class CleanupToolsTest(TempCleanupTestCase):
         """
         List rewriting unittest for formatted text
         """
-        doc = self.make_document('formatted-lists-rewritting.docx')
+        doc = self.make_document('formatted-lists-rewriting.docx')
         doc.listing_rewriting_cleanup()
-        self.compare_files(doc, 'formatted-lists-rewritting-cleaned.docx')
+        self.compare_files(doc, 'formatted-lists-rewriting-cleaned.docx')
 
     def test_cleanup_rewriting_list_plain(self):
         """
         List rewriting unittest for plaintext lists
         """
-        doc = self.make_document('plaintext-lists-rewritting.docx')
+        doc = self.make_document('plaintext-lists-rewriting.docx')
         doc.listing_rewriting_cleanup()
-        self.compare_files(doc, 'plaintext-lists-rewritting-cleaned.docx')
+        self.compare_files(doc, 'plaintext-lists-rewriting-cleaned.docx')
 
     def test_cleanup_rewriting_multilevel_list_formatted(self):
         """
         List rewriting unittest for formatted text
         """
-        doc = self.make_document('formatted-multilevel-lists-rewritting.docx')
+        doc = self.make_document('formatted-multilevel-lists-rewriting.docx')
         doc.listing_rewriting_cleanup()
         self.compare_files(
-            doc, 'formatted-multilevel-lists-rewritting-cleaned.docx')
+            doc, 'formatted-multilevel-lists-rewriting-cleaned.docx')
 
     def test_cleanup_rewriting_multilevel_list_plain(self):
         """
         List rewriting unittest for plaintext lists
         """
-        doc = self.make_document('plaintext-multilevel-lists-rewritting.docx')
+        doc = self.make_document('plaintext-multilevel-lists-rewriting.docx')
         doc.listing_rewriting_cleanup()
         self.compare_files(
-            doc, 'plaintext-multilevel-lists-rewritting-cleaned.docx')
+            doc, 'plaintext-multilevel-lists-rewriting-cleaned.docx')
 
     def test_cleanup_tables_formatted_postprocessing_bold_header(self):
         """

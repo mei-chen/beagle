@@ -269,7 +269,7 @@ class NameFileTests(TestCase):
 
     def test_get_filename_wo_ext_dotnaming(self):
         """
-        Should return name of file has dot in the name's beginging
+        Should return name of file has dot in the name's beginning
         """
         filepath = '/some/random/.filename'
         result = get_filename_wo_ext(filepath)
@@ -277,7 +277,7 @@ class NameFileTests(TestCase):
 
     def test_get_filename_wo_ext_dotnaming_with_ext(self):
         """
-        Should return name of file has dot in the name's beginging
+        Should return name of file has dot in the name's beginning
         """
         filepath = '/some/random/.filename.txt'
         result = get_filename_wo_ext(filepath)

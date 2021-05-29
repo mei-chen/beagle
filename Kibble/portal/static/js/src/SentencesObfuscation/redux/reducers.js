@@ -15,7 +15,7 @@ const initialState = Map({
   keywords_reports: new List(),
   regex_reports: new List(),
   selected_reports: new List(),
-  selceted_sentences: new Map({}),
+  selected_sentences: new Map({}),
   isModalOpen: false,
   show_downloads: false,
   loading_downloads: false,
@@ -82,20 +82,20 @@ export default (state = initialState, action) => {
 
     case SentencesObfuscationConstants.MARK_SENTENCE:
     {
-      return state.setIn(['selceted_sentences',action.rep_id,action.sent_idx],action.method);
+      return state.setIn(['selected_sentences',action.rep_id,action.sent_idx],action.method);
     }
 
     case SentencesObfuscationConstants.MARK_ALL_SENTENCES:
     {
       return state.merge({
-        'selceted_sentences': new Map(action.data)
+        'selected_sentences': new Map(action.data)
       })
     }
 
     case SentencesObfuscationConstants.CANCEL_LABELING:
     {
       return state.merge({
-        selceted_sentences: new Map({}),
+        selected_sentences: new Map({}),
         show_downloads: false
       })
     }

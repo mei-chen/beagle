@@ -16,7 +16,7 @@ const toolSource = {
   },
 
   endDrag(props, monitor) {
-    props.apllyOnDrop();
+    props.applyOnDrop();
   }
 }
 
@@ -107,11 +107,11 @@ DropTarget(ItemTypes.TOOL, toolTarget, connect => ({
 
 class DNDToolsComponent extends React.Component {
   render() {
-    const { changeSetting, auto_cleanup_tools, handleClickOnTool, moveTool, apllyOnDrop } = this.props;
+    const { changeSetting, auto_cleanup_tools, handleClickOnTool, moveTool, applyOnDrop } = this.props;
 
     return(
       <span>
-        {auto_cleanup_tools.map((tool,key) => 
+        {auto_cleanup_tools.map((tool,key) =>
           <Tool
             key={tool.id}
             index={key}
@@ -120,9 +120,9 @@ class DNDToolsComponent extends React.Component {
             changeSetting={changeSetting}
             handleClickOnTool={handleClickOnTool}
             moveTool={moveTool}
-            apllyOnDrop={apllyOnDrop}
-          /> 
-        )}          
+            applyOnDrop={applyOnDrop}
+          />
+        )}
       </span>
     )
   }

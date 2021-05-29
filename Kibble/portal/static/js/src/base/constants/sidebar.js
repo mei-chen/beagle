@@ -20,7 +20,7 @@ export const sideBarItems = [
     ]
   },
   {
-    title: 'Batch management',
+    title: 'Batch Management',
     url: urls.PROJECT_MANAGEMENT,
     activeForUrls: [ urls.PROJECT_MANAGEMENT, urls.BATCH_MANAGEMENT ],
     subMenuItems: [

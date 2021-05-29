@@ -4,7 +4,7 @@ from django.conf import settings
 import json
 
 
-class MostSimmilarModelAPI(object):
+class MostSimilarModelAPI(object):
 
     def __init__(self, word, model):
         self.word = word

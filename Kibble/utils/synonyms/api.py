@@ -1,5 +1,5 @@
 import requests
-
+import json
 from django.conf import settings
 
 
@@ -9,13 +9,13 @@ class SynonymsAPI(object):
         self.word = word
 
     def _make_request(self):
-        headers = {
-            'X-Mashape-Key': settings.SYNONYMS_API_KEY,
-            'Accept': 'application/json'
-        }
+        # headers = {
+        #     'X-Mashape-Key': settings.SYNONYMS_API_KEY,
+        #     'Accept': 'application/json'
+        # }
         return requests.get(
-            settings.SYNONYMS_ENDPOINT % self.word,
-            headers=headers
+            settings.SYNONYMS_ENDPOINT.format(word=self.word),
+            #headers=headers
         )
 
     def process(self):
@@ -25,7 +25,7 @@ class SynonymsAPI(object):
             return (
                 True,
                 'Successfully acquired synonyms for {}'.format(self.word),
-                response.json()
+                json.loads(response.json())
             )
         else:
             try:

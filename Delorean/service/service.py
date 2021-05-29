@@ -7,6 +7,9 @@ except ImportError:
 # import ujson as json
 import json
 import spacy
+import nltk
+nltk.download('wordnet')
+from nltk.corpus import wordnet
 # import sense2vec
 # import numpy as np
 
@@ -49,6 +52,15 @@ class SimilarityService(object):
             resp.media = json.dumps(self.handler_EUlaw(word))
         if model == 'lawinsider':
             resp.media = json.dumps(self.handler_USlaw(word))
+
+class SynonymService(object):
+    def on_get(self, req, resp, word=''):
+        synonyms = []
+        for syn in wordnet.synsets(word):
+            for l in syn.lemmas():
+                synonyms.append(l.name())
+        synonyms = list(set(synonyms))
+        resp.media = json.dumps(synonyms)
 
 # class SimilarityScoreService(object):
 #     '''Expose a sense2vec handler as a GET service for falcon.'''
@@ -322,6 +334,7 @@ def load():
     app = falcon.API(middleware=[cors.middleware,MultipartMiddleware()])
 
     app.add_route('/most_similar/word={word}&model={model}&number={number}', SimilarityService())
+    app.add_route('/synonyms/word={word}', SynonymService())
     # app.add_route('/similarity_score/{query}', SimilarityScoreService())
     # app.add_route('/sentence_score/{query}', SentenceScoreService_JMT())
     # app.add_route('/nda_parties', PartyIdentifierService())

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Command(BaseCommand):
-    help = 'Custom create superuser command to progammatically create user in ansible'
+    help = 'Custom create superuser command to programmatically create user in ansible'
 
     def add_arguments(self, parser):
         parser.add_argument(

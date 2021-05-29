@@ -100,7 +100,7 @@ class ObfuscationModal extends React.Component {
       markSentence,
       cancelLabeling,
       doneLabeling,
-      selcetedSentences,
+      selectedSentences,
       getSettingsFromServer
     } = this.props;
 
@@ -149,7 +149,7 @@ class ObfuscationModal extends React.Component {
                     reportName={report.name}
                     reportId={report.id}
                     markSentence={markSentence}
-                    obfTool={selcetedSentences[report.id] ? selcetedSentences[report.id][index] : null}
+                    obfTool={selectedSentences[report.id] ? selectedSentences[report.id][index] : null}
                   />)
                 })
               }
@@ -174,7 +174,7 @@ class ObfuscationModal extends React.Component {
 
 export default connect(
   (state) => ({
-    selcetedSentences: state[ MODULE_NAME ].get('selceted_sentences').toJS()
+    selectedSentences: state[ MODULE_NAME ].get('selected_sentences').toJS()
   }),
   (dispatch) => bindActionCreators({
     markSentence,

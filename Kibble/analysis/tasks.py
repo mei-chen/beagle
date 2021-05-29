@@ -8,7 +8,7 @@ from celery.utils.log import get_task_logger
 from document.models import PersonalData, Document
 from portal.models import Batch, File
 from analysis.models import RegEx, Report, KeywordList
-from utils.most_similar.api import MostSimmilarModelAPI
+from utils.most_similar.api import MostSimilarModelAPI
 from utils.synonyms.api import SynonymsAPI
 from utils.sentence_vector.api import SentenceVectorAPIError
 
@@ -125,7 +125,7 @@ def most_similar_recommend(word, model, session):
     message = NotificationManager.notify_client(session, ret)
     message.send()
 
-    api = MostSimmilarModelAPI(word, model)
+    api = MostSimilarModelAPI(word, model)
     success, message, result = api.process()
     keywords = result.get('results', [])
 
@@ -156,8 +156,7 @@ def synonyms_recommend(word, session):
     message.send()
 
     api = SynonymsAPI(word)
-    success, message, result = api.process()
-    keywords = result.get('synonyms', [])
+    success, message, keywords = api.process()
 
     ret = {
         'action': 'synonyms',

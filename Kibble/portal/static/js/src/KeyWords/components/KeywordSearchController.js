@@ -221,16 +221,16 @@ class KeywordListSearchController extends React.Component {
             <Row className="no-margin-row">
               <div className="checkmark-personal-data">
                 <Checkbox onChange={this.checkExclude}>
-                  Exclude Personal Data sentences
+                  Exclude Personal Data Sentences
                 </Checkbox>
               </div>
               <div className="submit-list-wrapper">
                 <ButtonToolbar>
                   <Button onClick={this.doApply} disabled={!applyButton}>
-                    { !applyButton ? 'Select keywordlist and batch' : 'Process' }
+                    { !applyButton ? 'Process - select batch and keyword list' : 'Process' }
                   </Button>
                   <Button onClick={this.showPreview} disabled={!previewButton}>
-                    { !previewButton ? 'Select batch and report first' : 'Preview' }
+                    { !previewButton ? 'Preview - select batch and report' : 'Preview' }
                   </Button>
                 </ButtonToolbar>
                 <ButtonToolbar>

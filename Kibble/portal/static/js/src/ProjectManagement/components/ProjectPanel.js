@@ -35,7 +35,7 @@ const ProjectPanel = ({ setModalOpen, selectedProject, setShowInactive, isShowIn
             onClick={() => setModalOpen('edit', true)}
             disabled={!selectedProject.size || isShowInactive}
           >
-            Edit Project <i className="fal fa-edit"></i>
+            Edit Project Name <i className="fal fa-edit"></i>
           </Button>
 
           <Button

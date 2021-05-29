@@ -190,7 +190,7 @@ class ThresholdChart extends Component {
           onHide={this._hideModal}
           className="threshold-modal">
           <ModalHeader closeButton>
-            <h4>Samles</h4>
+            <h4>Samples</h4>
           </ModalHeader>
           <ModalBody>
             { modalSamples.length > 0 && (

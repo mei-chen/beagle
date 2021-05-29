@@ -2,7 +2,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
 
-from portal.api.serializers import ProfileSerialzer
+from portal.api.serializers import ProfileSerializer
 from portal.models import Profile
 
 
@@ -14,7 +14,7 @@ class ProfileAPI(RetrieveModelMixin,
     Allowed methods: GET, PUT, PATCH.
     """
 
-    serializer_class = ProfileSerialzer
+    serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):

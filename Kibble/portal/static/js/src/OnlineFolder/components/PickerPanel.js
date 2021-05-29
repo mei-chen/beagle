@@ -51,7 +51,7 @@ class PickerPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.opneModal = this.opneModal.bind(this);
+    this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.closeFolderPicker = this.closeFolderPicker.bind(this);
     this.openFolderPicker = this.openFolderPicker.bind(this);
@@ -102,7 +102,7 @@ class PickerPanel extends React.Component {
     e.stopPropagation();
   }
 
-  opneModal(modal) {
+  openModal(modal) {
     this.setState({
       showDropboxModal:true,
       modal: modal
@@ -179,7 +179,7 @@ class PickerPanel extends React.Component {
         <Panel>
           <Grid>
             <Col xs={12} md={12}>
-              {isInitialized ? 
+              {isInitialized ?
                 <div className="folder-watchers">
                   <div className="watcher-wrapper">
                     {cloud_access['google_drive'] && cloud_access['google_drive'].access ?

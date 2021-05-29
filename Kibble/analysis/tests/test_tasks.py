@@ -168,7 +168,7 @@ class BulkZipReportTest(TestCase, PatcherMixin):
 
 class MostSimilarTasksTest(TestCase, PatcherMixin):
     def setUp(self):
-        self.patch('utils.most_similar.api.MostSimmilarModelAPI', 'process')
+        self.patch('utils.most_similar.api.MostSimilarModelAPI', 'process')
         self.patch('document.tasks.NotificationManager', 'notify_client')
 
     def test_calls_api(self):
@@ -184,7 +184,7 @@ class MostSimilarTasksTest(TestCase, PatcherMixin):
         task should send notifications with successful result from most similar
         """
         word = 'someword'
-        message = 'Successfuly acquired recommendations for {}'.format(word)
+        message = 'Successfully acquired recommendations for {}'.format(word)
         result = {'results': [
             {'text': 'otherword', 'score': 1},
             {'text': 'oncemore', 'score': 0}]

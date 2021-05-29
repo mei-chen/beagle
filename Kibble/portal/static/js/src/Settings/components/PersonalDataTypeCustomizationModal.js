@@ -58,7 +58,7 @@ export class PersonalDataTypeCustomizationModal extends React.Component {
       personal_data_types[type][field] = value;
     })
 
-    changeSetting('personal_data_types',personal_data_types);    
+    changeSetting('personal_data_types',personal_data_types);
   }
 
   handleInputChange(e) {
@@ -110,7 +110,7 @@ export class PersonalDataTypeCustomizationModal extends React.Component {
 
     const popover = (
       <Popover id="popover-positioned-right" title={(<strong>Hint!</strong>)}>
-        The personal information types list will automaticly update with new types when they are found in your uploaded documents.
+        The personal information types list will automatically update with new types when they are found in your uploaded documents.
       </Popover>
     );
     return(
@@ -247,7 +247,7 @@ export class PersonalDataTypeCustomizationModal extends React.Component {
                 value={this.state.selected_type}
               />
 
-              <h4> Your selectet personal type entries </h4>
+              <h4> Your selected personal type entries </h4>
               <div className="type-entries">
               {this.state.selected_type === "" ?
                 <h5> First select a type </h5> :

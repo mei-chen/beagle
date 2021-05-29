@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import { hashHistory } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import MaterialTitlePanel from 'base/components/MaterialTitlePanel';
@@ -144,7 +144,7 @@ class SidebarContent extends React.Component {
             />
           )) }
           <div className="sidebarFooter">
-            by <a href="https://beagle.ai" title="Beagle.ai">Beagle</a>
+            by <a href="https://beagleai.com/" title="Beagle.ai" target='_blank'>Beagle</a>
           </div>
         </div>
       </MaterialTitlePanel>

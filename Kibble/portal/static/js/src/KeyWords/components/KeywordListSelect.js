@@ -48,7 +48,7 @@ const KeywordListSelect = ({ keywordlists, onChange, selectedKeywordList, setMod
   return (
     <FormGroup>
       <Col style={colStyle} xs={7} md={7}>
-      <ControlLabel>Keyword lists</ControlLabel>
+      <ControlLabel>Keyword Lists</ControlLabel>
       <Select
         name="kwls-select"
         value={selectedKeywordList.get('name') || ''}

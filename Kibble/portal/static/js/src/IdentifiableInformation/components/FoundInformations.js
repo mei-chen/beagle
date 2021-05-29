@@ -24,14 +24,14 @@ import { getBatchForProject } from 'base/redux/modules/batches';
 import { changeSetting, setModalOpen, addPersonalDataType, deletePersonalDataType } from 'Settings/redux/modules/settings.js';
 import { Spinner } from 'base/components/misc.js';
 import { FileInfoBox, FileListBox } from 'IdentifiableInformation/components/FileBoxes';
-import { DefaultObfuscationSetting } from 'Settings/components/SettingsPannel';
+import { DefaultObfuscationSetting } from 'Settings/components/Settingspanel';
 import { PersonalDataTypeCustomizationModal } from 'Settings/components/PersonalDataTypeCustomizationModal';
 import { setActiveRootFolder, setActiveUrl } from 'base/redux/modules/sidebar';
 import { pushLogEntry } from 'ProgressNotification/actions';
 const ENDPOINT = window.CONFIG.API_URLS.personalData;
 
 import 'IdentifiableInformation/scss/FoundInformations.scss';
-import 'Settings/scss/SettingsPannel.scss';
+import 'Settings/scss/Settingspanel.scss';
 
 class InformationsOfStructures extends Component {
   constructor(props) {
@@ -141,7 +141,7 @@ class InformationsOfStructures extends Component {
 
     const projectPopover = (
       <Popover id="popover-project-statistics" title="Project statistics">
-        <div className="statistics-pannel">
+        <div className="statistics-panel">
           {project_statistics.isLoading ?
             <Spinner/> :
             <div className="statistics-wrapper">
@@ -159,7 +159,7 @@ class InformationsOfStructures extends Component {
 
     const batchPopover = (
       <Popover id="popover-batch-statistics" title="Batch statistics">
-        <div className="statistics-pannel">
+        <div className="statistics-panel">
           {batch_statistics.isLoading ?
             <Spinner/> :
             <div className="statistics-wrapper">
@@ -188,7 +188,7 @@ class InformationsOfStructures extends Component {
               <div className={`statistics-actions ${project_statistics.id !== PROJECT_NOT_SELECTED ? 'showing' : ''}`}>
               {
                 project_statistics.id !== PROJECT_NOT_SELECTED &&
-                  <div className="actions-pannel">
+                  <div className="actions-panel">
                     <OverlayTrigger
                       trigger="click"
                       placement="bottom"
@@ -217,7 +217,7 @@ class InformationsOfStructures extends Component {
                 batch_statistics.id > 0 &&
                 <span>
                   {selectedBatch.personal_data_gathered || gathering_status === 'completed' ?
-                    <div className="actions-pannel">
+                    <div className="actions-panel">
                       <OverlayTrigger
                         trigger="click"
                         placement="bottom"
@@ -246,7 +246,7 @@ class InformationsOfStructures extends Component {
                         Download obfuscated batch
                       </a>
                     </div> :
-                    <div className="actions-pannel">
+                    <div className="actions-panel">
                     {gathering_status === 'loading' ?
                       <div
                         className="statistics-action-button"
@@ -384,7 +384,7 @@ class FoundInformations extends Component {
               <i className="fal fa-chevron-down"></i>
             }
           </div>
-          {settings.isInitialized && 
+          {settings.isInitialized &&
             <span>
               <DefaultObfuscationSetting
                 changeSetting={changeSetting}

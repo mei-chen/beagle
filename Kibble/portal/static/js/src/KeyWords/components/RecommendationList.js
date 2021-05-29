@@ -16,7 +16,7 @@ const RecommendationItem = ({ word, index, style, handleSelect }) => {
 const RecommendationList = ({ keywords, label, noKeyWords, markKeyword }) => {
   return (
       <div className="keyword-list-selector">
-        <h4 className="slector-header">{label}</h4>
+        <h4 className="selector-header">{label}</h4>
         <ListGroup bsClass="list-group-class">
           {!keywords.size && (<div>{noKeyWords}</div>)}
           {keywords.map((keyword, i) => {
