@@ -4,6 +4,5 @@
       "uuid": "e4064bc6-59d7-4aa9-86dc-67d559fd8438",
       "created_at": "2017-10-30T18:44:58.502Z",
       "name": "Lightweight Glove",
-      "api_name": "googlenews",
-      "_comment": "this is a small model currently used as stand-in for five bigger models.  See revision history."}}
+      "api_name": "googlenews"}}
 ]
