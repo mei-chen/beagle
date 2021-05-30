@@ -24,14 +24,14 @@ import { getBatchForProject } from 'base/redux/modules/batches';
 import { changeSetting, setModalOpen, addPersonalDataType, deletePersonalDataType } from 'Settings/redux/modules/settings.js';
 import { Spinner } from 'base/components/misc.js';
 import { FileInfoBox, FileListBox } from 'IdentifiableInformation/components/FileBoxes';
-import { DefaultObfuscationSetting } from 'Settings/components/Settingspanel';
+import { DefaultObfuscationSetting } from 'Settings/components/SettingsPanel';
 import { PersonalDataTypeCustomizationModal } from 'Settings/components/PersonalDataTypeCustomizationModal';
 import { setActiveRootFolder, setActiveUrl } from 'base/redux/modules/sidebar';
 import { pushLogEntry } from 'ProgressNotification/actions';
 const ENDPOINT = window.CONFIG.API_URLS.personalData;
 
 import 'IdentifiableInformation/scss/FoundInformations.scss';
-import 'Settings/scss/Settingspanel.scss';
+import 'Settings/scss/SettingsPanel.scss';
 
 class InformationsOfStructures extends Component {
   constructor(props) {

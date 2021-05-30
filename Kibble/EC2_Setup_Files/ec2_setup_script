@@ -66,7 +66,7 @@ cd /var/www/beagle/Kibble/portal/static/js/src/
 npm install
 npm run dist
 cd /var/www/beagle/Kibble
-./manage.py collectstatic
+./manage.py collectstatic > collectstatic.log
 mv /var/www/beagle/Kibble/collectstatic /var/www/beagle/Kibble/static
 
 # Step 10

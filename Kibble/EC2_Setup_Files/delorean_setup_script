@@ -1,0 +1,10 @@
+% Delorean setup script
+% to run on Kibble server
+
+
+cd /var/www/beagle/Delorean
+virtualenv venv
+source venv/bin/activate
+pip3 install -r requirements.txt --no-cache-dir
+python -m spacy download en_core_web_sm
+echo put the glove file in the Delorean directory "glove.6B.50d.txt", go to a screen, activate the venv, and run "python app.py"
