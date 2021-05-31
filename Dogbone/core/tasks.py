@@ -5,6 +5,7 @@ import logging
 import requests
 import traceback
 import langdetect
+import tempfile
 
 from celery import shared_task, chain
 from constance import config
@@ -607,8 +608,19 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
     filename, extension = os.path.splitext(document.original_name)
 
     try:
+        # Download the file from s3 into a temp file + do the processing with that temp file
+        fd, local_temp_file = tempfile.mkstemp()
+
+
+        with open(fd, 'wb') as output, default_storage.open(os.path.basename(temp_filename), 'rb') as s3_file:
+            while True:
+                data = s3_file.read(100000)
+                if data == b'':  # end of file reached
+                    break
+                output.write(data)
+
         formatted_sents_tuple = conversion.document2sentences(document,
-                                                              temp_filename,
+                                                              local_temp_file,
                                                               extension)
 
     except EasyPDFCloudHTTPException as e:
@@ -737,24 +749,24 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
 
     finally:
         # Remove the temp file
-        if os.path.isfile(temp_filename):
-            os.remove(temp_filename)
+        if os.path.isfile(local_temp_file):
+            os.remove(local_temp_file)
 
         # Remove the temp file
-        if os.path.isfile(temp_filename + '.txt'):
-            os.remove(temp_filename + '.txt')
+        if os.path.isfile(local_temp_file + '.txt'):
+            os.remove(local_temp_file + '.txt')
 
         # Remove the temp file
-        if os.path.isfile(temp_filename + '.docx'):
-            os.remove(temp_filename + '.docx')
+        if os.path.isfile(local_temp_file + '.docx'):
+            os.remove(local_temp_file + '.docx')
 
         # Remove the temp file
-        if os.path.isfile(temp_filename + '.pdf'):
-            os.remove(temp_filename + '.pdf')
+        if os.path.isfile(local_temp_file + '.pdf'):
+            os.remove(local_temp_file + '.pdf')
 
         # Remove the temp file
-        if os.path.isfile(temp_filename + '.doc'):
-            os.remove(temp_filename + '.doc')
+        if os.path.isfile(local_temp_file + '.doc'):
+            os.remove(local_temp_file + '.doc')
 
     ####################################################################################################
     #
