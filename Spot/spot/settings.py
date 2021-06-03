@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
+# Python
+from datetime import timedelta
 import os
+
+# Third Party
 from dotenv import load_dotenv, find_dotenv
 
 # Loading the environmental variables
@@ -254,6 +258,13 @@ except ImportError:
 
 CELERY_BROKER_URL = BROKER_URL
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
+CELERYBEAT_SCHEDULE = {
+    'remove_expired_session_keys': {
+        'task': 'core.cron.remove_expired_session_keys',
+        'schedule': timedelta(days=1),
+    }
+}
 
 # Constance settings
 
