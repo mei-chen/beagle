@@ -401,6 +401,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'watcher.tasks.import_files_from_google_drive',
         'schedule': timedelta(seconds=(30 if DEBUG else 300)),
     },
+    'remove_expired_session_keys': {
+        'task': 'core.cron.remove_expired_session_keys',
+        'schedule': timedelta(days=1),
+    },
 }
 
 # Constance settings

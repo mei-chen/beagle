@@ -245,6 +245,11 @@ CELERYBEAT_SCHEDULE = {
     'add_dropbox_file_to_queue': {
         'task': 'watcher.tasks.add_to_queue_from_dropbox',
         'schedule': timedelta(seconds=30),
+    },
+
+    'remove_expired_session_keys' : {
+        'task' : 'core.cron.remove_expired_session_keys',
+        'schedule' : timedelta(days=1)
     }
 }
 

@@ -4,6 +4,7 @@ import logging
 
 from celery import shared_task
 from notifications.models import Notification
+from django.core import management
 
 
 ##################################################################################################
@@ -52,3 +53,10 @@ def periodic_send_notification_reminders():
 
     notifications.update(emailed=True)
     return True
+
+@shared_task
+def remove_expired_session_keys():
+    """
+    Remove session tokens that have expired from the database
+    """
+    management.call_command('clearsessions', verbosity=0)
