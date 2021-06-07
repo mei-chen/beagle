@@ -101,7 +101,7 @@ h2 {
   background-color: white; }
   .for-enterprise .icon {
     display: flex;
-    background-image: url("/static/img/GlassesBeagle.svg");
+    background-image: url("https://dogbone-static.s3.amazonaws.com/static/img/GlassesBeagle.svg");
     background-size: contain;
     background-repeat: no-repeat;
     width: 50px;

@@ -9,19 +9,19 @@
 /* Beagle Fonts */
 @font-face {
   font-family: 'equity-caps-a-regular';
-  src: url('../fonts/equity-caps-a-regular.ttf');
-  src: local('../fonts/equity-caps-a-regular.ttf')
+  src: url('https://dogbone-static.s3.amazonaws.com/static/fonts/equity-caps-a-regular.ttf');
+  src: local('https://dogbone-static.s3.amazonaws.com/static/fonts/equity-caps-a-regular.ttf')
 }
 
 
 @font-face {
   font-family: Concourse T7;
-  src: url('../fonts/concourse-t7-regular.otf')
+  src: url('https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-t7-regular.otf')
 }
 
 @font-face {
   font-family: Concourse T2;
-  src: url('../fonts/concourse-t2-regular.otf')
+  src: url('https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-t2-regular.otf')
 }
 
 #login-panel {

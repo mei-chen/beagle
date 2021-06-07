@@ -3,8 +3,8 @@ import pytz
 import re
 import requests
 
-from django_mobile.middleware import MobileDetectionMiddleware
-from django_mobile import set_flavour
+#from django_mobile.middleware import MobileDetectionMiddleware
+#from django_mobile import set_flavour
 from django.conf import settings
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
@@ -12,7 +12,7 @@ from django.utils.deprecation import MiddlewareMixin
 
 logger = logging.getLogger(__name__)
 
-
+"""
 class ExtendedMobileDetectionMiddleware(MobileDetectionMiddleware):
     # Example from django-mobile package
 
@@ -48,7 +48,7 @@ class ExtendedMobileDetectionMiddleware(MobileDetectionMiddleware):
         # set tablet flavour. It can be `mobile`, `tablet` or anything you want
         if is_tablet:
             set_flavour(settings.FLAVOURS[2], request)
-
+"""
 
 class UserCookieMiddleware(MiddlewareMixin):
 

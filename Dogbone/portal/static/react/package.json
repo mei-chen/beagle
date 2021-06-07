@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "HOT_LOAD=true node hotLoadServer.js",
-    "build": "HOT_LOAD=false webpack --progress --colors",
+    "build": "HOT_LOAD=false ASSET_PATH=https://dogbone-static.s3.amazonaws.com webpack --progress --colors",
     "prod": "REACT_ENV=beta webpack --progress --colors",
     "lint": "eslint --ext .js --ext .jsx . || true",
     "test": "echo 'No tests yet' && exit"

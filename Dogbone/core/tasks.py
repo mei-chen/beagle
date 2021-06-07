@@ -768,6 +768,9 @@ def process_document_conversion(doc_id, temp_filename, send_notifications=True, 
         if os.path.isfile(local_temp_file + '.doc'):
             os.remove(local_temp_file + '.doc')
 
+        # remove the file from s3
+        default_storage.delete(os.path.basename(temp_filename))
+
     ####################################################################################################
     #
     # Check if the conversion stage was successful

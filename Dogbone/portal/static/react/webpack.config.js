@@ -17,12 +17,21 @@ var NODE_ENV = IS_PROD ? 'production' : 'development';
 
 // whether or not we should do the hot load configuration
 var HOT_LOAD = JSON.parse(process.env.HOT_LOAD || 'false');
+var ASSET_PATH = false
 if (HOT_LOAD) {
   console.warn(
     "WARNING: Hot module replacement will be enabled. " +
     "This should ONLY be used for local development.\n"
   );
+  ASSET_PATH = 'http://0.0.0.0:3000/static/react/build'
 }
+
+if (process.env.ASSET_PATH) {
+  ASSET_PATH = process.env.ASSET_PATH
+}
+
+
+
 
 //
 // Configuring webpack plugins
@@ -164,7 +173,7 @@ module.exports = {
   output: {
     path: pwd + '/build',
     filename: '[name].entry.js',
-    publicPath: HOT_LOAD ? 'http://0.0.0.0:3000/static/react/build' : undefined,
+    publicPath: ASSET_PATH ? ASSET_PATH : undefined,
   },
   module: {
     preLoaders: preLoaders,

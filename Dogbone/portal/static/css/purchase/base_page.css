@@ -1,13 +1,13 @@
 @charset "UTF-8";
 @font-face {
   font-family: Concourse T2;
-  src: url("/static/fonts/concourse-t2-regular.otf"); }
+  src: url("https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-t2-regular.otf"); }
 @font-face {
   font-family: Concourse T7;
-  src: url("/static/fonts/concourse-t7-regular.otf"); }
+  src: url("https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-t7-regular.otf"); }
 @font-face {
   font-family: Concourse C2;
-  src: url("/static/fonts/concourse-c2-regular.otf"); }
+  src: url("https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-c2-regular.otf"); }
 .purchase {
   max-width: 1000px;
   margin: 20px auto; }
@@ -123,7 +123,7 @@
     background-color: white; }
     .purchase .for-enterprise .icon {
       display: flex;
-      background-image: url("/static/img/GlassesBeagle.svg");
+      background-image: url("https://dogbone-static.s3.amazonaws.com/static/img/GlassesBeagle.svg");
       background-size: contain;
       background-repeat: no-repeat;
       width: 50px;

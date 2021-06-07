@@ -26,7 +26,8 @@ if (argv.hasOwnProperty('syslog')) {
 // Init the logger and log level
 logger.setLevel('INFO');
 
-config = { listen_port: 4003, redis_url: 'redis://localhost:6379' };
+config = { listen_port: 4003, redis_url: process.env.REDIS_URL || 'redis://localhost:6379' };
+//config = { listen_port: 4003, redis_url: 'redis://host.docker.internal:6379' };
 
 if(process.env.PORT) {
     config.listen_port = process.env.PORT;
@@ -38,7 +39,14 @@ if(process.env.REDIS_URL) {
 
 logger.info('Loaded config: ', config);
 
-var server = http.createServer().listen(config.listen_port);
+const healthCheckListener = function (req, res) {
+    if (req.url == '/healthcheck') {
+        res.writeHead(200);
+        res.end();
+    }
+};
+
+var server = http.createServer(healthCheckListener).listen(config.listen_port, '0.0.0.0');
 
 // Create the server
 if (server) {
@@ -47,6 +55,8 @@ if (server) {
     logger.error("Could not start server. Exiting ...");
     process.exit(1);
 }
+
+
 
 // Attach socket.io
 var io = require('socket.io').listen(server);

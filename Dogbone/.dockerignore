@@ -1,0 +1,46 @@
+### Django/Python ###
+*.log
+*.pot
+*.pyc
+*.pkl
+__pycache__/
+db.sqlite3
+b.sqlite3-journal
+media/
+collectstatic/
+.idea/
+venv/
+
+.vscode/
+.vagrant/
+
+### Node ###
+node_modules/
+package-log.json
+
+
+### Vagrant ###
+.vagrant/
+secret.yml
+
+### MAC files ###
+.DS_Store
+
+
+## Ignored outer files
+.dia
+.md
+circle.yml
+fabfile.py
+LICENSE.TXT
+locustfile.py
+onedrive.sh
+postfix.rufu
+Vagrantfile
+
+## Ignored folders (Not needed to run applications)
+resources
+playbooks
+portal/static/react/node_modules/
+dogbone/settings/.env
+

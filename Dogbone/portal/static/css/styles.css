@@ -22,12 +22,12 @@ time, mark, audio, video {
 /* Beagle Fonts */
 @font-face {
   font-family: Equity;
-  src: url('../fonts/equity-caps-a-regular.otf')
+  src: url('https://dogbone-static.s3.amazonaws.com/static/fonts/equity-caps-a-regular.otf')
 }
 
 @font-face {
   font-family: Concourse;
-  src: url('../fonts/concourse-c2-regular.otf')
+  src: url('https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-c2-regular.otf')
 }
 
 /* HTML5 display-role reset for older browsers */

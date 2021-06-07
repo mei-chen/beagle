@@ -51,7 +51,7 @@ code {
 #img-logo {
     width: 145px;
     height: 26px;
-    background-image: url("/static/img/logo.png");
+    background-image: url("https://dogbone-static.s3.amazonaws.com/static/img/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     -webkit-transition: height .2s ease-in-out;

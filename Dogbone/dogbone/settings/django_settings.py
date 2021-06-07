@@ -43,6 +43,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 MIDDLEWARE = [
+    'dogbone.middleware.HealthCheckMiddleware',
     'django.middleware.common.CommonMiddleware',
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -154,7 +155,7 @@ TEMPLATES = [
                 "portal.context_processors.git_revision",
                 "portal.context_processors.global_settings",
                 "portal.context_processors.server_side_data",
-                "django_mobile.context_processors.flavour",
+                #"django_mobile.context_processors.flavour",
             ],
             'loaders': [
                 # insert your TEMPLATE_LOADERS here

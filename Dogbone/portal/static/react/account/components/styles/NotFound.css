@@ -1,6 +1,6 @@
 @font-face {
   font-family: Concourse T7;
-  src: url('/static/fonts/concourse-t7-regular.otf')
+  src: url('https://dogbone-static.s3.amazonaws.com/static/fonts/concourse-t7-regular.otf')
 }
 
 

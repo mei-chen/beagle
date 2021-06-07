@@ -47,10 +47,10 @@ NOTIFICATIONS_SOFT_DELETE = False
 #
 ######################################################################################
 
-CELERY_BROKER_URL = os.environ.get("BROKER_URL", "redis://localhost:6379/1")
-CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+BROKER_URL = os.environ.get("BROKER_URL", "redis://localhost:6379/1")
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_RESULT_BACKEND = BROKER_URL
 
 ######################################################################################
 #
