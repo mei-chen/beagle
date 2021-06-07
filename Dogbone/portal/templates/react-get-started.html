@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{% static 'img/favicon-16x16.png' %}" sizes="16x16" />
     <title>Beagle</title>
-    <link href="../static/css/styles2.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/styles2.css' %}" rel="stylesheet" type="text/css"> <!--Changed the static call, file still missing, can probably remove it-->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     {% include "global_partials.html" %}
     <!--Dropbox Include-->
